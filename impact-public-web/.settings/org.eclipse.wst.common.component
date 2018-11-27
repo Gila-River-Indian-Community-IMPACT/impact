@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="impact-public-web-23.13.0-SNAPSHOT">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="impact-core-23.13.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/impact-core/impact-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="shared-cromerr-services-23.13.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/shared-cromerr-services/shared-cromerr-services">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="shared-cromerr-services-wsdl-23.13.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/shared-cromerr-services-wsdl/shared-cromerr-services-wsdl">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="sharepoint-services-23.13.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/sharepoint-services/sharepoint-services">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="workflow-core-23.13.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/workflow-core/workflow-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="core-23.13.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/core/core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="impact-public-web"/>
+        <property name="java-output-path" value="/impact-public-web/target/classes"/>
+    </wb-module>
+</project-modules>

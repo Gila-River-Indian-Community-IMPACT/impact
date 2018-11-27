@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf136856026119740" configfile="/impact-web/src/main/webapp/WEB-INF/home-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1522" id="pf136856036888089" outlinks="pf136856036888090 pf136856036888091 pf136856036888092 pf136856036888093 pf136856036888094 pf136856036888095" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="home/home" x="338" y="370" id="pf136856036888196" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf136856036888197 pf136856036888198 pf136856036888199" inlinks="pf136856036888090 pf136856036888197" path="/home/home.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home/permitToDo" x="338" y="754" id="pf1368560368881100" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf136856036888091" path="/home/permitToDo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home/eventLog" x="554" y="1724" id="pf1368560368881101" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf136856036888092 pf1368560368881102" path="/home/eventLog.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home/eventNew" x="338" y="1522" id="pf1368560368881103" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf1368560368881102" inlinks="pf136856036888093" path="/home/eventNew.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home/initTask" x="338" y="1138" id="pf1368560368881104" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf1368560368881105" inlinks="pf136856036888094 pf1368560368881105" path="/home/initTask.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home/initWorkflow" x="338" y="1927" id="pf1368560368881106" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf1368560368881107" inlinks="pf136856036888095 pf1368560368881107" path="/home/initWorkflow.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/facilityProfile" x="554" y="178" id="pf1368560368881108" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf136856036888198" path="/facilities/facilityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflowProfile" x="554" y="562" id="pf1368560368881109" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf136856036888199" path="/workflows/workflowProfile.jsp"/>
+  <links id="pf136856036888090" target="pf136856036888196" source="pf136856036888089" outcome="todo" redirect="true"/>
+  <links id="pf136856036888091" target="pf1368560368881100" source="pf136856036888089" outcome="permitToDo" redirect="true"/>
+  <links id="pf136856036888092" target="pf1368560368881101" source="pf136856036888089" outcome="eventLog" redirect="true"/>
+  <links id="pf136856036888093" target="pf1368560368881103" source="pf136856036888089" outcome="eventNew" redirect="true"/>
+  <links id="pf136856036888094" target="pf1368560368881104" source="pf136856036888089" outcome="initTask" redirect="true"/>
+  <links id="pf136856036888095" target="pf1368560368881106" source="pf136856036888089" outcome="initWorkflow" redirect="true"/>
+  <links id="pf136856036888198" target="pf1368560368881108" source="pf136856036888196" outcome="Success" redirect="true" fromaction="#{facilityProfile.submitProfile}"/>
+  <links id="pf136856036888199" target="pf1368560368881109" source="pf136856036888196" outcome="Success" redirect="true" fromaction="#{workFlow2DDraw.submitProfile}"/>
+  <links id="pf1368560368881102" target="pf1368560368881101" source="pf1368560368881103" outcome="Success" redirect="true" fromaction="#{eventLog.createEvent}"/>
+  <links id="pf136856036888197" target="pf136856036888196" source="pf136856036888196" outcome="Success" fromaction="#{toDoSearch.submit}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368560368881107" target="pf1368560368881106" source="pf1368560368881106" outcome="Success" fromaction="#{initWorkflow.submit}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368560368881105" target="pf1368560368881104" source="pf1368560368881104" outcome="Success" fromaction="#{initWorkflow.submit}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+</pageflow:Pageflow>

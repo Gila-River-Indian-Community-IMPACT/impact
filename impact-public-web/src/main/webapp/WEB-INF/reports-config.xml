@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Reports Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--Reports Tab -->
+	<!-- menu items -->
+
+
+	<!-- Backing beans -->
+	<managed-bean>
+		<managed-bean-name>reportProfile</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.emissionsReport.ReportProfile
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>emissionsReportService</property-name>
+			<value>#{emissionsReportBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>reportSearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.reports.ReportSearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>infrastructureService</property-name>
+			<value>#{infrastructureBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>emissionsReportService</property-name>
+			<value>#{emissionsReportBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>reportDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.emissionsReport.ReportDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>emissionsReportService</property-name>
+			<value>#{emissionsReportBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>home.reports.reportDetail</from-outcome>
+			<to-view-id>/reports/homeReportDetail.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:createEUListPop</from-outcome>
+			<to-view-id>/reports/processEG71Choices.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:emissionReport</from-outcome>
+			<to-view-id>/reports/printEmiRpt.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+</faces-config>

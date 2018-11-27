@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf1376402254590127" configfile="/impact-web/src/main/webapp/WEB-INF/invoices-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1138" id="pf1376402266323128" outlinks="pf1376402266323129 pf1376402266323130" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/invSearch" x="338" y="946" id="pf1376402266323131" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf1376402266323129" path="/inv/invSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/invoice" x="338" y="1330" id="pf1376402266323132" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf1376402266323133 pf1376402266323134 pf1376402266323135 pf1376402266323136 pf1376402266323137 pf1376402266323138 pf1376402266323139 pf1376402266323140 pf1376402266323141" inlinks="pf1376402266323130 pf1376402266323134 pf1376402266323136" path="/inv/invoice.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/createAdjustment" x="554" y="178" id="pf1376402266323142" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf1376402266323133" path="/inv/createAdjustment.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/viewContact" x="554" y="562" id="pf1376402266323143" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf1376402266323135" path="/inv/viewContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/confirmIndicatorAdjustment" x="554" y="946" id="pf1376402266323144" referenceLink="//@navigationRule.1/@navigationCase.4/@toViewId|" inlinks="pf1376402266323137" path="/inv/confirmIndicatorAdjustment.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/createNewRevenueId" x="554" y="1330" id="pf1376402266323145" referenceLink="//@navigationRule.1/@navigationCase.5/@toViewId|" inlinks="pf1376402266323138" path="/inv/createNewRevenueId.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/confirmUnPost" x="554" y="1714" id="pf1376402266323146" referenceLink="//@navigationRule.1/@navigationCase.6/@toViewId|" inlinks="pf1376402266323139" path="/inv/confirmUnPost.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/confirmOperation" x="554" y="2098" id="pf1376402266323147" referenceLink="//@navigationRule.1/@navigationCase.7/@toViewId|" inlinks="pf1376402266323140" path="/inv/confirmOperation.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="inv/noteDetail" x="554" y="2482" id="pf1376402266323148" referenceLink="//@navigationRule.1/@navigationCase.8/@toViewId|" inlinks="pf1376402266323141" path="/inv/noteDetail.jsp"/>
+  <links id="pf1376402266323129" target="pf1376402266323131" source="pf1376402266323128" outcome="InvSearch" redirect="true"/>
+  <links id="pf1376402266323130" target="pf1376402266323132" source="pf1376402266323128" outcome="invoiceDetail" redirect="true"/>
+  <links id="pf1376402266323133" target="pf1376402266323142" source="pf1376402266323132" outcome="dialog:createAdjustment" fromaction="#{invoiceDetail.adjustmentDialog}"/>
+  <links id="pf1376402266323135" target="pf1376402266323143" source="pf1376402266323132" outcome="dialog:viewContact"/>
+  <links id="pf1376402266323137" target="pf1376402266323144" source="pf1376402266323132" outcome="dialog:confirmIndicatorAdjustment"/>
+  <links id="pf1376402266323138" target="pf1376402266323145" source="pf1376402266323132" outcome="dialog:createNewRevenueId"/>
+  <links id="pf1376402266323139" target="pf1376402266323146" source="pf1376402266323132" outcome="dialog:confirmUnPost"/>
+  <links id="pf1376402266323140" target="pf1376402266323147" source="pf1376402266323132" outcome="dialog:confirmInvoiceOperation"/>
+  <links id="pf1376402266323141" target="pf1376402266323148" source="pf1376402266323132" outcome="dialog:noteDetail"/>
+  <links id="pf1376402266323134" target="pf1376402266323132" source="pf1376402266323132" outcome="newAdjustment" redirect="true" fromaction="#{invoiceDetail.createNewAdjustment}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1376402266323136" target="pf1376402266323132" source="pf1376402266323132" outcome="newAddress" redirect="true" fromaction="#{invoiceDetail.editBillAddress}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+</pageflow:Pageflow>

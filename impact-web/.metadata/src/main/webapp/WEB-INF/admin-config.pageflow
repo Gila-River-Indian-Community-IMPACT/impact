@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf1368560478088110" configfile="/impact-web/src/main/webapp/WEB-INF/admin-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="admin/users" x="338" y="178" id="pf1368560591214111" referenceLink="//@navigationRule.3/@navigationCase.10/@toViewId|" outlinks="pf1368560591214112 pf1368560591214113 pf1368560591214114" inlinks="pf1368560591214112 pf1368560591214113 pf1368560591214114 pf1368560591214115" path="/admin/users.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/roles" x="338" y="946" id="pf1368560591215116" referenceLink="//@navigationRule.3/@navigationCase.9/@toViewId|" outlinks="pf1368560591215117 pf1368560591215118 pf1368560591215119 pf1368560591215120 pf1368560591215121 pf1368560591215122 pf1368560591215123" inlinks="pf1368560591215117 pf1368560591215118 pf1368560591215119 pf1368560591215120 pf1368560591215121 pf1368560591215122 pf1368560591215124" path="/admin/roles.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/confirmRoleDelete" x="554" y="946" id="pf1368560591215125" referenceLink="//@navigationRule.1/@navigationCase.6/@toViewId|" inlinks="pf1368560591215123" path="/admin/confirmRoleDelete.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/serviceCatalog" x="338" y="1714" id="pf1368560591215126" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf1368560591215127 pf1368560591215128 pf1368560591215129 pf1368560591215130 pf1368560591215131 pf1368560591215132 pf1368560591215133 pf1368560591215134 pf1368560591215135 pf15293434682140 pf15293434682141" inlinks="pf1368560591215127 pf1368560591215128 pf1368560591215129 pf1368560591215130 pf1368560591215131 pf1368560591215132 pf1368560591215133 pf1368560591215134 pf1368560591215135 pf1368560591215136" path="/admin/serviceCatalog.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2866" id="pf1368560591215137" outlinks="pf1368560591215136 pf1368560591215138 pf1368560591215139 pf1368560591215140 pf1368560591215141 pf1368560591215142 pf1368560591215143 pf1368560591215144 pf1368560591215145 pf1368560591215124 pf1368560591214115 pf1368560591215146 pf1368560591215147 pf1368560591215148 pf15293434682142" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/contEquipCatalog" x="338" y="562" id="pf1368560591215149" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" inlinks="pf1368560591215138" path="/admin/contEquipCatalog.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/defCatalog" x="338" y="1330" id="pf1368560591215150" referenceLink="//@navigationRule.3/@navigationCase.2/@toViewId|" inlinks="pf1368560591215139" path="/admin/defCatalog.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/scheduler" x="338" y="2098" id="pf1368560591215151" referenceLink="//@navigationRule.3/@navigationCase.3/@toViewId|" inlinks="pf1368560591215140" path="/admin/scheduler.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/AddContEquipType" x="338" y="2482" id="pf1368560591215152" referenceLink="//@navigationRule.3/@navigationCase.4/@toViewId|" inlinks="pf1368560591215141" path="/admin/AddContEquipType.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/AddContEquipAttribute" x="338" y="2866" id="pf1368560591215153" referenceLink="//@navigationRule.3/@navigationCase.5/@toViewId|" inlinks="pf1368560591215142" path="/admin/AddContEquipAttribute.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/editDefinition" x="338" y="3250" id="pf1368560591215154" referenceLink="//@navigationRule.3/@navigationCase.6/@toViewId|" inlinks="pf1368560591215143" path="/admin/editDefinition.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/editCustomDefinition" x="338" y="3634" id="pf1368560591215155" referenceLink="//@navigationRule.3/@navigationCase.7/@toViewId|" inlinks="pf1368560591215144" path="/admin/editCustomDefinition.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/addSchedulerMetaData" x="338" y="4018" id="pf1368560591215156" referenceLink="//@navigationRule.3/@navigationCase.8/@toViewId|" inlinks="pf1368560591215145" path="/admin/addSchedulerMetaData.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/configuration" x="338" y="4402" id="pf1368560591216157" referenceLink="//@navigationRule.3/@navigationCase.11/@toViewId|" inlinks="pf1368560591215146" path="/admin/configuration.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/cetaTvccImport" x="338" y="4786" id="pf1368560591216158" referenceLink="//@navigationRule.3/@navigationCase.12/@toViewId|" inlinks="pf1368560591215147" path="/admin/cetaTvccImport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/importFire" x="338" y="5170" id="pf1368560591216159" referenceLink="//@navigationRule.3/@navigationCase.13/@toViewId|" inlinks="pf1368560591215148" path="/admin/importFire.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/chooseEmissionsCategory" x="554" y="1714" id="pf15293434682143" referenceLink="//@navigationRule.2/@navigationCase.10/@toViewId|" inlinks="pf15293434682140" path="/admin/chooseEmissionsCategory.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/enableReporting" x="338" y="5554" id="pf15293434682144" referenceLink="//@navigationRule.3/@navigationCase.14/@toViewId|" inlinks="pf15293434682142" path="/admin/enableReporting.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/addNonChargeablePollutant" id="pf15293434682145" referenceLink="//@navigationRule.2/@navigationCase.10/@toViewId|" inlinks="pf15293434682141" path="/admin/addNonChargeablePollutant.jsp"/>
+  <links id="pf1368560591215123" target="pf1368560591215125" source="pf1368560591215116" outcome="dialog:confirmRoleDelete"/>
+  <links id="pf1368560591215136" target="pf1368560591215126" source="pf1368560591215137" outcome="admin.serviceCatalog" redirect="true"/>
+  <links id="pf1368560591215138" target="pf1368560591215149" source="pf1368560591215137" outcome="admin.contEquipCatalog" redirect="true"/>
+  <links id="pf1368560591215139" target="pf1368560591215150" source="pf1368560591215137" outcome="admin.defCatalog" redirect="true"/>
+  <links id="pf1368560591215140" target="pf1368560591215151" source="pf1368560591215137" outcome="admin.scheduler" redirect="true"/>
+  <links id="pf1368560591215141" target="pf1368560591215152" source="pf1368560591215137" outcome="dialog:AddCeTypeDialog"/>
+  <links id="pf1368560591215142" target="pf1368560591215153" source="pf1368560591215137" outcome="dialog:AddAttributeDialog"/>
+  <links id="pf1368560591215143" target="pf1368560591215154" source="pf1368560591215137" outcome="dialog:editDefinitionDialog"/>
+  <links id="pf1368560591215144" target="pf1368560591215155" source="pf1368560591215137" outcome="dialog:editCustomDefinitionDialog"/>
+  <links id="pf1368560591215145" target="pf1368560591215156" source="pf1368560591215137" outcome="dialog:addDataMap"/>
+  <links id="pf1368560591215124" target="pf1368560591215116" source="pf1368560591215137" outcome="admin.roles" redirect="true"/>
+  <links id="pf1368560591214115" target="pf1368560591214111" source="pf1368560591215137" outcome="admin.users" redirect="true"/>
+  <links id="pf1368560591215146" target="pf1368560591216157" source="pf1368560591215137" outcome="admin.configuration" redirect="true"/>
+  <links id="pf1368560591215147" target="pf1368560591216158" source="pf1368560591215137" outcome="admin.cetaImport" redirect="true"/>
+  <links id="pf1368560591215148" target="pf1368560591216159" source="pf1368560591215137" outcome="importFire" redirect="true"/>
+  <links id="pf15293434682140" target="pf15293434682143" source="pf1368560591215126" outcome="dialog:serviceCatalogEmissionsInfo"/>
+  <links id="pf15293434682142" target="pf15293434682144" source="pf1368560591215137" outcome="adminEREnable" redirect="true"/>
+  <links id="pf1368560591214112" target="pf1368560591214111" source="pf1368560591214111" outcome="Editable" fromaction="#{userTree.editUser}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368560591214113" target="pf1368560591214111" source="pf1368560591214111" outcome="Success" fromaction="#{userTree.saveUser}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf1368560591214114" target="pf1368560591214111" source="pf1368560591214111" outcome="Cancelled" fromaction="#{userTree.cancelUser}">
+    <bendPoints d1Height="-96" d2Height="-96"/>
+    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
+    <bendPoints d1Width="-124" d2Width="-124"/>
+  </links>
+  <links id="pf1368560591215117" target="pf1368560591215116" source="pf1368560591215116" outcome="RoleAdded" fromaction="#{roleTree.addNewRole}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368560591215118" target="pf1368560591215116" source="pf1368560591215116" outcome="RoleSaved" fromaction="#{roleTree.saveRole}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf1368560591215119" target="pf1368560591215116" source="pf1368560591215116" outcome="Cancelled" fromaction="#{roleTree.cancel}">
+    <bendPoints d1Height="-96" d2Height="-96"/>
+    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
+    <bendPoints d1Width="-124" d2Width="-124"/>
+  </links>
+  <links id="pf1368560591215120" target="pf1368560591215116" source="pf1368560591215116" outcome="RoleEditable" fromaction="#{roleTree.editRole}">
+    <bendPoints d1Height="-126" d2Height="-126"/>
+    <bendPoints d1Width="-154" d1Height="-126" d2Width="-154" d2Height="-126"/>
+    <bendPoints d1Width="-154" d2Width="-154"/>
+  </links>
+  <links id="pf1368560591215121" target="pf1368560591215116" source="pf1368560591215116" outcome="RoleCloned" fromaction="#{roleTree.cloneRole}">
+    <bendPoints d1Height="-156" d2Height="-156"/>
+    <bendPoints d1Width="-184" d1Height="-156" d2Width="-184" d2Height="-156"/>
+    <bendPoints d1Width="-184" d2Width="-184"/>
+  </links>
+  <links id="pf1368560591215122" target="pf1368560591215116" source="pf1368560591215116" outcome="UseCasesLoaded" fromaction="#{roleTree.loadUseCases}">
+    <bendPoints d1Height="-186" d2Height="-186"/>
+    <bendPoints d1Width="-214" d1Height="-186" d2Width="-214" d2Height="-186"/>
+    <bendPoints d1Width="-214" d2Width="-214"/>
+  </links>
+  <links id="pf1368560591215127" target="pf1368560591215126" source="pf1368560591215126" outcome="Cancelled" fromaction="#{serviceCatalog.cancelEdit}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368560591215128" target="pf1368560591215126" source="pf1368560591215126" outcome="ReportAdded" fromaction="#{serviceCatalog.addReport}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf1368560591215129" target="pf1368560591215126" source="pf1368560591215126" outcome="CategoryAdded" fromaction="#{serviceCatalog.addCategory}">
+    <bendPoints d1Height="-96" d2Height="-96"/>
+    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
+    <bendPoints d1Width="-124" d2Width="-124"/>
+  </links>
+  <links id="pf1368560591215130" target="pf1368560591215126" source="pf1368560591215126" outcome="FeeAdded" fromaction="#{serviceCatalog.addFee}">
+    <bendPoints d1Height="-126" d2Height="-126"/>
+    <bendPoints d1Width="-154" d1Height="-126" d2Width="-154" d2Height="-126"/>
+    <bendPoints d1Width="-154" d2Width="-154"/>
+  </links>
+  <links id="pf1368560591215131" target="pf1368560591215126" source="pf1368560591215126" outcome="ReminderAdded" fromaction="#{serviceCatalog.addReminder}">
+    <bendPoints d1Height="-156" d2Height="-156"/>
+    <bendPoints d1Width="-184" d1Height="-156" d2Width="-184" d2Height="-156"/>
+    <bendPoints d1Width="-184" d2Width="-184"/>
+  </links>
+  <links id="pf1368560591215132" target="pf1368560591215126" source="pf1368560591215126" outcome="ReportSaved" fromaction="#{serviceCatalog.saveReport}">
+    <bendPoints d1Height="-186" d2Height="-186"/>
+    <bendPoints d1Width="-214" d1Height="-186" d2Width="-214" d2Height="-186"/>
+    <bendPoints d1Width="-214" d2Width="-214"/>
+  </links>
+  <links id="pf1368560591215133" target="pf1368560591215126" source="pf1368560591215126" outcome="CategorySaved" fromaction="#{serviceCatalog.saveCategory}">
+    <bendPoints d1Height="-216" d2Height="-216"/>
+    <bendPoints d1Width="-244" d1Height="-216" d2Width="-244" d2Height="-216"/>
+    <bendPoints d1Width="-244" d2Width="-244"/>
+  </links>
+  <links id="pf1368560591215134" target="pf1368560591215126" source="pf1368560591215126" outcome="ReportEditable" fromaction="#{serviceCatalog.editReport}">
+    <bendPoints d1Height="-246" d2Height="-246"/>
+    <bendPoints d1Width="-274" d1Height="-246" d2Width="-274" d2Height="-246"/>
+    <bendPoints d1Width="-274" d2Width="-274"/>
+  </links>
+  <links id="pf1368560591215135" target="pf1368560591215126" source="pf1368560591215126" outcome="CategoryEditable" fromaction="#{serviceCatalog.editCategory}">
+    <bendPoints d1Height="-276" d2Height="-276"/>
+    <bendPoints d1Width="-304" d1Height="-276" d2Width="-304" d2Height="-276"/>
+    <bendPoints d1Width="-304" d2Width="-304"/>
+  </links>
+  <links id="pf15293434682141" target="pf15293434682145" source="pf1368560591215126" outcome="dialog:serviceCatalogAddNCPollutant"/>
+</pageflow:Pageflow>

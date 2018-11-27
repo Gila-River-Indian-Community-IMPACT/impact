@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+
+  <params>
+
+    <!-- General Parameters -->
+    <SearchLimit value="50000"/>
+    <HitIncrementCheck value="5000" />
+    <UsedMemoryLimit value="0.99" />
+
+  </params>
+
+</root>

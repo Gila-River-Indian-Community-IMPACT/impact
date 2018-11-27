@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<CorrespondenceSQL>
+
+		<correspondenceColumns>
+			cs.correspondence_id,
+			cs.correspondence_type_cd, cs.date_generated,
+			cs.facility_id, cs.rum_process_id,
+			cs.certified_mail_track_id,
+			cs.certified_mail_recpt_date, cs.additional_info, cs.linked_to_id,
+			cs.direction_cd, cs.district, cs.correspondence_category_cd,
+			cs.regarding, cs.to_person, cs.from_person, cs.reviewer,
+			cs.receipt_date, cs.follow_up_action, cs.follow_up_action_date,
+			cs.follow_up_action_dsc,
+			cs.last_modified AS cs_lm,
+			cs.county_cd,
+			cs.city_cd,
+			cs.legacy_flag, cs.linked_to_enf_action,
+			cs.hide_attachments,
+			cs.cor_id
+		</correspondenceColumns>
+
+		<createCorrespondence>
+			INSERT INTO %Schema%dc_correspondence
+			(correspondence_id,
+			correspondence_type_cd,
+			date_generated,
+			facility_id, rum_process_id,
+			certified_mail_track_id,
+			certified_mail_recpt_date, additional_info, linked_to_id,
+			direction_cd, district, correspondence_category_cd, regarding,
+			to_person,
+			from_person, reviewer, receipt_date, follow_up_action,
+			follow_up_action_date, follow_up_action_dsc, legacy_flag, county_cd, city_cd,
+			linked_to_enf_action,
+			hide_attachments)
+			VALUES (?, ?, ?, ?, ?, ?,
+			?, ?, ?, ?,
+			?,
+			?, ?, ?, ?, ?,
+			?, ?, ?, ?, ?,
+			?, ?, ?,?)
+		</createCorrespondence>
+
+		<updateCorrespondence>
+			UPDATE %Schema%dc_correspondence SET
+			correspondence_type_cd = ?,
+			date_generated = ?,
+			facility_id = ?, rum_process_id = ?,
+			certified_mail_track_id = ?,
+			certified_mail_recpt_date = ?,
+			additional_info = ?, linked_to_id = ?,
+			direction_cd = ?, district = ?, correspondence_category_cd = ?,
+			regarding = ?, to_person = ?, from_person = ?, reviewer = ?,
+			receipt_date = ?, follow_up_action = ?, follow_up_action_date = ?,
+			follow_up_action_dsc = ?,
+			legacy_flag = ?,
+			county_cd = ?,
+			city_cd = ?, linked_to_enf_action = ?,
+			hide_attachments = ?,
+			last_modified = ?
+			WHERE
+			correspondence_id = ?
+			AND last_modified = ?
+		</updateCorrespondence>
+
+		<deleteCorrespondence>
+			DELETE FROM %Schema%dc_correspondence WHERE
+			correspondence_id = ?
+		</deleteCorrespondence>
+
+		<searchFacilityCorrespondence>
+			SELECT
+			${CorrespondenceSQL.correspondenceColumns}
+			FROM
+			%Schema%dc_correspondence cs
+			WHERE cs.facility_id = ?
+		</searchFacilityCorrespondence>
+
+		<searchLinkedToCorrespondence>
+			SELECT
+			${CorrespondenceSQL.correspondenceColumns},
+			ff.facility_nm,
+			ff.fp_id, cmp.cmp_id AS company_id, cmp.name AS company_name
+			FROM
+			%Schema%dc_correspondence cs
+			LEFT OUTER JOIN %Schema%fp_facility ff
+			ON (cs.facility_id = ff.facility_id AND ff.version_id = -1)
+			LEFT OUTER JOIN %Schema%fp_facility_company_xref fcxref
+			ON (cs.facility_id = fcxref.facility_id AND fcxref.end_date is null)
+			LEFT OUTER JOIN %Schema%cm_company cmp
+			ON (fcxref.company_id = cmp.company_id)
+			WHERE cs.linked_to_id = ?
+		</searchLinkedToCorrespondence>
+
+		<searchCorrespondenceNotes>
+			SELECT ${InfrastructureSQL.noteColumns},
+			csnx.correspondence_id,
+			csnx.last_modified AS csnx_lm
+			FROM
+			%Schema%cm_note cn, %Schema%dc_correspondence_notes_xref csnx
+			WHERE
+			csnx.note_id = cn.note_id AND csnx.correspondence_id = ?
+		</searchCorrespondenceNotes>
+
+		<createNoteXref>
+			INSERT INTO %Schema%dc_correspondence_notes_xref
+			(correspondence_id,
+			note_id)
+			VALUES (?,?)
+		</createNoteXref>
+
+		<deleteNoteXref>
+			DELETE FROM %Schema%dc_correspondence_notes_xref
+			WHERE
+			correspondence_id = ? AND note_id = ?
+		</deleteNoteXref>
+
+		<searchCorrespondence>
+			SELECT
+			${CorrespondenceSQL.correspondenceColumns},
+			dctd.correspondence_type_dsc,
+			ff.facility_nm,
+			ff.fp_id, cmp.cmp_id AS company_id, cmp.name AS company_name,
+			ccod.county_nm,
+			ccd.city_nm
+			FROM
+			%Schema%dc_correspondence cs
+			LEFT OUTER JOIN
+			%Schema%dc_correspondence_type_def dctd
+			ON (cs.correspondence_type_cd
+			= dctd.correspondence_type_cd)
+			LEFT OUTER JOIN %Schema%fp_facility ff
+			ON (cs.facility_id = ff.facility_id AND ff.version_id = -1)
+			LEFT OUTER JOIN %Schema%fp_facility_company_xref fcxref
+			ON (cs.facility_id = fcxref.facility_id AND fcxref.end_date is null)
+			LEFT OUTER JOIN %Schema%cm_company cmp
+			ON (fcxref.company_id = cmp.company_id)
+			LEFT OUTER JOIN %Schema%cm_county_def ccod ON ccod.county_cd = cs.county_cd
+			LEFT OUTER JOIN %Schema%cm_city_def ccd ON ccd.city_cd = cs.city_cd
+			WHERE
+			((cs.facility_id =
+			ff.facility_id
+			AND ff.version_id = -1) OR ff.facility_id IS NULL)
+		</searchCorrespondence>
+
+		<modifyCorrespondence>
+			UPDATE %Schema%dc_correspondence SET
+			rum_process_id = ?,
+			certified_mail_track_id = ?,
+			date_generated = ?,
+			correspondence_type_cd = ?,
+			certified_mail_recpt_date
+			= ?, additional_info = ?,
+			linked_to_id = ?, direction_cd = ?, district
+			= ?, correspondence_category_cd = ?,
+			regarding = ?, to_person = ?,
+			from_person = ?,
+			reviewer = ?, receipt_date = ?, follow_up_action = ?,
+			follow_up_action_date = ?, follow_up_action_dsc = ?, facility_id = ?, legacy_flag = ?,
+			county_cd = ?,
+			city_cd = ?, linked_to_enf_action = ?,
+			hide_attachments = ?,
+			last_modified = ?
+			WHERE
+			correspondence_id
+			= ?
+			AND
+			last_modified = ?
+		</modifyCorrespondence>
+
+		<retrieveFollowUpCorrespondence>
+			SELECT
+			${CorrespondenceSQL.correspondenceColumns}, ff.fp_id
+			FROM
+			%Schema%dc_correspondence cs
+			LEFT OUTER JOIN %Schema%fp_facility ff
+			ON
+			(cs.facility_id = ff.facility_id)
+			WHERE cs.follow_up_action_date &lt; ?
+		 	AND cs.facility_id = ff.facility_id
+			AND ff.version_id = -1 AND cs.facility_id IS NOT NULL
+			AND cs.reviewer IS NOT NULL
+		</retrieveFollowUpCorrespondence>
+		
+		<createCorrespondenceAttachment>
+			INSERT INTO %Schema%dc_correspondence_attachment
+			(document_id, correspondence_id, attachment_type_cd)
+			VALUES(?,?,?)
+		</createCorrespondenceAttachment>
+		
+		<retrieveCorrespondenceAttachments>
+			SELECT cors.correspondence_id, cors.attachment_type_cd, cors.last_modified AS ref_lm,
+			def.correspondence_attachment_type_dsc, ${DocumentSQL.documentColumns}
+			FROM %Schema%dc_correspondence_attachment cors, %Schema%dc_document dd,
+			%Schema%dc_correspondence_attachment_type_def def WHERE cors.correspondence_id = ?
+			AND cors.document_id = dd.document_id AND
+			cors.attachment_type_cd = def.correspondence_attachment_type_cd
+		</retrieveCorrespondenceAttachments>
+		
+		<updateCorrespondenceAttachment>
+			UPDATE %Schema%dc_correspondence_attachment SET
+			document_id = ? , attachment_type_cd = ? , last_modified = ?
+			WHERE
+			document_id = ?
+			AND last_modified = ?
+		</updateCorrespondenceAttachment>
+		
+		<removeCorrespondenceAttachment>
+			DELETE FROM %Schema%dc_correspondence_attachment
+			WHERE document_id = ?
+		</removeCorrespondenceAttachment>
+		
+		<retrieveCorrespondenceAttachmentCount>
+			SELECT correspondence_id, count(*) AS attachment_count 
+			FROM %Schema%dc_correspondence_attachment 
+			WHERE correspondence_id = ? 
+			GROUP BY correspondence_id 
+		</retrieveCorrespondenceAttachmentCount>
+	</CorrespondenceSQL>
+</root>

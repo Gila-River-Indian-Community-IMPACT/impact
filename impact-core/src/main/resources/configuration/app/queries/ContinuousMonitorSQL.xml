@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <ContinuousMonitorSQL>
+  	<ContinuousMonitorColumns>
+  		cm.monitor_id, cm.mon_id, cm.fp_id, cm.monitor_desc, cm.add_date, cm.addl_info, cm.added_by, 
+  		cm.last_modified as cm_lm, cm.corr_monitor_id
+  	</ContinuousMonitorColumns>
+	<createContinuousMonitor>
+		INSERT INTO %Schema%fp_continuous_monitor (monitor_id, fp_id, monitor_desc, add_date, addl_info, added_by,
+		corr_monitor_id, mon_id)
+		VALUES (?,?,?,?,?,?, ?,?)
+	</createContinuousMonitor>
+	<deleteContinuousMonitor>
+      DELETE FROM %Schema%fp_continuous_monitor  WHERE monitor_id = ?
+    </deleteContinuousMonitor>
+	<modifyContinuousMonitor>
+		UPDATE %Schema%fp_continuous_monitor SET
+		monitor_desc = ?,
+		addl_info = ?,
+		last_modified = ?
+		WHERE monitor_id = ? AND last_modified = ?
+	</modifyContinuousMonitor>
+	<retrieveContinuousMonitor>
+		SELECT ${ContinuousMonitorSQL.ContinuousMonitorColumns},
+			ff.facility_id, ff.facility_nm, ff.version_id, ff.federal_scsc_id as scsc_id, ff.do_laa_cd as district_cd,
+			ccm.cmp_id, ccm.name as company_nm,
+			ca.county_cd, ccd.county_nm,
+			eqp.manufacturer_name, eqp.model_number, eqp.serial_number, eqp.qaqc_accepted_date
+			FROM %Schema%fp_continuous_monitor cm
+			    JOIN %Schema%fp_facility ff ON (cm.fp_id = ff.fp_id)
+  		        JOIN %Schema%fp_facility_address_xref faxr ON (ff.fp_id = faxr.fp_id)
+  		        JOIN %Schema%cm_address ca ON (faxr.address_id = ca.address_id AND ca.end_dt is null)
+  		        INNER JOIN dbo.cm_county_def ccd ON (ca.county_cd = ccd.county_cd)
+  		        LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id = ff.facility_id AND ffcx.end_date IS NULL)
+		        LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+		        LEFT OUTER JOIN %Schema%fp_active_continuous_monitor_eqt eqp on eqp.monitor_id = cm.monitor_id
+			WHERE cm.monitor_id = ?
+	</retrieveContinuousMonitor>
+	<searchContinuousMonitors>
+  		SELECT ${ContinuousMonitorSQL.ContinuousMonitorColumns},
+  		ff.fp_id,
+  		ff.facility_id, ff.facility_nm, ff.version_id, ff.federal_scsc_id as scsc_id, ff.do_laa_cd as district_cd,
+  		ccm.cmp_id, ccm.name as company_nm,
+  		ca.county_cd, ccd.county_nm,
+  		eqp.qaqc_accepted_date, eqp.serial_number, eqp.manufacturer_name, eqp.model_number
+  		FROM %Schema%fp_continuous_monitor cm
+  		JOIN %Schema%fp_facility ff ON (cm.fp_id = ff.fp_id)
+  		JOIN %Schema%fp_facility_address_xref faxr ON (ff.fp_id = faxr.fp_id)
+  		JOIN %Schema%cm_address ca ON (faxr.address_id = ca.address_id AND ca.end_dt is null)
+  		INNER JOIN dbo.cm_county_def ccd ON (ca.county_cd = ccd.county_cd)
+  		LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id = ff.facility_id AND ffcx.end_date IS NULL)
+		LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+		LEFT OUTER JOIN %Schema%fp_active_continuous_monitor_eqt eqp on eqp.monitor_id = cm.monitor_id
+  		WHERE (1=1)
+  	</searchContinuousMonitors>
+  	<createContinuousMonitorAttachment>
+		INSERT INTO %Schema%ce_enforcement_attachment(DOCUMENT_ID, monitor_id, ENF_ATTACHMENT_TYPE_CD) 
+		VALUES (?,?,?)
+	</createContinuousMonitorAttachment>
+	<modifyContinuousMonitorAttachment>
+		UPDATE %Schema%ce_enforcement_attachment
+		SET 
+		ENF_ATTACHMENT_TYPE_CD = ?,
+		LAST_MODIFIED = ?
+		WHERE DOCUMENT_ID = ? AND monitor_id = ? AND last_modified = ?
+	</modifyContinuousMonitorAttachment>
+	<deleteContinuousMonitorAttachment>
+		DELETE FROM %Schema%ce_enforcement_attachment where monitor_id = ?	and document_id = ?
+	</deleteContinuousMonitorAttachment>
+  	<retrieveContinuousMonitorAttachments>
+  		SELECT ea.monitor_id, ea.enf_attachment_type_cd as attachment_type_cd, 
+  			ea.last_modified AS ref_lm, def.enf_attachment_type_dsc, ${DocumentSQL.documentColumns}
+		FROM %Schema%ce_enforcement_attachment ea, %Schema%dc_document dd, 
+			%Schema%ce_enf_attachment_type_def def
+		WHERE ea.monitor_id = ?
+	      AND ea.document_id = dd.document_id
+		  AND ea.enf_attachment_type_cd = def.enf_attachment_type_cd
+  	</retrieveContinuousMonitorAttachments>
+  	
+  	<retrieveContinuousMonitorNotes>
+  		SELECT ${InfrastructureSQL.noteColumns}, mnx.corr_monitor_id
+  		FROM %Schema%fp_continuous_monitor_note_xref mnx, %Schema%cm_note cn
+  		WHERE mnx.corr_monitor_id = ?
+  		AND mnx.note_id = cn.note_id
+  		ORDER BY note_id DESC
+	</retrieveContinuousMonitorNotes>
+		
+	<deleteContinuousMonitorNotes>
+		DELETE FROM %Schema%fp_continuous_monitor_note_xref where corr_monitor_id = ?
+	</deleteContinuousMonitorNotes> 
+	<addContinuousMonitorNote>
+		INSERT INTO %Schema%fp_continuous_monitor_note_xref
+			(note_id, corr_monitor_id) VALUES (?, ?)
+	</addContinuousMonitorNote>
+    
+    <retrieveContinuousMonitorEqtList>
+      SELECT monitor_eqt_id, monitor_id,
+     	manufacturer_name, 
+        model_number, 
+        serial_number, 
+        qaqc_submitted_date,
+        qaqc_accepted_date,
+        install_date,
+        removal_date,
+        addl_info,
+        added_by, 
+        last_modified as cme_lm,
+        created_on
+        FROM %Schema%FP_CONTINUOUS_MONITOR_EQT cme
+        WHERE monitor_id = ?
+        ORDER BY install_date
+    </retrieveContinuousMonitorEqtList>
+    
+    <retrieveContinuousMonitorEqtListNewestFirst>
+      SELECT monitor_eqt_id, monitor_id,
+     	manufacturer_name, 
+        model_number, 
+        serial_number, 
+        qaqc_submitted_date,
+        qaqc_accepted_date,
+        install_date,
+        removal_date,
+        addl_info,
+        added_by, 
+        last_modified as cme_lm,
+        created_on
+        FROM %Schema%FP_CONTINUOUS_MONITOR_EQT cme
+        WHERE monitor_id = ?
+        ORDER BY created_on DESC
+    </retrieveContinuousMonitorEqtListNewestFirst>
+    
+    <retrieveActiveContinuousMonitorEqtList>
+      	SELECT monitor_eqt_id, monitor_id,
+     	manufacturer_name, 
+        model_number, 
+        serial_number, 
+        qaqc_submitted_date,
+        qaqc_accepted_date,
+        install_date,
+        removal_date,
+        addl_info,
+        added_by, 
+        last_modified as cme_lm,
+        created_on
+        FROM %Schema%FP_CONTINUOUS_MONITOR_EQT cme 
+      		WHERE removal_date is null and monitor_id = ?
+    </retrieveActiveContinuousMonitorEqtList>
+
+    <removeContinuousMonitorEqtList>
+      DELETE FROM %Schema%FP_CONTINUOUS_MONITOR_EQT WHERE monitor_id = ?
+    </removeContinuousMonitorEqtList>
+
+    <createContinuousMonitorEqt>
+      INSERT INTO %Schema%FP_CONTINUOUS_MONITOR_EQT 
+        (monitor_eqt_id, 
+        monitor_id, 
+        manufacturer_name, 
+        model_number, 
+        serial_number, 
+        qaqc_submitted_date,
+        qaqc_accepted_date,
+        install_date,
+        removal_date,
+        addl_info,
+        added_by)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createContinuousMonitorEqt>
+
+    <modifyContinuousMonitorEqt>
+      UPDATE %Schema%FP_CONTINUOUS_MONITOR_EQT 
+        SET monitor_eqt_id = ?, 
+        	monitor_id = ?,  
+        	manufacturer_name = ?, 
+        	model_number = ?,
+        	serial_number = ?,
+        	qaqc_submitted_date = ?,
+        	qaqc_accepted_date = ?,
+        	install_date = ?,
+        	removal_date = ?,
+        	addl_info = ?,
+            added_by = ?, 
+            last_modified = ?
+        WHERE monitor_eqt_id = ? AND monitor_id = ? AND last_modified = ?
+    </modifyContinuousMonitorEqt>
+
+    <removeContinuousMonitorEqt>
+      DELETE FROM %Schema%FP_CONTINUOUS_MONITOR_EQT  WHERE monitor_eqt_id = ? AND monitor_id = ?
+    </removeContinuousMonitorEqt>
+    
+    <retrieveContinuousMonitorByFpId>
+    	SELECT ${ContinuousMonitorSQL.ContinuousMonitorColumns},
+    		eqp.qaqc_accepted_date, eqp.serial_number, eqp.manufacturer_name, eqp.model_number 
+    		FROM %Schema%fp_continuous_monitor cm
+    		LEFT OUTER JOIN %Schema%fp_active_continuous_monitor_eqt eqp on eqp.monitor_id = cm.monitor_id
+    		WHERE cm.fp_id = ?
+    </retrieveContinuousMonitorByFpId>
+    
+    <createAssociatedFpEuIdRef>
+    	INSERT into %Schema%fp_continuous_monitor_eu_xref
+    		(monitor_id, emu_id) values (?, ?)
+    </createAssociatedFpEuIdRef>
+    <retrieveAssociatedFpEuIdsByMonitorId>
+    	SELECT emu_id 
+    		from %Schema%fp_continuous_monitor_eu_xref where monitor_id = ?
+    </retrieveAssociatedFpEuIdsByMonitorId>
+    <deleteAssociatedFpEuIdRef>
+    	DELETE from %Schema%fp_continuous_monitor_eu_xref
+    		where monitor_id = ? and emu_id = ?
+    </deleteAssociatedFpEuIdRef>
+    <deleteAssociatedFpEuIdsByMonitorId>
+    		DELETE from %Schema%fp_continuous_monitor_eu_xref
+    		where monitor_id = ?
+    </deleteAssociatedFpEuIdsByMonitorId>
+    
+    <createAssociatedFpEgressPointIdRef>
+    	INSERT into %Schema%fp_continuous_monitor_egress_point_xref
+    		(monitor_id, fpnode_id) values (?, ?)
+    </createAssociatedFpEgressPointIdRef>
+    <retrieveAssociatedFpEgressPointIdsByMonitorId>
+    	SELECT fpnode_id 
+    		from %Schema%fp_continuous_monitor_egress_point_xref where monitor_id = ?
+    </retrieveAssociatedFpEgressPointIdsByMonitorId>
+    <deleteAssociatedFpEgressPointIdRef>
+    	DELETE from %Schema%fp_continuous_monitor_egress_point_xref
+    		where monitor_id = ? and fpnode_id = ?
+    </deleteAssociatedFpEgressPointIdRef>
+    <deleteAssociatedFpEgressPointIdsByMonitorId>
+    		DELETE from %Schema%fp_continuous_monitor_egress_point_xref
+    		where monitor_id = ?
+    </deleteAssociatedFpEgressPointIdsByMonitorId>
+    
+    <retrieveLimitIdsForMonitors>
+		SELECT fcc.monitor_id, lim_id from %Schema%FP_CEM_COM_LIMIT fccl
+			JOIN %Schema%fp_continuous_monitor fcc ON (fccl.MONITOR_ID = fcc.MONITOR_ID)
+			AND fccl.END_DT is null
+    </retrieveLimitIdsForMonitors>
+    
+    <retrieveAssociatedFpEuEpaEmuIdsByMonitorId>
+    	SELECT feu.epa_emu_id
+			from %Schema%fp_emissions_unit feu
+			inner join %Schema%fp_continuous_monitor_eu_xref cmeux on cmeux.emu_id = feu.emu_id
+			where cmeux.monitor_id = ?
+    </retrieveAssociatedFpEuEpaEmuIdsByMonitorId>
+    <retrieveAssociatedFpReleasePointIdsByMonitorId>
+	SELECT fegp.release_point_id
+		from %Schema%fp_egress_point fegp
+		inner join %Schema%fp_continuous_monitor_egress_point_xref cmegpx on cmegpx.fpnode_id = fegp.fpnode_id
+		where cmegpx.monitor_id = ?
+    </retrieveAssociatedFpReleasePointIdsByMonitorId>
+    
+    <createContinuousMonitorEqtWithCreatedDt>
+      INSERT INTO %Schema%FP_CONTINUOUS_MONITOR_EQT 
+        (monitor_eqt_id, 
+        monitor_id, 
+        manufacturer_name, 
+        model_number, 
+        serial_number, 
+        qaqc_submitted_date,
+        qaqc_accepted_date,
+        install_date,
+        removal_date,
+        addl_info,
+        added_by,
+        created_on)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createContinuousMonitorEqtWithCreatedDt>
+    
+    <retrieveNextMonId>
+    	SELECT ISNULL(MAX(RIGHT(mon_id,3)), 0) + 1
+			FROM %Schema%fp_continuous_monitor
+			WHERE fp_id = ?
+    </retrieveNextMonId>
+    
+    <retrieveContinuousMonitorByFpIdAndCorrId>
+  		Select ${ContinuousMonitorSQL.ContinuousMonitorColumns},
+  			eqp.manufacturer_name, eqp.model_number, eqp.serial_number, eqp.qaqc_accepted_date   
+  			from %Schema%fp_continuous_monitor cm
+  			LEFT OUTER JOIN %Schema%fp_active_continuous_monitor_eqt eqp on eqp.monitor_id = cm.monitor_id
+  			where cm.fp_id = ? and cm.corr_monitor_id = ?
+  	</retrieveContinuousMonitorByFpIdAndCorrId>
+  	
+  	<facilitiesWithMatchingContinuousMonitorEqt>
+  		select e.monitor_eqt_id, f.FACILITY_ID from %Schema%fp_continuous_monitor_eqt e
+			inner join %Schema%fp_continuous_monitor m on m.MONITOR_ID = e.MONITOR_ID 
+			inner join %Schema%fp_facility f on f.FP_ID = m.FP_ID 
+			where f.VERSION_ID = -1 
+				and e.REMOVAL_DATE is null
+				and e.MANUFACTURER_NAME = ?
+				and e.MODEL_NUMBER = ?
+				and e.SERIAL_NUMBER = ?
+  	</facilitiesWithMatchingContinuousMonitorEqt>
+  	
+  	<retrieveCorrelatedMonitorIds>
+  		Select monitor_id from 
+  			%Schema%fp_continuous_monitor
+  				where corr_monitor_id = ? 
+  					and monitor_id != ?
+  	</retrieveCorrelatedMonitorIds>
+    
+  </ContinuousMonitorSQL>
+</root>

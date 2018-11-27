@@ -1,0 +1,21 @@
+<Query>
+	<Where>
+	<And>
+		<And>
+			<Contains> 
+				<FieldRef Name="Editor" /> 
+				<Value Type="Text">Mike Colbert</Value>
+			</Contains>
+			<Contains> 
+				<FieldRef Name="FileRef" /> 
+				<Value Type="Text">Capture.PNG</Value>
+			</Contains>		
+		</And>
+		<Eq> 
+			<FieldRef Name="Created_x0020_Date" /> 
+			<Value Type="DateTime">2014-02-18T16:17:28Z</Value>
+		</Eq>				
+	</And>		
+	
+	</Where>
+</Query>

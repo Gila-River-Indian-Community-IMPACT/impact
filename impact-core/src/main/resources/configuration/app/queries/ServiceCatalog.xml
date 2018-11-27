@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <ServiceCatalogSQL>
+  <emissionsReportColumns>ser.sc_emissions_report_id, ser.process_template_id, 
+  ser.emissions_report_nm, ser.report_group_type_cd, 
+  ser.fee_type, ser.reporting_yr, ser.report_effective_dt, ser.reference_yr,
+  ser.report_freq_yrs, ser.pollutant_cap, ser.minimum_ei_charge, ser.content_type_cd,
+  ser.regulatory_requirement_cd, ser.shape_id, ser.treat_partial_as_full_period_Flag,
+  ser.last_modified
+  </emissionsReportColumns>
+  <feeColumns>sf.fee_id, sf.fee_nm, sf.amount, sf.low_range, sf.high_range, 
+  sf.fee_effective_dt, sf.fee_end_dt, sf.last_modified AS fee_lm
+  </feeColumns>
+  <nonChargeHAPColumns>
+  	srnhx.sc_emissions_report_id AS nc_pollutant_emissions_report_id, 
+  	srnhx.pollutant_cd AS nc_pollutant_pollutant_cd, 
+  	srnhx.fugitive_only AS nc_fugitive_only
+  </nonChargeHAPColumns>
+  <DataImportPollutantColumns>
+  	scdipx.sc_emissions_report_id
+  	, scdipx.pollutant_cd
+  	, scdipx.sort_order
+  	, scdipx.last_modified
+  </DataImportPollutantColumns>
+  <retrieveEmissionsReports>
+  SELECT ${ServiceCatalogSQL.emissionsReportColumns}
+  FROM %Schema%sc_emissions_report ser
+  ORDER BY ser.REPORTING_YR DESC, ser.CONTENT_TYPE_CD ASC, ser.REGULATORY_REQUIREMENT_CD ASC
+  </retrieveEmissionsReports>
+  <retreivePollutants>SELECT srpx.sc_emissions_report_id, srpx.pollutant_cd, 
+  srpx.chargable, srpx.display_order, cpd.deprecated, srpx.threshold_qa, cpd.pollutant_dsc, 
+  srpx.billed_on_permitted 
+  FROM %Schema%sc_report_pollutant_xref srpx 
+  INNER JOIN %Schema%cm_pollutant_def cpd
+  ON (srpx.pollutant_cd = cpd.pollutant_cd)
+  WHERE srpx.sc_emissions_report_id = ?
+  </retreivePollutants>
+  
+  <retrieveNonChargePollutants>
+  <!--  Note: srnhx.scc_id != '00000000' is a dummy value inserted into cm_scc to allow for 
+          non-null scc_ids in the xref to meet the pk constraint where the xref scc_id would 
+          usually be null because no scc applies to the pollutant (AZ requirement that sometimes
+          a pollutant is not charged only for some particular SCC). -->
+    SELECT ${ServiceCatalogSQL.nonChargeHAPColumns}, scc.scc_id AS nc_scc_id, 
+  		cpd.deprecated AS nc_pollutant_deprecated, cpd.pollutant_dsc AS nc_pollutant_pollutant_dsc,
+  		${InfrastructureSQL.sccCodeColumns}
+	  FROM %Schema%sc_report_nc_pollutant_xref srnhx 
+		  INNER JOIN %Schema%cm_pollutant_def cpd
+			  ON (srnhx.pollutant_cd = cpd.pollutant_cd)
+		  LEFT OUTER JOIN %Schema%cm_scc scc
+		      ON (srnhx.scc_id = scc.scc_id AND srnhx.scc_id != '00000000')
+	  WHERE srnhx.sc_emissions_report_id = ?
+  </retrieveNonChargePollutants>
+  
+  <retrieveEmissionsReport>
+  SELECT ${ServiceCatalogSQL.emissionsReportColumns}, srpx.pollutant_cd, 
+  srpx.display_order, srpx.chargable, cpd.deprecated, srpx.threshold_qa, cpd.pollutant_dsc, 
+  srpx.billed_on_permitted  
+  FROM %Schema%sc_emissions_report ser 
+  LEFT OUTER JOIN %Schema%sc_report_pollutant_xref srpx 
+  ON (ser.sc_emissions_report_id = srpx.sc_emissions_report_id)
+  LEFT OUTER JOIN %Schema%cm_pollutant_def cpd
+  ON (srpx.pollutant_cd = cpd.pollutant_cd)
+  WHERE ser.sc_emissions_report_id = ?
+  </retrieveEmissionsReport>
+  <retrieveReportPollutants>SELECT DISTINCT(cpd.pollutant_cd) AS code, 
+  cpd.pollutant_dsc AS description, cpd.deprecated, cpd.sort_category, cpd.last_modified
+  FROM %Schema%rp_report_pollutant_totals rrpt
+  INNER JOIN %Schema%cm_pollutant_def cpd ON (rrpt.pollutant_cd = cpd.pollutant_cd)
+  ORDER BY cpd.sort_category, description
+  </retrieveReportPollutants>
+  <retrieveReportFees>SELECT ser.sc_emissions_report_id, ${ServiceCatalogSQL.feeColumns}
+  FROM %Schema%sc_emissions_report ser 
+  INNER JOIN (%Schema%sc_report_fee_xref srfx 
+  INNER JOIN %Schema%sc_fee sf ON (srfx.fee_id = sf.fee_id))
+  ON (ser.sc_emissions_report_id = srfx.sc_emissions_report_id)  
+  WHERE ser.sc_emissions_report_id = ?
+  </retrieveReportFees>
+  <retrieveReportExemptions>SELECT exemption_cd s
+  FROM %Schema%sc_report_exemption_xref   
+  WHERE sc_emissions_report_id = ?
+  </retrieveReportExemptions>
+  <retrieveReportTvClassifications>SELECT tv_classification_cd s
+  FROM %Schema%sc_report_tv_classif_xref   
+  WHERE sc_emissions_report_id = ?
+  </retrieveReportTvClassifications>
+  <createEmissionsReport>
+  INSERT INTO %Schema%sc_emissions_report (sc_emissions_report_id, process_template_id, 
+  emissions_rpt_cd, emissions_report_nm, report_group_type_cd, fee_type, 
+  reporting_yr, report_effective_dt, reference_yr, report_freq_yrs, pollutant_cap, minimum_ei_charge,
+  content_type_cd, regulatory_requirement_cd, shape_id, treat_partial_as_full_period_Flag)
+  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+  </createEmissionsReport>
+  <createFee>
+  INSERT INTO %Schema%sc_fee (fee_id, fee_nm, amount, fee_effective_dt, fee_end_dt, 
+  low_range, high_range)
+  VALUES (?,?,?,?,?,?,?)
+  </createFee>
+  <modifyEmissionsReport>
+  UPDATE %Schema%sc_emissions_report SET process_template_id = ?, 
+  emissions_report_nm = ?, reporting_yr = ?, report_effective_dt = ?, 
+  reference_yr = ?, report_freq_yrs = ?, pollutant_cap = ?, minimum_ei_charge = ?, 
+  content_type_cd = ?, regulatory_requirement_cd = ?, shape_id = ?, 
+  treat_partial_as_full_period_Flag = ?, last_modified = ?
+  WHERE sc_emissions_report_id = ?
+  AND last_modified = ?
+  </modifyEmissionsReport>
+  <modifyFee>
+  UPDATE %Schema%sc_fee SET fee_nm = ?, amount = ?, fee_effective_dt = ?, fee_end_dt = ?, 
+  low_range = ?, high_range = ?, last_modified = ?
+  WHERE fee_id = ?
+  AND last_modified = ?
+  </modifyFee>
+  <addPollutantToEmissionsReport>
+  INSERT INTO %Schema%sc_report_pollutant_xref (sc_emissions_report_id, pollutant_cd,
+  display_order, threshold_qa, chargable, billed_on_permitted)
+  VALUES (?,?,?,?,?,?)
+  </addPollutantToEmissionsReport>
+  <addNonChargePollutantToEmissionsReport>
+  INSERT INTO %Schema%sc_report_nc_pollutant_xref (sc_emissions_report_id, pollutant_cd, scc_id, fugitive_only)
+  VALUES (?,?,?,?)
+  </addNonChargePollutantToEmissionsReport>
+  <addExemptionToEmissionsReport>
+  INSERT INTO %Schema%sc_report_exemption_xref (sc_emissions_report_id, exemption_cd)
+  VALUES (?,?)
+  </addExemptionToEmissionsReport>
+  <addTvClassificationToEmissionsReport>
+  INSERT INTO %Schema%sc_report_tv_classif_xref (sc_emissions_report_id, tv_classification_cd)
+  VALUES (?,?)
+  </addTvClassificationToEmissionsReport>
+  <addFeeToEmissionsReport>
+  INSERT INTO %Schema%sc_report_fee_xref (sc_emissions_report_id, fee_id)
+  VALUES (?,?)
+  </addFeeToEmissionsReport>
+  <removeEmissionsReport>
+  DELETE FROM %Schema%sc_emissions_report WHERE sc_emissions_report_id = ?
+  </removeEmissionsReport>
+  <removeEmissionsReportPollutants>
+  DELETE FROM %Schema%sc_report_pollutant_xref WHERE sc_emissions_report_id = ?
+  </removeEmissionsReportPollutants>
+  <removeEmissionsReportNonChargeNonChargePollutants>
+  DELETE FROM %Schema%sc_report_nc_pollutant_xref WHERE sc_emissions_report_id = ?
+  </removeEmissionsReportNonChargeNonChargePollutants>
+  <removeEmissionsReportExemptions>
+  DELETE FROM %Schema%sc_report_exemption_xref WHERE sc_emissions_report_id = ?
+  </removeEmissionsReportExemptions>
+  <removeEmissionsReportTvClassifications>
+  DELETE FROM %Schema%sc_report_tv_classif_xref WHERE sc_emissions_report_id = ?
+  </removeEmissionsReportTvClassifications>
+  <removeFee>
+  DELETE FROM %Schema%sc_fee WHERE fee_id = ?
+  </removeFee>
+  <removeEmissionsReportFees>
+  DELETE FROM %Schema%sc_report_fee_xref WHERE sc_emissions_report_id = ?
+  </removeEmissionsReportFees>
+  <createEUCategory>INSERT INTO %Schema%sc_eu_category (eu_category_id, eu_category_dsc)
+  VALUES (?,?)
+  </createEUCategory>
+  <modifyEUCategory>UPDATE %Schema%sc_eu_category SET eu_category_dsc = ?, last_modified = ?
+  WHERE eu_category_id = ?
+  AND last_modified = ?
+  </modifyEUCategory>
+  <retrieveEUCategory>SELECT sec.eu_category_id, sec.eu_category_dsc,
+  sec.last_modified AS euCategory_lm, ${ServiceCatalogSQL.feeColumns}
+  FROM %Schema%sc_eu_category sec 
+  LEFT OUTER JOIN %Schema%sc_category_fee_xref scfx ON (sec.eu_category_id = scfx.eu_category_id) 
+  LEFT OUTER JOIN %Schema%sc_fee sf ON (scfx.fee_id = sf.fee_id)
+  WHERE sec.eu_category_id = ?
+  </retrieveEUCategory>
+  <retrieveEUCategories>SELECT sec.eu_category_id, sec.eu_category_dsc,
+  sec.last_modified AS euCategory_lm
+  FROM %Schema%sc_eu_category sec
+  </retrieveEUCategories>
+  <removeCategoryFees>DELETE FROM %Schema%sc_category_fee_xref
+  WHERE eu_category_id = ?
+  </removeCategoryFees>
+  <addFeeToCategory>INSERT INTO %Schema%sc_category_fee_xref (eu_category_id, fee_id)
+  VALUES (?,?)
+  </addFeeToCategory>
+  <retrieveFee>SELECT ${ServiceCatalogSQL.feeColumns}
+  FROM %Schema%sc_fee sf
+  WHERE sf.fee_id = ?
+  </retrieveFee>
+  <retrieveCategoryByFeeId>SELECT sec.eu_category_id, sec.eu_category_dsc,
+  sec.last_modified AS euCategory_lm
+  FROM %Schema%sc_eu_category sec, %Schema%sc_category_fee_xref scfx
+  WHERE scfx.fee_id = ?
+  AND scfx.eu_category_id = sec.eu_category_id 
+  </retrieveCategoryByFeeId>
+  
+	<retrievePermitClassCds>
+	SELECT permit_classification_cd
+	FROM
+	%Schema%SC_REPORT_PERMIT_CLASS_XREF
+	WHERE sc_emissions_report_id = ?
+	</retrievePermitClassCds>
+
+	<createPermitClassXrefs>
+		INSERT INTO %Schema%SC_REPORT_PERMIT_CLASS_XREF
+		(sc_emissions_report_id, permit_classification_cd) VALUES (?, ?)
+	</createPermitClassXrefs>
+
+	<deletePermitClassXrefs>
+		DELETE FROM %Schema%SC_REPORT_PERMIT_CLASS_XREF
+		WHERE sc_emissions_report_id = ?
+	</deletePermitClassXrefs>
+	
+	<retrieveFacilityTypeCds>
+	SELECT facility_type_cd
+	FROM
+	%Schema%SC_REPORT_FACILITY_TYPE_XREF
+	WHERE sc_emissions_report_id = ?
+	</retrieveFacilityTypeCds>
+
+	<createFacilityTypeXrefs>
+		INSERT INTO %Schema%SC_REPORT_FACILITY_TYPE_XREF
+		(sc_emissions_report_id, facility_type_cd) VALUES (?, ?)
+	</createFacilityTypeXrefs>
+
+	<deleteFacilityTypeXrefs>
+		DELETE FROM %Schema%SC_REPORT_FACILITY_TYPE_XREF
+		WHERE sc_emissions_report_id = ?
+	</deleteFacilityTypeXrefs>
+	
+	<okToSaveServiceCatalogTemplate>
+		SELECT [SC_EMISSIONS_REPORT_ID]
+		  FROM dbo.[SC_EMISSIONS_REPORT]
+		WHERE 
+		REPORTING_YR = ? AND 
+		CONTENT_TYPE_CD = ? AND 
+		REGULATORY_REQUIREMENT_CD = ?
+	</okToSaveServiceCatalogTemplate>
+	
+	<retrieveSCEmissionsReportId>
+	SELECT SC_EMISSIONS_REPORT_ID FROM dbo.SC_EMISSIONS_REPORT 
+	WHERE REPORTING_YR = ? and CONTENT_TYPE_CD = ? and REGULATORY_REQUIREMENT_CD = ?
+	</retrieveSCEmissionsReportId>
+	
+	<retrieveHighestPriorityRptReportId>
+	SELECT TOP 1 ser.SC_emissions_report_id FROM dbo.[FP_YEARLY_REPORTING_CATEGORY] fyr
+		JOIN dbo.[SC_EMISSIONS_REPORT] ser ON ser.SC_EMISSIONS_REPORT_ID = fyr.SC_EMISSIONS_REPORT_ID
+		JOIN dbo.[RP_REGULATORY_REQUIREMENT_TYPE_DEF] rrrt ON rrrt.REGULATORY_REQUIREMENT_CODE = ser.REGULATORY_REQUIREMENT_CD
+		WHERE FACILITY_ID = ? AND year = ? AND CONTENT_TYPE_CD = ?
+		ORDER BY PRIORITY
+	</retrieveHighestPriorityRptReportId>
+	
+ 	<addDataImportPollutantToEmissionsReport>
+  		INSERT INTO %Schema%SC_REPORT_DATA_IMPORT_POLLUTANT_XREF (sc_emissions_report_id, pollutant_cd, sort_order)
+ 		VALUES (?,?,?)
+ 	</addDataImportPollutantToEmissionsReport>
+
+	<retrieveDataImportPollutants>
+		SELECT ${ServiceCatalogSQL.DataImportPollutantColumns}
+			, cpd.pollutant_dsc, cpd.deprecated
+		FROM %Schema%SC_REPORT_DATA_IMPORT_POLLUTANT_XREF scdipx 
+		INNER JOIN %Schema%cm_pollutant_def cpd
+  			ON (scdipx.pollutant_cd = cpd.pollutant_cd)
+		WHERE scdipx.sc_emissions_report_id = ?
+	</retrieveDataImportPollutants>
+
+	<removeEmissionsReportDataImportPollutants>
+		DELETE FROM %Schema%SC_REPORT_DATA_IMPORT_POLLUTANT_XREF WHERE sc_emissions_report_id = ?
+	</removeEmissionsReportDataImportPollutants>
+		
+  </ServiceCatalogSQL>
+</root>

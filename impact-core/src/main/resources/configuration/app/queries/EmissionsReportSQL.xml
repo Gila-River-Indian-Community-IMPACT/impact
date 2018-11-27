@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<EmissionsReportSQL>
+		<emissionPeriodColumns>
+			rep.emission_period_id, rep.scc_id, rep.sched_ts,
+			sched_ts_just, rep.winter_throughput_pct,
+			rep.spring_throughput_pct, rep.summer_throughput_pct,
+			rep.fall_throughput_pct, rep.days_per_week,
+			rep.weeks_per_year, rep.hours_per_day, rep.hours_per_year,
+			rep.first_half_hours_of_operation_pct, rep.second_half_hours_of_operation_pct, 
+			rep.last_modified AS emissionPeriod_lm
+		</emissionPeriodColumns>
+		<reportEUGroupColumns>
+			rreg.report_eu_group_id, rreg.report_eu_group_nm,
+			rreg.last_modified AS rreg_lm
+		</reportEUGroupColumns>
+		<emissionsColumns>
+			re.emission_period_id, re.pollutant_cd, re.fire_id,
+			re.emission_calc_method_cd, re.fugitive_emissions, 
+			re.stack_emissions, re.emission_unit_numerator,
+			re.time_based_factor_numeric_value,
+			re.factor_numeric_value_override, re.factor_numeric_value, re.factor_unit_numerator,
+			re.factor_unit_denominator, re.explanation,
+			re.annual_adjustment, re.last_modified AS emissions_lm
+		</emissionsColumns>
+		<emissionEUColumns>
+			rre.corr_id, rre.emissions_rpt_id, rre.exempt_by_eg71,
+			rre.zero_emissions, rre.force_detailed_reporting, rre.last_modified AS rre_lm
+		</emissionEUColumns>
+		<emissionReportColumns>
+			rer.emissions_rpt_id, rer.report_modified,
+			rer.companion_report, rer.fp_id,
+			rer.rpt_received_status_cd, rer.rpt_received_status_dt,
+			rer.report_approved_status_dt, rer.total_emissions,
+			rer.report_year, rer.fee_id, rer.fee_id2, rer.eis_status_cd,
+			rer.transfer_date, rer.legacy_flag, rer.auto_generated,
+			rer.shutdown_date, rer.new_owner, rer.provide_both_years,
+			rer.prev_owner_forwarding_addr, rer.new_owner_addr,
+			rer.billing_addr, rer.primary_addr, rer.facility_nm,
+			rer.received_date, rer.revision_reason, rer.ei_id,
+			rer.invoice_amount, rer.invoice_date, rer.payment_received_date, 
+			rer.total_reported_emissions, rer.validated_flag, rer.submitted_by_user,
+			rer.submitted_by_contact
+		</emissionReportColumns>
+		<FireRowColumns>
+			rff.fire_id, rff.fire_id, rff.scc_id, rff.pollutant_cd,
+			rff.factor, rff.formula, rff.emissions_unit_cd,
+			rff.material_unit_cd, rff.material_cd, rff.action_cd,
+			rff.notes, rff.quality, rff.origin, rff.cas,
+			rff.fire_pollutant, rff.fire_pollutant_id, rff.orig_factor,
+			rff.orig_formula, rff.orig_emissions_unit_cd,
+			rff.orig_material_unit, rff.orig_material,
+			rff.orig_action_cd, rff.ap42_section, rff.ref_desc,
+			rff.orig_notes, rff.orig_quality, rff.created,
+			rff.deprecated_year, rff.last_modified
+		</FireRowColumns>
+		<DefaultStackParmsColumns>
+			rdsp.scc_id, rdsp.avg_stack_height, rdsp.avg_stack_diameter,
+			rdsp.avg_exit_gas_temp, rdsp.avg_exit_gas_vel,
+			rdsp.calc_flow_rate, rdsp.fugitive
+		</DefaultStackParmsColumns>
+		<materialActionsColumns>
+			rma.emission_period_id, rma.material_cd, rma.action_cd,
+			rma.material_unit_cd, rma.throughput, rma.throughput_ts, rma.throughput_ts_just, rma.last_modified
+		</materialActionsColumns>
+		<variableColumns>
+			rpv.emission_period_id, rpv.variable, rpv.value,
+			rpv.last_modified
+		</variableColumns>
+		<EmissionsRptInfoColumns>
+			facility_id, year, rpt_received_status_cd, sc_emissions_report_id as sc_id,
+			reporting_enabled, comments, sc_emissions_report_id as sc_id, last_modified
+		</EmissionsRptInfoColumns>
+		<EmissionsDocumentColumns>
+			emissions_doc_id, document_id, emissions_rpt_id,
+			trade_secret_doc_id, attachment_type_cd,
+			trade_secret_reason, description
+		</EmissionsDocumentColumns>
+		<scFeeColumns>
+		    Fee_ID, FEE_NM, AMOUNT, LOW_RANGE, HIGH_RANGE, FEE_EFFECTIVE_DT, FEE_END_DT, LAST_MODIFIED
+		</scFeeColumns>
+		<retrieveUnitDefs>
+			SELECT unit_cd AS code, unit_dsc AS description, deprecated,
+			us_epa_unit_cd, last_modified FROM %Schema%rp_unit_def ORDER
+			BY unit_dsc
+		</retrieveUnitDefs>
+		<createEmissionPeriod>
+			INSERT INTO %Schema%rp_emission_period (emission_period_id,
+			scc_id, sched_ts, sched_ts_just, winter_throughput_pct,
+			spring_throughput_pct, summer_throughput_pct,
+			fall_throughput_pct, days_per_week, weeks_per_year,
+			hours_per_day, hours_per_year,
+			first_half_hours_of_operation_pct, second_half_hours_of_operation_pct)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createEmissionPeriod>
+		<createEmissions>
+			INSERT INTO %Schema%rp_emissions (emission_period_id,
+			pollutant_cd, fire_id, emission_calc_method_cd,
+			fugitive_emissions, stack_emissions,
+			emission_unit_numerator, time_based_factor_numeric_value, 
+			factor_numeric_value_override,
+			factor_numeric_value,
+			factor_unit_numerator, factor_unit_denominator,
+			annual_adjustment, explanation)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createEmissions>
+		<createEmissionTotal>
+			INSERT INTO %Schema%rp_report_pollutant_totals
+			(emissions_rpt_id, pollutant_cd, total_emissions)
+			VALUES(?,?,?)
+		</createEmissionTotal>
+		<createEmissionsReport>
+			INSERT INTO %Schema%rp_emissions_rpt (emissions_rpt_id,
+			report_modified, fp_id,
+			rpt_received_status_cd, rpt_received_status_dt, legacy_flag,
+			auto_generated, report_approved_status_dt, total_emissions,
+			report_year, fee_id, fee_id2, eis_status_cd, transfer_date,
+			shutdown_date, new_owner, provide_both_years,
+			prev_owner_forwarding_addr, new_owner_addr, billing_addr,
+			primary_addr, facility_nm, companion_report, received_date,
+			revision_reason, total_reported_emissions, validated_flag,
+			submitted_by_user,submitted_by_contact)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createEmissionsReport>
+		<createReportEUGroup>
+			INSERT INTO %Schema%rp_report_eu_groups (report_eu_group_id,
+			report_eu_group_nm) VALUES (?,?)
+		</createReportEUGroup>
+		<addReportType>
+			INSERT INTO %Schema%rp_report_report_type_xref
+			(emissions_rpt_id, report_group_type_cd) VALUES (?,?)
+		</addReportType>
+		<addReportNote>
+			INSERT INTO %Schema%rp_emissions_rpt_note_xref
+			(emissions_rpt_id, note_id) VALUES (?,?)
+		</addReportNote>
+		<removeNote>
+      	   DELETE FROM %Schema%RP_EMISSIONS_RPT_NOTE_XREF WHERE EMISSIONS_RPT_ID = ? AND NOTE_ID = ?
+    	</removeNote>
+		<addReportPeriod>
+			INSERT INTO %Schema%rp_report_period_xref
+			(emission_period_id, corr_id, report_eu_group_id,
+			emissions_rpt_id) VALUES (?,?,?,?)
+		</addReportPeriod>
+		<addReportEUGroup>
+			INSERT INTO %Schema%rp_report_eu_group_xref
+			(report_eu_group_id, corr_id, emissions_rpt_id) VALUES
+			(?,?,?)
+		</addReportEUGroup>
+		<addEUGroupToReport>
+			INSERT INTO %Schema%rp_report_eu_groups_xref
+			(emissions_rpt_id, report_eu_group_id) VALUES (?,?)
+		</addEUGroupToReport>
+		<createReportEU>
+			INSERT INTO %Schema%rp_report_eu (corr_id, exempt_by_eg71,
+			zero_emissions, force_detailed_reporting, emissions_rpt_id) VALUES(?,?,?,?,?)
+		</createReportEU>
+		<createEmissionsDocument>
+			INSERT INTO %Schema%rp_emissions_document
+			(${EmissionsReportSQL.EmissionsDocumentColumns})
+			VALUES(?,?,?,?,?,?,?)
+		</createEmissionsDocument>
+		<modifyEmissionsDocument>
+			UPDATE %Schema%rp_emissions_document SET attachment_type_cd
+			= ?, document_id = ?, description = ?, trade_secret_doc_id =
+			?, trade_secret_reason = ?, last_modified = ? WHERE
+			emissions_doc_id = ? AND last_modified = ?
+		</modifyEmissionsDocument>
+		<modifyEmissionPeriod>
+			UPDATE %Schema%rp_emission_period SET sched_ts = ?,
+			sched_ts_just = ?, winter_throughput_pct = ?,
+			spring_throughput_pct = ?, summer_throughput_pct = ?,
+			fall_throughput_pct = ?, days_per_week = ?, weeks_per_year =
+			?, hours_per_day = ?, hours_per_year = ?,
+			first_half_hours_of_operation_pct = ?, second_half_hours_of_operation_pct = ? , last_modified = ?
+			WHERE emission_period_id = ? AND last_modified = ?
+		</modifyEmissionPeriod>
+		<modifyEmissions>
+			UPDATE %Schema%rp_emissions SET ef_reliability_cd = ?,
+			secondary_device_cd = ?, primary_device_cd = ?,
+			emission_calc_method_cd = ?, emissions_type_cd = ?,
+			start_date = ?, end_date = ?, fugitive_emissions = ?,
+			stack_emissions = ?, emission_unit_numerator = ?,
+			em_reliability_ind = ?, time_based_factor_numeric_value = ?,
+			factor_numeric_value_override = ?, factor_numeric_value = ?,
+			factor_unit_numerator = ?, factor_unit_denominator = ?,
+			rule_effectiveness = ?, control_status = ?,
+			emissions_data_level = ?, last_modified = ? WHERE
+			emission_period_id = ? AND pollutant_cd = ? AND
+			last_modified = ?
+		</modifyEmissions>
+		<deleteEmissionsReport>
+			DELETE FROM %Schema%rp_emissions_rpt WHERE emissions_rpt_id
+			= ? AND last_modified = ?
+		</deleteEmissionsReport>
+		<modifyEmissionsReport>
+			UPDATE %Schema%rp_emissions_rpt SET rpt_received_status_dt =
+			?, legacy_flag = ?, auto_generated = ?,
+			report_approved_status_dt = ?, 
+			rpt_received_status_cd = ?, total_emissions = ?, fee_id = ?, fee_id2 = ?,
+			eis_status_cd = ?, fp_id = ?, transfer_date = ?,
+			shutdown_date = ?, new_owner = ?, provide_both_years = ?,
+			prev_owner_forwarding_addr = ?, new_owner_addr = ?,
+			billing_addr = ?, primary_addr = ?, facility_nm = ?,
+			companion_report = ?, last_modified = ?, received_date = ?,
+			invoice_amount = ? , invoice_date = ?, payment_received_date = ?,
+			revision_reason = ?, total_reported_emissions = ?, validated_flag = ?,
+			submitted_by_user = ?, submitted_by_contact = ?
+			
+			WHERE 
+			emissions_rpt_id = ? AND last_modified = ?
+		</modifyEmissionsReport>
+		<modifyEmissionsReport2>
+			UPDATE %Schema%rp_emissions_rpt SET rpt_received_status_dt =
+			?, legacy_flag = ?, auto_generated = ?,
+			report_approved_status_dt = ?, 
+			rpt_received_status_cd = ?, total_emissions = ?, fee_id = ?, fee_id2 = ?,
+			eis_status_cd = ?, fp_id = ?, transfer_date = ?,
+			shutdown_date = ?, new_owner = ?, provide_both_years = ?,
+			prev_owner_forwarding_addr = ?, new_owner_addr = ?,
+			billing_addr = ?, primary_addr = ?, facility_nm = ?,
+			companion_report = ?, last_modified = ?, received_date = ?,
+			invoice_amount = ? , invoice_date = ?, payment_received_date = ?,
+			revision_reason = ?, emissions_rpt_id = ?, total_reported_emissions = ?, validated_flag = ?,
+			submitted_by_user = ?, submitted_by_contact = ?
+			
+			WHERE
+			emissions_rpt_id = ? AND last_modified = ?
+		</modifyEmissionsReport2>
+		
+		<retrieveEmissionsPeriods>
+		SELECT EMISSION_PERIOD_ID FROM 
+		RP_REPORT_PERIOD_XREF WHERE EMISSIONS_RPT_ID=?
+		</retrieveEmissionsPeriods>
+		
+		<retrieveEmissionPeriod>
+			SELECT ${EmissionsReportSQL.emissionPeriodColumns},
+			${EmissionsReportSQL.emissionsColumns}, fire.factor FROM
+			%Schema%rp_emission_period rep 
+			LEFT OUTER JOIN %Schema%rp_emissions re 
+			ON (rep.emission_period_id = re.emission_period_id) 
+			left outer join dbo.RP_FIRE_FACTOR fire on fire.FIRE_ID = re.FIRE_ID
+			WHERE rep.emission_period_id = ?
+		</retrieveEmissionPeriod>
+		<retrieveEmissionPeriods>
+			SELECT rrpx.emission_period_id, rrpx.corr_id,
+			rrpx.emissions_rpt_id,
+			${EmissionsReportSQL.emissionPeriodColumns} FROM
+			%Schema%rp_emission_period rep,
+			%Schema%rp_report_period_xref rrpx WHERE
+			rrpx.emissions_rpt_id = ? AND rrpx.emission_period_id =
+			rep.emission_period_id
+		</retrieveEmissionPeriods>
+		<retrieveFeeInfo>
+			SELECT ${EmissionsReportSQL.scFeeColumns} FROM %Schema%SC_FEE WHERE FEE_ID=?
+		</retrieveFeeInfo>
+		<retrieveSuperCd>
+			SELECT SUP_CD FROM %Schema%rp_part_of WHERE SUB_CD=? and DEPRECATED='N'
+		</retrieveSuperCd>
+		<retrieveGroupEmissions>
+			SELECT ${EmissionsReportSQL.emissionsColumns},
+			fire.factor
+			 FROM
+			%Schema%rp_emissions re 
+			left outer join dbo.RP_FIRE_FACTOR fire on fire.FIRE_ID = em.FIRE_ID
+			WHERE re.emission_period_id = ?
+		</retrieveGroupEmissions>
+		<retrieveMaterialActionUnits>
+			SELECT ${EmissionsReportSQL.materialActionsColumns} FROM
+			%Schema%rp_material_actions rma WHERE rma.emission_period_id
+			= ? ORDER by rma.material_cd
+		</retrieveMaterialActionUnits>
+		<createMaterialActionUnits>
+			INSERT INTO %Schema%rp_material_actions (emission_period_id,
+			material_cd, action_cd, material_unit_cd, throughput, throughput_ts, throughput_ts_just)
+			VALUES(?,?,?,?,?,?,?)
+		</createMaterialActionUnits>
+		<createVariable>
+			INSERT INTO %Schema%rp_period_variables (emission_period_id,
+			variable, value) VALUES(?,?,?)
+		</createVariable>
+		<retrieveVariables>
+			SELECT ${EmissionsReportSQL.variableColumns} FROM
+			%Schema%rp_period_variables rpv WHERE rpv.emission_period_id
+			= ? ORDER by rpv.variable
+		</retrieveVariables>
+		<modifyMaterialActionUnits>
+			UPDATE %Schema%rp_material_actions SET action_cd = ?,
+			material_unit_cd = ?, throughput = ?,  throughput_ts = ?,throughput_ts_just = ?, last_modified = ?
+			WHERE emission_period_id = ? AND material_cd = ? AND
+			last_modified = ?
+		</modifyMaterialActionUnits>
+		<periodEmissionsExists>
+			SELECT emission_period_id FROM %Schema%rp_emissions re WHERE
+			emission_period_id = ? AND pollutant_cd = ?
+		</periodEmissionsExists>
+		<periodMaterialExists>
+			SELECT emission_period_id FROM %Schema%rp_material_actions
+			rme WHERE emission_period_id = ? AND material_cd = ?
+		</periodMaterialExists>
+		<retrieveEmissionsReport>
+			SELECT ${EmissionsReportSQL.emissionReportColumns},
+			rer.last_modified AS rer_lm, rrrtx.report_group_type_cd FROM
+			%Schema%rp_emissions_rpt rer LEFT OUTER JOIN
+			%Schema%rp_report_report_type_xref rrrtx ON
+			(rer.emissions_rpt_id = rrrtx.emissions_rpt_id) WHERE
+			rer.emissions_rpt_id = ? ORDER BY rrrtx.report_group_type_cd
+			DESC
+		</retrieveEmissionsReport>
+		<retrieveEmissionReports>
+			SELECT ${EmissionsReportSQL.emissionReportColumns},
+			rer.last_modified AS rer_lm FROM %Schema%rp_emissions_rpt
+			rer WHERE rer.fp_id = ?
+		</retrieveEmissionReports>
+		<retrieveLatestEmissionReport>
+			SELECT *
+			FROM (SELECT ${EmissionsReportSQL.emissionReportColumns},
+			rer.last_modified AS rer_lm, RANK() OVER (ORDER BY
+			rer.report_approved_status_dt DESC) AS r FROM
+			%Schema%rp_emissions_rpt rer, %Schema%fp_facility ff WHERE
+			ff.fp_id = rer.fp_id AND (rer.rpt_received_status_cd =
+			'10aa' OR rer.rpt_received_status_cd = '09ar')
+		</retrieveLatestEmissionReport>
+		<retrieveLatestTvEmissionReport>
+			SELECT ${EmissionsReportSQL.emissionReportColumns}, rer_lm
+			FROM (SELECT ${EmissionsReportSQL.emissionReportColumns},
+			rer.last_modified AS rer_lm, RANK() OVER (ORDER BY
+			rer.report_approved_status_dt DESC) AS r FROM
+			%Schema%rp_emissions_rpt rer, %Schema%fp_facility ff WHERE
+			ff.fp_id = rer.fp_id
+			AND (rer.rpt_received_status_cd =
+			'10aa' OR rer.rpt_received_status_cd = '09ar')
+		</retrieveLatestTvEmissionReport>
+		<retrieveLatestSubmittedEmissionReport>
+			SELECT *
+			FROM (SELECT ${EmissionsReportSQL.emissionReportColumns},
+			rer.last_modified AS rer_lm, RANK() OVER (ORDER BY
+			rer.report_approved_status_dt DESC) r FROM
+			%Schema%rp_emissions_rpt rer, %Schema%fp_facility ff WHERE
+			ff.fp_id = rer.fp_id
+			AND (rer.rpt_received_status_cd =
+			'08ur' OR rer.rpt_received_status_cd = '07rr' OR
+			rer.rpt_received_status_cd = '07sc' OR
+			rer.rpt_received_status_cd = '09ar'  OR
+			rer.rpt_received_status_cd = '11nn') subT
+		</retrieveLatestSubmittedEmissionReport>
+		<retrieveReportNote>
+			SELECT rernx.emissions_rpt_id,
+			${InfrastructureSQL.noteColumns} FROM
+			%Schema%rp_emissions_rpt_note_xref rernx, cm_note cn WHERE
+			rernx.note_id = ? AND rernx.note_id = cn.note_id
+		</retrieveReportNote>
+		<retrieveReportNotes>
+			SELECT ${InfrastructureSQL.noteColumns},
+			rernx.emissions_rpt_id FROM
+			%Schema%rp_emissions_rpt_note_xref rernx, %Schema%cm_note cn
+			WHERE rernx.emissions_rpt_id = ? AND rernx.note_id =
+			cn.note_id ORDER BY rernx.note_id DESC
+		</retrieveReportNotes>
+		<retrieveEmissionTotal>
+			SELECT emissions_rpt_id, pollutant_cd, total_emissions,
+			last_modified FROM %Schema%rp_report_pollutant_totals WHERE
+			emissions_rpt_id = ?
+		</retrieveEmissionTotal>
+		<retrieveEmissions>
+			SELECT ${EmissionsReportSQL.emissionsColumns}, fire.factor FROM %Schema%RP_EMISSIONS re 
+			left outer join dbo.RP_FIRE_FACTOR fire on fire.FIRE_ID = re.FIRE_ID
+			WHERE
+			emission_period_id = ?
+		</retrieveEmissions>
+		<retrieveEmissionsDocument>
+			SELECT ${EmissionsReportSQL.EmissionsDocumentColumns},
+			last_modified FROM %Schema%rp_emissions_document
+			WHERE emissions_doc_id = ?
+		</retrieveEmissionsDocument>
+		<retrieveReportAttachments>
+			SELECT ${EmissionsReportSQL.EmissionsDocumentColumns},
+			last_modified FROM %Schema%rp_emissions_document
+			WHERE emissions_rpt_id = ?
+		</retrieveReportAttachments>
+		<retrieveReportAttachmentTypes>
+			SELECT attachment_type_cd AS code,
+			attachment_type_dsc AS description, deprecated,
+			last_modified, trade_secret_allowed FROM %Schema%rp_attachment_type_def
+			ORDER BY attachment_type_dsc
+	    </retrieveReportAttachmentTypes>			
+		<retrieveReportEU>
+			SELECT ${EmissionsReportSQL.emissionEUColumns},
+			  ${EmissionsReportSQL.emissionPeriodColumns} 
+			FROM %Schema%rp_report_eu rre 
+			  LEFT OUTER JOIN (%Schema%rp_report_period_xref rrpx 
+			                     LEFT OUTER JOIN %Schema%rp_emission_period rep 
+			                       ON (rrpx.emission_period_id = rep.emission_period_id)) 
+			    ON (rre.corr_id = rrpx.corr_id AND rre.emissions_rpt_id = rrpx.emissions_rpt_id) 
+			WHERE rre.emissions_rpt_id = ? 
+			AND rre.corr_id = ?
+		</retrieveReportEU>
+		<retrieveReportEUs>
+			SELECT ${EmissionsReportSQL.emissionEUColumns} FROM
+			%Schema%rp_report_eu rre WHERE rre.emissions_rpt_id = ?
+		</retrieveReportEUs>
+		<!--
+			<retrieveReportReviewers>SELECT c.last_nm + ', ' + c.first_nm AS description, 
+			ud.user_id AS id
+			FROM %Schema%cm_contact c, %Schema%cm_user_def ud, %Schema%fp_facility_role_xref ffrx
+			WHERE ffrx.facility_role_cd = 'ferr'
+			AND ffrx.user_id = ud.user_id
+			AND ud.contact_id = c.contact_id
+			</retrieveReportReviewers>
+		-->
+		<modifyReportEUGroup>
+			UPDATE %Schema%rp_report_eu_groups SET report_eu_group_nm =
+			?, last_modified = ? WHERE report_eu_group_id = ? AND
+			last_modified = ?
+		</modifyReportEUGroup>
+		<retrieveReportEUGroup>
+			SELECT ${EmissionsReportSQL.reportEUGroupColumns},
+			${EmissionsReportSQL.emissionPeriodColumns}, rregx.corr_id
+			FROM %Schema%rp_report_eu_groups rreg LEFT OUTER JOIN
+			%Schema%rp_report_eu_group_xref rregx ON
+			(rreg.report_eu_group_id = rregx.report_eu_group_id),
+			%Schema%rp_report_period_xref rrpx,
+			%Schema%rp_emission_period rep WHERE rreg.report_eu_group_id
+			= ? AND rrpx.report_eu_group_id = rreg.report_eu_group_id
+			AND rrpx.emission_period_id = rep.emission_period_id
+		</retrieveReportEUGroup>
+		<retrieveReportEUGroupByName>
+			SELECT ${EmissionsReportSQL.reportEUGroupColumns},
+			${EmissionsReportSQL.emissionPeriodColumns},
+			${EmissionsReportSQL.emissionsColumns} FROM
+			%Schema%rp_report_eu_groups rreg,
+			%Schema%rp_report_eu_groups_xref rregx,
+			%Schema%rp_emission_period rep, %Schema%rp_emissions re
+			WHERE rregx.emissions_rpt_id = ? AND
+			rregx.report_eu_group_id = rreg.report_eu_group_id AND
+			rreg.report_eu_group_nm = ? AND rreg.emission_period_id =
+			rep.emission_period_id AND rep.emission_period_id = epi
+		</retrieveReportEUGroupByName>
+
+		<retrieveReportEUGroupByRef>
+			SELECT report_eu_group_id, 'none' as report_eu_group_nm,
+			last_modified as rreg_lm from
+			%Schema%rp_report_eu_groups_xref WHERE emissions_rpt_id = ?
+		</retrieveReportEUGroupByRef>
+
+		<retrieveReportEUGroups>
+			SELECT ${EmissionsReportSQL.reportEUGroupColumns} FROM
+			%Schema%rp_report_eu_groups rreg,
+			%Schema%rp_report_eu_groups_xref rregx WHERE
+			rregx.emissions_rpt_id = ? AND rregx.report_eu_group_id =
+			rreg.report_eu_group_id
+		</retrieveReportEUGroups>
+		<retrieveReportEUGroupsByCorrId>
+			SELECT ${EmissionsReportSQL.reportEUGroupColumns} FROM
+			%Schema%rp_report_eu_groups rreg,
+			%Schema%rp_report_eu_group_xref rregx WHERE
+			rregx.emissions_rpt_id = ? AND rregx.corr_id = ? AND
+			rregx.report_eu_group_id = rreg.report_eu_group_id
+		</retrieveReportEUGroupsByCorrId>
+		<findUnusedEmissionPeriods>
+			SELECT DISTINCT(rep.emission_period_id) FROM
+			%Schema%rp_emission_period rep,
+			%Schema%rp_report_period_xref rrpx WHERE
+			rep.emission_period_id NOT IN (SELECT emission_period_id
+			FROM %Schema%rp_report_period_xref)
+		</findUnusedEmissionPeriods>
+		<deleteReportEUs>
+			DELETE FROM %Schema%rp_report_eu WHERE
+			emissions_rpt_id = ?
+		</deleteReportEUs>
+		<retrieveDefaultStackParms>
+			SELECT ${EmissionsReportSQL.DefaultStackParmsColumns} FROM
+			%Schema%rp_default_stack_parms rdsp WHERE rdsp.scc_id = ?
+		</retrieveDefaultStackParms>
+		<createFireRow>
+			INSERT INTO %Schema%rp_fire_factor ( fire_id, scc_id,
+			pollutant_cd, factor, formula, emissions_unit_cd,
+			material_unit_cd, material_cd, action_cd, notes, quality,
+			cas, fire_pollutant, fire_pollutant_id, orig_factor,
+			orig_formula, orig_emissions_unit_cd, orig_material_unit,
+			orig_material, orig_action_cd, ap42_section, ref_desc,
+			orig_notes, orig_quality, origin, created, deprecated_year)
+			VALUES(?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,
+			?,?,?,?,?,?,?)
+		</createFireRow>
+		<modifyFireRow>
+			UPDATE %Schema%rp_fire_factor SET scc_id = ?, pollutant_cd =
+			?, factor = ?, formula = ?, emissions_unit_cd = ?,
+			material_unit_cd = ?, material_cd = ?, action_cd = ?, notes
+			= ?, quality = ?, cas = ?, fire_pollutant = ?,
+			fire_pollutant_id = ?, orig_factor = ?, orig_formula = ?,
+			orig_emissions_unit_cd = ?, orig_material_unit = ?,
+			orig_material = ?, orig_action_cd = ?, ap42_section = ?,
+			ref_desc = ?, orig_notes = ?, orig_quality = ?, origin = ?,
+			created = ?, deprecated_year = ? WHERE fire_id = ?
+		</modifyFireRow>
+		<retrieveFireRowsByScc>
+			SELECT ${EmissionsReportSQL.FireRowColumns} FROM
+			%Schema%rp_fire_factor rff, %Schema%rp_material_def rmd
+			WHERE rff.material_cd = rmd.material_cd AND
+			rff.fire_id in (select fire_id from dbo.RP_FIRE_FACTOR where 
+			scc_id = ? OR
+			(scc_id is null AND material_cd in (
+			SELECT DISTINCT material_cd FROM dbo.RP_FIRE_FACTOR where scc_id = ?)))
+			ORDER BY rmd.material_dsc, rff.pollutant_cd, rff.scc_id
+		</retrieveFireRowsByScc>
+		<retrieveFireRowsBySccByMaterial>
+			SELECT ${EmissionsReportSQL.FireRowColumns} 
+			  FROM %Schema%rp_fire_factor rff 
+			  WHERE rff.scc_id = ? 
+			    AND rff.material_cd = ?
+		</retrieveFireRowsBySccByMaterial>
+		<retrieveFireRow>
+			SELECT ${EmissionsReportSQL.FireRowColumns} FROM
+			%Schema%rp_fire_factor rff WHERE rff.fire_id = ?
+		</retrieveFireRow>
+		<retrieveFireRow2>
+			SELECT TOP 1 ${EmissionsReportSQL.FireRowColumns} FROM
+			%Schema%rp_fire_factor rff WHERE rff.scc_id = ? AND
+			rff.material_cd = ? AND rff.action_cd is not null AND
+			rff.material_unit_cd is not null AND (rff.deprecated_year is null
+			OR rff.deprecated_year &gt; ?) AND (rff.created is null OR
+			rff.created &lt;= ?)
+		</retrieveFireRow2>
+		<retrieveFireRow3>
+			SELECT ${EmissionsReportSQL.FireRowColumns} FROM
+			%Schema%rp_fire_factor rff
+		</retrieveFireRow3>
+		<retrieveFireRow4>
+			SELECT TOP 1 ${EmissionsReportSQL.FireRowColumns} FROM
+			%Schema%rp_fire_factor rff WHERE rff.scc_id = ?
+		</retrieveFireRow4>
+		<retrieveEmissionsRptInfos>
+			SELECT facility_id, rpt_received_status_cd,
+			reporting_enabled, comments, fyrc.last_modified as last_modified, 
+			ser.sc_emissions_report_id as sc_id, 
+			ser.reporting_yr as year, 
+			ser.content_type_cd as content_type_cd, 
+			ser.regulatory_requirement_cd as regulatory_requirement_cd
+			FROM
+			%Schema%fp_yearly_reporting_category fyrc
+			JOIN %Schema%sc_emissions_report ser on (ser.sc_emissions_report_id = fyrc.sc_emissions_report_id) 
+			where facility_id = ?
+			order by year DESC
+		</retrieveEmissionsRptInfos>
+		<retrieveEmissionsRptInfos2>
+			SELECT 
+				fyrc.facility_id
+				, fyrc.rpt_received_status_cd
+				, fyrc.year
+				, fyrc.comments
+				, fyrc.reporting_enabled
+				, fyrc.last_modified
+				, fyrc.sc_emissions_report_id as sc_id
+				FROM %Schema%fp_yearly_reporting_category fyrc
+				INNER JOIN %Schema%rp_emissions_rpt_sc_emissions_report_xref rptscx 
+					ON rptscx.sc_emissions_report_id = fyrc.sc_emissions_report_id   
+				WHERE fyrc.facility_id = ?
+				AND rptscx.emissions_rpt_id = ?
+		</retrieveEmissionsRptInfos2>
+		<retrieveEmissionsRptInfo>
+			SELECT ${EmissionsReportSQL.EmissionsRptInfoColumns} FROM
+			%Schema%fp_yearly_reporting_category WHERE facility_id = ?
+			AND year = ?
+		</retrieveEmissionsRptInfo>
+		<retrieveEmissionsRptInfo2>
+			SELECT facility_id, rpt_received_status_cd,
+			reporting_enabled, comments, fyrc.last_modified as last_modified,
+			ser.sc_emissions_report_id as sc_id, 
+			ser.reporting_yr as year,
+			ser.content_type_cd as content_type_cd, 
+			ser.regulatory_requirement_cd as regulatory_requirement_cd
+			FROM
+			%Schema%fp_yearly_reporting_category fyrc
+			JOIN %Schema%sc_emissions_report ser on (ser.sc_emissions_report_id = fyrc.sc_emissions_report_id)
+			WHERE reporting_enabled != 'Y' AND fyrc.sc_emissions_report_id = ?
+		</retrieveEmissionsRptInfo2>
+		<retrieveEmissionsRptInfo3>
+			SELECT ${EmissionsReportSQL.EmissionsRptInfoColumns} FROM
+			%Schema%fp_yearly_reporting_category
+		</retrieveEmissionsRptInfo3>
+		<createEmissionsRptInfo>
+			INSERT INTO %Schema%fp_yearly_reporting_category
+			(facility_id, 
+			rpt_received_status_cd, reporting_enabled, comments, 
+			sc_emissions_report_id, year)
+			VALUES(?,?,?,?,?,?)
+		</createEmissionsRptInfo>
+		<modifyEmissionsRptInfo>
+			UPDATE %Schema%fp_yearly_reporting_category SET
+			rpt_received_status_cd = ?, sc_emissions_report_id = ?,
+			reporting_enabled = ?, comments = ?, last_modified = ? WHERE
+			facility_id = ? AND sc_emissions_report_id = ? AND last_modified = ?
+		</modifyEmissionsRptInfo>
+		<deleteEmissionsRptInfo>
+			DELETE FROM %Schema%fp_yearly_reporting_category
+			WHERE
+			facility_id = ? AND sc_emissions_report_id = ?
+		</deleteEmissionsRptInfo>
+		
+		<missingEmissionsRptInfoCommon>
+			SELECT RN, tab.facility_id, tab.last_shutdown_date,	tab.operating_status_cd, tab.SC_EMISSIONS_REPORT_ID, tab.permit_classification_cd, tab.FACILITY_TYPE_CD, tab.FP_ID FROM
+				( SELECT ROW_NUMBER() OVER (PARTITION BY ff.facility_id ORDER BY ff.facility_id, ff.fp_id DESC) AS RN,
+					ff.facility_id, ff.last_shutdown_date, ff.operating_status_cd, fyrc.SC_EMISSIONS_REPORT_ID, ff.PERMIT_CLASSIFICATION_CD, ff.FACILITY_TYPE_CD, ff.fp_id
+					FROM dbo.fp_facility ff
+						LEFT OUTER JOIN dbo.fp_yearly_reporting_category fyrc ON (ff.facility_id = fyrc.facility_id AND fyrc.SC_EMISSIONS_REPORT_ID = ?
+						)
+						WHERE NOT((ff.START_DT &lt; ? AND (ff.END_DT &lt; ? AND ff.END_DT IS NOT NULL)) OR ff.START_DT &gt; ?)
+							AND (ff.OPERATING_STATUS_CD = 'op' OR ff.OPERATING_STATUS_CD = 'ia' 
+								OR (ff.OPERATING_STATUS_CD = 'sd' AND (ff.LAST_SHUTDOWN_DATE &gt;= ? AND ff.LAST_SHUTDOWN_DATE &lt;= ?))) 
+							AND fyrc.SC_EMISSIONS_REPORT_ID IS NULL
+				) tab 
+				WHERE tab.RN = 1 AND
+				((tab.FACILITY_TYPE_CD IN (SELECT FACILITY_TYPE_CD FROM dbo.[SC_REPORT_FACILITY_TYPE_XREF] WHERE SC_EMISSIONS_REPORT_ID = ? )) OR 
+				NOT EXISTS (SELECT FACILITY_TYPE_CD FROM dbo.[SC_REPORT_FACILITY_TYPE_XREF] WHERE SC_EMISSIONS_REPORT_ID = ? )) 	
+				 AND
+                           (((SELECT SHAPE_ID FROM dbo.[SC_EMISSIONS_REPORT] WHERE SC_EMISSIONS_REPORT_ID = ?) IS NULL)
+						   OR 
+							 (EXISTS (
+								SELECT 
+								  fax.fp_id, a.ADDRESS_ID
+								  FROM dbo.[FP_FACILITY_ADDRESS_XREF] fax 
+								  LEFT OUTER JOIN dbo.[CM_ADDRESS] a ON a.ADDRESS_ID=fax.ADDRESS_ID,
+								  dbo.[CM_SHAPE] s
+								 WHERE s.SHAPE_ID = (SELECT SHAPE_ID FROM dbo.[SC_EMISSIONS_REPORT] WHERE SC_EMISSIONS_REPORT_ID = ?)
+								 AND tab.FP_ID = fax.FP_ID
+								 AND s.GEOG.STIntersects(geography::Point(a.Latitude, a.longitude,4326)) = 1)))
+		</missingEmissionsRptInfoCommon>
+		
+		<missingEmissionsRptInfoFacilityClassOnLastDay>
+			AND
+				((tab.permit_classification_cd IN (SELECT PERMIT_CLASSIFICATION_CD FROM dbo.[SC_REPORT_PERMIT_CLASS_XREF] WHERE SC_EMISSIONS_REPORT_ID = ? )) or 
+				NOT EXISTS (SELECT PERMIT_CLASSIFICATION_CD FROM dbo.[SC_REPORT_PERMIT_CLASS_XREF] WHERE SC_EMISSIONS_REPORT_ID = ? ))
+				ORDER BY tab.FACILITY_ID ASC
+		</missingEmissionsRptInfoFacilityClassOnLastDay>
+			
+		<missingEmissionsRptInfoFacilityClassAnyDay>
+			AND
+				tab.facility_id IN (SELECT DISTINCT facility_id from dbo.[fp_facility] ff WHERE ff.permit_classification_cd IN (SELECT PERMIT_CLASSIFICATION_CD 
+					FROM dbo.[SC_REPORT_PERMIT_CLASS_XREF] WHERE SC_EMISSIONS_REPORT_ID = ?)
+					AND NOT ((ff.START_DT &lt; ? AND (ff.END_DT &lt; ? AND ff.END_DT IS NOT NULL)) OR ff.START_DT &gt; ?))
+				ORDER BY FACILITY_ID ASC
+		</missingEmissionsRptInfoFacilityClassAnyDay>
+			
+		<missingEmissionsRptInfo1>
+		${EmissionsReportSQL.missingEmissionsRptInfoCommon} ${EmissionsReportSQL.missingEmissionsRptInfoFacilityClassOnLastDay}
+		</missingEmissionsRptInfo1>
+		
+		<missingEmissionsRptInfo2>
+		${EmissionsReportSQL.missingEmissionsRptInfoCommon} ${EmissionsReportSQL.missingEmissionsRptInfoFacilityClassAnyDay}
+		</missingEmissionsRptInfo2>
+		
+		<inCompliance>
+			SELECT in_compliance FROM %Schema%cm_county_compliance WHERE
+			year = ? AND county_cd = ?
+		</inCompliance>
+        <searchEmissionsReport> 
+			SELECT DISTINCT rer.emissions_rpt_id, rer.report_modified,
+			rer.report_year, rer.total_emissions,
+			rer.eis_status_cd, ff.version_id, ff.fp_id, ff.facility_id,
+			ff.facility_nm, rer.received_date, 
+			rer.report_approved_status_dt, rer.companion_report,
+			rer.rpt_received_status_cd, rer.rpt_received_status_dt,
+			ff.do_laa_cd,  
+			ccm.cmp_id, ccm.name as company_nm, rer.ei_id,
+			rer.total_reported_emissions,
+			cmu.network_login_nm as submitter_network_login_nm, 
+			cmc.envite_username as submitter_envite_username, 
+			cmc2.name as submitter_company_name,
+			rer.invoice_amount, rer.invoice_date, rer.payment_received_date
+			FROM 
+			%Schema%rp_emissions_rpt rer 
+			INNER JOIN 
+			%Schema%fp_facility ff ON (rer.fp_id = ff.fp_id)
+			LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+			LEFT JOIN %Schema%cm_user_def cmu ON cmu.user_id = rer.submitted_by_user
+			LEFT JOIN %Schema%cm_contact cmc ON cmc.contact_id = rer.submitted_by_contact
+			LEFT JOIN %Schema%cm_company cmc2 ON cmc2.company_id = cmc.company_id
+			LEFT JOIN %Schema%RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF scx ON scx.EMISSIONS_RPT_ID = rer.EMISSIONS_RPT_ID
+			LEFT JOIN %Schema%SC_EMISSIONS_REPORT sc ON sc.SC_EMISSIONS_REPORT_ID = scx.SC_EMISSIONS_REPORT_ID
+		</searchEmissionsReport>
+		<searchEmissionsReportForScore>
+			SELECT rer.emissions_rpt_id, rer.report_modified,
+			rer.report_year, rer.fee_id, rer.total_emissions,
+			rer.eis_status_cd, ff.version_id, ff.fp_id, ff.facility_id,
+			ff.facility_nm, rer.received_date,
+			rer.report_approved_status_dt, rer.companion_report,
+			rer.rpt_received_status_cd, rer.rpt_received_status_dt,
+			ff.do_laa_cd, sf.low_range, sf.high_range FROM
+			%Schema%rp_emissions_rpt rer LEFT OUTER JOIN %Schema%sc_fee
+			sf ON (rer.fee_id = sf.fee_id) INNER JOIN
+			%Schema%fp_facility ff ON (rer.fp_id = ff.fp_id) WHERE
+			rer.rpt_received_status_dt &gt;= ? AND
+			rer.rpt_received_status_dt &lt; ?
+		</searchEmissionsReportForScore>
+		<searchEmissionsReportStaging1>
+			SELECT rer.emissions_rpt_id, rer.report_modified,
+			rer.report_year, rer.total_emissions,
+			rer.eis_status_cd, ff.version_id, ff.fp_id, ff.facility_id,
+			ff.facility_nm, rer.received_date, 
+			rer.report_approved_status_dt, rer.companion_report,
+			rer.rpt_received_status_cd, rer.rpt_received_status_dt,
+			ff.do_laa_cd, ccm.cmp_id, ccm.name as company_nm, rer.ei_id,
+			rer.total_reported_emissions
+			FROM %Schema%rp_emissions_rpt rer INNER JOIN
+			%Schema%fp_facility ff ON (rer.fp_id = ff.fp_id) 
+			LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff.facility_id AND ffcx.end_date IS NULL)
+		    LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+		</searchEmissionsReportStaging1>		
+		<searchEmissionsReportStaging2>
+			INNER JOIN %Schema%fp_facility ff ON (rer.fp_id = ff.fp_id)
+		</searchEmissionsReportStaging2>
+		<searchFacilities>
+			SELECT ff.fp_id FROM %Schema%fp_facility ff,
+			%Schema%cm_address ca, %Schema%fp_facility_address_xref faxr
+			WHERE ff.version_id = -1 AND ff.fp_id = faxr.fp_id AND
+			faxr.address_id = ca.address_id AND ca.end_dt is null
+		</searchFacilities>
+		<searchForAutoGenNTV>
+			SELECT fyrc.facility_id, fyrc.year,
+			fyrc.rpt_received_status_cd,
+			ff.operating_status_cd FROM
+			%Schema%fp_yearly_reporting_category fyrc INNER JOIN
+			%Schema%fp_facility ff ON (fyrc.facility_id = ff.facility_id
+			AND ff.version_id = -1) WHERE (fyrc.year = ? AND
+			(fyrc.rpt_received_status_cd = '03rs' OR
+			fyrc.rpt_received_status_cd = '05nv')) OR (fyrc.year = ? AND
+			(fyrc.rpt_received_status_cd = '03rs' OR
+			fyrc.rpt_received_status_cd = '05nv')) ORDER BY
+			fyrc.facility_id, fyrc.year
+		</searchForAutoGenNTV>
+		<retrievePollutantPartOf>
+			SELECT sub_cd, sup_cd FROM %Schema%rp_part_of where deprecated = 'N'
+		</retrievePollutantPartOf>
+		<retrievePollutantParent>
+			SELECT sup_cd, sub_cd FROM %Schema%rp_part_of where deprecated = 'N' AND sub_cd = ?
+		</retrievePollutantParent>
+		<deprecateFire>
+			UPDATE %Schema%rp_fire_factor SET deprecated_year = ? WHERE
+			deprecated_year IS NULL
+		</deprecateFire>
+		<removeInvalidFireRows>
+			DELETE FROM %Schema%rp_fire_factor WHERE created = ? AND
+			deprecated_year = ?
+		</removeInvalidFireRows>
+		<activeFireRows>
+			SELECT COUNT(*) as cnt FROM %Schema%rp_fire_factor where
+			deprecated_year is null
+		</activeFireRows>
+		<deprecatedFireRows>
+			SELECT ${EmissionsReportSQL.FireRowColumns} FROM
+			%Schema%rp_fire_factor rff WHERE rff.deprecated_year = ? ORDER BY
+			rff.scc_id, rff.material_cd, rff.pollutant_cd
+		</deprecatedFireRows>
+		<materialForScc>
+			SELECT COUNT(*) as cnt FROM %Schema%rp_fire_factor rff WHERE
+			SCC_ID = ? AND (rff.deprecated_year IS NULL OR rff.deprecated_year
+			&gt; ?) AND (rff.created &lt; ? OR rff.created IS NULL)
+		</materialForScc>
+		<facilitiesWithEisReports>
+			SELECT DISTINCT ff.facility_id, ff.federal_scsc_id FROM
+			%Schema%RP_EMISSIONS_RPT rer, %Schema%FP_FACILITY ff,
+			%Schema%RP_REPORT_REPORT_TYPE_XREF rrrtx WHERE rer.fp_id =
+			ff.fp_id AND rer.emissions_rpt_id = rrrtx.emissions_rpt_id
+			AND rrrtx.report_group_type_cd = 'EIS' AND rer.report_year =
+			? ORDER by ff.federal_scsc_id, ff.facility_id
+		</facilitiesWithEisReports>
+		<activeTvFacilities>
+			SELECT ff.facility_id, ff.federal_scsc_id FROM
+			 %Schema%FP_YEARLY_REPORTING_CATEGORY fyrc,  %Schema%FP_FACILITY
+			ff WHERE fyrc.facility_id = ff.facility_id AND ff.version_id
+			= -1 AND fyrc.reporting_enabled = 'Y' AND
+			fyrc.rpt_received_status_cd != '00no' AND
+			fyrc.year = ? ORDER by ff.facility_id
+		</activeTvFacilities>
+		<retrieveFireVariables>
+			SELECT variable_name_cd AS code, variable_name_dsc AS
+			description, deprecated, min_val, max_val, required,
+			last_modified FROM %Schema%rp_fire_variable_names_def ORDER
+			BY code
+		</retrieveFireVariables>
+		<locateUsingOldEuName>
+			select DISTINCT(feu.corr_epa_emu_id) as cnt from
+			 %Schema%FP_EMISSIONS_UNIT feu,  %Schema%FP_FACILITY ff where
+			ff.facility_id = ? and ff.fp_id = feu.fp_id and ff.fp_id
+			&lt; ? and feu.epa_emu_id = ? order by feu.corr_epa_emu_id
+		</locateUsingOldEuName>
+		<retrieveReportInvoicePair>
+			SELECT * from  %Schema%rp_emissions_rpt rer LEFT OUTER JOIN
+			 %Schema%iv_invoice ii ON rer.emissions_rpt_id =
+			ii.emissions_rpt_id WHERE rer.report_modified = ?
+		</retrieveReportInvoicePair>
+		<retrieveFacilityPermitInfo>
+			SELECT p.permit_id, p.permit_nbr,
+			p.PERMIT_TYPE_CD, p.EFFECTIVE_DATE,
+			pe.corr_epa_emu_id, pe.revocation_dt, pe.terminated_dt, pe.superseded_dt,
+			ppi.issuance_date FROM  %Schema%pt_eu pe,
+			 %Schema%pt_eu_group peg, %Schema%pt_permit p
+			LEFT OUTER JOIN
+			%Schema%pt_permit_issuance ppi ON (ppi.permit_id = p.permit_id)
+			  WHERE ppi.issuance_type_cd = 'F'
+			  AND p.permit_id = peg.permit_id AND
+			peg.permit_eu_group_id = pe.permit_eu_group_id AND
+			p.facility_id = ? ORDER by p.EFFECTIVE_DATE desc
+		</retrieveFacilityPermitInfo>
+		<retriveFacilityPermitAppInfo>
+			SELECT p.permit_id a, ppax.application_id b FROM
+			 %Schema%pt_permit p,  %Schema%pt_permit_application_xref ppax
+			WHERE ppax.permit_id = p.permit_id AND p.facility_id = ?
+			ORDER by p.permit_id
+		</retriveFacilityPermitAppInfo>
+		<retrieveFacilityAppInfo>
+			SELECT pa.application_id, pa.application_nbr, pa.application_type_cd,
+			pa.received_date, feu.corr_epa_emu_id,  pn.disposition_flag
+			FROM %Schema%pa_eu pe,
+			 %Schema%fp_facility ff,  %Schema%fp_emissions_unit feu,
+			 %Schema%pa_application pa
+			 LEFT OUTER JOIN
+			%Schema%pa_pbr_notification pn ON (pa.application_id = pn.application_id)
+			WHERE pa.application_id = pe.application_id AND pe.emu_id =
+			feu.emu_id AND pa.fp_id = feu.fp_id AND pa.fp_id = ff.fp_id
+			AND pe.excluded_flag = 'N'
+			AND ff.facility_id = ? ORDER by pa.received_date desc
+		</retrieveFacilityAppInfo>
+		<setEmissionsReportValidatedFlag>
+			UPDATE %Schema%RP_EMISSIONS_RPT SET validated_flag = ?
+			WHERE EMISSIONS_RPT_ID = ?
+		</setEmissionsReportValidatedFlag>
+		<retrieveCalculationMethods>
+			SELECT emission_calc_method_cd AS code, emission_calc_method_dsc AS
+			description, deprecated,
+			emission_calc_method_long_dsc, emission_calc_method_accuracy, user_selectable,
+			last_modified
+			FROM
+			%Schema%rp_emission_calc_method_def
+			ORDER BY
+			emission_calc_method_accuracy desc
+		</retrieveCalculationMethods>
+		<retrieveUserSelectableCalculationMethods>
+			SELECT emission_calc_method_cd AS code, emission_calc_method_dsc AS
+			description, deprecated,
+			emission_calc_method_long_dsc, emission_calc_method_accuracy, user_selectable,
+			last_modified
+			FROM
+			%Schema%rp_emission_calc_method_def WHERE user_selectable = 'Y'
+			ORDER BY
+			emission_calc_method_accuracy desc
+		</retrieveUserSelectableCalculationMethods>
+		<retrieveMissingFactors>
+			SELECT ${FacilitySQL.emissionUnitColumns}, ${FacilitySQL.emissionProcessColumns}, ${FacilitySQL.facilityColumns}
+			FROM %Schema%fp_emissions_unit feu 
+			RIGHT JOIN %Schema%fp_emission_process fep ON (feu.emu_id = fep.emu_id)
+			RIGHT JOIN %Schema%fp_facility ff ON (ff.fp_id = feu.fp_id)
+			WHERE feu.operating_status_cd = 'op' AND feu.initial_installation_dt &lt; ? AND ff.permit_classification_cd like ? AND ff.version_id = -1
+				AND fep.scc_id NOT IN
+					(SELECT rp.scc_id FROM dbo.rp_fire_factor rp WHERE rp.deprecated_year IS NULL AND rp.scc_id IS NOT NULL)
+		</retrieveMissingFactors>
+		<updateTotalEmissions>
+			update %Schema%rp_emissions_rpt set total_emissions = ?, total_reported_emissions = ?
+				where emissions_rpt_id = ?
+		</updateTotalEmissions>
+		<retrieveRegulatoryRequirementTypes>
+			SELECT regulatory_requirement_code AS code, regulatory_requirement_dsc AS description,
+			allow_jumpstart_data_entry, report_to_usepa, priority,
+			last_modified, deprecated, allow_file_import
+			FROM %Schema%rp_regulatory_requirement_type_def ORDER BY regulatory_requirement_code
+		</retrieveRegulatoryRequirementTypes>
+		<retrieveAllowFileImportRegulatoryRequirementTypes>
+			SELECT regulatory_requirement_code AS code, regulatory_requirement_dsc AS description,
+			allow_jumpstart_data_entry, report_to_usepa, priority,
+			last_modified, deprecated, allow_file_import
+			FROM %Schema%rp_regulatory_requirement_type_def 
+			WHERE allow_file_import = 'Y'
+			ORDER BY regulatory_requirement_code
+		</retrieveAllowFileImportRegulatoryRequirementTypes>		
+		
+		<retrieveContentTypes>
+			SELECT content_type_code AS code, content_type_dsc AS description,
+			start_day, start_month, end_day, end_month,
+			last_modified, deprecated
+			FROM %Schema%rp_content_type_def ORDER BY content_type_code
+		</retrieveContentTypes>
+
+		<retrieveAssociatedSCEmissionsReports>
+		    SELECT ${ServiceCatalogSQL.emissionsReportColumns}
+		    FROM %Schema%RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF x
+		    INNER JOIN dbo.sc_emissions_report ser 
+		        on ser.SC_EMISSIONS_REPORT_ID = x.SC_EMISSIONS_REPORT_ID
+		    WHERE x.EMISSIONS_RPT_ID = ?
+		</retrieveAssociatedSCEmissionsReports>
+		
+		<disassociateSCEmissionsReports>
+			DELETE %Schema%RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF
+			WHERE EMISSIONS_RPT_ID = ?
+		</disassociateSCEmissionsReports>
+		
+		<associateSCEmissionsReport>
+			INSERT INTO %Schema%RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF
+			(emissions_rpt_id, sc_emissions_report_id)
+			VALUES (?,?)
+		</associateSCEmissionsReport>
+		
+		<emissionsInventoriesForFacilityAndServiceCatalog>
+			SELECT COUNT(*) as cnt FROM %Schema%RP_EMISSIONS_RPT rer 
+				JOIN %Schema%RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF rerserx ON rerserx.EMISSIONS_RPT_ID = rer.EMISSIONS_RPT_ID
+				JOIN %Schema%FP_FACILITY ff ON ff.fp_id = rer.fp_id
+			WHERE
+			ff.facility_id = ? AND rerserx.sc_emissions_report_id = ?  
+		</emissionsInventoriesForFacilityAndServiceCatalog>
+		
+		<retrieveSccMaterials>
+			SELECT DISTINCT rmd.material_cd AS code, rmd.material_dsc AS description,
+			rmd.last_modified, deprecated 
+			FROM
+			%Schema%rp_fire_factor rff, %Schema%rp_material_def rmd
+			WHERE rff.material_cd = rmd.material_cd AND
+			rmd.deprecated='N' AND
+			rmd.material_cd IN (SELECT material_cd FROM %Schema%RP_FIRE_FACTOR WHERE 
+			scc_id = ?)
+			ORDER BY rmd.material_dsc
+		</retrieveSccMaterials>
+		
+		<retrieveSccPollutants>
+			SELECT DISTINCT cpd.pollutant_cd AS code, cpd.pollutant_dsc AS description,
+			cpd.last_modified, deprecated 
+			FROM
+			%Schema%rp_fire_factor rff, %Schema%cm_pollutant_def cpd
+			WHERE rff.pollutant_cd = cpd.pollutant_cd AND
+			cpd.deprecated='N' AND
+			cpd.pollutant_cd IN (SELECT pollutant_cd FROM %Schema%RP_FIRE_FACTOR WHERE 
+			scc_id = ?)
+			ORDER BY cpd.pollutant_dsc
+		</retrieveSccPollutants>
+		
+		<retrieveSccPollutantsForMaterials>
+			SELECT DISTINCT cpd.pollutant_cd AS code, cpd.pollutant_dsc AS description,
+			cpd.last_modified, deprecated 
+			FROM
+			%Schema%rp_fire_factor rff, %Schema%cm_pollutant_def cpd
+			WHERE rff.pollutant_cd = cpd.pollutant_cd AND
+			cpd.deprecated='N'
+		</retrieveSccPollutantsForMaterials>
+		
+		<updateFireRows>
+			UPDATE dbo.rp_fire_factor
+		</updateFireRows>
+		
+		<retrieveReportDocumentByTradeSecrectDocId>
+			SELECT ${EmissionsReportSQL.EmissionsDocumentColumns}
+				FROM %Schema%rp_emissions_document
+				WHERE trade_secret_doc_id = ?
+		</retrieveReportDocumentByTradeSecrectDocId>
+		
+		<!-- These are used for EI import through csv -->
+		<retrieveValidEmissionsReportIds>
+			SELECT rpt.emissions_rpt_id
+			FROM %Schema%rp_emissions_rpt rpt
+			INNER JOIN %Schema%fp_facility fac on (rpt.fp_id = fac.fp_id)
+			INNER JOIN %Schema%rp_emissions_rpt_sc_emissions_report_xref ref on (rpt.emissions_rpt_id = ref.emissions_rpt_id)
+			INNER JOIN %Schema%sc_emissions_report sc on (sc.sc_emissions_report_id = ref.sc_emissions_report_id)
+			WHERE rpt.rpt_received_status_cd NOT IN ('06nn', '11nn')
+		</retrieveValidEmissionsReportIds>
+
+		<updatePriorEIsToInvalidAfterCsvImport>
+			UPDATE %Schema%rp_emissions_rpt 
+			SET rpt_received_status_cd = CASE
+											WHEN rpt_received_status_cd in ('09ar', '10aa' ) THEN '11nn'
+											ELSE '06nn'
+										 END
+				, last_modified = rpt.last_modified+1
+			FROM %Schema%rp_emissions_rpt rpt
+			INNER JOIN %Schema%fp_facility fac on (rpt.fp_id = fac.fp_id)
+			INNER JOIN %Schema%rp_emissions_rpt_sc_emissions_report_xref ref on (rpt.emissions_rpt_id = ref.emissions_rpt_id)
+			INNER JOIN %Schema%sc_emissions_report sc on (sc.sc_emissions_report_id = ref.sc_emissions_report_id)
+			WHERE rpt.rpt_received_status_cd NOT IN ('06nn', '11nn')
+		</updatePriorEIsToInvalidAfterCsvImport>
+
+		<retrieveEnabledEmissionRptsForYearAndContentType>
+			SELECT enb.facility_id, count(sc.sc_emissions_report_id) as reports_count from %Schema%fp_yearly_reporting_category enb
+			INNER JOIN %Schema%sc_emissions_report sc on (enb.sc_emissions_report_id = sc.sc_emissions_report_id and sc.reporting_yr=? and sc.content_type_cd=? and enb.reporting_enabled='Y')
+			GROUP BY enb.facility_id
+		</retrieveEnabledEmissionRptsForYearAndContentType>
+		<!-- These are used for EI import through csv -->
+
+		<setActiveEmissionsReportsValidatedFlag>
+			UPDATE %Schema%rp_emissions_rpt SET validated_flag = ?
+			WHERE fp_id = ? AND eis_status_cd = ?
+		</setActiveEmissionsReportsValidatedFlag>
+		
+		
+		<deleteReferences>
+			UPDATE %Schema%rp_emissions_rpt SET REPORT_MODIFIED = NULL WHERE fp_id in (select fp_id from %Schema%fp_facility where facility_id = ? )
+		</deleteReferences>
+		
+		<removeAssociatedInvoice>
+			DELETE  FROM %Schema%IV_INVOICE where emissions_rpt_id = ?
+		</removeAssociatedInvoice>
+		
+		<deleteEmissionsRptInvoiceDetails>
+			DELETE FROM  %Schema%IV_INVOICE_DETAIL where INVOICE_ID in (Select INVOICE_ID FROM %Schema%IV_INVOICE where emissions_rpt_id= ? )
+		</deleteEmissionsRptInvoiceDetails>
+		
+		<deleteEmissionsRptInvoiceNotes>
+			 DELETE FROM %Schema%IV_INVOICE_NOTE_XREF where INVOICE_ID in (Select INVOICE_ID FROM %Schema%IV_INVOICE where emissions_rpt_id= ? )
+		</deleteEmissionsRptInvoiceNotes>
+		
+	</EmissionsReportSQL>
+</root>

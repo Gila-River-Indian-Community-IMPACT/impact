@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<map version="1.0">
+
+<!--  non-use-case-based Help Topics -->
+<!-- help_overview page never accessed; file may not exist -->
+<mapID target="help_overview_html" url="help_overview.html" />
+<mapID target="stars2_systemOverview_html" url="stars2_systemOverview.html" />
+<mapID target="common_ui_elements_html" url="common_ui_elements.html" />
+<mapID target="common_ui_menuStructure_html" url="common_ui_menuStructure.html" />
+<mapID target="common_ui_searchParadigm_html" url="common_ui_searchParadigm.html" />
+<mapID target="common_ui_datagrids_html" url="common_ui_datagrids.html" /> 
+<mapID target="common_ui_detailData_html" url="common_ui_detailData.html" /> 
+<mapID target="common_ui_editMode_html" url="common_ui_editMode.html" /> 
+<mapID target="common_ui_inputFields_html" url="common_ui_inputFields.html" /> 
+<mapID target="common_ui_editButtons_html" url="common_ui_editButtons.html" /> 
+<mapID target="common_ui_exceptions_html" url="common_ui_exceptions.html" /> 
+<mapID target="common_ui_notes_html" url="common_ui_notes.html" /> 
+<mapID target="common_ui_popupWin_html" url="common_ui_popupWin.html" /> 
+<!--  NOT IMPLEMENTED for LACK OF TIME
+<mapID target="common_ui_attachments_html" url="common_ui_attachments.html" /> 
+<mapID target="common_ui_iconLegend_html" url="common_ui_iconLegend.html" />
+ -->
+ 
+<mapID target="system_roleBasedSecurity_html" url="systemRoleBasedSecurity.html" />
+<mapID target="facility_roles_html" url="facility_roles.html" />
+<mapID target="glossary_html" url="glossary.html" />
+
+<!-- Tab-level help topic files -->
+<mapID target="home" url="home_todo.html" />
+<mapID target="admin" url="admin.html" />
+<mapID target="tools" url="tools.html" />
+<mapID target="workflows" url="workflows_search.html" />
+<mapID target="facilities" url="facilities_search.html" />
+<mapID target="permits" url="permits_search.html" />
+<mapID target="applications" url="applications_search.html" />
+<mapID target="compliance" url="compliance_search.html" />
+<mapID target="reports" url="reports_search.html" />
+<mapID target="mgmt_reports" url="mgmt_reports_reportTree.html" />
+<mapID target="invoices" url="invoices_search.html" />
+
+<!-- Home Tab help topic files -->
+<mapID target="home_todo" url="home_todo.html" />
+<mapID target="home_initTask" url="home_createToDo.html" />
+ 
+<!-- Workflows Tab help topic files -->
+<mapID target="workflows" url="workflows_search.html" />
+<mapID target="workflows_summary" url="workflow_summaryCharts.html" />
+<mapID target="workflows_activityProfile" url="workflows_taskProfile.html" />
+<mapID target="workflows_workflowProfile" url="workflow_workflowDiagram.html" />
+<mapID target="workflows_workflowProfile_cancelProcess" url="workflows_workflowProfile_cancelProcess.html" />
+<mapID target="workflows_workflowProfile_processNoteList" url="workflows_workflowProfile_Notes.html" />
+<mapID target="workflows_workflowProfile_reassign" url="workflows_workflowProfile_reassign.html" />
+<mapID target="workflows_workflowProfile_changeProcessDueDate" url="workflows_workflowProfile_changeActivityDueDate.html" />
+<mapID target="workflows_workflowProfile_summaryProcess" url="workflows_workflowProfile_summary.html" />
+<!-- No Help file provided for Clone Wofkflow; not in TOC -->
+<mapID target="workflows_workflowProfile_cloneProcess" url="workflows_workflowProfile_cloneProcess.html" />
+<mapID target="workflows_workflowProfile_permitSummaryProcess" url="workflows_workflowProfile_summaryProcess.html" />
+<mapID target="workflows_activityProfile_reassignActivity" url="workflows_taskProfile_reassignTask.html" />
+<mapID target="workflows_activityProfile_changeActivityStartDate" url="workflows_taskProfile_changeStartDate.html" />
+<mapID target="workflows_activityProfile_gotoActivity" url="workflows_taskProfile_loopback.html" />
+<mapID target="workflows_activityProfile_referActivity" url="workflows_taskProfile_referral.html" />
+
+<!-- Facilities Tab help topic files -->
+<mapID target="facilities_search" url="facilities_search.html" />
+<mapID target="facilities_createFacility" url="facilities_createFacility.html" />
+<mapID target="facilities_facilityHistorySearch" url="facilities_historySearch.html" />
+<mapID target="facilities_undeliveredMail" url="facilities_rum_2ndLevel.html" />
+<mapID target="facility_tree_html" url="facility_tree.html" />
+<mapID target="facilities_profile" url="facilities_profile.html" />
+<mapID target="facilities_profile_contacts" url="facilities_profile_contacts.html" />
+<mapID target="facilities_profile_applications" url="facilities_profile_applications.html" />
+<mapID target="facilities_profile_fedRules" url="facilities_profile_fedRules.html" />
+<mapID target="facilities_profile_rum" url="facilities_profile_rum.html" />
+<mapID target="facilities_profile_notes" url="facilities_profile_notes.html" />
+<mapID target="facilities_profile_facilityRoles" url="facilities_profile_userRoles.html" />
+<mapID target="facilities_profile_eventLog" url="facilities_profile_eventLog.html" />
+<mapID target="facilities_profile_addrHistory" url="facilities_profile_addrHistory.html" />
+<mapID target="facilities_profile_invoices" url="facilities_profile_invoiceHistory.html" />
+<mapID target="facilities_profile_history" url="facilities_profile_history.html" />
+<mapID target="facilities_profile_correspondence" url="facilities_profile_correspondence.html" />
+<mapID target="facilities_profile_attachments" url="facilities_profile_attachments.html" />
+<mapID target="facilities_profile_compReports" url="facilities_profile_compReports.html" />
+<mapID target="facilities_profile_reportCategory" url="facilities_profile_reportingCategory.html" />
+<mapID target="facilities_profile_reports" url="facilities_profile_reports.html" />
+<mapID target="facilities_profile_allowEmissions" url="facilities_profile_allowEmissions.html" />
+<mapID target="facilities_profile_permits" url="facilities_profile_permits.html" />
+<mapID target="facilities_profile_egpSummary" url="facilities_profile_egpSummary.html" />
+<mapID target="facilities_profile_euSummary" url="facilities_profile_euSummary.html" />
+<mapID target="facilities_profile_ceSummary" url="facilities_profile_ceSummary.html" />
+<!--  No Help Page for Edit Facility Roles;  not in TOC -->
+<mapID target="facilities_profile_facilityRoles_editFacilityRoles" url="facilities_profile_facilityRoles_editFacilityRoles.html" />
+<mapID target="facilities_profile_PERDueDates" url="facilities_profile_perDueDate.html" />
+
+<!-- Permits Tab help topic files -->
+<mapID target="permits_search" url="permits_search.html" />
+<mapID target="permits_detail" url="permits_detail.html" />
+<mapID target="permits_detail_permitAllWorkflows" url="permits_detail_workflowList.html" />
+<mapID target="permits_detail_outlineStructure" url="permits_detail_outlineStructure.html" />
+<mapID target="permits_detail_notes" url="permits_detail_notes.html" />
+<mapID target="permits_detail_attachments" url="permits_detail_attachments.html" />
+<mapID target="permits_detail_feeSummary" url="permits_detail_feeSummary.html" />
+<mapID target="permits_detail_batSummary" url="permits_detail_batSummary.html" />
+<mapID target="permits_detail_ccList" url="permits_detail_ccList.html" />
+<mapID target="permits_detail_tcList" url="permits_detail_tcList.html" />
+<!--  No Help Pages for Issuance 3rd level menu items; not in TOC -->
+<mapID target="permits_detail_draftIssuance" url="permits_detail_draftIssuance.html" />
+<mapID target="permits_detail_PPPIssuance" url="permits_detail_PPPIssuance.html" />
+<mapID target="permits_detail_PPIssuance" url="permits_detail_PPIssuance.html" />
+<mapID target="permits_detail_finalIssuance" url="permits_detail_finalIssuance.html" />
+<mapID target="permits_detail_denialIssuance" url="permits_detail_denialIssuance.html" />
+
+<!-- Applications Tab help topic files -->
+<mapID target="applications_search" url="application_search.html" />
+<mapID target="applications_detail" url="applications_detail.html" />
+
+<!-- Emissions Inventories Tab help topic files -->
+<mapID target="reports_search" url="reports_search.html" />
+<mapID target="reports_enableReportingYear" url="reports_enableReportingYear.html" />
+<!--  there is only one Emissions Inventory detail page; use case name never changed -->
+<mapID target="reports_TVdetail" url="emissionsReport.html" />
+
+<!-- Compliance Reports Tab help topic files -->
+<mapID target="compliance_search" url="compliance_search.html" />
+<mapID target="compliance_detail" url="compliance_detail.html" />
+
+<!-- Invoices Tab help topic files -->
+<mapID target="invoices_search" url="invoice_search.html" />
+<mapID target="invoices_detail" url="invoices_detail.html" />
+
+<!-- Mgmt Reports Tab help topic files -->
+<mapID target="mgmt_reports_reportTree" url="mgmt_reports_reportTree.html" />
+<mapID target="mgmt_reports_permitSOP" url="mgmt_reports_latePermits.html" />
+<mapID target="mgmt_reports_issuanceReport" url="mgmt_reports_issuanceReport.html" />
+<mapID target="mgmt_reports_permitWorkload" url="mgmt_reports_permitWorkload.html" />
+<mapID target="mgmt_reports_pbrCount" url="mgmt_reports_pbrCounts.html" />
+<mapID target="mgmt_reports_facilityPermitCount" url="mgmt_reports_facilityCounts.html" />
+<mapID target="mgmt_reports_topsReport" url="mgmt_reports_topsReport.html" />
+
+<!-- Tools Tab help topic files -->
+<mapID target="tools_bulkOperationsCatalog" url="tools_bulkOperations.html" />
+<mapID target="tools_fieldAuditLog" url="tools_fieldAuditLog.html" />
+<mapID target="tools_correspondence" url="tools_correspondenceSearch.html" />
+<mapID target="tools_externalReferences" url="tools_externalReferences.html" />
+<mapID target="tools_docGenerationCatalog" url="tools_documentGeneration.html" />
+<mapID target="tools_submissionLog" url="tools_submissionLog.html" />
+<!--  No help file provided for CO Document Generation screen; not in TOC -->
+<mapID target="tools_coDocGenerationCatalog" url="tools_coDocumentGeneration.html" />
+<mapID target="home_eventLog" url="tools_eventLog.html" />
+<mapID target="home_eventNew" url="tools_eventLog_newEvent.html" />
+<!--  No help file provided for Temporary Files screen; not in TOC -->
+<mapID target="tools_temporaryFiles" url="tools_temporaryFiles.html" />
+
+<!-- No Help file provided for Admin Tab; not in TOC -->
+<mapID target="admin_roles" url="admin_roles.html" />
+<mapID target="admin_contEquipCatalog" url="admin_contEquipCatalog.html" />
+<mapID target="admin_configuration" url="admin_configuration.html" />
+<mapID target="admin_scheduler" url="admin_scheduler.html" />
+<mapID target="admin_serviceCatalog" url="admin_serviceCatalog.html" />
+<mapID target="admin_users" url="admin_users.html" />
+<mapID target="admin_defTab" url="admin_defTab.html" />
+
+
+<!--  HelpOnHelp Help Topics -->
+<mapID target="helpOnHelp_html" url="helpOnHelp.html" />
+<mapID target="contents_html" url="contents.html" />
+<mapID target="idxtab_html" url="idxtab.html" />
+<mapID target="search_html" url="search.html" />
+<mapID target="topic_html" url="topic.html" />
+
+</map>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf136846048365835" configfile="/impact-web/src/main/webapp/WEB-INF/companies-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="companies/companySearch" x="122" y="274" id="pf13754782605686" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" outlinks="pf13754782605687" inlinks="pf13754782605687" path="/companies/companySearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="754" id="pf13754782605698" outlinks="pf13754782605699 pf137547826056910 pf137547826056911 pf137547826056912 pf137547826056913" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="companies/createCompany" x="338" y="178" id="pf137547826056914" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13754782605699" path="/companies/createCompany.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="companies/companyProfile" x="338" y="562" id="pf137547826056915" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf137547826056910" path="/companies/companyProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="companies/notes" x="338" y="946" id="pf137547826056916" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf137547826056911" path="/companies/notes.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="companies/noteDetail" x="338" y="1330" id="pf137547826056917" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf137547826056912" path="/companies/noteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="companies/deleteCompany" id="pf137547826056918" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf137547826056913" path="/companies/deleteCompany.jsp"/>
+  <links id="pf13754782605699" target="pf137547826056914" source="pf13754782605698" outcome="companies.createCompany" redirect="true"/>
+  <links id="pf137547826056910" target="pf137547826056915" source="pf13754782605698" outcome="companyProfile" redirect="true"/>
+  <links id="pf137547826056911" target="pf137547826056916" source="pf13754782605698" outcome="companies.profile.notes" redirect="true"/>
+  <links id="pf137547826056912" target="pf137547826056917" source="pf13754782605698" outcome="dialog:companyNoteDetail"/>
+  <links id="pf13754782605687" target="pf13754782605686" source="pf13754782605686" outcome="Success" fromaction="#{companySearch.submitSearch}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf137547826056913" target="pf137547826056918" source="pf13754782605698" outcome="dialog:deleteCompany"/>
+</pageflow:Pageflow>

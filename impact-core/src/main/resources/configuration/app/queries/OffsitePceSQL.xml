@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<OffsitePceSQL>
+		<offsitePceColumns>
+			p.offsite_pce_id, p.afs_id, p.afs_dt, p.fp_id, p.action_date, p.last_modified
+		</offsitePceColumns>
+
+		<retrieveOffsitePCE>
+			SELECT ${OffsitePceSQL.offsitePceColumns} FROM
+			%Schema%ce_offsite_pce p WHERE p.offsite_pce_id = ?
+		</retrieveOffsitePCE>
+
+		<createOffsitePce>
+			INSERT INTO %Schema%ce_offsite_pce(offsite_pce_id, fp_id, action_date) VALUES
+			(?,?,?)
+		</createOffsitePce>
+		
+		<deleteOffsitePce>
+			DELETE FROM %Schema%ce_offsite_pce WHERE offsite_pce_id = ?
+		</deleteOffsitePce>
+
+		<modifyOffsitePce>
+			UPDATE %Schema%ce_offsite_pce SET afs_id =?, afs_dt = ?, fp_id = ?, action_date = ?,
+			last_modified = ? WHERE offsite_pce_id = ? AND last_modified = ?
+		</modifyOffsitePce>
+
+		<newAfsOffsitePCEs>
+			SELECT ${OffsitePceSQL.offsitePceColumns}, ea.action_id, ea.action_date, ea.enforcement_id,
+			ff2.facility_id, ff2.facility_nm, ff1.version_id, ff2.federal_scsc_id as scsc_id 
+			FROM %Schema%fp_facility ff1, %Schema%fp_facility ff2,
+			%Schema%ce_offsite_pce p
+			LEFT OUTER JOIN %Schema%ce_enforcement_action ea 
+			 on (ea.enf_discovery_type_cd = 'O' AND ea.enf_discovery_id = p.offsite_pce_id)
+			 WHERE p.fp_id = ff1.fp_id AND ff1.facility_id = ff2.facility_id AND ff2.version_id = -1
+			 AND ff1.facility_id &lt;> '0125204001' AND p.afs_dt is null
+			 ORDER BY ff2.federal_scsc_id, ff2.facility_id, p.offsite_pce_id
+		</newAfsOffsitePCEs>
+		
+		<retrieveOffSiteVisitsByAfsId>
+			SELECT ${OffsitePceSQL.offsitePceColumns}, ff2.facility_id, ff2.facility_nm, ff2.version_id, ff2.federal_scsc_id as scsc_id 
+			 FROM %Schema%ce_offsite_pce p, %Schema%fp_facility ff1, %Schema%fp_facility ff2
+			 WHERE ff2.federal_scsc_id = ? AND p.afs_id = ? AND ff2.version_id = -1 
+			 AND ff1.fp_id = p.fp_id AND ff1.facility_id = ff2.facility_id
+		</retrieveOffSiteVisitsByAfsId>
+	</OffsitePceSQL>
+</root>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+	<ExternalLinks>
+		<Section name="General">
+			<Link title="Wyoming FAQ"
+				url="http://deq.state.wy.us/out/outreachfaq.htm"/>
+			<!-- <Link title="Annual Permit Evaluation Report (PER) Form - Frequently Asked Questions"
+				url="http://epa.ohio.gov/portals/27/permits/PER.pdf"/>-->
+			<Link title="Wyoming Public Notices"
+				url="http://wyopublicnotices.com/"/>
+			<Link title="SCC Codes"
+				url="http://www.adeq.state.ar.us/air/isteps/p_scc_select.asp"/>
+			<Link title="NAICS Reference Information"
+				url="http://www.census.gov/eos/www/naics/"/>
+		</Section>
+		
+		<Section name="Guidance">
+			<Link title="Exceptional Event Letter Guidance"
+				url="http://deq.state.wy.us/aqd/downloads/AirMonitor/DEQ_AQD_Exceedance_Documentation_Guidance.pdf"/>
+			<Link title="Guidance for Ambient Monitoring Network Change"
+				url="http://deq.state.wy.us/aqd/downloads/AirMonitor/Guidance_for_Ambient_Monitoting_Network_Change.pdf"/>
+			<Link title="New Source Construction Permit Guidance"
+				url="http://deq.state.wy.us/aqd/construction.asp"/>
+			<Link title="Oil and Gas Guidance"
+				url="http://deq.state.wy.us/aqd/oilgas.asp"/>
+			<Link title="Coal Bed Methane Guidance"
+				url="http://deq.state.wy.us/aqd/coalbed.asp"/>
+			<Link title="Title V Operating Permit Guidance"
+				url="http://deq.state.wy.us/aqd/operating.asp"/>
+			<Link title="Emissions Inventory Guidance"
+				url="http://deq.state.wy.us/aqd/ei.asp"/>
+			<Link title="Asbestos Guidance"
+				url="http://deq.state.wy.us/aqd/asbestos.asp"/>
+			<Link title="Excess Emission Guidance"
+				url="http://deq.state.wy.us/aqd/miscforms.asp"/>
+			<Link title="Division Approved Calculation Methods for Various Sources"
+				url="http://deq.state.wy.us/aqd/Miscellaneous/calcs.pdf"/>
+			<Link title="Potential to Emit (PTE) Guide"
+				url="http://epamact.utk.edu/library/pdf/ptebroc.pdf"/>
+			<Link title="USEPA - Applicability Determination Index"
+				url="http://cfpub.epa.gov/adi/"/>
+			<Link title="USEPA - Control Equipment Knowledge Base"
+				url="http://cfpub.epa.gov/mkb/control.cfm"/>
+			<Link title="USEPA - Control Techiques Guidelines"
+				url="http://www.epa.gov/airquality/ozonepollution/SIPToolkit/ctgs.html"/>
+			<Link title="USEPA - Industry Sector Notebooks"
+				url="http://www.epa.gov/compliance/resources/publications/assistance/sectors/notebooks/index.html"/>
+			<Link title="USEPA - Policy and Guidance"
+				url="http://www.epa.gov/ttn/oarpg/"/>
+			<Link title="USEPA - Region 8"
+				url="http://www.epa.gov/aboutepa/region8.html"/>
+			<Link title="USEPA - Technology Transfer Network"
+				url="http://www.epa.gov/ttn/"/>
+			<Link title="USEPA - Region 8 - Air Permitting"
+				url="http://www2.epa.gov/region8/air-permitting"/>
+			<Link title="USEPA - Region 8 - National Environmental Policy Act (NEPA)"
+				url="http://www2.epa.gov/region8/national-environmental-policy-act"/>
+			<Link title="EPA-Emission Measurement Center"
+				url="http://epa.gov/ttn/emc/"/>
+			<Link title="USEPA"	url="http://www.epa.gov/"/>
+			<Link title="Wyoming DEQ/Air Quality Division Requirements for Submitting Modeling Analyses (Major/PSD Sources)"
+				url="http://deq.state.wy.us/aqd/downloads/cbm/MajorSrc_ModelGuide_21Jan14.pdf"/>	
+			<Link title="Wyoming DEQ/Air Quality Division Requirements for Submitting Modeling Analyses (Minor Sources and CBM Sources)"
+				url="http://deq.state.wy.us/aqd/downloads/cbm/MinorSrc_ModelGuide_21Jan14.pdf"/>
+		</Section>
+		
+		<Section name="Tools and Software">
+			<Link title="Air Dispersion Modeling Conversions and Formulas"
+				url="http://www.air-dispersion.com/formulas.html"/>
+			<Link title="Paint and Coating emissions calculator"
+				url="http://www.paintcenter.org/newcalc.cfm"/>
+			<Link title="Unit Conversion calculator"
+				url="http://www.onlineconversion.com/"/>
+			<Link title="USEPA - AP-42 Emission Factors"
+				url="http://www.epa.gov/ttn/chief/ap42/index.html"/>
+			<Link title="WebFIRE (Factor Information Retrieval System)"
+				url="http://cfpub.epa.gov/webfire/index.cfm?action=fire.main&amp;CFID=126672227&amp;CFTOKEN=24275215&amp;jsessionid=4e303b2eec8f286aae1230372d3f6c24a315"/>
+			<Link title="EPA-Air Quality Models"
+				url="http://www.epa.gov/ttn/scram/aqmindex.htm"/>
+			<Link title="TANKS Emission Estimation Software"
+				url="http://www.epa.gov/ttn/chief/software/tanks/index.html"/>
+		</Section>
+		
+		<Section name="Monitoring">
+			<Link title="WyVisNet"
+				url="http://www.wyvisnet.com"/>
+			<Link title="AQD Monitoring Page"
+				url="http://deq.state.wy.us/aqd/Monitoring Data.asp"/>
+			<Link title="Annual Network Plans"
+				url="http://deq.state.wy.us/aqd/Annual Network Plans.asp"/>
+			<Link title="EPA-Air Data"
+				url="http://www.epa.gov/airdata/"/>
+			<Link title="EPA-AirNow"
+				url="http://www.airnow.gov/"/>
+			<Link title="EPA-AirNowTech"
+				url="http://www.airnowtech.org/index.cfm?page=login"/>
+		</Section>
+		
+		<Section name="Rules">
+			<Link title="Electronic Code of Federal Regulations (e-CFR)"
+				url="http://ecfr.gpoaccess.gov/cgi/t/text/text-idx?&amp;c=ecfr&amp;tpl=/ecfrbrowse/Title40/40tab_02.tpl"/>
+			<Link title="Federal Register" 
+				url="http://www.epa.gov/fedrgstr/"/>
+			<Link title="MACT Standards and Contacts"
+				url="http://www.epa.gov/ttn/atw/mactfnlalph.html"/>
+			<Link title="NSPS, MACT, NESHAP Subparts"
+				url="http://www.tceq.state.tx.us/permitting/air/nav/air_supportsys.html"/>
+			<Link title="Wyoming Rules and Regulations"
+				url="http://soswy.state.wy.us/Rules/default.aspx"/>
+			<Link title="USEPA - Clean Air Act" 
+				url="http://epa.gov/air/caa/"/>
+			<Link title="USEPA - Stack Test Methods"
+				url="http://www.epa.gov/ttn/emc/promgate.html"/>
+			<Link title="EPA Test Methods"
+				url="http://www.baaqmd.gov/?sc_itemid=16F32108-0ECC-4759-AE59-91A9F098F50C"/>
+			<Link title="USEPA - HAP List"
+				url="http://www.epa.gov/ttn/atw/188polls.html"/>
+		</Section>
+		
+		<Section name="Other Information">
+			<Link title="Wyoming DEQ"
+				url="http://deq.state.wy.us/"/>
+			<Link
+				title="USEPA - ECHO (Enforcement &amp; Compliance History Online)"
+				url="http://www.epa-echo.gov/echo/"/>
+		</Section>
+	</ExternalLinks>
+</root>

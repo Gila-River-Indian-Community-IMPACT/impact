@@ -1,0 +1,23 @@
+<root>
+	<workflow-definitions>
+		<category label="Benchmarks" description="">
+			<definition-set table="PT_PERMIT_ACTIVITY_BENCHMARK_DEF"
+				contentType="custom" label="Permitting" columnPrefix="benchmark"
+				deprecateModel="flag" create="T" update="T" orderBy="DISPLAY_ORDER"
+				description="Permitting workflow benchmarks" importClass="us.oh.state.epa.stars2.def.PermitWorkflowActivityBenchmarkDef">
+				<field column="ACTIVITY_BENCHMARK_CD" label="Code" update="T" />
+				<field column="ACTIVITY_TEMPLATE_ID" label="Task Type"
+					update="T" pickListTable="PT_PERMITTING_WF_ACTIVITY_TEMPLATES"
+					pickListColumn="ACTIVITY_TEMPLATE_ID" pickListDisplay="ACTIVITY_TEMPLATE_NM" />
+				<field column="PREDICATE_CD" label="Predicate" update="T"
+					pickListTable="CM_PREDICATE_DEF" pickListColumn="PREDICATE_CD"
+					pickListDisplay="PREDICATE_DSC" />
+				<field column="DAYS" label="Days" update="T" />
+				<field column="DISPLAY_ORDER" label="Display Order" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+		</category>
+	</workflow-definitions>
+</root>

@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<!-- ********** HEAD ************ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Help: Common User Interface Elements --&gt; Detail Data</title>
+
+<link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+<link rel="STYLESHEET" type="text/css" href="stars2.css">
+
+<!-- **Uncomment** this STYLE element to hide TOC button -->
+<!-- **Comment out** this STYLE element to display TOC button -->
+<script language="JavaScript" type="text/javascript" src="browvers.js">
+</script>
+
+<style type="text/css"> .hide {display : none}
+</style>
+</head> <!--  END HEAD -->
+
+<!-- ********** BODY ************ -->
+<body>
+<noscript>Script to detect browser version</noscript>
+
+<!-- ********** TOP [BOOKMARK] ************ -->
+<a name="top"></a>
+
+<div class="zz-skip-header"><a href="#start">Skip navigation header</a></div>
+
+<table summary="Document information and navigation controls" border="0" 
+	width="97%">
+<tbody>
+  <tr>
+    <td class="zz-nav-header-cell" scope="col"><strong>Common User Interface 
+	Elements</strong></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="common_ui_datagrids.html">
+       <img src="images/leftnav.gif" alt="Previous Topic" border="0" 
+		height="24" width="23"><br>Previous Topic</a></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="common_ui_editMode.html">
+       <img src="images/rightnav.gif" alt="Next Topic" border="0" 
+		height="24" width="23"><br>Next Topic</a></td>
+  </tr>
+</tbody>
+</table>
+
+<!-- ********** START [BOOKMARK] ************ -->
+<a name="start"></a>
+<h1>Detail Data Pages</h1>
+<h2>Overview </h2>
+<p>This Help topic describes the general layout and common features 
+of pages in the system that provide Detail Data about an object or entity for 
+which data is  
+stored in the system.  Most artifacts in the system, including 
+<font face="Courier New">Facilities,</font>   
+<font face="Courier New">Applications</font>,   
+Requests for Permitting Action,   
+<font face="Courier New">Permits</font>,   
+<font face="Courier New">Emissions Inventories</font>,  
+ and <font face="Courier New">Compliance Reports</font> offer such pages.      
+You can access Detail Data for an object by clicking on the identifier link, 
+for example a 
+<font face="Courier New">Report ID</font>, for an instance of that 
+object    
+in a datagrid, a tree or any other summary screen. 
+</p> 
+<p>Detail Data screens have similar general layouts and some common features.      
+Each includes entity-specific 
+<a href="#hi-level_data">high-level data</a> for a single 
+instance of an object.&nbsp; Lower-level data be available for some
+objects through    
+third-level menu links or nodes in a <a href="#tree_control">tree</a> 
+that may
+appear on the screen with the high-level data.
+The <a href="common_ui_menuStructure.html">Page Layout &amp; Menu Structure
+</a> Help topic page describes and illustrates the common 
+third-level menu element and illustrates the position of the 
+content area with
+respect to that menu, the tree control and other common screen elements.
+</p>
+<!--   
+The always-visible data is set off by a content title 
+(in this example, 
+<font face="Courier New">Permit Information</font>).  Additionally, more 
+detailed data is often available in  
+screen regions that are <a href="common_ui_elements_collapsibleRegions.html">
+collapsed</a> 
+while other information may appear in 
+<a href="common_ui_elements_datagrids.html">datagrids</a>.&nbsp; 
+The operations buttons appear at the bottom of the content area on the 
+screen.&nbsp;  
+Some operation buttons may be grayed-out, indicating either that you are not 
+authorized to  
+perform that action, or the action.&nbsp; You may find additional informa 
+does not apply to 
+the current state of your selections.&nbsp; Depending upon the object which 
+the data 
+describes, you may also see a tree structure and/or a lower- (also called a 
+third-) level 
+menu through which you can access even more information</p>
+-->
+<p>Each Detail Data page also provides you the opportunity,   
+with  
+<a href="#buttons">Operations Buttons</a>, to    
+enter and/or modify data shown on the page, and to perform
+other context-specific operations.  For objects that include
+tree representations, you may also access a Detail
+Data page (and its associated operations buttons) 
+by selecting a node in the tree for the object of interest.  
+(See the 
+<a href="#tree_control">Tree Control</a>  
+section below for more information on that usage.)     
+Some Detail Data  
+pages also provide the capability for you to view, add or delete 
+ Attachments related to an object, 
+either directly
+ on the Detail Page, or via a third-level menu item.  
+ These capabilities are      
+covered in separate Help topics, accessible via the preceding links or those 
+listed  
+in <a href="#rel_help">  
+Related Help Topics.</a></p>
+<p>Figure 1 below presents an overview of the Facility Detail Page 
+(also called the  
+initial Facility Detail page).  This is certainly the most complex Detail 
+Data page 
+in the system.&nbsp; Consequently, it illustrates the data and
+ operations 
+components 
+discussed in the remainder of this Help topic, as well as the page links above  
+and those in the <a href="#rel_help">Related Help Topics</a> section below. 
+</p>
+<p>
+<a name="detail_data_overview_figure"></a>
+<div align="center">
+<img src="images/facility_profileOverviewPublicCollapsed.jpg"  
+alt="Facility Detail Page (Public) Overview, Collapsed">
+<br>
+<b>Figure 1: Detail Data Overview, using
+Facility Detail as an Example</b><br>
+</div>
+
+<p>The following common Detail Data screen elements are included in 
+<u>this</u> 
+Help topic:   
+ <ul>
+ <li><a href="#tree_control">Tree Control</a></li>
+ <li><a href="#hi-level_data">High-level Data</a></li>
+ <li><a href="#data_regions">Collapsible Data Regions</a></li>
+ <li><a href="#buttons">Operations Buttons</a>
+ <p>Other common Detail Data screen elements are covered in separate Help topics, 
+      as listed in</p>
+      </li>
+ <li><a href="#rel_help">Related Help Links.</a></li>
+ </ul>
+ <p>Note that not all Detail Data pages offer all of the data screen sectors 
+described here, but most are common   
+ to at least several such pages. They will work the same on any Detail Data 
+page on which they are offered.<br></p>
+<p><a href="#top">Back to Top</a></p>
+
+<!--  ********** Tree Control  ************************************** -->
+<h2><a name="tree_control"><br>Tree Control</a></h2> 
+<p>
+On some screens, specifically those presenting information
+about your facility, an issued permit, an emissions inventory or a
+permit application,
+the system provides a tree view of the object you are looking at.    
+The tree gives you direct access to information about each object that
+is represented by a node in the tree,   
+as well as   
+providing a comprehensive summary of the object you are looking at. Figure 7   
+illustrates a portion of a facility tree that might appear in the tree region 
+in <a href="#detail_data_overview_figure">Figure 1</a>.
+<p>
+<div align="center">
+<img src="images/treeRegion.jpg"  alt="Facility Tree Example">
+<br><br><b>Figure 3: Portion of a Facility Tree</b><br>
+</div>
+ 
+<p>The tree control is covered in more detail on the 
+<a href="common_ui_detailData.html">Common User Interface --&gt; Detail Data</a> and 
+the <a href="facility_tree.html">Facility Tree</a> Help topic pages, the latter 
+of<br>which includes a table describing the icons 
+you will see in the trees.   
+<!--  replace if we ever do icon legend page 
+The 
+<a href="icon_legend.html">Common User Interface -&gt; 
+Icon Legend</a> provides 
+a list of the icons used in all the tree representations in the system,  
+along with explanations of their meaning when used in different contexts.</p>
+<a href="#top">Back to Top</a>
+-->
+
+
+<!-- ********** High-level entity data ************ -->
+<h2><a href="hi-level_data"></a><br>High-level Data</h2>
+<p>The topmost region of the <a href="common_ui_menuStructure.html/#content">Content 
+Area</a> 
+displays high-level information about the object, such as identification, 
+status, and the  
+most salient data items for that object.  Normally, this region is always 
+visible.   
+Identified with a double green line (<img src="images/double-green line.jpg" alt="double green line">)
+in <a href="#detail_data_overview_figure">Figure 1</a>, 
+the high-level 
+information is presented between the 
+<font face="Courier New">Facility Information</font> 
+page title and the title of the following screen region (in this case, 
+<font face="Courier New">Facility Details</font>). It presents various data items
+related to the entity.  Clearly, the data presented depends upon the object.  
+For example, as illustrated in <a href="#detail_data_overview_figure">Figure 1</a>,
+the <font face="Courier New">Facility Detail</font> detail page includes
+facility location information, classification and status information, and
+compliance reporting due dates.</p> 
+
+<p><a href="#top">Back to Top</a></p>
+
+<!-- ********** Labeled Data Regions BOOKMARK************ -->
+<h2><a name="data_regions"></a><br>Collapsible Data Regions</h2>
+<p>One or more collapsible
+screen regions often follow the always-visible topmost screen region. 
+These regions contain additional data grouped for ease of understanding 
+and use.  
+Icons adjacent to
+the region title allow the user to expand(<img src="images/expand.jpg" 
+alt="Expand-region icon">) or collapse (<img src="images/collapse.jpg" alt="Collapse-region icon" >) 
+the region. Expanding any collapsed screen regions reveals the additional 
+information displyed in the region.  In the example in 
+<a href="#detail_data_overview_figure">
+Figure 1</a>, the <font face="Courier New">Facility Details</font> region 
+is populated, but collapsed so the data is not immediately visible. 
+<font face="Courier New">Facility Details</font> region is 
+  
+Expanding the <font face="Courier New">Facility Details</font> region 
+reveals the following data:   
+</p>
+<p>
+<a name="figure 4"></a>
+<div align="center">
+<img src="images/facility_detailExpanded.jpg" alt="Facility Detail
+screen region - expanded"><br>
+<b>Figure 4: Faciity Detail Screen Region - Expanded</b>
+</div>
+
+<p>Frequently the 
+page will have a  
+collapsible screen region devoted to <a href="common_ui_attachments.html">Attachments</a>,  
+documents you may attach to certain objects 
+in the system, and one devoted to <a href="common_ui_notes.html">Notes</a>.  Notes and Attachments 
+are covered in detail in other Help topic pages. 
+</p> 
+   
+<p><a href="#top">Back to Top</a></p>
+
+<!-- ********** Operations Buttons BOOKMARK************ -->
+<h2><a name="buttons"></a><br>Operations Buttons</h2>
+<p>  
+At the bottom of each Detail Data screen, the system offers 
+operations buttons appropriate 
+to the object.  
+Most screens will have some combination of the common operations 
+buttons including <img src="images/btn_edit.jpg"
+alt="Edit button">, <img src="images/btn_validate.jpg" alt="Validate button">,
+and <img src="images/btn_submit.jpg" alt="Submit button"> buttons 
+described in <a href="common_ui_editMode/#buttons">Entering and Editing
+Data --&gt; Operations Buttons</a> as well as context-sensitive
+buttons appropriate to 
+the object, such as the 
+<img src="images/btn_preserveCurrentProfile.jpg" alt="Preserve Current Profile button">, 
+<img src="images/btn_showProfileReport.jpg" alt="Show Profile Report button">, 
+<img src="images/btn_createEmissionsUnit.jpg" alt="Create Emissions Unit button">,
+<img src="images/btn_createControlEquipment.jpg" alt="Create Control Equipment button">,
+and <img src="images/btn_createEgressPoint.jpg" alt="Create Release Point button"> 
+buttons you see on the <font face="Courier New">Facility Detail</font> 
+Detail Data screen illustrated in <a href="#detail_data_overview_figure">Figure 1</a>
+and <a href="#facility_detailExpanded.jpg">Figure 4</a>.
+  Each of these 
+buttons executes an automatic operation, or moves to a screen for further 
+user-input or action to complete the operation named on the button. 
+You will find similar context-sensitive operations
+buttons (to perform for different operations) on the detail data 
+screen for each object in the system</p> 
+
+<p>Some operation buttons may be grayed-out, 
+indicating
+ that the action does not apply to the current state of the object.  
+</p>
+<p><a href="#top">Back to Top</a>
+<!-- ********** Related Help Topics BOOKMARK************ -->
+<h2><a name="rel_help"></a><br>
+Related Help Topics</h2>
+<ul>
+<li><a href="common_ui_menuStructure.html">Page Layout and Menu Structure</a></li>
+<li><a href="common_ui_datagrids.html">Datagrids</a></li>
+<li><a href="facility_tree.html">Facility Tree<br></a></li>
+<li><a href="common_ui_editMode.html">Entering and Editing Data</a></li>
+<li><a href="common_ui_inputFields.html">Input Fields</a></li>
+<li><a href="common_ui_notes.html">Notes</a></li>
+</ul>
+<p><a href="#top">Back to Top</a></p>
+
+<p class="horizontal-rule">&nbsp;<br>
+</p>
+<div class="zz-nav-footer-menu"><a href="common_ui_datagrids.html">
+Previous Topic</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="common_ui_editMode.html">Next Topic</a> </div>
+<!-- no legal notice in Stars2 system help; command remains for potential 
+future use -->
+<p class="zz-legal-notice"><a class="zz-legal-notice-link" href="cpyr.html">
+Copyright © 1996, 2004, Oracle.</a> All rights reserved.</p>
+</body></html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+    <portalCreateMenu>
+        <menuItem title="Make a change to the Facility Inventory"
+            outcome="changeFacilityProfile" disabled="false" column="facility"
+            explainText="Make a change to the information describing my facility. Other IMPACT services - such as permit applications, emissions inventories, and compliance reports are based on the information in the facility inventory." />
+
+        <menuItem title="Make a change to the Facility Inventory - clone another facility"
+        	popup="true" width="1200" height="1200"
+            outcome="changeFacilityProfileWithCloning" disabled="false" column="facility"
+            explainText="Make a change to the information describing my facility by initially cloning existing equipment from another facility. Other IMPACT services - such as permit applications, emissions inventories, and compliance reports are based on the information in the facility inventory." 
+            />
+
+        <menuItem title="Make a change to the Facility Contact(s)"
+            outcome="changeOwnerContact" disabled="false" column="facility"
+            explainText="Make a change to the contact of my facility." />    
+            
+ 
+
+        <menuItem title="Create an NSR Permit Application"
+        	restrictedMode="true"
+            popup="true"
+            disabled="false"
+            outcome="createPTI_PTIOApp" column="permit" section="Permit Applications"
+            explainText="Initial, Renewal, Modification, (click Help for details)"
+            width="600"
+            height="275" />         
+
+        <menuItem title="Create a Title V Permit Application"
+        	restrictedMode="false"
+            popup="true"
+            disabled="false"
+            outcome="createTVPTOApp" column="permit" section="Permit Applications"
+            explainText="Inital, Renewal, Modification (click Help for details)"
+            width="600"
+            height="275"/>
+            
+            
+         <menuItem title="Create an Emissions Inventory"
+            popup="true"
+            disabled="false"
+            outcome="createEmissionReport" column="emissions" section="Emissions Inventories"
+            explainText="Create an Emissions Inventory."
+            width="900"
+            height="600" />   
+            
+          <menuItem title="Create a Stack Test Report"
+            popup="true"
+            disabled="false"
+            outcome="startNewStackTestReport" column="compliance" section="Compliance Reports"
+            explainText="Create a stack test report."
+            width="600"
+            height="275" />
+            
+          <menuItem title="Create a Compliance Report"
+            popup="true"
+            disabled="false"
+            outcome="startCreateCompReport" column="compliance" section="Compliance Reports"
+            explainText="Create a compliance report."
+            width="600"
+            height="275" />
+  
+        <menuItem title="Upload a Monitor Report"
+            outcome="uploadMonitorReport" disabled="false" column="monitoring"
+            explainText="Upload a monitor report." />
+  
+          <!--
+          <menuItem title="Create a CEMS/COMS/RATA Compliance Report"
+            popup="true"
+            disabled="false"
+            outcome="createCompReportCems" column="compliance" section="Compliance Reports"
+            explainText="Create a compliance report for CEMS, COMS or RATA."
+            width="600"
+            height="275" />
+            
+          <menuItem title="Create a One Time Compliance Report"
+            popup="true"
+            disabled="false"
+            outcome="createCompReportOneTime" column="compliance" section="Compliance Reports"
+            explainText="Create a One Time Report." 
+            width="600"
+            height="275"/>  
+            
+        <menuItem title="Create an Other Compliance Report"
+            popup="true"
+            disabled="false"
+            outcome="createCompReportOther" column="compliance" section="Compliance Reports"
+            explainText="Create a compliance report other than a CEMS/COMS/RATA report or One Time Report."
+            width="600"
+            height="275" />
+        -->   
+        <!--     
+        <menuItem title="Create an Administrative Permit Amendment Request"
+            popup="true"
+            disabled="false"
+            outcome="createRPC" column="permit"
+            explainText="Certain types of permit modification requests do not require a full application. Choose this task to request a NSR Administrative Permit Modification, a Title V Administrative Permit Amendment or a Title V Off-Permit Change." 
+            width="600"
+            height="275"/>  
+            
+               
+        <menuItem title="Permit-by-rule Notification"
+            popup="true"
+            disabled="false"
+            outcome="createPBR" column="left"
+            explainText="Certain air contaminant sources may be eligible for a Permit-by-Rule. Choose this task to request a Permit-by-Rule."
+            width="600"
+            height="275" />
+      
+        <menuItem title="Title IV Acid Rain Application"
+          popup="false"
+          disabled="false"
+          outcome="createTIVApp" column="left" section="Permit Applications"
+          explainText="Create a Title IV Acid Rain permit application."
+          width="600"
+          height="275" />
+
+        <menuItem title="Permit Evaluation Report (PER)"
+            popup="true"
+            outcome="createCompReportPER" column="right" section="Compliance Reports"
+            explainText="Create an annual Permit Evaluation Report (PER) for air contaminant sources which have a PTIO."
+            width="600"
+            height="275" />
+            
+        <menuItem title="Scheduled Maintenence Bypass Request"
+            popup="true"
+            disabled="false"
+            outcome="createCompReportSmbr" column="right"
+            explainText="Create a Scheduled Maintenence Bypass Request." 
+            width="600"
+            height="275"/>
+            
+        <menuItem title="Create an Intent To Relocate notice"
+            popup="true"
+            disabled="false"
+            outcome="createIntToRel" column="right"
+            explainText="Applies to portable facilities only. Use this to give notice of intent to relocate." 
+            width="600"
+            height="275"/>  -->
+    </portalCreateMenu>
+</root>

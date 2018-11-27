@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<RelocateRequestSQL>
+		<relocateRequestColumns>
+		    rr.request_id as pr_request_id,rr.form_complete as pr_form_complete,rr.facility_compliant as pr_facility_compliant,
+		    rr.site_preapproved as pr_site_approved,rr.jfo_recommendation_cd as pr_jfo_recommendation_cd,rr.request_disposition_cd as pr_request_disposition_cd,rr.future_address as pr_future_address,rr.target_county_cd as pr_target_county_cd,
+		    rr.special_text as pr_special_text,rr.user_id as pr_user_id,rr.date_received as pr_date_received,rr.application_id as application_id,rr.last_modified as pr_lm
+	  	</relocateRequestColumns>
+	  	
+	  	<documentColumns>
+		      doc.document_id, doc.upload_dt, doc.facility_id, doc.description,
+		      doc.path, doc.last_checkout_by, doc.last_modified_by,
+		      doc.last_modified_ts, doc.temp_flag, doc.last_modified AS
+		      dd_lm,itr.last_modified AS ref_lm
+	    </documentColumns>
+	  	
+	  	<applicationColumns>
+			  pa.application_id, pa.application_type_cd, pa.contact_id, pa.fp_id, 
+			  pa.previous_application_nbr, pa.application_nbr, pa.validated_flag, 
+			  pa.received_date, pa.app_amended_flag, pa.app_corrected_flag, 
+			  pa.app_corrected_reason, pa.application_desc, pa.submitted_date, 
+			  pa.legacy_flag, pa.general_permit, pa.last_modified as pa_lm
+  		</applicationColumns>
+  
+		<createRelocateRequest>
+			INSERT INTO %Schema%PA_RELOCATION (request_id,form_complete,facility_compliant,
+		    site_preapproved,jfo_recommendation_cd,request_disposition_cd,future_address,target_county_cd,
+		    special_text,user_id,application_id,date_received)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+		</createRelocateRequest>
+	
+		<updateRelocateRequest>
+			UPDATE %Schema%PA_RELOCATION SET 
+			form_complete=?,facility_compliant=?,site_preapproved=?,
+			jfo_recommendation_cd=?,request_disposition_cd=?,future_address=?,
+			target_county_cd=?,special_text=?,user_id=?,application_id=?,date_received=?,
+			last_modified=? WHERE REQUEST_ID = ? AND last_modified = ?
+		</updateRelocateRequest>
+
+		<deleteRelocateRequest>
+			DELETE FROM %Schema%PA_RELOCATION WHERE
+			request_id = ?
+		</deleteRelocateRequest>
+
+		<findRelocateRequests>
+			SELECT ${RelocateRequestSQL.relocateRequestColumns}    
+            FROM %Schema%PA_RELOCATION  
+            WHERE 1 = 1 
+		</findRelocateRequests>
+		
+		<retrieveRelocateRequestById>
+			SELECT ${RelocateRequestSQL.relocateRequestColumns},${RelocateRequestSQL.applicationColumns},FF.facility_id     
+            FROM %Schema%PA_RELOCATION RR,%Schema%PA_APPLICATION PA, %Schema%FP_FACILITY FF  
+            WHERE PA.fp_id = FF.fp_id and pa.application_id = rr.application_id and rr.request_id = ? 
+		</retrieveRelocateRequestById>
+		
+		<retrievePortalRelocateRequestById>
+			SELECT ${RelocateRequestSQL.relocateRequestColumns},${RelocateRequestSQL.applicationColumns}     
+            FROM %Schema%PA_RELOCATION RR,%Schema%PA_APPLICATION PA  
+            WHERE pa.application_id = rr.application_id and rr.request_id = ? 
+		</retrievePortalRelocateRequestById>
+
+		<retrieveRelocateRequestByAppId>
+			SELECT ${RelocateRequestSQL.relocateRequestColumns},${RelocateRequestSQL.applicationColumns},FF.facility_id     
+            FROM %Schema%PA_RELOCATION RR,%Schema%PA_APPLICATION PA, %Schema%FP_FACILITY FF  
+            WHERE PA.fp_id = FF.fp_id and pa.application_id = rr.application_id and pa.application_id = ? 
+		</retrieveRelocateRequestByAppId>
+		
+		<retrieveRelocateRequestsByFacility>
+			SELECT ${RelocateRequestSQL.relocateRequestColumns},${RelocateRequestSQL.applicationColumns},FF.facility_id    
+            FROM %Schema%PA_RELOCATION RR,%Schema%PA_APPLICATION PA, %Schema%FP_FACILITY FF  
+            WHERE PA.fp_id = FF.fp_id and pa.application_id = rr.application_id and FF.facility_id = ? ORDER BY pa.received_date DESC
+		</retrieveRelocateRequestsByFacility>
+		
+		<createRelocationAttachment>
+			INSERT INTO %Schema%PA_ITR_ATTACHMENTS
+			(DOCUMENT_ID,APPLICATION_ID,ITR_ATTACHMENT_TYPE_CD,LAST_MODIFIED)
+			VALUES (?,?,?,?)
+		</createRelocationAttachment>
+		
+		<updateRelocationAttachment>
+			UPDATE %Schema%PA_ITR_ATTACHMENTS SET
+		    DOCUMENT_ID = ? , ITR_ATTACHMENT_TYPE_CD = ? , last_modified = ?
+		    WHERE DOCUMENT_ID = ?
+		    AND last_modified = ?
+    	</updateRelocationAttachment>
+    	
+    	<deleteRelocationAttachment>
+			DELETE FROM %Schema%PA_ITR_ATTACHMENTS pa_itr_attachment 
+            WHERE pa_itr_attachment.DOCUMENT_ID = ? 
+            AND pa_itr_attachment.APPLICATION_ID = ?
+		</deleteRelocationAttachment>
+		
+		<retrieveRelocationAttachments>
+			SELECT ${RelocateRequestSQL.documentColumns},
+			itr.ITR_ATTACHMENT_TYPE_CD AS attachment_type_cd 
+            FROM %Schema%dc_document doc
+			INNER JOIN %Schema%PA_ITR_ATTACHMENTS itr ON (doc.document_id = itr.document_id)
+			WHERE doc.facility_id = ? 
+            AND itr.application_id = ?
+		</retrieveRelocationAttachments>
+    
+        <retrievePreApprovedAddressesForFacility>
+	    SELECT CAST(request_id AS VARCHAR) + ':0' AS code, future_address AS description, 1 AS last_modified, 'N' AS deprecated
+	        FROM %Schema%PA_RELOCATION rel
+	        WHERE application_id IN (
+	          SELECT application_id
+	          FROM %Schema%PA_APPLICATION
+	          WHERE fp_id IN (
+	            SELECT fp_id
+	            FROM %Schema%FP_FACILITY
+	            WHERE facility_id = ?)
+	          AND application_type_cd = 'SPA')
+	   UNION
+	    SELECT CAST(request_id AS VARCHAR) + ':' + addtl_addr_id AS code, future_address AS description, 1 AS last_modified, 'N' AS deprecated
+	        FROM %Schema%pa_relocation_addtl_addr
+	        WHERE request_id IN (
+	            SELECT request_id from %Schema% PA_RELOCATION
+	            WHERE application_id IN (
+	                SELECT application_id
+	                FROM %Schema%PA_APPLICATION
+	                WHERE fp_id IN (
+	                    SELECT fp_id
+	                    FROM %Schema%FP_FACILITY
+	                    WHERE facility_id = ?)
+	                AND application_type_cd = 'SPA')
+	             )
+        </retrievePreApprovedAddressesForFacility>
+        
+        <createRelocationAddtlAddr>
+        	INSERT INTO %Schema%pa_relocation_addtl_addr (addtl_addr_id, request_id,
+        		future_address, target_county_cd)
+            VALUES (?, ?, ?, ?)
+        </createRelocationAddtlAddr>
+        
+        <retrieveRelocationAddtlAddrs>
+        	SELECT addtl_addr_id, request_id, future_address, target_county_cd
+        	FROM %Schema%pa_relocation_addtl_addr
+        	WHERE request_id = ?
+        </retrieveRelocationAddtlAddrs>
+        
+        <deleteRelocationAddtlAddrs>
+        	DELETE FROM %Schema%pa_relocation_addtl_addr
+        	WHERE request_id = ?
+        </deleteRelocationAddtlAddrs>
+        
+        <getMaxAddtlAddrId>
+		  SELECT MAX(addtl_addr_id) 
+		  FROM %Schema%pa_relocation_addtl_addr
+		  WHERE request_id = ?
+        </getMaxAddtlAddrId>
+
+	</RelocateRequestSQL>
+</root>

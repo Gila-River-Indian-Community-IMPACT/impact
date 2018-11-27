@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf136846017108434" configfile="/impact-web/src/main/webapp/WEB-INF/ceta-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="5554" id="pf137640039253050" outlinks="pf137640039253051 pf137640039253052 pf137640039253053 pf137640039253054 pf137640039253055 pf137640039253056 pf137640039253057 pf137640039253058 pf137640039253061 pf137640039253063 pf137640039253065 pf137640039253066 pf137640039253067 pf137640039253068 pf13948321412900 pf13948321412901 pf15410126517180 pf15410126517181 pf15410126517182 pf15410126517183 pf15410126517184 pf15410126517185 pf15410126517186 pf15410126517187 pf15410126517188 pf15410126517189 pf154101265171810 pf154101265171811 pf154101265171812 pf154101265171813 pf154101265171814" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/enforcementSearch" x="338" y="178" id="pf137640039253069" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf137640039253051" path="/ceta/enforcementSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/stackTestSearch" x="338" y="562" id="pf137640039253070" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf137640039253052" path="/ceta/stackTestSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/complianceSearch" x="338" y="946" id="pf137640039253071" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf137640039253053" path="/ceta/complianceSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/fceSearch" x="338" y="1330" id="pf137640039253072" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf137640039253054" path="/ceta/fceSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/siteVisitSearch" x="338" y="2098" id="pf137640039253073" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf137640039253055" path="/ceta/siteVisitSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/complaintSearch" x="338" y="2482" id="pf137640039253074" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf137640039253056" path="/ceta/complaintSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/gdfSearch" x="338" y="3250" id="pf137640039253075" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf137640039253057" path="/ceta/gdfSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/prtEmissionsTest" x="338" y="3634" id="pf137640039253076" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf137640039253058" path="/ceta/prtEmissionsTest.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/enforcementDetail" x="122" y="6448" id="pf137640039253077" referenceLink="//@navigationRule.2/@fromViewId|" path="/ceta/enforcementDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/offsitePce" x="122" y="7343" id="pf137640039253079" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" path="/ceta/offsitePce.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/enforcementActionDetail" x="338" y="1714" id="pf137640039253180" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf154101265171815" inlinks="pf137640039253061 pf15410126517180" path="/ceta/enforcementActionDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/enforcementMilestoneDetail" x="122" y="8239" id="pf137640039253181" referenceLink="//@navigationRule.1/@navigationCase.4/@toViewId|" path="/ceta/enforcementMilestoneDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/enforcementNoteDetail" x="338" y="4018" id="pf137640039253182" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf137640039253063" path="/ceta/enforcementNoteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/linkToDiscovery" x="122" y="9135" id="pf137640039253183" referenceLink="//@navigationRule.1/@navigationCase.6/@toViewId|" path="/ceta/linkToDiscovery.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/complaintDetail" x="338" y="4402" id="pf137640039253184" referenceLink="//@navigationRule.1/@navigationCase.4/@toViewId|" inlinks="pf137640039253065" path="/ceta/complaintDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/gdfDetail" x="338" y="4786" id="pf137640039253185" referenceLink="//@navigationRule.1/@navigationCase.5/@toViewId|" inlinks="pf137640039253066" path="/ceta/gdfDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/fceSchedules" x="338" y="5170" id="pf137640039253186" referenceLink="//@navigationRule.1/@navigationCase.6/@toViewId|" inlinks="pf137640039253067" path="/ceta/fceSchedules.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/viewHistory" x="338" y="5554" id="pf137640039253187" referenceLink="//@navigationRule.1/@navigationCase.7/@toViewId|" inlinks="pf137640039253068" path="/ceta/viewHistory.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="tools/correspondence" x="122" y="10032" id="pf137640039253188" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" path="/tools/correspondence.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/fceSchedulesHelpInfo" x="338" y="5938" id="pf13948321412912" referenceLink="//@navigationRule.1/@navigationCase.8/@toViewId|" inlinks="pf13948321412900" path="/ceta/fceSchedulesHelpInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/stackTestSynchProfileDetail" x="338" y="6322" id="pf13948321412913" referenceLink="//@navigationRule.1/@navigationCase.9/@toViewId|" inlinks="pf13948321412901" path="/ceta/stackTestSynchProfileDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="correspondence/correspondence" x="554" y="2290" id="pf154101265171816" referenceLink="//@navigationRule.14/@navigationCase.0/@toViewId|" inlinks="pf154101265171815 pf154101265171817" path="/correspondence/correspondence.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/enforcementActionEventDetail" x="338" y="6706" id="pf154101265171818" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf15410126517181" path="/ceta/enforcementActionEventDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/enfAttachmentDetail" x="338" y="7090" id="pf154101265171819" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf15410126517182" path="/ceta/enfAttachmentDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/deleteEnforcementAction" x="338" y="7474" id="pf154101265171820" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf15410126517183" path="/ceta/deleteEnforcementAction.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/fcePreData" x="338" y="2866" id="pf154101265171821" referenceLink="//@navigationRule.16/@fromViewId|" outlinks="pf154101265171817 pf154101265171822 pf154101265171823" inlinks="pf15410126517184" path="/ceta/fcePreData.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/fcePermitConditions" x="338" y="7858" id="pf154101265171824" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf15410126517185" path="/ceta/fcePermitConditions.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/fceObservations" x="338" y="8242" id="pf154101265171825" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf15410126517186" path="/ceta/fceObservations.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/prepareInspRptPopup" x="338" y="8626" id="pf154101265171826" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" inlinks="pf15410126517187 pf15410126517188 pf15410126517189" path="/ceta/prepareInspRptPopup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/fceConfirmPermitSelectionPopup" x="338" y="9010" id="pf154101265171827" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" inlinks="pf154101265171810" path="/ceta/fceConfirmPermitSelectionPopup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/generateInspRpt" x="338" y="9394" id="pf154101265171828" referenceLink="//@navigationRule.13/@navigationCase.0/@toViewId|" inlinks="pf154101265171811" path="/ceta/generateInspRpt.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/downloadInspRpt" x="338" y="9778" id="pf154101265171829" referenceLink="//@navigationRule.13/@navigationCase.1/@toViewId|" inlinks="pf154101265171812" path="/ceta/downloadInspRpt.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/generateInspInfoDoc" x="338" y="10162" id="pf154101265171830" referenceLink="//@navigationRule.13/@navigationCase.2/@toViewId|" inlinks="pf154101265171813" path="/ceta/generateInspInfoDoc.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/downloadGeneratedDocument" x="338" y="10546" id="pf154101265171831" referenceLink="//@navigationRule.13/@navigationCase.3/@toViewId|" inlinks="pf154101265171814" path="/ceta/downloadGeneratedDocument.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorSite" x="554" y="2674" id="pf154101265171832" referenceLink="//@navigationRule.15/@navigationCase.0/@toViewId|" inlinks="pf154101265171822" path="/monitoring/monitorSite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitor" x="554" y="3058" id="pf154101265171833" referenceLink="//@navigationRule.16/@navigationCase.0/@toViewId|" inlinks="pf154101265171823" path="/monitoring/monitor.jsp"/>
+  <links id="pf137640039253051" target="pf137640039253069" source="pf137640039253050" outcome="enforcements.search"/>
+  <links id="pf137640039253052" target="pf137640039253070" source="pf137640039253050" outcome="stackTest.search"/>
+  <links id="pf137640039253053" target="pf137640039253071" source="pf137640039253050" outcome="complianceStatus.search"/>
+  <links id="pf137640039253054" target="pf137640039253072" source="pf137640039253050" outcome="fce.search"/>
+  <links id="pf137640039253055" target="pf137640039253073" source="pf137640039253050" outcome="siteVisit.search"/>
+  <links id="pf137640039253056" target="pf137640039253074" source="pf137640039253050" outcome="complaints.search"/>
+  <links id="pf137640039253057" target="pf137640039253075" source="pf137640039253050" outcome="gdfs.search"/>
+  <links id="pf137640039253058" target="pf137640039253076" source="pf137640039253050" outcome="dialog:prtEmissionsTest"/>
+  <links id="pf137640039253061" target="pf137640039253180" source="pf137640039253050" outcome="enforcement"/>
+  <links id="pf137640039253063" target="pf137640039253182" source="pf137640039253050" outcome="dialog:enforcementNoteDetail"/>
+  <links id="pf137640039253065" target="pf137640039253184" source="pf137640039253050" outcome="dialog:complaintDetail"/>
+  <links id="pf137640039253066" target="pf137640039253185" source="pf137640039253050" outcome="dialog:gdfDetail"/>
+  <links id="pf137640039253067" target="pf137640039253186" source="pf137640039253050" outcome="ceta.fceSchedule"/>
+  <links id="pf137640039253068" target="pf137640039253187" source="pf137640039253050" outcome="dialog:viewHistory"/>
+  <links id="pf13948321412900" target="pf13948321412912" source="pf137640039253050" outcome="dialog:inspectionScheduleHelpInfo"/>
+  <links id="pf13948321412901" target="pf13948321412913" source="pf137640039253050" outcome="dialog:stackTestSynchProfileDetail"/>
+  <links id="pf15410126517180" target="pf137640039253180" source="pf137640039253050" outcome="dialog:enforcementActionDetail" redirect="true"/>
+  <links id="pf154101265171815" target="pf154101265171816" source="pf137640039253180" outcome="Success" fromaction="#{correspondenceDetail.submitFromJsp}"/>
+  <links id="pf15410126517181" target="pf154101265171818" source="pf137640039253050" outcome="dialog:enforcementActionEventDetail"/>
+  <links id="pf15410126517182" target="pf154101265171819" source="pf137640039253050" outcome="dialog:editEnforcementActionAttachment"/>
+  <links id="pf15410126517183" target="pf154101265171820" source="pf137640039253050" outcome="dialog:requestEnforcementActionDelete"/>
+  <links id="pf15410126517184" target="pf154101265171821" source="pf137640039253050" outcome="ceta.fceDetail.fcePreData" redirect="true"/>
+  <links id="pf15410126517185" target="pf154101265171824" source="pf137640039253050" outcome="ceta.fceDetail.fcePermitConditions" redirect="true"/>
+  <links id="pf15410126517186" target="pf154101265171825" source="pf137640039253050" outcome="ceta.fceDetail.fceObservations" redirect="true"/>
+  <links id="pf15410126517187" target="pf154101265171826" source="pf137640039253050" outcome="dialog:confirmPrepareInspRpt"/>
+  <links id="pf15410126517188" target="pf154101265171826" source="pf137640039253050" outcome="dialog:confirmCompleteInspRpt"/>
+  <links id="pf15410126517189" target="pf154101265171826" source="pf137640039253050" outcome="dialog:confirmFinalizeInspRpt"/>
+  <links id="pf154101265171810" target="pf154101265171827" source="pf137640039253050" outcome="dialog:confirmPermitSelection"/>
+  <links id="pf154101265171811" target="pf154101265171828" source="pf137640039253050" outcome="dialog:generateInspectionReport"/>
+  <links id="pf154101265171812" target="pf154101265171829" source="pf137640039253050" outcome="dialog:downloadInspectionReport"/>
+  <links id="pf154101265171813" target="pf154101265171830" source="pf137640039253050" outcome="dialog:generateInspectionInfoDoc"/>
+  <links id="pf154101265171814" target="pf154101265171831" source="pf137640039253050" outcome="dialog:downloadGeneratedDocument"/>
+  <links id="pf154101265171817" target="pf154101265171816" source="pf154101265171821" outcome="Success" fromaction="#{correspondenceDetail.submitFromJsp}"/>
+  <links id="pf154101265171822" target="pf154101265171832" source="pf154101265171821" outcome="Success" fromaction="#{monitorSiteDetail.submitFromJsp}"/>
+  <links id="pf154101265171823" target="pf154101265171833" source="pf154101265171821" outcome="Success" fromaction="#{monitorDetail.submitFromJsp}"/>
+</pageflow:Pageflow>

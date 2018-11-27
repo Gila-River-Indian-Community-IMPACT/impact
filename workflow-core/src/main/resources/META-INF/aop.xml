@@ -1,0 +1,20 @@
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+
+    <weaver>
+
+        <!-- only weave classes in our application-specific packages -->
+        <include within="us.oh.state.epa.stars2..*"/>
+        <include within="us.wy.state.deq.impact..*"/>
+        
+    </weaver>
+
+    <aspects>
+
+        <!-- weave in just this aspect -->
+        <aspect name="us.wy.state.deq.impact.aspects.RetryAspect"/>
+
+    </aspects>
+
+</aspectj>

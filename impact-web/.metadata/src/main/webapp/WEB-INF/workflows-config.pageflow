@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf136855734591339" configfile="/impact-web/src/main/webapp/WEB-INF/workflows-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="4721" id="pf136856036869541" outlinks="pf136856036869542 pf136856036869543 pf136856036869544 pf136856036869545 pf136856036869546 pf136856036869547 pf136856036869548 pf136856036869549 pf136856036869550 pf136856036869551 pf136856036869552 pf136856036869553 pf136856036869554 pf136856036869555 pf136856036869556 pf136856036869557 pf136856036869558 pf136856036869559 pf136856036869560 pf136856036869561 pf14071721543760 pf14072544078090 pf14073318509772 pf14073318509773" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflows" x="338" y="2866" id="pf136856036869562" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf136856036869563 pf136856036869564" inlinks="pf136856036869542" path="/workflows/workflows.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/summary" x="338" y="178" id="pf136856036869565" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf136856036869543" path="/workflows/summary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/summaryProcess" x="338" y="6343" id="pf136856036869666" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf136856036869667" inlinks="pf136856036869544" path="/workflows/summaryProcess.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/permitSummaryProcess" x="338" y="562" id="pf136856036869668" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf136856036869545" path="/workflows/permitSummaryProcess.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/reassign" x="338" y="4402" id="pf136856036869669" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf136856036869670" inlinks="pf136856036869546" path="/workflows/reassign.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/cloneProcess" x="338" y="946" id="pf136856036869671" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf136856036869547" path="/workflows/cloneProcess.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/processNoteList" x="338" y="1330" id="pf136856036869672" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf136856036869548" path="/workflows/processNoteList.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/activityProfile" x="554" y="7697" id="pf136856036869673" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf136856036869674" inlinks="pf136856036869549 pf136856036869558 pf136856036869561 pf136856036869667 pf136856036869675 pf136856036869676 pf136856036869677 pf136856036869674" path="/workflows/activityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflowProfile" x="554" y="4402" id="pf136856036869678" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf136856036869550 pf136856036869563 pf136856036869670" path="/workflows/workflowProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/reassignActivity" x="338" y="6727" id="pf136856036869679" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf136856036869675" inlinks="pf136856036869551" path="/workflows/reassignActivity.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/referActivity" x="338" y="7111" id="pf136856036869780" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf136856036869677" inlinks="pf136856036869552" path="/workflows/referActivity.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/gotoActivity" x="338" y="7495" id="pf136856036869781" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf136856036869676" inlinks="pf136856036869553" path="/workflows/gotoActivity.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/changeProcessDueDate" x="338" y="1714" id="pf136856036869782" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf136856036869554" path="/workflows/changeProcessDueDate.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/changeActivityStartDate" x="338" y="2098" id="pf136856036869783" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf136856036869555" path="/workflows/changeActivityStartDate.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/changeActivityDueDate" x="338" y="2482" id="pf136856036869784" referenceLink="//@navigationRule.0/@navigationCase.16/@toViewId|" inlinks="pf136856036869556" path="/workflows/changeActivityDueDate.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/cancelProcess" x="338" y="3250" id="pf136856036869785" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf136856036869557" path="/workflows/cancelProcess.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/newNote" x="338" y="3634" id="pf136856036869786" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf136856036869559" path="/workflows/newNote.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/endReferDate" x="338" y="4018" id="pf136856036869787" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf136856036869560" path="/workflows/endReferDate.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/facilityProfile" x="554" y="2866" id="pf136856036869888" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf136856036869564" path="/facilities/facilityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflowsAdvancedPermitSearch" x="338" y="4807" id="pf14071721543771" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14071721543760" path="/workflows/workflowsAdvancedPermitSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflowsDefs" x="338" y="5191" id="pf14072544078101" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14072544078090" path="/workflows/workflowsDefCatalog.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflowsEditDefinition" x="338" y="5575" id="pf14073318509794" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf14073318509772" path="/workflows/workflowsEditDefinition.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflowsEditCustomDefinition" x="338" y="5959" id="pf14073318509795" referenceLink="//@navigationRule.0/@navigationCase.23/@toViewId|" inlinks="pf14073318509773" path="/workflows/workflowsEditCustomDefinition.jsp"/>
+  <links id="pf136856036869542" target="pf136856036869562" source="pf136856036869541" outcome="workflowsSearch" redirect="true"/>
+  <links id="pf136856036869543" target="pf136856036869565" source="pf136856036869541" outcome="workflowsSummary" redirect="true"/>
+  <links id="pf136856036869544" target="pf136856036869666" source="pf136856036869541" outcome="workflows.summaryProcess" redirect="true"/>
+  <links id="pf136856036869545" target="pf136856036869668" source="pf136856036869541" outcome="workflows.permitSummaryProcess" redirect="true"/>
+  <links id="pf136856036869546" target="pf136856036869669" source="pf136856036869541" outcome="workflows.reassign" redirect="true"/>
+  <links id="pf136856036869547" target="pf136856036869671" source="pf136856036869541" outcome="workflows.cloneProcess" redirect="true"/>
+  <links id="pf136856036869548" target="pf136856036869672" source="pf136856036869541" outcome="workflows.processNoteList" redirect="true"/>
+  <links id="pf136856036869549" target="pf136856036869673" source="pf136856036869541" outcome="activityProfile" redirect="true"/>
+  <links id="pf136856036869550" target="pf136856036869678" source="pf136856036869541" outcome="workflowProfile" redirect="true"/>
+  <links id="pf136856036869551" target="pf136856036869679" source="pf136856036869541" outcome="workflows.reassignActivity" redirect="true"/>
+  <links id="pf136856036869552" target="pf136856036869780" source="pf136856036869541" outcome="workflows.referActivity" redirect="true"/>
+  <links id="pf136856036869553" target="pf136856036869781" source="pf136856036869541" outcome="workflows.gotoActivity" redirect="true"/>
+  <links id="pf136856036869554" target="pf136856036869782" source="pf136856036869541" outcome="workflows.changeProcessDueDate" redirect="true"/>
+  <links id="pf136856036869555" target="pf136856036869783" source="pf136856036869541" outcome="workflows.changeActivityStartDate" redirect="true"/>
+  <links id="pf136856036869556" target="pf136856036869784" source="pf136856036869541" outcome="workflows.changeActivityDueDate" redirect="true"/>
+  <links id="pf136856036869557" target="pf136856036869785" source="pf136856036869541" outcome="workflows.cancelProcess" redirect="true"/>
+  <links id="pf136856036869558" target="pf136856036869673" source="pf136856036869541" outcome="Success" redirect="true" fromaction="#{activityProfile.endReferral}"/>
+  <links id="pf136856036869559" target="pf136856036869786" source="pf136856036869541" outcome="dialog:newNote"/>
+  <links id="pf136856036869560" target="pf136856036869787" source="pf136856036869541" outcome="dialog:endReferDate"/>
+  <links id="pf136856036869561" target="pf136856036869673" source="pf136856036869541" outcome="currentWorkflow"/>
+  <links id="pf136856036869563" target="pf136856036869678" source="pf136856036869562" outcome="Success" redirect="true" fromaction="#{workFlow2DDraw.submitProfile}"/>
+  <links id="pf136856036869564" target="pf136856036869888" source="pf136856036869562" outcome="Success" redirect="true" fromaction="#{facilityProfile.submitProfile}"/>
+  <links id="pf136856036869667" target="pf136856036869673" source="pf136856036869666" outcome="Profile" redirect="true" fromaction="#{activityProfile.submitProfile}"/>
+  <links id="pf136856036869675" target="pf136856036869673" source="pf136856036869679" outcome="Success" fromaction="#{reassignActivities.apply}"/>
+  <links id="pf136856036869670" target="pf136856036869678" source="pf136856036869669" outcome="Success" fromaction="#{reassignActivities.apply}"/>
+  <links id="pf136856036869676" target="pf136856036869673" source="pf136856036869781" outcome="Success" fromaction="#{activityProfile.gotoSubmit}"/>
+  <links id="pf136856036869677" target="pf136856036869673" source="pf136856036869780" outcome="Success" fromaction="#{activityProfile.referActivity}"/>
+  <links id="pf14071721543760" target="pf14071721543771" source="pf136856036869541" outcome="workflowsAdvancedPermitSearch" redirect="true"/>
+  <links id="pf14072544078090" target="pf14072544078101" source="pf136856036869541" outcome="workflowsDefs" redirect="true"/>
+  <links id="pf14073318509772" target="pf14073318509794" source="pf136856036869541" outcome="dialog:workflowsEditDefinitionDialog"/>
+  <links id="pf14073318509773" target="pf14073318509795" source="pf136856036869541" outcome="dialog:workflowsEditCustomDefinitionDialog"/>
+  <links id="pf136856036869674" target="pf136856036869673" source="pf136856036869673" outcome="Success" redirect="true" fromaction="#{activityProfile.checkIn}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+</pageflow:Pageflow>

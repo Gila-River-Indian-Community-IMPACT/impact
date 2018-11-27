@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>impact</groupId>
+        <artifactId>impact</artifactId>
+        <version>23.13.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+	<artifactId>web</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Impact Web Modules</name>
+
+    <modules>
+        <module>../../impact-web</module>
+        <module>../../impact-portal-web</module>
+        <module>../../workflow-web</module>
+        <module>../../impact-public-web</module>
+    </modules>
+
+	<properties>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+	    <failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+	<build>
+		<finalName>${finalName}</finalName>
+		<resources>
+		  <resource>
+		      <directory>src/main/resources</directory>
+		      <filtering>true</filtering>
+		  </resource>
+		</resources>
+		<plugins>
+			<plugin>
+			    <groupId>org.apache.tomcat.maven</groupId>
+			    <artifactId>tomcat7-maven-plugin</artifactId>
+			    <version>2.2</version>
+				<configuration>
+				    <update>true</update>
+					<url>${tomcat.protocol}://${tomcat.host}:${tomcat.port}/manager/text</url>
+                    <path>/</path>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

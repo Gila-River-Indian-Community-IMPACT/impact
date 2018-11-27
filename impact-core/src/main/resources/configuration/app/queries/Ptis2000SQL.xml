@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<Ptis2000SQL>
+		<TAB1>pti_information</TAB1>
+		<SQL1>
+			select
+			pti_information.facility_id,
+			pti_information.int_doc_id,
+			pti_information.pti_number,		
+			pti_information.received_date,			
+			pti_information.draft_issue_date,
+			pti_information.permit_type_id,
+			pti_information.final_issue_date,
+			pti_information.revenue_id,
+			pti_information.pti_description,
+			pti_information.pti_comment,
+			pti_information.fee_review,
+			pti_information.mod_flg,
+			pti_information.mod_permit_type_id,
+			rp.permit_type,
+			rp.permit_description,
+			rp.notif_code
+			from pti_information, reference_permit rp
+			where pti_information.permit_type_id = rp.permit_type_id
+			order by pti_information.facility_id,
+			pti_information.int_doc_id,
+			pti_information.pti_number 
+		</SQL1>
+		<TAB2>pti_info_addition</TAB2>
+		<SQL2>
+			select
+			t.facility_id,
+			pti_info_addition.int_doc_id,
+			t.pti_number,
+			pti_info_addition.PSD,
+			pti_info_addition.Netting,
+			pti_info_addition.Emis_offset,
+			pti_info_addition.synthetic_minor,
+			pti_info_addition.cem,
+			pti_info_addition.modeling_submit,
+			pti_info_addition.MACT_new,
+			pti_info_addition.NSPS_new,
+			pti_info_addition.NESHAPS_new,
+			pti_info_addition.Toxic_review,
+			pti_info_addition.NSRDS,
+			pti_info_addition.Water,
+			pti_info_addition.Solid_Waste,
+			pti_info_addition.Hazardus,
+			pti_info_addition.HWFB,
+			pti_info_addition.Located,
+			pti_info_addition.Permit_used,
+			pti_info_addition.GDF
+			from pti_info_addition
+			left outer join pti_information t
+			on pti_info_addition.int_doc_id=t.int_doc_id
+			order by t.facility_id,
+			pti_info_addition.int_doc_id,
+			t.pti_number
+		</SQL2>
+		<TAB3>pti_contact_info</TAB3>
+		<SQL3>
+			select
+			t.facility_id,
+			contact_info.int_doc_id,
+			contact_info.address_line1,
+			contact_info.address_line2,
+			contact_info.city,
+			contact_info.state,
+			contact_info.zip_code,
+			contact_info.contact,
+			contact_info.phone_number,
+			contact_info.first_name,
+			contact_info.last_name
+			from contact_info
+			left outer join pti_information t
+			on contact_info.int_doc_id=t.int_doc_id
+			order by t.facility_id, contact_info.int_doc_id
+		</SQL3>
+		<TAB4>pti_task_history</TAB4>
+		<SQL4>
+			select
+			t.facility_id,
+			task_history.int_doc_id,
+			task_history.sequence_number,
+			task_history.sub_sequence_number,
+			task_history.task_id,
+			td.description,
+			task_history.complete_flg,
+			task_history.complete_date,
+			task_history.update_date,
+			task_history.assign_to,
+			task_history.permit_type_id,
+			task_history.time_code,
+			task_history.date_sent,
+			task_history.number_day,
+			task_history.date_received,
+			task_history.mod_permit_type_id
+			from task_history
+			left outer join pti_information t
+			on task_history.int_doc_id=t.int_doc_id,
+			reference_todo_task td
+			where task_history.task_id = td. task_id
+			order by t.facility_id,
+			task_history.int_doc_id,
+			update_date, sequence_number, sub_sequence_number
+		</SQL4>
+		<TAB5>pti_emission_units_info</TAB5>
+		<SQL5>
+			select
+			t.facility_id,
+			emission_units_info.int_doc_id,
+			emission_units_info.pti_number,
+			emission_units_info.emission_unit_id,
+			emission_units_info.emission_unit_desc,
+			emission_units_info.fee_id,
+			emission_units_info.exp_construction_date,
+			emission_units_info.last_update,
+			emission_units_info.act_construction_date,
+			emission_units_info.adj_amount,
+			emission_units_info.adj_id,
+			reference_fee.fee_amount AS reference_fee_amount,
+			emission_units_info.fee_amount,
+			emission_units_info.generalPermit,
+			emission_units_info.generalPermit_des
+			from emission_units_info
+			left outer join pti_information t
+			on emission_units_info.int_doc_id=t.int_doc_id,
+			reference_fee
+			where reference_fee.fee_id = emission_units_info.fee_id
+			order by t.facility_id,
+			emission_units_info.int_doc_id,
+			emission_units_info.pti_number, emission_unit_id
+		</SQL5>
+		<TAB6>pti_mailcc_info</TAB6>
+		<SQL6>
+			select
+			t.facility_id,
+			mailcc_info.int_doc_id,
+			mailcc_info.sequence_number,
+			mailcc_info.address_line1,
+			mailcc_info.address_line2,
+			mailcc_info.city,
+			mailcc_info.state,
+			mailcc_info.zip_code,
+			mailcc_info.contact,
+			mailcc_info.company_name,
+			mailcc_info.first_name,
+			mailcc_info.last_name
+			from mailcc_info
+			left outer join pti_information t
+			on mailcc_info.int_doc_id=t.int_doc_id
+			order by t.facility_id,
+			mailcc_info.int_doc_id,
+			mailcc_info.sequence_number
+		</SQL6>
+
+		<TAB7>end</TAB7>
+	</Ptis2000SQL>
+</root>

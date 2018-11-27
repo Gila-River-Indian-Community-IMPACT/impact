@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+  <GdfSQL>
+  
+  	<GdfColumns>  			
+  	g.gdf_Id,
+	g.do_laa_cd,
+	g.year,
+	g.month,
+	g.stageOne,
+	g.stageOneAndTwo,
+	g.nonStageOneAndTwo,
+	g.last_modified as gdf_lm	
+  	</GdfColumns>
+  	
+  	
+  	
+  	<retrieveGDF>
+  		SELECT ${GdfSQL.GdfColumns} FROM %Schema%ce_gdf g WHERE g.gdf_id = ? 	
+   	</retrieveGDF>
+   	
+   	<retrieveGDF3Arg>
+  		SELECT ${GdfSQL.GdfColumns} FROM %Schema%ce_gdf g WHERE g.do_laa_cd = ? AND g.year = ? AND g.month = ? 		
+   	</retrieveGDF3Arg>
+  	  	
+  	<retrieveGDFByDoLaa>
+  		SELECT ${GdfSQL.GdfColumns} FROM %Schema%ce_gdf g WHERE g.do_laa_cd = ? order by year DESC	
+   	</retrieveGDFByDoLaa> 
+	
+	<createGDF>
+		INSERT INTO %Schema%ce_gdf
+		(gdf_Id,do_laa_cd,year,month,stageOne,stageOneAndTwo,nonStageOneAndTwo)
+		VALUES (?,?,?,?,?,?,?)
+	</createGDF>
+	
+	<modifyGDF>
+		UPDATE %Schema%ce_gdf 
+		SET 
+		do_laa_cd  = ?,
+		year  = ?,
+		month  = ?,
+		stageOne  = ?,
+		stageOneAndTwo  = ?,
+		nonStageOneAndTwo  = ?,
+		last_modified  = ?		
+		where gdf_id = ? AND last_modified = ?
+	</modifyGDF>
+			  	
+  	<deleteGDF>
+		DELETE FROM %Schema%ce_gdf WHERE gdf_id = ? 	
+	</deleteGDF>
+	
+
+	
+  </GdfSQL>
+</root>

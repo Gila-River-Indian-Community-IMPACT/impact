@@ -1,0 +1,1 @@
+select * from fp_facility order by emissions_rpt_cd

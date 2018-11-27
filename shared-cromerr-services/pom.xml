@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>impact</groupId>
+        <artifactId>impact</artifactId>
+        <version>23.13.0-SNAPSHOT</version>
+        <relativePath>../impact/pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+  <artifactId>shared-cromerr-services</artifactId>
+  <name>Shared CROMERR Services Module</name>
+  
+  <dependencies>
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+		    <version>2.4.0.RELEASE</version>
+        </dependency>
+        <!-- 
+         -->
+        <dependency>
+            <groupId>impact</groupId>
+            <artifactId>shared-cromerr-services-wsdl</artifactId>
+		    <version>23.13.0-SNAPSHOT</version>
+        </dependency>
+  </dependencies>
+
+</project>

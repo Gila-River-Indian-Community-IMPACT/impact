@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<EmissionUnitTypeSQL>
+		<EmissionUnitColumns>
+			feut.emu_id, feut.name_plate_rating, feut.units,
+			feut.capacity_unit,
+			feut.primary_fuel_type, feut.secondary_fuel_type,
+			feut.serial_number,
+			feut.serial_number_effective_date,
+			feut.manufacture_name,
+			feut.modelname_and_number, feut.engine_type,
+			feut.heat_input_rating,
+			feut.plant_type, feut.max_production_rate,
+			feut.max_burner_design_rate, feut.power_source, feut.fuel_type,
+			feut.type_of_batching, feut.type_of_material,
+			feut.material_description, feut.max_annual_throughput,
+			feut.type_of_material_stored, feut.type_of_liquid_material_stored, feut.material_stored_description,
+			feut.capacity, feut.max_throughput,
+			feut.unit_type,
+			feut.max_design_capacity, feut.min_design_capacity,
+			feut.pilot_gas_volume, feut.incinerator_type, feut.burner_system,
+			feut.primary_chamber_operating_temp,
+			feut.secondary_chamber_operating_temp, feut.dehydration_type,
+			feut.design_capacity, feut.firing_type, feut.heat_content_of_fuel,
+			feut.heat_content_of_fuel_units_cd,
+			feut.type_of_equipment,
+			feut.bleed_rate, feut.gas_consumption_rate,
+			feut.type_of_event,
+			feut.charge_rate, feut.drift_rate,
+			feut.total_dissolved_solids,
+			feut.material_produced,
+			feut.unit_description, feut.vessel_type,
+			feut.vessel_heated, feut.site_rating, feut.site_rating_unit_cd,
+			feut.process_equipment_combusting_emissions, feut.name_and_type_of_material,
+			feut.init_yeast_as_percent_of_flour, feut.total_ferment_time_hrs,
+			feut.yeast_spike_as_percent_of_flour, feut.spike_time_hrs,
+			feut.application_method,
+			feut.welding_process,feut.max_amt_of_electrode_consumed,feut.max_time_operated,
+			feut.substrate_blasted, feut.substrate_blasted_other, feut.substrate_removed,feut.concentration_of_lead_pct, feut.max_number_of_times_blastmedia_reclaimed_for_reuse,
+			feut.is_blastmedia_carb_certified, feut.max_annual_usage, feut.substrate_removed_other,feut.unit_type_other,
+			feut.plating_line_flag, feut.plating_type, feut.plating_type_other,feut.metal_type, feut.metal_type_other,feut.concentration_pct,
+			feut.press_type,feut.press_type_other, feut.substrate_feed_method, feut.impression_area, feut.max_pct_VOC,
+			feut.max_pct_styrene,
+			feut.max_ozone_generation_rate,
+			feut.type_of_operation, feut.type_of_dry_cleaning,
+			feut.equipment_type_other,
+			feut.solvent_type,
+			feut.facility_type,
+			feut.maximum_annual_throughput,
+			feut.max_annual_usage_abs,
+			feut.max_amt_of_rubber_removed,
+			feut.max_annual_wood_dust_generated, feut.type_of_equipment, feut.power_rating_flag,
+			feut.type_of_explosive, feut.type_of_explosive_other, feut.max_number_of_rounds_detonated,
+			feut.amt_of_material_removed,
+			feut.contaminant_type, feut.other_contaminant_type, feut.contaminated_material, feut.voc_emission_rate,
+			feut.type_of_coating_operation, feut.type_of_material_being_coated, feut.type_of_material_being_coated_other, feut.type_of_product_being_coated, feut.application_method_other,
+			feut.type_of_use, feut.fugitive_leaks_flag, feut.eqpt_count,
+			feut.tank_location,
+			feut.submerged_fill_pipe_flag
+			
+		</EmissionUnitColumns>
+		
+		<EuFugComponentColumns>
+			fcx.emu_id, fcx.component_cd, fcx.gas_cnt, fcx.ho_cnt, fcx.lo_cnt, fcx.water_cnt
+		</EuFugComponentColumns>	
+		
+		<retrieveEmissionUnitType>
+			SELECT
+			${EmissionUnitTypeSQL.EmissionUnitColumns}
+			FROM
+			%Schema%fp_emissions_unit_type feut
+			WHERE feut.emu_id = ?
+		</retrieveEmissionUnitType>
+		<removeEmissionUnitType>
+			delete from %Schema%fp_emissions_unit_type
+			where
+			emu_id = ?
+		</removeEmissionUnitType>
+
+		<createEmissionUnitTypeENG>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			name_plate_rating, units, primary_fuel_type,
+			secondary_fuel_type, serial_number,
+			serial_number_effective_date,
+			manufacture_name, modelname_and_number, engine_type,
+			site_rating, site_rating_unit_cd, type_of_use)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeENG>
+		<createEmissionUnitTypeBOL>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			heat_input_rating, primary_fuel_type,
+			secondary_fuel_type,
+			serial_number,
+			serial_number_effective_date,
+			manufacture_name,
+			modelname_and_number)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeBOL>
+		<createEmissionUnitTypeHMA>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, plant_type,
+			max_production_rate, units,
+			max_burner_design_rate,
+			power_source,
+			fuel_type)
+			VALUES(?,?,?,?,?,?,?)
+		</createEmissionUnitTypeHMA>
+		<createEmissionUnitTypeCMX>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, type_of_batching,
+			max_production_rate, units,
+			power_source)
+			VALUES(?,?,?,?,?)
+		</createEmissionUnitTypeCMX>
+		<createEmissionUnitTypeDHY>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, dehydration_type, design_capacity)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeDHY>
+		<createEmissionUnitTypeHET>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, firing_type, heat_input_rating, units, primary_fuel_type,
+			secondary_fuel_type, heat_content_of_fuel,
+			heat_content_of_fuel_units_cd)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeHET>		
+		<createEmissionUnitTypeBAK>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material,maximum_annual_throughput)	VALUES(?,?,?)
+		</createEmissionUnitTypeBAK>
+		<createEmissionUnitTypeBGM>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material,maximum_annual_throughput)
+				VALUES(?,?,?)
+		</createEmissionUnitTypeBGM>
+		<createEmissionUnitTypeGIN>
+			INSERT INTO %Schema%fp_emissions_unit_type 
+			(emu_id, maximum_annual_throughput)	VALUES(?,?)
+		</createEmissionUnitTypeGIN>
+		<createEmissionUnitTypeDIS>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, material_description,max_annual_throughput, units)	VALUES(?,?,?,?)
+		</createEmissionUnitTypeDIS>
+		<createEmissionUnitTypeMAT>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, material_description,maximum_annual_throughput, units)	VALUES(?,?,?,?)
+		</createEmissionUnitTypeMAT>
+		<createEmissionUnitTypeGRI>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material, maximum_annual_throughput)
+				VALUES(?,?,?)
+		</createEmissionUnitTypeGRI>
+		<createEmissionUnitTypeMIL>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material,maximum_annual_throughput)	VALUES(?,?,?)
+		</createEmissionUnitTypeMIL>
+		<createEmissionUnitTypeMET>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material,maximum_annual_throughput, units)	VALUES(?,?,?,?)
+		</createEmissionUnitTypeMET>
+		<createEmissionUnitTypeMIX>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material,maximum_annual_throughput, units)	VALUES(?,?,?,?)
+		</createEmissionUnitTypeMIX>
+		<createEmissionUnitTypePEL>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material,maximum_annual_throughput)	VALUES(?,?,?)
+		</createEmissionUnitTypePEL>		
+		<createEmissionUnitTypeMLD>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, name_and_type_of_material,maximum_annual_throughput)	VALUES(?,?,?)
+		</createEmissionUnitTypeMLD>					
+		<createEmissionUnitTypePNE>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, type_of_equipment, bleed_rate, gas_consumption_rate, eqpt_count)
+			VALUES(?,?,?,?,?)
+		</createEmissionUnitTypePNE>
+		<createEmissionUnitTypeBVC>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, type_of_event)
+			VALUES(?,?)
+		</createEmissionUnitTypeBVC>
+		<createEmissionUnitTypeCCU>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, charge_rate)
+			VALUES(?,?)
+		</createEmissionUnitTypeCCU>
+		<createEmissionUnitTypeCTW>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			drift_rate,
+			total_dissolved_Solids)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeCTW>
+		<createEmissionUnitTypeAMN>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			design_capacity)
+			VALUES(?,?)
+		</createEmissionUnitTypeAMN>
+		<createEmissionUnitTypeSRU>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			max_annual_throughput,
+			units)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeSRU>
+		<createEmissionUnitTypeTGT>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			heat_input_rating)
+			VALUES(?,?)
+		</createEmissionUnitTypeTGT>
+		<createEmissionUnitTypeSEP>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			vessel_type,
+			vessel_heated)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeSEP>
+		<createEmissionUnitTypeSEB>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			unit_type,
+			unit_description)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeSEB>
+		<createEmissionUnitTypeABS>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			name_and_type_of_material,
+			substrate_blasted,
+			substrate_removed,
+			concentration_of_lead_pct,
+			max_annual_usage_abs,
+			is_blastmedia_carb_certified,
+			max_number_of_times_blastmedia_reclaimed_for_reuse,
+			application_method,substrate_removed_other,substrate_blasted_other)			
+			VALUES(?,?,?,?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeABS>
+		<createEmissionUnitTypeWEL>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			welding_process,
+			max_amt_of_electrode_consumed)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeWEL>
+		<createEmissionUnitTypeACB>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			fuel_type,
+			max_time_operated)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeACB>
+		<createEmissionUnitTypeLUD>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_material,
+			material_description,
+			max_annual_throughput,
+			units)
+			VALUES(?,?,?,?,?)
+		</createEmissionUnitTypeLUD>
+		<createEmissionUnitTypePAM>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_equipment,
+			maximum_annual_throughput)
+			VALUES(?,?,?)
+		</createEmissionUnitTypePAM>
+		<createEmissionUnitTypeTAR>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			maximum_annual_throughput,heat_input_rating)
+			VALUES(?,?,?)
+		</createEmissionUnitTypeTAR>		
+		<createEmissionUnitTypeSEM>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_equipment)
+			VALUES(?,?)
+		</createEmissionUnitTypeSEM>		
+		<createEmissionUnitTypeFLR>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			max_design_capacity,
+			min_design_capacity,
+			pilot_gas_volume,
+			units,
+			capacity_unit
+			)
+			VALUES(?,?,?,?,?,?)
+		</createEmissionUnitTypeFLR>
+		<createEmissionUnitTypeEGU>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			heat_input_rating, primary_fuel_type,
+			secondary_fuel_type,
+			manufacture_name,
+			modelname_and_number, unit_type)
+			VALUES(?,?,?,?,?,?,?)
+		</createEmissionUnitTypeEGU>
+		<createEmissionUnitTypeAPT>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			material_produced, max_throughput,
+			units)
+			VALUES(?,?,?,?)
+		</createEmissionUnitTypeAPT>
+		<createEmissionUnitTypeCKD>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			unit_type, max_annual_throughput,
+			units,heat_input_rating,
+			primary_fuel_type, secondary_fuel_type,
+			serial_number,serial_number_effective_date)
+			VALUES(?,?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeCKD>
+		<createEmissionUnitTypeTNK>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_material_stored,
+			type_of_liquid_material_stored,
+			material_stored_description,
+			submerged_fill_pipe_flag,
+			capacity,
+			capacity_unit,
+			max_throughput,
+			units,
+			tank_location)
+			VALUES(?,?,?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeTNK>
+		<createEmissionUnitTypeCSH>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			unit_type,
+			max_annual_throughput,
+			units,
+			serial_number,
+			serial_number_effective_date,
+			manufacture_name,
+			modelname_and_number)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeCSH>
+		<createEmissionUnitTypeINC>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			incinerator_type,
+			burner_system,
+			max_design_capacity,
+			units,
+			min_design_capacity,
+			capacity_unit,
+			pilot_gas_volume,
+			primary_chamber_operating_temp,
+			secondary_chamber_operating_temp)
+			VALUES(?,?,?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeINC>
+		<createEmissionUnitTypeFAT>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			unit_type,max_production_rate,unit_type_other)
+			VALUES(?,?,?,?)
+		</createEmissionUnitTypeFAT>
+		<createEmissionUnitTypeTKO>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_material,
+			plating_line_flag,
+			plating_type,
+			plating_type_other,
+			metal_type,
+			metal_type_other,
+			capacity,
+			max_annual_usage,
+			concentration_pct)
+			VALUES(?,?,?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypeTKO>
+		<createEmissionUnitTypePRN>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			press_type,
+			press_type_other,
+			substrate_feed_method,
+			impression_area,
+			max_annual_usage,
+			units,
+			max_pct_voc)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createEmissionUnitTypePRN>
+		<createEmissionUnitTypeREM>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			contaminant_type,
+			other_contaminant_type,
+			contaminated_material,
+			voc_emission_rate)
+			VALUES(?,?,?,?,?)
+		</createEmissionUnitTypeREM>
+		<createEmissionUnitTypeRES>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			name_and_type_of_material,
+			max_annual_usage,
+			max_pct_voc,
+			max_pct_styrene,
+			application_method)
+			VALUES(?,?,?,?,?,?)
+		</createEmissionUnitTypeRES>
+		<createEmissionUnitTypeDRY>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_dry_cleaning,
+			max_annual_usage,
+			type_of_operation)
+			VALUES(?,?,?,?)
+		</createEmissionUnitTypeDRY>
+		<createEmissionUnitTypeSTZ>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			facility_type,
+			type_of_material,
+			max_annual_usage)
+			VALUES(?,?,?,?)
+		</createEmissionUnitTypeSTZ>
+		<createEmissionUnitTypeSVC>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_equipment,
+			equipment_type_other,
+			solvent_type,
+			max_annual_usage)
+			VALUES(?,?,?,?,?)
+		</createEmissionUnitTypeSVC>
+		<createEmissionUnitTypeSVU>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			 name_and_type_of_material,
+			 max_annual_throughput,
+			 units,
+			 max_pct_voc)
+			 VALUES(?,?,?,?,?)
+		</createEmissionUnitTypeSVU>		
+		<createEmissionUnitTypeOEP> INSERT INTO %Schema%fp_emissions_unit_type 
+			(emu_id, 
+			name_and_type_of_material,
+			maximum_annual_throughput,
+			units)
+			VALUES(?,?,?,?)
+		 </createEmissionUnitTypeOEP>
+		<createEmissionUnitTypeORD> INSERT INTO %Schema%fp_emissions_unit_type 
+			(emu_id, 
+			type_of_explosive,
+			type_of_explosive_other,
+			max_number_of_rounds_detonated)
+			VALUES(?,?,?,?)
+		 </createEmissionUnitTypeORD>
+		<createEmissionUnitTypeOZG>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			 max_ozone_generation_rate)
+			 VALUES(?,?)		
+		</createEmissionUnitTypeOZG>		
+		<createEmissionUnitTypeTIM>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			 max_amt_of_rubber_removed)
+			 VALUES(?,?)		
+		</createEmissionUnitTypeTIM>
+		<createEmissionUnitTypeWWE>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			 max_annual_wood_dust_generated,
+			 type_of_equipment,
+			 power_rating_flag)
+			 VALUES(?,?,?,?)		
+		</createEmissionUnitTypeWWE>
+		<createEmissionUnitTypeMAC>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			max_time_operated,
+			amt_of_material_removed)
+			VALUES(?,?,?)		
+		</createEmissionUnitTypeMAC>
+		<createEmissionUnitTypeCOT>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id,
+			type_of_coating_operation,
+			type_of_material_being_coated,
+			type_of_material_being_coated_other,
+			type_of_product_being_coated,
+			name_and_type_of_material,
+			max_annual_throughput,
+			max_pct_voc,
+			application_method,
+			application_method_other)
+			VALUES(?,?,?,?,?,?,?,?,?,?)		
+		</createEmissionUnitTypeCOT>
+			
+		<createEmissionUnitTypeFUG>
+			INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id, fugitive_leaks_flag) VALUES(?,?)		
+		</createEmissionUnitTypeFUG>
+
+		<createEmissionUnitTypeDefault>INSERT INTO %Schema%fp_emissions_unit_type
+			(emu_id)
+			VALUES(?)
+		</createEmissionUnitTypeDefault>
+		
+		<addFugComponent>
+			INSERT INTO %Schema%fp_eu_fug_component_xref (emu_id, component_cd, gas_cnt, ho_cnt, lo_cnt, water_cnt) 
+			VALUES (?, ?, ?, ?, ?, ?)
+		</addFugComponent>
+		
+		<deleteFugComponent>
+			DELETE FROM %Schema%FP_EU_FUG_COMPONENT_XREF WHERE emu_id = ?
+		</deleteFugComponent>
+		
+		<retrieveComponentsByEmuId>
+			SELECT ${EmissionUnitTypeSQL.EuFugComponentColumns} FROM %Schema%fp_eu_fug_component_xref fcx 
+			INNER JOIN dbo.cm_fug_component_def as fcd ON fcx.component_cd = fcd.component_cd
+			WHERE fcx.emu_id = ?
+			ORDER BY fcd.sort_order
+		</retrieveComponentsByEmuId>
+	</EmissionUnitTypeSQL>
+</root>

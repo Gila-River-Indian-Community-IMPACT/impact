@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<!-- ********** HEAD ************ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<!-- !!! THIS LINE DEFINES THE STRING THAT APPEARS AS THE WINDOW TITLE !!! -->
+<title>General Topic Template</title>
+
+<link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+<link rel="STYLESHEET" type="text/css" href="stars2.css">
+
+<!-- **Uncomment** this STYLE element to hide TOC button -->
+<!-- **Comment out** this STYLE element to display TOC button -->
+<script language="JavaScript" type="text/javascript" src="browvers.js"></script>
+
+<style type="text/css"> .hide {display : none}
+</style>
+</head> <!--  END HEAD -->
+
+<!-- ********** BODY ************ -->
+<body>
+<noscript>Script to detect browser version</noscript>
+<!-- ********** TOP [BOOKMARK] ************ -->
+<a name="top"></a>
+
+<div class="zz-skip-header"><a href="#start">Skip navigation header</a></div>
+
+<table summary="Document information and navigation controls" border="0" width="97%">
+<tbody>
+  <tr>
+<!-- !!! THIS LINE DEFINES THE STRING THAT APPEARS ABOVE THE HELP TOPIC TITLE    !!! -->
+<!-- !!! THE HELP TOPIC TITLE SHOULD 'MATCH' THE HELP TOPIC AS LISTED IN THE TOC !!! -->
+<!-- !!! IF THE PAGE HAS A DIRECT HELP BUTTON, THEN THE HELP TOPIC AND TOC       !!! -->
+<!-- !!! LISTING SHOULD MATCH THE MENU ITEM                                      !!! -->
+<td class="zz-nav-header-cell" scope="col"><strong>Chapter Title</strong></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="prev_placeholder.html">
+       <img src="images/leftnav.gif" alt="Previous Topic" border="0" height="24" width="23">
+       <br>Previous Topic</a></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="next_placeholder.html">
+       <img src="images/rightnav.gif" alt="Next Topic" border="0" height="24" width="23">
+       <br>Next Topic</a></td>
+  </tr>
+</tbody>
+</table>
+
+<!-- !!! THIS IS THE BEGINNING OF THE HELP TOPIC CONTENT.  IT SHOULD BE         !!! -->
+<!-- !!! REPLACED BY THE CONTENT OF THE HELP TOPIC.                              !!! -->
+
+<!-- ********** START [BOOKMARK] ************ -->
+<a name="start"></a>
+<h1>On-line Help -&nbsp; Topic Template (This is a level 1
+Heading)</h1>
+<h2>Overview (This is a level 2 Heading)</h2>
+<p>(In a "real" topic page, this section provides an overview of
+the purpose &amp; scope of the page from which this help file was
+accessed.)</p>
+<p>
+The overview of <span style="text-decoration: underline;">this</span>
+file provides by example most, if not all, of the directives the system
+needs in order to produce the help topic page(s) you will write. It
+uses cascading stylesheets to implement standard "Browser
+Look-and-Feel" (or blaf) formatting, overriding it when appropriate
+with styles that mimic and/or blend with the styles that Stars2 uses.
+The file demonstrates <strong>Bookmarks</strong>, <strong>Font
+Styles, Prose Text</strong>, <strong>Numbered</strong>
+and <strong>Bulleted Lists</strong>, <strong>Graphics,
+</strong>and <strong>Tables</strong>. </p>
+<p>You can open this file using the KompoZer tool, and edit the
+view that KompoZer provides. Doing so modifies the HTML information
+that the browser uses to render the page. KompoZer gives you controls
+similar to MS Word with which to add graphics and links to your page as
+well as to provide information in numbered and unnumbered lists, and in
+other formats. You can also 'preview' your page within KompoZer;
+although it may not look exactly like you expect. To see what the page
+will really look like in any particular browser, be sure that the
+appropriate stylesheets (<span style="font-family: Courier New,Courier,monospace;">blafdoc.css</span>
+and <span style="font-family: Courier New,Courier,monospace;">stars2.css</span>)
+are in your development directory and open the file with the browser
+you want to preview. &nbsp;Most of the "instructions" presented in
+this template file are descriptions of how to accomplish things within
+the KompoZer tool. &nbsp;You may also use other tools or even edit
+or "tweak" the raw html source code that is produced by KompoZer (or
+another tool), if you prefer. </p>
+<p>For testing purposes, you will need to have your image files
+in a directory called "images" under the directory where you are
+storing your HTML (topic page) files. If you're using KompoZer, this
+will most conveniently be in the Program Files\KompoZer directory. If
+the images you are using are shared among multiple pages, then you
+should copy the image files you need from their "official" home into
+your development directory; if you are using images unique to your
+page, then be sure to provide your image file when you incorporate your
+page into the 'help' infrastructure so that it will be available from
+the "official" page when that page is accessed and also so that it can
+be made available to others for use in their pages as well.
+We will copy the template file (topic_template.html), the stylesheets,
+shared image files and <br>
+the <code>J:\SHARED\UNICON\Help Source Files</code>
+directory with the stylesheets and shared image files you will
+need.</p>
+<p>Note that the spacing around headings (regardless of level) and between sections are
+hard-coded --- it is NOT defined as part of the style.  It is, however, included in this template
+file, so careful text replacement should preserve this spacing.</p>
+<p><br>
+This topic contains the following sections:</p>
+<ul>
+<li><a href="#FontStyles">Font Styles</a></li>
+<li><a href="#InLineGraphics">Graphics &amp;
+Images</a></li>
+<li><a href="#lists">Lists</a></li>
+<li><a href="#TABLES">Tables</a></li>
+<li><a href="#GlossaryLinks">Glossary Links</a></li>
+<li><a href="#RelatedLinks">Related Links</a></li>
+</ul>
+
+<p>
+<!-- ********** FONT STYLES ************ -->
+
+<a name="FontStyles"></a><br><br>
+<h2>Font Styles(Another level 2 Heading)</h2>
+<p>This section illustrates several font styles that you can use
+in your pages: <b>Bold</b>, <i>Italic</i> <i><b>Bold
+italic</b></i>,, <u>Underline</u>. The various
+font styles can be applied in any combination to selected text in your
+page. </p>
+<p>When a user double-clicks a topic title in the table of
+contents, that topic is displayed in the topic window. The user may
+also open a topic in a new (additional) topic window, by selecting a command from the
+right-click menu. In addition, the list of items in the navigator
+window can be printed.</p>
+<p>Note that there is a link to take you back to the top of the
+page at the end of each bookmarked section.</p>
+<p><a href="#top">Back to Top</a></p>
+
+<p>
+
+<!-- ********** CODE FOR IN-LINE GRAPHICS ************ -->
+
+<a name="InLineGraphics"></a><br><br>
+<h2>Graphics&amp; Images (Another level 2 Heading)</h2>
+<p>
+Images may be easily inserted in your page using the 'Insert' menu,
+and/or by selecting the 'Image' icon on the toolbar. &nbsp;From
+either of these points, you specify the filename of the image file.
+&nbsp;You are required to provide 'Alternate text', which is the
+text that appears in the designated spot if your browser doesn't
+support such images&nbsp;. &nbsp;You may also provide 'Tooltip'
+text. &nbsp;This is optional. &nbsp;Any text you provide in
+this field appears if the user places their cursor over the image and
+holds it there for a brief period of time. &nbsp;</p>
+<p>
+It's preferable that you use .gif files for any graphics you which to
+include on your page, as they require considerably less storage space
+than other graphics formats.&nbsp; Create an "images" folder in the
+folder in which your topic page files (the .html files) are
+stored.&nbsp; Then when you insert a link into your page, the link
+reference will be "<font face="Courier New">images/&lt;image_file_name</font>&gt;".</p>
+<h3>In-line Graphics (A level 3 Heading)</h3>
+<p>If you 'Insert' an image in the normal flow of the text, then the image
+will appear "in-line" with the text, as shown above. &nbsp;Note
+that the size of the graphic can impact the <br>
+height of the line of text in which it appears, as the line will expand
+to accommodate the image.<br>
+<br>
+Here's an example of insertion of an image, in this case the image in
+the file <span style="font-family: Courier New,Courier,monospace;">images/diswin.gif</span>:
+&nbsp;The 'Alternate text' provided is "New display window", and
+the tooltip is "Tooltip for a 'new' display window.": &nbsp;<img style="width: 24px; height: 24px;" title="Tooltip for a 'new' display window" src="images/diswin.gif" alt="New display window">
+&nbsp;Note that in KompoZer's 'Normal' view, hovering on the image
+shows you the location of the image file. &nbsp;You will need to
+use the 'Preview' view (or actually open the file with a browser) in
+order to see the tooltip.
+<h3> Captioned Graphics (A level 3 Heading)</h3>
+<p>You may also 'Insert' an image in its own space, and,
+optionally, include a caption for it. &nbsp;As shown below.</p>
+
+<div align="center">
+<p><img alt="Ohio EPA Logo" src="oepa.gif" title="This is the tooltip for the Ohio EPA logo." style="border: 0px solid ; width: 118px; height: 32px;" vspace="4"></p>
+<p><b>This is the caption for the Ohio EPA Logo graphic</b></p>
+<p>(Normally, captions for graphics appear under them, e.g.,
+Figure 1: &lt;figure title&gt;, while captions for Tables
+appear above them.)</p>
+</div>
+<a href="#top">Back to Top</a> 
+
+<p>
+
+<!-- ********** CODE FOR LISTS ************ -->
+
+<a name="Lists"></a><br><br>
+<h2>Lists</h2>
+<p>Here is an example of a numbered list, with the topic of the items
+presented in <strong>bold</strong>. </p>
+<ol>
+<li><strong>Item 1.</strong> Description of Item 1.<br>
+</li>
+<li><strong>Item 2.</strong> Desciption of Item 2.<br>
+</li>
+<li><strong>Item 3.</strong> Description of item 3.</li>
+</ol>
+<br>
+An bulleted list with the same format looks like this: <br>
+<ul>
+<li><strong>Bullet 1:</strong> Description of
+Bullet item 1.</li>
+<li><strong>Bullet 2:</strong> Description of
+Bullet item 1.</li>
+<li><strong>Bullet 3:</strong> Description of
+Bullet item 1.</li>
+</ul>
+<a href="#top">Back to Top</a>
+
+<p>
+
+<!-- ********** CODE FOR TABLES ************ -->
+
+<a name="tables"></a><br><br>
+<h2>Tables</h2>
+<p>Here's a table example with BLAF borders and brown table headers:</p>&nbsp;<!-- Table Example With BLAF Borders and Brown Table Headers -->
+<table class="table-border" summary="Add summary here" border="1" cellpadding="4" cellspacing="0" width="75%">
+<caption>Table Caption</caption> 
+<tbody>
+<tr valign="top">
+   <th class="table-header-border-left" scope="col">Table header</th>
+   <th class="table-header-border-middle" scope="col">Table header</th>
+   <th class="table-header-border-middle" scope="col">Table header</th>
+   <th class="table-header-border-right" scope="col">Table header</th>
+</tr>
+<tr valign="top">
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+</tr>
+<tr valign="top">
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+</tr>
+</tbody>
+</table>
+
+<!-- Table Example With BLAF Borders and un-colored Table Headers --></div>
+<div style="text-align: center;">
+</div>
+<br>
+<table class="table-border" summary="Summary text - where does it show up?" border="1" cellpadding="4" cellspacing="0" width="75%">
+<caption>Table Caption
+</caption> <tbody>
+<tr valign="top">
+<th scope="col">Table header</th>
+<th scope="col">Table header</th>
+<th scope="col">Table header</th>
+<th scope="col">Table header</th>
+</tr>
+<tr valign="top">
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+</tr>
+<tr valign="top">
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+<td>Cell content.</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<a href="#top">Back to Top</a>
+
+<p>
+
+<!-- ********** CODE FOR GLOSSARY LINKS ************ -->
+<a name="GlossaryLinks"></a><br><br> 
+<h2>Glossary Links</h2>
+<p>You can establish glossary-links to words in your page, but it
+must be done manually (i.e., KompoZer doesn't currently support it). To
+do this, insert the following tag around the word you want to link to
+its glossary entry, here called your <span style="font-family: Courier New,Courier,monospace;"><span style="font-weight: bold;">TARGET_TERM</span>:</span></p>
+<p><span style="font-family: Courier New,Courier,monospace;">
+&lt;a class="glossary-link" href="glossary.html/#</span><span style="font-family: Courier New,Courier,monospace;"><span style="font-weight: bold;">TARGET_TERM</span></span><span style="font-family: Courier New,Courier,monospace;">"
+target="_blank"&gt;<span style="font-weight: bold;">TARGET_TERM</span>&lt;/a&gt;</span></p>
+<p><span style="font-family: Courier New,Courier,monospace;"></span>And,
+add an entry for the term in the <code>glossary.html</code>
+file.</p>
+<code>&lt;dt&gt;&lt;a
+name="<span style="font-weight: bold;">TARGET_TERM</span>"&gt;<span style="font-weight: bold;">Target Term</span>&lt;/a&gt;&lt;/dt&gt;
+<br>
+&lt;dd&gt;Specify the definition text for target_term
+here&lt;/dd&gt;<br>
+<br>
+</code>(The <code>&lt;/dd&gt;</code> tag at
+the end of the 'dictionary definition' text is optional.)<p class="MsoCaption"></p>
+
+<a href="#top">Back to Top</a>
+<p>
+
+<!-- ********** RELATED HELP TOPIC LINKS ************ -->
+<a name="RelatedLinks"></a><br><br>
+<h2>Related Links</h2>
+Somestimes you may want to put direct links in your page to other help
+pages. You can easily do this using related links. This is how they
+look:
+<p class="rlhdr">Related Topics:</p>
+<ul>
+<li><a href="about_stars2ui.html">The IMPACT User
+Interface</a></li>
+<li><a href="about_nav.html">Navigating IMPACT Help</a></li>
+</ul>
+<p>These links will take you directly to the referenced page,
+replacing the content currently in that help topic window.<br>
+</p>
+
+<!-- !!! THIS IS THE END OF THE HELP TOPIC CONTENT  !!! -->
+
+
+
+<!-- !!! BELOW IS THE FOOTER SECTION. IT SHOULD REMAIN IN ALL HELP PAGES THAT  !!! -->
+<!-- !!! APPEAR IN THE TABLE OF CONTENTS.  PREVIOUS TOPIC AND NEXT TOPICS      !!! -->
+<!-- !!! ARE MODIFIED HERE FOR THE FOOTER.                                     !!! -->
+
+<p class="horizontal-rule">&nbsp;<br>
+</p>
+<div class="zz-nav-footer-menu"><a href="prev_placeholder.html">Previous
+Topic</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="next_placeholder.html">Next Topic</a> </div>
+<!-- no legal notice in Stars2 system help; command remains for potential future use -->
+<p class="zz-legal-notice"><a class="zz-legal-notice-link" href="cpyr.html">Copyright
+© 1996, 2004, Oracle.</a> All rights reserved.</p>
+</body></html>

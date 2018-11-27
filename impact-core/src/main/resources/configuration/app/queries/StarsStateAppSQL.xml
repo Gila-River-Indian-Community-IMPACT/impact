@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<StarsStateAppSQL>
+		<TAB1>state_PTO_app</TAB1>
+		<SQL1>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			state_permit_app.int_doc_id,
+			state_permit_app.prepared_date,
+			state_permit_app.resp_official_name,
+			state_permit_app.app_name,
+			state_permit_app.resp_official_title,
+			state_permit_app.attachments_desc,
+			state_permit_app.tmsp_created,
+			state_permit_app.tmsp_last_updt,
+			state_permit_app.staff_id_last_updt
+			from state_permit_app, dsk_central_file
+			where
+			state_permit_app.int_doc_id=dsk_central_file.int_doc_id and
+			dsk_central_file.action_type='STP'
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL1>
+		
+		<TAB2>state_PTO_appRev</TAB2>
+		<SQL2>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			state_permit_app.int_doc_id,
+			state_permit_app.prepared_date,
+			state_permit_app.resp_official_name,
+			state_permit_app.app_name,
+			state_permit_app.resp_official_title,
+			state_permit_app.attachments_desc,
+			state_permit_app.tmsp_created,
+			state_permit_app.tmsp_last_updt,
+			state_permit_app.staff_id_last_updt
+			from state_permit_app, dsk_central_file
+			where
+			state_permit_app.int_doc_id=dsk_central_file.int_doc_id and
+			dsk_central_file.action_type='STR'
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL2>
+		
+		<TAB3>state_PTO_app_EUapp</TAB3>
+		<SQL3>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			spa_emission_unit.int_doc_id,
+			spa_emission_unit.eu_oepa_id,
+			spa_emission_unit.special_comm_desc,
+			spa_emission_unit.process_flow_type,
+			spa_emission_unit.eu_activity_desc,
+			spa_emission_unit.eu_install_date,
+			spa_emission_unit.eu_startup_date,
+			spa_emission_unit.eu_recent_mod_date,
+			spa_emission_unit.co_eqip_desc,
+			spa_emission_unit.tmsp_created,
+			spa_emission_unit.tmsp_last_updt,
+			spa_emission_unit.staff_id_last_updt
+			from spa_emission_unit, dsk_central_file
+			where
+			spa_emission_unit.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL3>
+		
+		<TAB4>state_PTO_app_EPapp</TAB4>
+		<SQL4>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			spa_egress_point.int_doc_id,
+			spa_egress_point.egress_point_id,
+			spa_egress_point.tmsp_created,
+			spa_egress_point.tmsp_last_updt,
+			spa_egress_point.staff_id_last_updt
+			from spa_egress_point, dsk_central_file
+			where
+			spa_egress_point.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL4>
+					
+		<TAB5>state_PTO_app_CEapp</TAB5>
+		<SQL5>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			spa_ctrl_equip.int_doc_id,
+			spa_ctrl_equip.ce_company_id,
+			spa_ctrl_equip.configuration,
+			spa_ctrl_equip.ce_type,
+			spa_ctrl_equip.tmsp_created,
+			spa_ctrl_equip.tmsp_last_updt,
+			spa_ctrl_equip.staff_id_last_updt
+			from spa_ctrl_equip, dsk_central_file
+			where
+			spa_ctrl_equip.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL5>
+						
+		<TAB6>state_app_est_emissions</TAB6>
+		<SQL6>		
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			spa_prop_emissions.int_doc_id,
+			spa_prop_emissions.pollutant_code,
+			spa_prop_emissions.prop_max_er_hr,
+			spa_prop_emissions.prop_max_er_yr,
+			spa_prop_emissions.tmsp_created,
+			spa_prop_emissions.tmsp_last_updt,
+			spa_prop_emissions.staff_id_last_updt
+			from spa_prop_emissions, dsk_central_file
+			where
+			spa_prop_emissions.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL6>
+		
+		<TAB7>state_confid</TAB7>
+		<SQL7>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			spa_confid.int_doc_id,
+			amtb_confidential.confidential_desc,
+			spa_confid.basis_confid_desc,
+			spa_confid.tmsp_created,
+			spa_confid.tmsp_last_updt,
+			spa_confid.staff_id_last_updt
+			from spa_confid, dsk_central_file, amtb_confidential
+			where
+			spa_confid.int_doc_id=dsk_central_file.int_doc_id
+			and spa_confid.confid_item=amtb_confidential.confidential_code
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id		
+		</SQL7>
+		
+		<TAB8>state_fed_restrict</TAB8>
+		<SQL8>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			spa_fed_restrict.int_doc_id,
+			spa_fed_restrict.pollutant_code,
+			spa_fed_restrict.prop_ann_em_limit,
+			spa_fed_restrict.prop_op_restrict,
+			spa_fed_restrict.prop_emissions,
+			spa_fed_restrict.prop_compliance_desc,
+			spa_fed_restrict.tmsp_created,
+			spa_fed_restrict.tmsp_last_updt,
+			spa_fed_restrict.staff_id_last_updt
+			from spa_fed_restrict, dsk_central_file
+			where
+			spa_fed_restrict.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id			
+		</SQL8>
+				
+		<TAB9>title_v_confid</TAB9>
+		<SQL9>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			tva_confid.int_doc_id,
+			amtb_confidential.confidential_desc,
+			tva_confid.basis_confid_desc,
+			tva_confid.tmsp_created,
+			tva_confid.tmsp_last_updt,
+			tva_confid.staff_id_last_updt
+			from tva_confid, dsk_central_file, amtb_confidential
+			where
+			tva_confid.int_doc_id=dsk_central_file.int_doc_id
+			and tva_confid.confid_item=amtb_confidential.confidential_code
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id		
+		</SQL9>
+				
+		<TAB10>title_v_eu_confid</TAB10>
+		<SQL10>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			tva_eu_confid.int_doc_id,
+			amtb_confidential.confidential_desc,
+			tva_eu_confid.basis_confid_desc,
+			tva_eu_confid.tmsp_created,
+			tva_eu_confid.tmsp_last_updt,
+			tva_eu_confid.staff_id_last_updt
+			from tva_eu_confid, dsk_central_file, amtb_confidential
+			where
+			tva_eu_confid.int_doc_id=dsk_central_file.int_doc_id
+			and tva_eu_confid.confid_item=amtb_confidential.confidential_code
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id		
+		</SQL10>
+				
+		<TAB11>tva_non_compliance</TAB11>
+		<SQL11>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			tva_non_compliance.int_doc_id,
+			tva_non_compliance.progress_reports,
+			tva_non_compliance.rq_non_comp_desc,
+			tva_non_compliance.comp_desc,
+			tva_non_compliance.final_ctrl_plan_desc,
+			tva_non_compliance.awd_contract_desc,
+			tva_non_compliance.init_action_desc,
+			tva_non_compliance.install_desc,
+			tva_non_compliance.final_comp_desc,
+			tva_non_compliance.comp_plan_desc_1,
+			tva_non_compliance.comp_plan_desc_2
+			from tva_non_compliance, dsk_central_file
+			where
+			tva_non_compliance.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL11>
+		
+		<TAB12>title_V_PTO_app_2</TAB12>
+		<SQL12>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			title_v_app.int_doc_id,
+			title_v_app.facility_type,
+			title_v_app.subject_to_tiv_flag,
+			title_v_app.sub_under_112r_flag,
+			title_v_app.stat_agent_name,
+			title_v_app.stat_agent_mail_addr,
+			title_v_app.stat_agent_city,
+			title_v_app.stat_agent_state,
+			title_v_app.stat_agent_zip,
+			title_v_app.resp_official_name,
+			title_v_app.title,
+			title_v_app.alt_limits_desc,
+			title_v_app.on_site_contact_name,
+			title_v_app.on_site_contact_phone
+			from title_v_app, dsk_central_file
+			where
+			title_v_app.int_doc_id=dsk_central_file.int_doc_id and
+			dsk_central_file.action_type='TVP'
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL12>
+		
+		<TAB13>title_V_PTO_appRev2</TAB13>
+		<SQL13>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			title_v_app.int_doc_id,
+			title_v_app.facility_type,
+			title_v_app.subject_to_tiv_flag,
+			title_v_app.sub_under_112r_flag,
+			title_v_app.stat_agent_name,
+			title_v_app.stat_agent_mail_addr,
+			title_v_app.stat_agent_city,
+			title_v_app.stat_agent_state,
+			title_v_app.stat_agent_zip,
+			title_v_app.resp_official_name,
+			title_v_app.title,
+			title_v_app.alt_limits_desc,
+			title_v_app.on_site_contact_name,
+			title_v_app.on_site_contact_phone
+			from title_v_app, dsk_central_file
+			where
+			title_v_app.int_doc_id=dsk_central_file.int_doc_id and
+			dsk_central_file.action_type='TVR'
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL13>
+		
+		<TAB14>correction2</TAB14>
+		<SQL14>
+		select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			t.filename,
+			t.bbs_verif_num,
+			t.revisions_desc,
+			t.child_int_doc_id,
+			t.elec_sub_date
+			from dsk_central_file,  
+			(select
+			spa_tva_correction.int_doc_id,
+			spa_tva_correction.filename,
+			spa_tva_correction.bbs_verif_num,
+			spa_tva_correction.revisions_desc,
+			dsk_link.child_int_doc_id,
+			spa_tva_correction.elec_sub_date
+			from spa_tva_correction
+			left outer join dsk_link
+			on spa_tva_correction.int_doc_id=dsk_link.int_doc_id) t
+			where t.int_doc_id=dsk_central_file.int_doc_id
+			order by
+			 dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id 
+		</SQL14>
+		
+		<TAB15>END</TAB15>
+	</StarsStateAppSQL>
+</root>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<DelegationRequestSQL>
+		<delegationColumns>
+		    pd.effective_date as pd_effective_date,pd.originator_first_name as pd_originator_first_name,
+		    pd.originator_last_name as pd_originator_last_name,pd.originator_title as pd_originator_title,
+		    pd.originator_address1 as pd_originator_address1,pd.originator_address2 as pd_originator_address2,
+		    pd.originator_city as pd_originator_city,pd.originator_state_cd as pd_originator_state_cd,
+		    pd.originator_zip as pd_originator_zip,pd.originator_phone_no as pd_originator_phone_no,
+		    pd.corporate_qualified as pd_corporate_qualified,pd.request_type_cd as pd_request_type_cd,
+		    pd.fac_250emp_qualified as pd_fac_250emp_qualified,pd.fac_25mil_qualified as pd_fac_25mil_qualified,
+		    pd.delegate_qualified as pd_delegate_qualified,pd.successor_qualified as pd_successor_qualified,
+		    pd.assignee_first_name as pd_assignee_first_name,pd.assignee_last_name as pd_assignee_last_name,
+		    pd.assignee_title as pd_assignee_title,pd.assignee_address1 as pd_assignee_address1,
+		    pd.assignee_address2 as pd_assignee_address2,pd.assignee_city as pd_assignee_city,
+		    pd.assignee_state_cd as pd_assignee_state_cd,pd.assignee_zip as pd_assignee_zip,pd.last_modified as pd_lm
+		</delegationColumns>
+			  	
+	  	<applicationColumns>
+			  pa.application_id, pa.application_type_cd, pa.contact_id, pa.fp_id, 
+			  pa.previous_application_nbr, pa.application_nbr, pa.validated_flag, 
+			  pa.received_date, pa.app_amended_flag, pa.app_corrected_flag, 
+			  pa.app_corrected_reason, pa.application_desc, pa.submitted_date, 
+			  pa.legacy_flag, pa.general_permit, pa.last_modified as pa_lm
+  		</applicationColumns>
+  
+	    <documentColumns>
+	      doc.document_id, doc.upload_dt, doc.facility_id, doc.description,
+	      doc.path, doc.last_checkout_by, doc.last_modified_by,
+	      doc.last_modified_ts, doc.temp_flag, doc.last_modified AS
+	      dd_lm,dor.last_modified AS ref_lm
+	    </documentColumns>
+    
+		<createDelegationRequest>
+			INSERT INTO %Schema%PA_DELEGATION (application_id,effective_date,originator_first_name,
+			originator_last_name,originator_title,
+		    originator_address1,originator_address2,originator_city,originator_state_cd,
+		    originator_zip,originator_phone_no,corporate_qualified,request_type_cd,
+		    fac_250emp_qualified,fac_25mil_qualified,successor_qualified,assignee_first_name,
+		    assignee_last_name,assignee_title,assignee_address1,assignee_address2,
+		    assignee_city,assignee_state_cd,assignee_zip)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createDelegationRequest>
+	
+		<updateDelegationRequest>
+			UPDATE %Schema%PA_DELEGATION SET 
+			effective_date=?,originator_first_name=?,originator_last_name=?,originator_title=?,
+		    originator_address1=?,originator_address2=?,originator_city=?,originator_state_cd=?,
+		    originator_zip=?,originator_phone_no=?,corporate_qualified=?,request_type_cd=?,
+		    fac_250emp_qualified=?,fac_25mil_qualified=?,successor_qualified=?,assignee_first_name=?,
+		    assignee_last_name=?,assignee_title=?,assignee_address1=?,assignee_address2=?,
+		    assignee_city=?,assignee_state_cd=?,assignee_zip=?,last_modified=? WHERE APPLICATION_ID = ? AND last_modified = ?
+		</updateDelegationRequest>
+
+		<deleteDelegationRequest>
+			DELETE FROM %Schema%PA_DELEGATION WHERE
+			application_id = ?
+		</deleteDelegationRequest>
+
+		<findDelegationRequests>
+			SELECT ${DelegationRequestSQL.delegationColumns}    
+            FROM %Schema%PA_DELEGATION  
+            WHERE 1 = 1 
+		</findDelegationRequests>
+		
+		<retrieveDelegationRequestById>
+			SELECT ${DelegationRequestSQL.delegationColumns},${DelegationRequestSQL.applicationColumns},FF.facility_id     
+            FROM %Schema%PA_DELEGATION pd,%Schema%PA_APPLICATION PA, %Schema%FP_FACILITY FF  
+            WHERE PA.fp_id = FF.fp_id and pa.application_id = pd.application_id and pa.application_id = ? 
+		</retrieveDelegationRequestById>
+
+		<retrieveDelegationRequestsByFacility>
+			SELECT ${DelegationRequestSQL.delegationColumns},${DelegationRequestSQL.applicationColumns},FF.facility_id    
+            FROM %Schema%PA_DELEGATION pd,%Schema%PA_APPLICATION PA, %Schema%FP_FACILITY FF  
+            WHERE PA.fp_id = FF.fp_id and pa.application_id = pd.application_id and FF.facility_id = ? ORDER BY pa.received_date DESC
+		</retrieveDelegationRequestsByFacility>
+
+		<retrieveDelegationAttachments>
+			SELECT ${DelegationRequestSQL.documentColumns} 
+			FROM %Schema%dc_document doc
+            INNER JOIN %Schema%pa_dor_attachments dor ON (doc.document_id = dor.document_id)
+			WHERE doc.facility_id = ? 
+            AND dor.application_id = ?
+		</retrieveDelegationAttachments>
+		
+		<createDelegationAttachment>
+			INSERT INTO %Schema%PA_DOR_ATTACHMENTS
+			(DOCUMENT_ID,APPLICATION_ID,LAST_MODIFIED)
+			VALUES (?,?,?)
+		</createDelegationAttachment>
+		
+		<updateDelegationAttachment>
+			UPDATE %Schema%PA_DOR_ATTACHMENTS SET 
+			LAST_MODIFIED = ? WHERE 
+			DOCUMENT_ID = ? AND LAST_MODIFIED = ?
+		</updateDelegationAttachment>
+		
+		<deleteDelegationAttachment>
+			DELETE FROM %Schema%pa_dor_attachments dor 
+            WHERE dor.document_id = ? 
+            AND dor.application_id = ?
+		</deleteDelegationAttachment>
+		
+	</DelegationRequestSQL>
+</root>

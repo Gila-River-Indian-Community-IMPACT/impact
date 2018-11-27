@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Companies Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--Companies Tab -->
+
+	<!-- menu items -->
+	<managed-bean>
+		<managed-bean-name>menuItem_companies</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_companies</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Companies</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>companies</value>
+		</managed-property>
+		<!-- <managed-property>
+			<property-name>children</property-name>
+			<list-entries>
+				<value-class>
+					us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+				</value-class>
+				<value>#{menuItem_companySearch}</value>
+				<value>#{menuItem_companyProfile}</value>
+				<value>#{menuItem_createCompany}</value>
+			</list-entries>
+		</managed-property> -->
+		<managed-property>
+      		<property-name>rendered</property-name>
+      		<value>false</value>
+    	</managed-property>
+    	 <managed-property>
+            <property-name>children</property-name>
+            <list-entries>
+                <value-class>
+                    us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+                </value-class>
+                    <value>#{menuItem_companyProfile}</value>
+            </list-entries>
+        </managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.companySearch.refreshSearchCompanies</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_companySearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_companySearch</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Company Search</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>companies.search</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/companies/companySearch.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.companySearch.refreshSearchCompanies</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_createCompany</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_createCompany</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Create Company</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>companies.createCompany</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/companies/createCompany.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>companies.createCompany</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_companyProfile</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_companyProfile</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Company Detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>companies.profile</value>
+		</managed-property>
+		<managed-property>
+			<property-name>disabled</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/companies/companyProfile.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/companies/companyProfile.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.companyProfile.refreshCompanyProfile</value>
+		</managed-property>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>createCompany</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.company.CreateCompany
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		      <managed-property>
+            <property-name>companyService</property-name>
+            <value>#{companyBO}</value>
+        </managed-property>
+	</managed-bean>
+
+    <!-- TODO this should use a class from the portal package, not the app package -->
+	<managed-bean>
+		<managed-bean-name>companySearch</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.app.company.CompanySearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+              <managed-property>
+            <property-name>companyService</property-name>
+            <value>#{companyBO}</value>
+        </managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>companyProfile</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.portal.company.CompanyProfile
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>companyService</property-name>
+            <value>#{companyBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>facilityService</property-name>
+            <value>#{facilityBO}</value>
+        </managed-property>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>menuItem_cmpNotes</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_cmpNotes</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Notes</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>companies.profile.notes</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/companies/notes.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>companies.profile.notes</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>/companies/companySearch.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{companySearch.submitSearch}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/companies/companySearch.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>companies.createCompany</from-outcome>
+			<to-view-id>/companies/createCompany.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>companyProfile</from-outcome>
+			<to-view-id>/companies/companyProfile.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:companyProfile</from-outcome> 
+			<to-view-id>/companies/companyDetailDialog.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>companies.profile.notes</from-outcome>
+			<to-view-id>/companies/notes.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:companyNoteDetail</from-outcome> 
+			<to-view-id>/companies/noteDetail.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:companyOffsetTrackingSummary</from-outcome>
+			<to-view-id>/companies/offsetTrackingSummary.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

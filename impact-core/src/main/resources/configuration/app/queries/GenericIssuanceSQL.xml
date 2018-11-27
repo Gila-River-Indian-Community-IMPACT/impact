@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+  <GenericIssuanceSQL>
+
+    <genericIssuanceColumns>
+      issuance_id, issuance_type_cd, facility_id, application_id, permit_id,
+      issuance_date, issued_flag, public_notice_text, document_id, addr_doc_id, 
+      fee_amount, last_modified AS gi_lm
+    </genericIssuanceColumns>
+
+    <retrieveGenericIssuance>
+      SELECT ${GenericIssuanceSQL.genericIssuanceColumns}
+        FROM %Schema%is_generic_issuance
+        WHERE issuance_id = ?
+    </retrieveGenericIssuance>
+
+    <searchGenericIssuances>
+      SELECT ${GenericIssuanceSQL.genericIssuanceColumns}
+        FROM %Schema%is_generic_issuance
+    </searchGenericIssuances>
+
+    <createGenericIssuance>
+      INSERT INTO %Schema%is_generic_issuance
+        (issuance_id, issuance_type_cd, facility_id, application_id, permit_id, 
+         issuance_date, issued_flag, public_notice_text, document_id, addr_doc_id, 
+         fee_amount)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createGenericIssuance>
+
+    <modifyGenericIssuance>
+      UPDATE %Schema%is_generic_issuance
+        SET issuance_type_cd = ?, facility_id = ?, application_id = ?, permit_id = ?,
+            issuance_date = ?, issued_flag = ?, public_notice_text = ?, document_id = ?, 
+            addr_doc_id = ?, fee_amount = ?, last_modified = ?
+        WHERE issuance_id = ? 
+          AND last_modified = ? 
+    </modifyGenericIssuance>
+
+  </GenericIssuanceSQL>
+
+</root>

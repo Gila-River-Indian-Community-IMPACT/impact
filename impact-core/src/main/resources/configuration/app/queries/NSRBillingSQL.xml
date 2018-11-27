@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<NSRBillingSQL>
+		<aqdsTimesheetEntryColumns>
+			tsh.EmployeeID 				as aqds_employee_id,
+			t21.AppID 					as aqds_app_id,
+			tsh.HourEntryID 			as aqds_hour_entry_id, 
+			t21.AppNum 					as section_nsr_id, 
+			CONCAT(emp.LName, ', ', emp.FName) as engineer, 
+			null		 				as entry_id,
+			null			 			as employee_id, 
+			tsh.Date 					as date, 
+			tsh.[Function] 				as [function],
+			tsh.Section 				as section,
+			null 						as section_nsr_app,
+			null				 		as section_nsr_permit,
+			tsh.OT 						as ot,
+			null		 				as invoiced, 
+			tsh.Hours 					as hours, 
+			tsh.ActivityDescription 	as comments,
+			null						as last_modified
+		</aqdsTimesheetEntryColumns>
+
+		<impactTimesheetEntryColumns>
+			null						as aqds_employee_id,
+			tsh.aqds_app_id				as aqds_app_id,
+			tsh.aqds_hour_entry_id		as aqds_hour_entry_id, 
+			tsh.section_nsr_id 			as section_nsr_id,
+			tsh.section_tv_id 			as section_tv_id,
+			tsh.entry_id 				as entry_id,
+			tsh.employee_id 			as employee_id, 
+			tsh.date 					as date, 
+			tsh.[function] 				as [function],
+			tsh.section 				as section,
+			tsh.section_nsr_app 		as section_nsr_app,
+			tsh.section_nsr_permit 		as section_nsr_permit,
+			tsh.ot 						as ot, 
+			tsh.invoiced 				as invoiced, 
+			tsh.hours 					as hours, 
+			tsh.activity_description 	as comments,
+			tsh.last_modified			as last_modified
+		</impactTimesheetEntryColumns>
+
+		<retrieveBillableRateDef>
+			SELECT
+				code, description, effective_date, 
+				hourly_rate, deprecated, last_modified
+				FROM %Schema%NSR_BILLING_BILLABLE_RATE_DEF ORDER BY code ASC
+		</retrieveBillableRateDef>
+		
+		<retrieveStandardFeeDef>
+			SELECT
+				code, description, invoice_type_cd, 
+				fee, deprecated, last_modified
+				FROM %Schema%NSR_BILLING_STANDARD_FEES_DEF ORDER BY code ASC
+		</retrieveStandardFeeDef>
+
+		<retrieveAQDSTimeSheetHours>
+			SELECT ${NSRBillingSQL.aqdsTimesheetEntryColumns} FROM TimeSheetHours tsh
+				INNER JOIN Trac21 t21 ON tsh.SectionNSR = t21.AppID
+				INNER JOIN Employees emp ON tsh.EmployeeID = emp.EmployeeID 
+		</retrieveAQDSTimeSheetHours>
+
+		<retrieveImpactTimeSheetHours>
+			SELECT 
+				concat(u.last_nm, ', ', u.first_nm) as engineer,
+				${NSRBillingSQL.impactTimesheetEntryColumns}
+				FROM dbo.ts_timesheet_entry tsh
+				INNER JOIN dbo.cm_user_def u on u.user_id = tsh.employee_id
+		</retrieveImpactTimeSheetHours>
+		
+		<createTimesheetEntry>
+			INSERT INTO dbo.ts_timesheet_entry
+			(
+				entry_id, 
+				employee_id, 
+				date, 
+				[function], 
+				section, 
+				section_nsr_id, 
+				section_nsr_app, 
+				section_nsr_permit, 
+				objective, 
+				ot, 
+				invoiced, 
+				hours, 
+				activity_description,
+				aqds_app_id,
+				aqds_hour_entry_id,
+				section_tv_id 
+			)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createTimesheetEntry>
+		
+		<modifyTimesheetEntry>
+			UPDATE dbo.ts_timesheet_entry
+			SET 
+				date = ?, 
+				[function] = ?, 
+				section = ?, 
+				section_nsr_id = ?, 
+				section_nsr_app = ?, 
+				section_nsr_permit = ?, 
+				objective = ?, 
+				ot = ?, 
+				invoiced = ?, 
+				hours = ?, 
+				activity_description = ?,
+				last_modified = ?,
+				section_tv_id = ? 
+			WHERE 
+				entry_id = ?
+				AND last_modified = ?
+		</modifyTimesheetEntry>
+
+		<retrieveTimeSheetEntries>
+			SELECT 
+				${NSRBillingSQL.impactTimesheetEntryColumns}
+			FROM dbo.ts_timesheet_entry tsh
+			WHERE tsh.employee_id = ?
+			ORDER BY tsh.date DESC
+		</retrieveTimeSheetEntries>
+
+		<retrieveTimeSheetEntry>
+			SELECT 
+				${NSRBillingSQL.impactTimesheetEntryColumns}
+			FROM dbo.ts_timesheet_entry tsh
+			WHERE tsh.entry_id = ?
+		</retrieveTimeSheetEntry>
+
+		<removeTimesheetEntry>
+			DELETE FROM dbo.ts_timesheet_entry
+			WHERE
+			entry_id = ?
+		</removeTimesheetEntry>
+		
+		<countAqdsTimesheetEntries>
+			SELECT count(*) from dbo.TS_TIMESHEET_ENTRY 
+				WHERE aqds_hour_entry_id is not null;
+		</countAqdsTimesheetEntries>
+		
+		<retrieveAqdsNsrTimesheetEntries>
+			SELECT 
+ 				${NSRBillingSQL.aqdsTimesheetEntryColumns}
+			FROM [dbo].[TimeSheetHours] tsh
+				INNER JOIN Trac21 t21 ON tsh.SectionNSR = t21.AppID
+				INNER JOIN Employees emp ON tsh.EmployeeID = emp.EmployeeID
+			WHERE
+				tsh.[Function] = 6 and tsh.Section = 1
+				and t21.AppNum like 'A_______'
+				and tsh.Date is not null
+				and tsh.EmployeeID is not null
+				and tsh.Hours is not null
+		</retrieveAqdsNsrTimesheetEntries>
+		
+		<retrieveImpactTimesheetUser>
+			SELECT user_id from [dbo].[CM_USER_DEF_AQDS_EMPLOYEES] where
+				aqds_employee_id = ?
+		</retrieveImpactTimesheetUser>
+		
+		<deleteAllTimesheetEntries>
+			DELETE FROM	dbo.TS_TIMESHEET_ENTRY 
+		</deleteAllTimesheetEntries>
+		
+	</NSRBillingSQL>
+</root>

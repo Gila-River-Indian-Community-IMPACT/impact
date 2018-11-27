@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RY: all *Base* will be removed later -->
+<root>
+  <DocumentSQL>
+
+    <documentColumns>
+      dd.document_id, dd.facility_id, dd.last_checkout_by, dd.last_modified_by,
+      dd.last_modified_ts, dd.path, dd.upload_dt, dd.description, dd.temp_flag,
+      dd.last_modified AS dd_lm
+    </documentColumns>
+
+    <modifyDocument>
+      update %Schema%dc_document set facility_id = ?, last_checkout_by = ?, last_modified_by = ?,
+      last_modified_ts = ?, path = ?, upload_dt = ?, description = ?, temp_flag = ?
+      where document_id = ?
+    </modifyDocument>
+
+    <createDocument>
+      INSERT INTO %Schema%dc_document (document_id, facility_id, last_checkout_by, last_modified_by,
+       last_modified_ts, path, upload_dt, description, temp_flag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createDocument>
+
+    <retrieveDocument>
+      SELECT ${DocumentSQL.documentColumns}
+        FROM %Schema%dc_document dd
+        WHERE dd.document_id = ?
+    </retrieveDocument>
+    
+    <retrieveMigratedPdfDocuments>
+      SELECT ${DocumentSQL.documentColumns}
+        FROM %Schema%dc_document dd
+        WHERE (dd.path like '%.pdf' OR dd.path like '%.PDF') AND 
+        dd.upload_dt &lt; to_date('2008-06-27', 'YYYY-MM-DD')
+    </retrieveMigratedPdfDocuments>
+
+    <retrieveDocumentsByPath>
+      SELECT ${DocumentSQL.documentColumns}
+        FROM %Schema%dc_document dd
+        WHERE lower(dd.path) LIKE ?
+    </retrieveDocumentsByPath>
+
+    <retrieveDocuments>
+      SELECT ${DocumentSQL.documentColumns},(c.last_nm + ', ' + c.first_nm) as contact_name 
+        FROM %Schema%dc_document dd,%Schema%cm_contact c 
+        WHERE dd.document_id in (?) and dd.last_modified_by = c.contact_id order by last_modified_ts desc
+    </retrieveDocuments>
+
+    <retrieveOldTemplateDocument>
+      SELECT ${DocumentSQL.documentColumns}, dt.template_doc_type_cd, dt.template_doc_type_dsc, 
+             dt.deprecated 
+        FROM %Schema%dc_document dd, %Schema%dc_template_doc_type_def dt
+        WHERE dd.document_id = dt.document_id
+          AND dd.document_id = ?
+    </retrieveOldTemplateDocument>
+    
+    <retrieveTemplateDocument>
+      SELECT dt.template_doc_type_cd, dt.template_doc_type_dsc, 
+             dt.deprecated, template_path 
+        FROM %Schema%dc_template_doc_type_def dt
+        WHERE dt.document_id = ?
+    </retrieveTemplateDocument>
+
+    <retrieveOldTemplateDocuments>
+      SELECT ${DocumentSQL.documentColumns}, dt.template_doc_type_cd, dt.template_doc_type_dsc, 
+             dt.deprecated, dt.template_path, dt.template_type
+        FROM %Schema%dc_document dd, %Schema%dc_template_doc_type_def dt
+        WHERE dd.document_id = dt.document_id
+    </retrieveOldTemplateDocuments>
+    
+    <retrieveTemplateDocuments>
+      SELECT dt.template_doc_type_cd, dt.template_doc_type_dsc, 
+             dt.deprecated, dt.template_path
+        FROM %Schema%dc_template_doc_type_def dt        
+    </retrieveTemplateDocuments>
+
+    <unMarkTempDocument>
+    	UPDATE %Schema%dc_document SET temp_flag='N' WHERE document_id = ? 
+    </unMarkTempDocument>
+
+    <selectTemporaryDocuments>
+        SELECT ${DocumentSQL.documentColumns} FROM %Schema%dc_document dd 
+          WHERE dd.last_modified_ts &lt; ? AND dd.temp_flag = 'Y'
+    </selectTemporaryDocuments>
+
+    <selectAllNonTemporaryDocuments>
+        SELECT ${DocumentSQL.documentColumns} FROM %Schema%dc_document dd 
+          WHERE dd.last_modified_ts &gt; ? AND dd.temp_flag = 'N'
+    </selectAllNonTemporaryDocuments>
+
+  </DocumentSQL>
+</root>

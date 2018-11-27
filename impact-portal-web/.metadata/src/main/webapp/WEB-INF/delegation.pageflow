@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf137893541168370" configfile="/impact-portal-web/src/main/webapp/WEB-INF/delegation.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="562" id="pf137893546023171" outlinks="pf137893546023172 pf137893546023173 pf137893546023174" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="delegation/editDelegation" x="338" y="178" id="pf137893546023175" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf137893546023172" path="/delegation/editDelegation.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="delegation/delegationDetail" x="338" y="562" id="pf137893546023176" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf137893546023173" path="/delegation/delegationDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="delegation/delegationSearch" x="338" y="946" id="pf137893546023177" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf137893546023174" path="/delegation/delegationSearch.jsp"/>
+  <links id="pf137893546023172" target="pf137893546023175" source="pf137893546023171" outcome="dialog:editDelegation"/>
+  <links id="pf137893546023173" target="pf137893546023176" source="pf137893546023171" outcome="delegation" redirect="true"/>
+  <links id="pf137893546023174" target="pf137893546023177" source="pf137893546023171" outcome="delegationSearch" redirect="true"/>
+</pageflow:Pageflow>

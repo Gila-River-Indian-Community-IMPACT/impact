@@ -1,0 +1,67 @@
+<!DOCTYPE faces-config PUBLIC
+    "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+    "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+
+  <!-- menu items -->
+    
+  <!-- end menu items -->
+
+  <!-- Backing beans -->
+  <managed-bean>
+    <managed-bean-name>documentSearch</managed-bean-name>
+    <managed-bean-class>
+            us.oh.state.epa.stars2.webcommon.document.DocumentSearch
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>documentService</property-name>
+            <value>#{documentBO}</value>
+        </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>attachments</managed-bean-name>
+    <managed-bean-class>
+        us.oh.state.epa.stars2.webcommon.document.Attachments
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>documentService</property-name>
+            <value>#{documentBO}</value>
+        </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>documentGenerationBean</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.util.DocumentGenerationBean
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>applicationService</property-name>
+            <value>#{applicationBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>facilityService</property-name>
+            <value>#{facilityBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>infrastructureService</property-name>
+            <value>#{infrastructureBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>companyService</property-name>
+            <value>#{companyBO}</value>
+        </managed-property>
+  </managed-bean>
+
+  <!-- Navigation rules -->
+  <navigation-rule>
+    <navigation-case>
+      <from-outcome>documentSearch</from-outcome>
+      <to-view-id>/documents/documentSearch.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+</faces-config>

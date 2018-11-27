@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<StarsSQL>
+		<TAB1>title_V_PTO_app_SIC</TAB1>
+		<SQL1>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_sic.sic_code
+			from  tva_sic, dsk_central_file
+			where tva_sic.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL1>
+		<TAB2>title_V_PTO_app</TAB2>
+		<!--  This SQL statement should be nearly identical as the one to
+			  generate title_V_PTO_appRev -->
+		<SQL2>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			title_v_app.int_doc_id,
+			title_v_app.facility_type,
+			title_v_app.subject_to_tiv_flag,
+			title_v_app.sub_under_112r_flag,
+			title_v_app.stat_agent_name,
+			title_v_app.stat_agent_mail_addr,
+			title_v_app.stat_agent_city,
+			title_v_app.stat_agent_state,
+			title_v_app.stat_agent_zip,
+			title_v_app.resp_official_name,
+			title_v_app.title,
+			title_v_app.alt_limits_desc
+			from title_v_app, dsk_central_file
+			where
+			title_v_app.int_doc_id=dsk_central_file.int_doc_id and
+			dsk_central_file.action_type='TVP'
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL2>
+		<TAB3>ME_Orgs</TAB3>
+		<SQL3>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			fac_facility_organizations.organization_name,
+			fac_facility_organizations.organization_type,
+			fac_facility_organizations.address_line_1,
+			fac_facility_organizations.address_line_2,
+			fac_facility_organizations.city,
+			fac_facility_organizations.state,
+			fac_facility_organizations.zip_code,
+			fac_facility_organizations.phone_num
+			from fac_facility_organizations, dsk_central_file
+			where fac_facility_organizations.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL3>
+		<TAB4>ME_Contacts</TAB4>
+		<SQL4>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			fac_facility_contact.first_name,
+			fac_facility_contact.last_name,
+			fac_facility_contact.mid_name,
+			fac_facility_contact.suffix,
+			fac_facility_contact.contact_type,
+			fac_facility_contact.address_line_1,
+			fac_facility_contact.address_line_2,
+			fac_facility_contact.city,
+			fac_facility_contact.state,
+			fac_facility_contact.zip_code,
+			fac_facility_contact.phone_num
+			from fac_facility_contact, dsk_central_file
+			where fac_facility_contact.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL4>
+		<TAB5>title_V_PTO_app_EUapp</TAB5>
+			<!--Right outer join needed because in a few cases there
+			    is no tva_schedule corresponding to tva_emission_unit
+			-->
+		<SQL5>
+			select
+			t.facility_id,
+			t.action_class_code,
+			t.action_id,
+			t.sect_id,
+			t.int_doc_id,
+			t.eu_oepa_id,
+			tva_schedule.op_sched_hrs_day,
+			tva_schedule.op_sched_hrs_yr,
+			t.special_comm_desc,
+			t.equip_desc,
+			t.alt_op_scen_num,
+			t.alt_op_scen_desc,
+			t.process_flow_type
+			from tva_schedule
+			right outer join 
+			(select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_emission_unit.eu_oepa_id,
+			tva_emission_unit.special_comm_desc,
+			tva_emission_unit.equip_desc,
+			tva_emission_unit.alt_op_scen_num,
+			tva_emission_unit.alt_op_scen_desc,
+			tva_emission_unit.process_flow_type
+			from tva_emission_unit, dsk_central_file
+			where
+			tva_emission_unit.int_doc_id=dsk_central_file.int_doc_id) t
+			on
+			t.int_doc_id=tva_schedule.int_doc_id
+			order by t.facility_id,
+			 t.action_class_code desc,
+			 t.action_id,
+			 t.int_doc_id
+		</SQL5>
+		<TAB6>ME_EU</TAB6>
+		<SQL6>
+			select
+			fac_emissions_unit.facility_id,
+			fac_emissions_unit.int_doc_id,
+			fac_emissions_unit.eu_oepa_id,
+			fac_emissions_unit.eu_desc,
+			fac_emissions_unit.emission_unit_id,
+			fac_emissions_unit.eu_install_date,
+			fac_emissions_unit.eu_startup_date,
+			fac_emissions_unit.eu_recent_mod_date,
+			fac_emissions_unit.eu_type
+			from fac_emissions_unit
+			order by fac_emissions_unit.facility_id
+		</SQL6>
+		<TAB7>ME_CE</TAB7>
+		<SQL7>
+			select
+			fac_control_equip.facility_id,
+			fac_control_equip.int_doc_id,
+			fac_control_equip.ce_company_id,
+			fac_control_equip.ce_desc,
+			fac_control_equip.ce_manufacturer,
+			fac_control_equip.ce_model_num,
+			fac_control_equip.ce_inlet_flow,
+			fac_control_equip.ce_inlet_temp,
+			fac_control_equip.ce_equip_type,
+			fac_control_equip.ce_installed_date
+			from fac_control_equip order by
+			fac_control_equip.facility_id
+		</SQL7>
+		<TAB8>title_V_PTO_app_CEapp</TAB8>
+		<SQL8>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_ctrl_equip.ce_company_id,
+			tva_ctrl_equip.configuration
+			from tva_ctrl_equip, dsk_central_file
+			where tva_ctrl_equip.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+ 			 tva_ctrl_equip.configuration
+		</SQL8>
+		<TAB9>ME_EP</TAB9>
+		<SQL9>
+			select
+			fac_egress_point.facility_id,
+			fac_egress_point.int_doc_id,
+			fac_egress_point.egress_point_id,
+			fac_egress_point.ep_type,
+			fac_egress_point.ep_shape,
+			fac_egress_point.ep_cross_area,
+			fac_egress_point.ep_height,
+			fac_egress_point.ep_diameter,
+			fac_egress_point.ep_exit_gas_temp_max,
+			fac_egress_point.ep_exit_gas_temp_avg,
+			fac_egress_point.ep_exit_gas_flow_max,
+			fac_egress_point.ep_exit_gas_flow_avg,
+			fac_egress_point.ep_base_elevation,
+			fac_egress_point.ep_release_height,
+			fac_egress_point.ep_plume_temp,
+			fac_egress_point.ep_area
+			from fac_egress_point order by
+			fac_egress_point.facility_id
+		</SQL9>
+		<TAB10>title_V_PTO_app_EPapp</TAB10>
+		<SQL10>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_emission_unit.eu_oepa_id,
+			tva_egress_point.egress_point_id
+			from tva_egress_point, tva_emission_unit, dsk_central_file
+			where tva_egress_point.int_doc_id=dsk_central_file.int_doc_id and
+			tva_egress_point.int_doc_id=tva_emission_unit.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+			 tva_emission_unit.eu_oepa_id,
+			 tva_egress_point.egress_point_id
+		</SQL10>
+		<TAB11>TODO_info</TAB11>
+		<SQL11>
+			select
+			dsk_todo.facility_id,
+			dsk_todo.action_class_code,
+			dsk_todo.action_id,
+			dsk_central_file.sect_id,
+			dsk_todo.int_doc_id,
+			dsk_todo.action_category_code,
+			dsk_todo.task_id,
+			dsk_todo.task_sequence,
+			dsk_task_list.task_description,
+			dsk_task_list.task_comment,
+			dsk_todo.tmsp_assigned,
+			dsk_todo.tmsp_due,
+			dsk_todo.tmsp_scheduled,
+			dsk_todo.tmsp_deadline,
+			dsk_todo.tmsp_completed,
+			dsk_todo.staff_id_assigned,
+			dsk_todo.staff_id_assigner,
+			dsk_todo.tmsp_created,
+			dsk_todo.locked
+			from dsk_todo, dsk_central_file, dsk_task_list
+			where dsk_todo.task_id=dsk_task_list.task_id
+			  and dsk_central_file.sect_id='ACT'
+			  and dsk_todo.facility_id=dsk_central_file.facility_id
+			  and dsk_todo.action_class_code=dsk_central_file.action_class_code
+			  and dsk_todo.action_id=dsk_central_file.action_id
+			order by dsk_todo.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_todo.task_sequence
+		</SQL11>
+		<TAB12>Notes</TAB12>
+		<SQL12>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			dsk_notes.int_note_id,
+			dsk_notes.staff_id,
+			dsk_notes.tmsp_created,
+			dsk_notes.text
+			from dsk_notes, dsk_central_file
+			where dsk_notes.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+			 dsk_notes.int_note_id
+		</SQL12>
+		<TAB13>title_V_app_est_emissions</TAB13>
+		<SQL13>
+			select dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			amtb_pollutant.pollutant_short,
+			tva_est_emissions.act_em_rate,
+			tva_est_emissions.em_rate_basis,
+			tva_est_emissions.em_rate_basis_2,
+			tva_est_emissions.tva_pot_em_status
+			from tva_est_emissions, amtb_pollutant, dsk_central_file
+			where tva_est_emissions.int_doc_id = dsk_central_file.int_doc_id
+			and tva_est_emissions.pollutant_code = amtb_pollutant.pollutant_code
+			order by dsk_central_file.facility_id,
+			dsk_central_file.action_class_code desc,
+			dsk_central_file.action_id,
+			dsk_central_file.int_doc_id
+		</SQL13>
+		<TAB14>title_V_app_EU_Pollutants</TAB14>
+		<SQL14>
+			select dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_emission_unit.eu_oepa_id,
+			amtb_pollutant.pollutant_short,
+			tva_pollutant.prop_max_em_rate_tons,
+			tva_pollutant.em_rate_det_basis_tons,
+			tva_pollutant.em_rate_det_basis_tons_2,
+			tva_pollutant.prop_max_em_rate,
+			tva_pollutant.prop_max_em_rate_units,
+			tva_pollutant.em_rate_det_basis,
+			tva_pollutant.em_rate_det_basis_2
+			from tva_emission_unit, amtb_pollutant, tva_pollutant, dsk_link, dsk_central_file
+			where tva_emission_unit.int_doc_id = dsk_central_file.int_doc_id and
+			tva_emission_unit.int_doc_id = dsk_link.child_int_doc_id and
+			dsk_link.child_int_doc_id = tva_pollutant.int_doc_id and
+			tva_pollutant.pollutant_code = amtb_pollutant.pollutant_code
+			order by dsk_central_file.facility_id,
+			dsk_central_file.action_class_code desc,
+			dsk_central_file.action_id,
+			dsk_central_file.int_doc_id,
+			tva_emission_unit.eu_oepa_id
+		</SQL14>
+		<TAB15>title_V_app_exemptions</TAB15>
+		<SQL15>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_exemption.eu_oepa_id,
+			tva_exemption.exemption_code 
+			from tva_exemption, dsk_central_file
+			where tva_exemption.int_doc_id = dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+			 tva_exemption.eu_oepa_id
+		</SQL15>
+		<TAB16>title_V_requirements</TAB16>
+			<!--Right outer join needed because in a few cases there
+			    is no reqt_textual corresponding to tva_requirements
+			-->
+		<SQL16>
+			select
+			t.facility_id,
+			t.action_class_code,
+			t.action_id,
+			t.sect_id,
+			t.int_doc_id,
+			t.eu_oepa_id,
+			t.seq_num,
+			t.reqt_type,
+			reqt_textual.long_field,
+			t.cert_sched_desc,
+			t.prop_comp_desc,
+			t.prop_comp_desc_2,
+			t.comp_rptg_desc,
+			t.comp_records_desc,
+			t.comp_records_desc_2,
+			t.comp_monitor_desc,
+			t.comp_monitor_desc_2,
+			t.prop_comp_test_desc,
+			t.new_id_upon_mod,
+			t.affected_pollutants,
+			t.regulatory_bases,
+			t.compliance_det_method
+			from 
+			(select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_requirements.seq_num,
+			tva_requirements.reqt_type,
+			tva_requirements.eu_oepa_id,
+			tva_requirements.cert_sched_desc,
+			tva_requirements.prop_comp_desc,
+			tva_requirements.prop_comp_desc_2,
+			tva_requirements.comp_rptg_desc,
+			tva_requirements.comp_records_desc,
+			tva_requirements.comp_records_desc_2,
+			tva_requirements.comp_monitor_desc,
+			tva_requirements.comp_monitor_desc_2,
+			tva_requirements.prop_comp_test_desc,
+			tva_requirements.new_id_upon_mod,
+			tva_requirements.affected_pollutants,
+			tva_requirements.regulatory_bases,
+			tva_requirements.compliance_det_method
+			from tva_requirements, dsk_central_file
+			where tva_requirements.int_doc_id=dsk_central_file.int_doc_id) t
+			left outer join reqt_textual
+			on t.int_doc_id=reqt_textual.int_doc_id and
+			 t.seq_num=reqt_textual.seq_num
+			order by t.facility_id,
+			 t.action_class_code desc,
+			 t.action_id,
+			 t.int_doc_id,
+			 t.eu_oepa_id,
+			 t.seq_num
+		</SQL16>
+		<TAB17>title_V_pollutant_xref</TAB17>
+		<SQL17>
+			select tva_pollutant_xref.int_doc_id,
+			tva_pollutant_xref.seq_num, tva_pollutant_xref.eu_oepa_id,
+			tva_pollutant_xref.affected_pl_code from tva_pollutant_xref
+			order by tva_pollutant_xref.int_doc_id,
+			tva_pollutant_xref.eu_oepa_id, tva_pollutant_xref.seq_num
+		</SQL17>
+		<TAB18>title_V_reg_basis_xref</TAB18>
+		<SQL18>
+			select tva_reg_basis_xref.int_doc_id,
+			tva_reg_basis_xref.seq_num, tva_reg_basis_xref.eu_oepa_id,
+			tva_reg_basis_xref.reg_basis from tva_reg_basis_xref order
+			by tva_reg_basis_xref.int_doc_id,
+			tva_reg_basis_xref.eu_oepa_id, tva_reg_basis_xref.seq_num
+		</SQL18>
+		<TAB19>title_V_app_method_xref</TAB19>
+		<SQL19>
+			select dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_app_method_xref.seq_num,
+			tva_app_method_xref.eu_oepa_id,
+			tva_app_method_xref.applicable_mthd 
+			from tva_app_method_xref, dsk_central_file
+			where tva_app_method_xref.int_doc_id = dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			dsk_central_file.action_class_code desc,
+			dsk_central_file.action_id,
+			dsk_central_file.int_doc_id,
+			tva_app_method_xref.eu_oepa_id,
+			tva_app_method_xref.seq_num
+		</SQL19>
+		<TAB20>title_V_app_compliance</TAB20>
+		<SQL20>
+			select dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			tva_emission_unit.eu_oepa_id,
+			tva_compliance.enhanced_mon_flag,
+			tva_compliance.complies_flag,
+			tva_compliance.compliance_type,
+			tva_compliance.future_comp_flag
+			from tva_compliance, tva_emission_unit, dsk_link, dsk_central_file 
+			where tva_compliance.int_doc_id = dsk_central_file.int_doc_id and
+			tva_compliance.int_doc_id=tva_emission_unit.int_doc_id and
+			tva_compliance.int_doc_id=dsk_link.child_int_doc_id
+			order by dsk_central_file.facility_id,
+			dsk_central_file.action_class_code desc,
+			dsk_central_file.action_id,
+			dsk_central_file.int_doc_id,
+			tva_emission_unit.eu_oepa_id
+		</SQL20>
+		<TAB21>ME_CE_CarbonAdsorber</TAB21>
+		<SQL21>
+			select
+			fac_carbon_adsorber.facility_id,
+			fac_carbon_adsorber.int_doc_id,
+			fac_carbon_adsorber.ce_company_id,
+			fac_carbon_adsorber.catalyst_type,
+			fac_carbon_adsorber.max_design_outlet,
+			fac_carbon_adsorber.max_design_time from fac_carbon_adsorber
+			order by fac_carbon_adsorber.facility_id
+		</SQL21>
+		<TAB22>ME_CE_Catalytic_incinerator</TAB22>
+		<SQL22>
+			select
+			fac_catalytic_incinerator.facility_id,
+			fac_catalytic_incinerator.int_doc_id,
+			fac_catalytic_incinerator.ce_company_id,
+			fac_catalytic_incinerator.min_inlet_temp,
+			fac_catalytic_incinerator.residence_time,
+			fac_catalytic_incinerator.min_temp_diff from
+			fac_catalytic_incinerator order by
+			fac_catalytic_incinerator.facility_id
+		</SQL22>
+		<TAB23>ME_CE_Concentrator</TAB23>
+		<SQL23>
+			select
+			fac_concentrator.facility_id,
+			fac_concentrator.int_doc_id,
+			fac_concentrator.ce_company_id,
+			fac_concentrator.design_regeneration_time,
+			fac_concentrator.ppmv_for_adsorber from fac_concentrator
+			order by fac_concentrator.facility_id
+		</SQL23>
+		<TAB24>ME_CE_Condensers</TAB24>
+		<SQL24>
+			select
+			fac_condensers.facility_id,
+			fac_condensers.int_doc_id,
+			fac_condensers.ce_company_id,
+			fac_condensers.max_exhaust_temp,
+			fac_condensers.coolant_type_desc,
+			fac_condensers.coolant_inlet_temp,
+			fac_condensers.coolant_outlet_temp,
+			fac_condensers.min_coolant_flow_rate from fac_condensers
+			order by fac_condensers.facility_id
+		</SQL24>
+		<TAB25>ME_CE_Cyclones</TAB25>
+		<SQL25>
+			select
+			fac_cyclones.facility_id,
+			fac_cyclones.int_doc_id,
+			fac_cyclones.ce_company_id,
+			fac_cyclones.cyclone_type
+			from
+			fac_cyclones order by fac_cyclones.facility_id
+		</SQL25>
+		<TAB26>ME_CE_Electro_precip</TAB26>
+		<SQL26>
+			select
+			fac_electro_precip.facility_id,
+			fac_electro_precip.int_doc_id,
+			fac_electro_precip.ce_company_id,
+			fac_electro_precip.electro_precip_type,
+			fac_electro_precip.num_of_fields from fac_electro_precip
+			order by fac_electro_precip.facility_id
+		</SQL26>
+		<TAB27>ME_CE_Filter_baghouse</TAB27>
+		<SQL27>
+			select
+			fac_filter_baghouse.facility_id,
+			fac_filter_baghouse.int_doc_id,
+			fac_filter_baghouse.ce_company_id,
+			fac_filter_baghouse.pressure_drop_range,
+			fac_filter_baghouse.pressure_type,
+			fac_filter_baghouse.fabric_cleaning_type from
+			fac_filter_baghouse order by fac_filter_baghouse.facility_id
+		</SQL27>
+		<TAB28>ME_CE_Flare</TAB28>
+		<SQL28>
+			select
+			fac_flare.facility_id,
+			fac_flare.int_doc_id,
+			fac_flare.ce_company_id,
+			fac_flare.flare_type,
+			fac_flare.flame_sensor_flag from fac_flare order by
+			fac_flare.facility_id
+		</SQL28>
+		<TAB29>ME_CE_Thermal_incinerator</TAB29>
+		<SQL29>
+			select
+			fac_flame_incinerator.facility_id,
+			fac_flame_incinerator.int_doc_id,
+			fac_flame_incinerator.ce_company_id,
+			fac_flame_incinerator.min_gas_temp,
+			fac_flame_incinerator.residence_time,
+			fac_flame_incinerator.exhaust_gas_temp from
+			fac_flame_incinerator order by
+			fac_flame_incinerator.facility_id
+		</SQL29>
+		<TAB30>ME_CE_Wet_scrubber</TAB30>
+		<SQL30>
+			select
+			fac_wet_scrubber.facility_id,
+			fac_wet_scrubber.int_doc_id,
+			fac_wet_scrubber.ce_company_id,
+			fac_wet_scrubber.wet_scrubber_type,
+			fac_wet_scrubber.press_drop_range,
+			fac_wet_scrubber.ph_op_range,
+			fac_wet_scrubber.liquid_gas_ratio from fac_wet_scrubber
+			order by fac_wet_scrubber.facility_id
+		</SQL30>
+		<TAB31>ME_CE_Set_chamber</TAB31>
+		<SQL31>
+			select
+			fac_set_chamber.facility_id,
+			fac_set_chamber.int_doc_id,
+			 fac_set_chamber.ce_company_id,
+			fac_set_chamber.set_chamber_type
+			from fac_set_chamber order
+			by fac_set_chamber.facility_id
+		</SQL31>
+		<TAB32>ME_CE_Other</TAB32>
+		<SQL32>
+			select
+			fac_ce_other.facility_id,
+			fac_ce_other.int_doc_id,
+			fac_ce_other.ce_company_id,
+			fac_ce_other.other_desc from
+			fac_ce_other order by fac_ce_other.facility_id
+		</SQL32>
+		<TAB33>dsk_central_file</TAB33>
+			<!--dsk_central_file is left joined with dsk_link
+		    to locate the parent object-if one exists.  This allows
+		    easy location of the EU that an EAC is attached to.
+		    A right outer join is done to locate the title of the
+			attachment(blob)-if one exists.
+			-->
+		<SQL33>
+			select
+			t.facility_id,
+			t.action_category_code,
+			t.action_id,
+			t.int_doc_id,
+			t.sect_id,
+			t.title,
+			t.program_code,
+			t.action_class_code,
+			t.action_type,
+			t.case_id,
+			t.version_no,
+			t.doc_type_general_code,
+			t.doc_type_specific_code,
+			t.imported,
+			t.effective_start,
+			t.effective_end,
+			t.tmsp_created,
+			t.tmsp_last_updt,
+			t.bbs_serial_number,
+			t.tmsp_bbs_submission,	
+			t.parent_ind_doc_id,
+			dsk_blob.blob_title
+			from dsk_blob
+			right outer join (select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_category_code,
+			dsk_central_file.action_id,
+			dsk_central_file.int_doc_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.title,
+			dsk_central_file.program_code,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_type,
+			dsk_central_file.case_id,
+			dsk_central_file.version_no,
+			dsk_central_file.doc_type_general_code,
+			dsk_central_file.doc_type_specific_code,
+			dsk_central_file.imported,
+			dsk_central_file.effective_start,
+			dsk_central_file.effective_end,
+			dsk_central_file.tmsp_created,
+			dsk_central_file.tmsp_last_updt,
+			dsk_central_file.bbs_serial_number,
+			dsk_central_file.tmsp_bbs_submission,	
+			dsk_link.int_doc_id parent_ind_doc_id
+			from dsk_central_file
+			left outer join dsk_link
+			on dsk_central_file.int_doc_id=dsk_link.child_int_doc_id) t
+			on t.int_doc_id=dsk_blob.int_doc_id
+			where t.action_class_code not in ('###')
+			order by t.facility_id,
+			 t.action_class_code desc,
+			 t.action_id,
+			 t.int_doc_id
+		</SQL33>
+		<TAB34>ME_fac</TAB34>
+		<SQL34>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			fac_facility.bbs_short_name,
+			fac_facility.bbs_long_name,
+			fac_facility.major_sic_code,
+			fac_facility.op_stts_type
+			from fac_facility, dsk_central_file
+			where fac_facility.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL34>
+		<TAB35>title_V_PTO_appRev</TAB35>
+		<!--  This SQL statement should be nearly identical as the one to
+			  generate title_V_PTO_app -->
+		<SQL35>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			title_v_app.int_doc_id,
+			title_v_app.facility_type,
+			title_v_app.subject_to_tiv_flag,
+			title_v_app.sub_under_112r_flag,
+			title_v_app.stat_agent_name,
+			title_v_app.stat_agent_mail_addr,
+			title_v_app.stat_agent_city,
+			title_v_app.stat_agent_state,
+			title_v_app.stat_agent_zip,
+			title_v_app.resp_official_name,
+			title_v_app.title,
+			title_v_app.alt_limits_desc
+			from title_v_app, dsk_central_file
+			where
+			title_v_app.int_doc_id=dsk_central_file.int_doc_id and
+			dsk_central_file.action_type='TVR'
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL35>
+		<TAB36>correction</TAB36>
+		<SQL36>
+		select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			t.filename,
+			t.bbs_verif_num,
+			t.revisions_desc,
+			t.child_int_doc_id
+			from dsk_central_file,  
+			(select
+			spa_tva_correction.int_doc_id,
+			spa_tva_correction.filename,
+			spa_tva_correction.bbs_verif_num,
+			spa_tva_correction.revisions_desc,
+			dsk_link.child_int_doc_id
+			from spa_tva_correction
+			left outer join dsk_link
+			on spa_tva_correction.int_doc_id=dsk_link.int_doc_id) t
+			where t.int_doc_id=dsk_central_file.int_doc_id
+			order by
+			 dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id 
+		</SQL36>
+		<TAB3x7>END</TAB3x7>
+		<TAB37>Blob_info</TAB37>
+		<SQL37>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_blob.int_doc_id,
+			dsk_blob.doc_type_general_code,
+			dsk_blob.doc_type_specific_code,
+			dsk_blob.blob_title,
+			dsk_blob.blob_storage,
+			dsk_blob.blob_object
+			from dsk_blob
+			left outer join dsk_central_file
+			on dsk_blob.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id 
+		</SQL37>
+		<TAB38>TEST_Blob</TAB38>
+			<!-- Expect no rows in TEST_Blob, indicating that
+			these fields are always null-and don't need to read. -->
+		<SQL38>
+			select dsk_blob.int_doc_id,
+			dsk_blob.doc_type_general_code,
+			dsk_blob.doc_type_specific_code,
+			dsk_blob.blob_title,
+			dsk_blob.blob_source,
+			dsk_blob.blob_source_type,
+			dsk_blob.blob_summary,
+			dsk_blob.blob_storage,
+			dsk_blob.blob_comments
+			 from dsk_blob
+			  where
+			 dsk_blob.blob_source &lt;&gt; null
+			 or dsk_blob.blob_source_type &lt;&gt; null or
+			 dsk_blob.blob_summary &lt;&gt; null or
+			 dsk_blob.blob_comments &lt;&gt; null
+		</SQL38>
+		<TAB39>stardust</TAB39>
+		<SQL39>
+		select
+		e.eu_agency_cd || e.eu_county_cd || e.eu_city_cd || e.eu_id_cd facility_id,
+ 		e.eu_prefix_cd || e.eu_number_cd eu_id,
+		e.eu_type_cd,
+		e.eu_received_date,
+		e.eu_local_status_cd,
+		e.eu_tc,
+		e.eu_eap_status,
+		e.eu_process_date,
+		e.eu_state_status,
+		e.eu_eff_date,
+		e.eu_term_date,
+		e.eu_issue_date,
+		e.eu_withdrawal_code,
+		e.eu_withdrawal_date,
+		e.eu_adjud_code,
+		e.eu_sic_code,
+		e.eu_ren_proc_date,
+		e.eu_appendix_code,
+		e.eu_equip_id,
+		e.eu_equip_desc,
+		e.eu_renewal_status,
+		e.eu_renewal_type_cd,
+		e.eu_state_terms_cond,
+		f.facility_contact_name,
+		f.facility_contact_street,
+		f.facility_contact_city,
+		f.facility_contact_state,
+		f.facility_contact_zip,
+		f.facility_fac_name,
+		f.facility_fac_street,
+		f.facility_fac_city,
+		f.facility_fac_state,
+		f.facility_fac_zip,
+		f.facility_phone_no,
+		f.facility_major_polluter_code
+		from stardust.emission_unit e
+		left outer join stardust.facility f
+		on	e.eu_agency_cd=f.facility_agency_cd and
+			e.eu_county_cd=f.facility_county_cd and
+			e.eu_city_cd=f.facility_city_cd and
+			e.eu_id_cd=f.facility_id_cd
+ 		order by e.eu_agency_cd, e.eu_county_cd, e.eu_city_cd, e.eu_id_cd,
+ 		e.eu_prefix_cd, e.eu_number_cd
+		</SQL39>
+		<TAB40>pollutant_def</TAB40>
+		<SQL40>
+			select
+			pollutant_code,
+			pollutant_desc,
+			pollutant_short,
+			pollutant_type,
+			pollutant_column,
+			fee,
+			statement,
+			inventory
+			from amtb_pollutant
+			order by pollutant_code
+		</SQL40>
+		<TAB41>END</TAB41>
+	</StarsSQL>
+</root>

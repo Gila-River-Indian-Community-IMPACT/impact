@@ -1,0 +1,227 @@
+/* ========================================================================== */
+/*                                stars2.css                                  */
+/*                                Release 0.1                                 */
+/*           			Developed for Stars2 Help pages                       */
+/*                                                                            */
+/*   Project-specific styles for the Stars2 Project Help pages.                */
+/*   The first few styles are taken from the modified blafdoc.css delivered    */
+/*   with Oracle Help for the Web.  Thereafter, the styles are specific       */
+/*   to the Stars2 project's help pages.                                         */
+/* ========================================================================== */
+
+/* This entry produces a warning: Same colors for background-color and border-top-color; OK? */
+
+TABLE.table-border TH.table-header-border-all {
+    background-color: #DDDDCC;
+    border : 1px solid #DDDDCC;
+    }
+H2 {
+    padding-top : 2px ;
+    border : solid #DDDDCC;
+    border-width : 0px 0px 1px 0px;
+    border-color : #006600;
+    width : 100%;
+    }
+
+
+/* Stars2-specific styles */
+
+/* Do we need to modify/use different formatting for active and/or visited links?
+A:active {
+    color:#ff6600;
+    background-color : #FFFFFF;
+    }
+
+A:visited {
+    color:#996633;
+    background-color : #FFFFFF;
+    }
+*/
+
+
+/* change header colors and font size */ 
+H1, H2, H3, H4 {
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+    color: #006600;
+    background-color : #FFFFFF;
+    }
+
+H1 {
+    font-size : 1.6em;
+    font-weight: bold;
+    border : solid #DDDDCC;
+    border-width : 0px 0px 1px 0px;
+    width : 100%;
+    }
+
+/* consider modifying font-weight and/or style or font-family for h2 sections that will be
+book-marked */
+H2 {
+    font-size:1.4em;
+    font-weight: bold;
+    font-style : italic ;
+    }
+
+H3 {
+    font-size:1.2em; 
+    font-weight: bold;
+    }
+
+H4 {
+    font-size:1.1em; 
+    font-weight: bold;
+    font-style : italic;
+    }
+    
+H5 {
+    font-size:1.1em; 
+    color : #000000
+    font-weight: bold;
+    font-style : italic;
+    }
+    
+H6 {
+    font-size:1em; 
+    font-weight: normal;
+    font-style : italic;
+    }
+    
+/* what does this one do? Does it need to be modified? */
+H1 A, H2 A, H3 A, H4 A {
+    font-size: 100%;
+    }
+
+
+CODE {
+    color: #000000;
+    }
+
+/* what does this one do?  Does it need to be modified? 
+H1 A CODE, H2 A CODE, H3 A CODE, H4 A CODE {
+    color: #336699;
+    font-weight: bold;
+}
+*/  
+ 
+/*  Do we need/expect to use these?  If so, do they need to be modified? 
+A:link CODE {
+    color: #663300;
+    }
+
+A:active CODE {
+    color: #ff6600;
+    }
+
+A:visited CODE {
+    color: #996633;
+    }
+*/
+
+	
+DT {
+    font-size:1.2em;
+    font-weight : bold;
+    padding-top : 1em;
+    }
+    
+TH, TD {
+    color: #000000;
+    padding: 0 0 1em 0;
+    }
+    
+TABLE.table-border  {
+    border : 1px solid #DDDDCC; 
+    }
+
+TABLE.table-border TD, TABLE.table-border TH {
+    border : 1px solid #DDDDCC; 
+    }
+
+TABLE.table-border TH.table-header-border-left, TABLE.table-border TH.table-header-border-middle, TABLE.table-border TH.table-header-border-right  {
+    background-color: #DDDDCC;
+    color: #006600;
+    }
+
+/* This entry produces a warning: Same colors for background-color and border-top-color; OK? */
+TABLE.table-border TH.table-header-border-left {
+    border-left : 1px solid #DDDDCC;
+    background-color: #DDDDCC;
+    }
+
+TABLE.table-border TH.table-header-border-middle {
+    border-left : 1px solid #FFFFFF;
+    border-right : 1px solid #FFFFFF;
+    background-color: #DDDDCC;
+    }
+
+/* This entry produces a warning: Same colors for background-color and border-top-color; OK? */
+TABLE.table-border TH.table-header-border-right {
+    border-left : 1px solid #FFFFFF;
+    border-right : 1px solid #DDDDCC;
+    background-color: #DDDDCC;
+    }
+
+
+P.horizontal-rule {
+    border : solid #DDDDCC;
+/* width OK? */
+    border-width : 0px 0px 1px 0px;
+    }
+    
+LI {
+	padding-top: 10px
+}
+    
+/* ===========================*/
+/* what exactly do these  do (and how do they work)?  Do they need to be modified for our use? 
+div.zz-skip-header {
+  	margin-bottom : 0px;
+  	margin-top : -2px;
+    padding : 0px;
+    text-align:center;
+    line-height : 1px;  
+    }
+
+div.zz-skip-header a:link, div.zz-skip-header a:visited, div.zz-skip-header a:active  {
+    color:white;
+    background-color:white;
+    text-decoration:none;
+    font-size:.1em;
+    line-height : 1px;  
+}
+==============================*/
+
+TD.zz-nav-header-cell {
+	color:#006600;
+	width : 95%;
+	vertical-align : bottom;
+   } 
+
+A.zz-nav-header-link {
+	font-size : 1.2em;
+	color : #006600;
+   }
+
+TD.zz-nav-button-cell {
+    color : #006600;
+    }
+
+A.zz-nav-button-link {
+    font-size : x-small;
+    color : #006600;
+    }
+
+DIV.zz-nav-footer-menu {
+    width : 100%;
+    text-align : center;
+    margin-top : 4em;
+    margin-bottom : 2em;
+    }
+
+
+P.zz-legal-notice, A.zz-legal-notice-link {
+    display : none ;       /* Uncomment this to hide the legal notice */
+}
+
+
+

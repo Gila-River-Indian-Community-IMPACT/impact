@@ -1,0 +1,1448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<InfrastructureSQL>
+		<userDefColumns>
+			cud.user_id, cud.first_nm, cud.last_nm, cud.position_number,
+			cud.manager_id,
+			network_login_nm, cud.active_ind, cud.password_val,
+			cud.password_exp_dt,
+			cud.last_modified AS user_def_lm
+		</userDefColumns>
+		<contactTypeColumns>ccctx.contact_id, ccctx.contact_type_cd,
+			ccctx.start_date AS ct_start_date, ccctx.end_date AS ct_end_date,
+			ccctx.last_modified AS contactType_lm, ccctx.facility_id
+		</contactTypeColumns>
+		<addressColumns>
+			ca.address_id, ca.address1,
+			ca.address2, ca.city,
+			ca.state_cd, ca.zip5, ca.zip4, ca.country_cd,
+			ca.county_cd,
+			ca.start_dt, ca.end_dt, ca.last_modified AS
+			address_lm, ca.latitude,
+			ca.longitude, ca.latlong,
+			ca.quarter_quarter, ca.quarter, ca.section,
+			ca.township, ca.range, ca.do_laa_cd, ca.indian_reservation_cd
+		</addressColumns>
+		<countyColumns>
+			ccd.county_cd, ccd.county_nm, ccd.state_cd,
+			ccd.do_laa_cd, ccd.fips_county_cd,
+			ccd.pti_ptio_draft, ccd.dolaa,
+			ccd.title_v_draft, ccd.county_seat, ccd.last_modified AS
+			county_lm, ccd.shape_id
+		</countyColumns>		
+		<externalLinksColumns>
+			cel.ext_link_cd as code, cel.ext_link_section_cd, cel.ext_link_url as description, cel.last_modified, cel.deprecated  
+		</externalLinksColumns>
+		<systemPropertyColumns>
+			csp.sys_prop_cd as code, csp.sys_prop_val AS description, csp.sys_prop_desc, csp.last_modified, csp.deprecated
+		</systemPropertyColumns>
+		<maxAnnualThroughputUnitColumns>
+			csp.unit_cd as code,
+			csp.unit_val as description,
+			csp.last_modified,
+			csp.deprecated
+		</maxAnnualThroughputUnitColumns>
+		<maxAnnualThroughputUnitEutypeColumns>
+			csp.code as code
+			, csp.max_annual_throughput_cd as description 
+			, csp.eu_type_cd
+			, csp.deprecated
+			, csp.last_modified
+		</maxAnnualThroughputUnitEutypeColumns>
+		<cityColumns>
+			ccd.city_cd, ccd.city_nm, ccd.county_cd,
+			ccd.last_modified AS city_lm
+		</cityColumns>
+		<securityGroupColumns>
+			csg.security_group_id, csg.security_group_nm,
+			csg.last_modified AS security_group_lm
+		</securityGroupColumns>
+		<useCaseColumns>
+			st.security_id, parent_id, usecase, usecase_nm,
+			st.last_modified AS
+			security_template_lm
+		</useCaseColumns>
+		<noteColumns>cn.note_id, cn.note_type_cd, cn.user_id, cn.note_txt,
+			cn.date_entered, cn.last_modified AS cn_lm
+		</noteColumns>
+		<sccCodeColumns>
+			scc.scc_id, fed_scc_id, scc.level1_dsc,
+			scc.level2_dsc,
+			scc.level3_dsc,
+			scc.level4_dsc,
+			scc.created,
+			scc.category,
+			scc.epa_unit_type_cd,
+			scc.inactive
+		</sccCodeColumns>
+		<taskColumns>
+			task_id, FP_ID, dependent_task_id, task_type, task_name,
+			task_description,
+			dependent,
+			create_date, user_name, version,
+			internal_id, facility_id, reference_count,
+			core_place_id,
+			non_ro_submission, document_id, last_modified AS task_lm
+		</taskColumns>
+		<mapOptionsConfigColumns>
+			cmocd.id as code, cmocd.dsc as description, 
+			cmocd.center_lat, cmocd.center_lng, cmocd.zoom_level,
+			cmocd.deprecated, cmocd.last_modified
+		</mapOptionsConfigColumns>
+
+		<retrievePredicates>
+			SELECT predicate_cd, predicate_dsc from dbo.cm_predicate_def
+		</retrievePredicates>
+		
+		<retrieveNote>SELECT ${InfrastructureSQL.noteColumns}
+			FROM
+			%Schema%cm_note cn
+			WHERE note_id = ?
+		</retrieveNote>
+		<createNote>INSERT INTO %Schema%cm_note (note_id, note_type_cd,
+			user_id, note_txt,
+			date_entered)
+			VALUES (?,?,?,?,?)
+		</createNote>
+		<modifyNote>UPDATE %Schema%cm_note SET note_type_cd = ?, note_txt = ?,
+			last_modified = ?
+			WHERE note_id = ?
+			AND last_modified = ?
+		</modifyNote>
+		<removeNote>
+			DELETE FROM %Schema%cm_note WHERE note_id = ?
+		</removeNote>
+		<retrieveAddress>SELECT ${InfrastructureSQL.addressColumns}
+			, cc.county_nm
+			FROM
+			%Schema%cm_address ca
+			left join dbo.cm_county_def cc on cc.county_cd = ca.county_cd
+			WHERE ca.address_id = ?
+		</retrieveAddress>
+		<createAddress>INSERT INTO %Schema%cm_address
+			(address_id, state_cd,
+			country_cd, county_cd, address1,
+			address2, city, zip5, zip4, start_dt,
+			end_dt,
+			latitude, longitude, quarter_quarter, quarter, section,
+			township, range, do_laa_cd, indian_reservation_cd)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createAddress>
+		<modifyAddress>UPDATE %Schema%cm_address
+			SET state_cd = ?, country_cd =
+			?, county_cd = ?,
+			address1 = ?, address2 = ?, city = ?, zip5 = ?, zip4
+			= ?, start_dt = ?,
+			end_dt = ?, last_modified = ?,
+			latitude = ?,
+			longitude = ?, quarter_quarter = ?,
+			quarter = ?, section = ?,
+			township
+			= ?, range = ?, do_laa_cd = ?, indian_reservation_cd = ?
+			WHERE
+			address_id = ?
+			AND last_modified = ?
+		</modifyAddress>
+		<updateAddressEndDates>
+			UPDATE ca
+			SET ca.end_dt = new_end_date
+			FROM %Schema%cm_address ca
+			INNER JOIN
+			(SELECT ca_uo.address_id, ca_uo.start_dt,
+			LAG(ca_uo.start_dt) OVER (ORDER BY ca_uo.start_dt DESC) AS new_end_date
+			FROM %Schema%cm_address ca_uo
+			LEFT JOIN %Schema%fp_facility_address_xref ffax
+			ON
+			ca_uo.address_id=ffax.address_id
+			WHERE ffax.fp_id=?) ca_o
+			ON ca_o.address_id= ca.address_id
+		</updateAddressEndDates>
+		<getPlssByLatLong>
+			SELECT TOP 1 distance,township, range, section,
+			FORMAT(latitude, '0.#####') AS latitude, FORMAT(longitude, '0.#####')
+			AS longitude
+			FROM (SELECT 69.171 *
+			Power(
+			(Power(
+			(Cos((([Latitude] + ?)
+			/ convert(float,2)) * 0.017453292) * ([Longitude] - (?))),
+			convert(float,2))) +
+			Power(([Latitude] - ?),
+			convert(float,2)),CONVERT(float,.5)) as distance,
+			township, range,
+			Section, latitude, longitude
+			From CM_PLSS_CONVERSION_DEF) c1
+			WHERE
+			distance = (
+			SELECT MIN(distance)
+			FROM ( SELECT 69.171 *
+			Power(
+			(Power(
+			(Cos((([Latitude] + ?) / convert(float,2)) * 0.017453292) *
+			([Longitude] - (?))),
+			convert(float,2))) +
+			Power(([Latitude] - ?),
+			convert(float,2)),CONVERT(float,.5)) as distance
+			FROM
+			CM_PLSS_CONVERSION_DEF) a)
+		</getPlssByLatLong>
+		<getLatLongByPlss>
+			SELECT FORMAT(latitude, '0.#####') AS latitude,
+			FORMAT(longitude, '0.#####') AS longitude,
+			township, range, section
+			FROM CM_PLSS_CONVERSION_DEF
+			WHERE section = ? AND
+			township = ? AND
+			range = ?
+		</getLatLongByPlss>
+		<retrieveSystemProperties>
+			SELECT ${InfrastructureSQL.systemPropertyColumns}
+			FROM
+			%Schema%cm_sys_prop_def csp
+			ORDER BY sys_prop_cd
+		</retrieveSystemProperties>		
+		<retrieveSystemProperty>
+			SELECT ${InfrastructureSQL.systemPropertyColumns}
+			FROM
+			%Schema%cm_sys_prop_def csp
+			WHERE sys_prop_cd = ?
+		</retrieveSystemProperty>
+		<retrieveMaxAnnualThroughputUnits>
+			SELECT ${InfrastructureSQL.maxAnnualThroughputUnitColumns}
+			FROM
+			%Schema%cm_max_annual_throughput_unit_def csp
+			ORDER BY code
+		</retrieveMaxAnnualThroughputUnits>
+		<retrieveMaxAnnualThroughputUnitsEutype>
+			SELECT ${InfrastructureSQL.maxAnnualThroughputUnitEutypeColumns}
+			FROM
+			%Schema%cm_max_annual_throughput_uniteutype_def csp
+			ORDER BY csp.code
+		</retrieveMaxAnnualThroughputUnitsEutype>
+		<retrieveExternalLinks>
+			SELECT ${InfrastructureSQL.externalLinksColumns}
+			FROM
+			%Schema%cm_ext_link_def cel
+			ORDER BY ext_link_cd
+		</retrieveExternalLinks>
+		<retrieveExternalLink>
+			SELECT ext_link_section_nm
+			FROM
+			%Schema%cm_ext_link_def cel
+			WHERE ext_link_cd = ?
+		</retrieveExternalLink>	
+		<getCountyByLatLong>			
+			SELECT TOP 1 ${InfrastructureSQL.countyColumns}
+			FROM dbo.cm_county_def ccd
+			INNER JOIN dbo.cm_shape cs ON ccd.shape_id = cs.shape_id 
+			AND cs.geog.STDisjoint(GEOGRAPHY::Point( ?, ?, geog.STSrid)) = 0
+		</getCountyByLatLong>
+		<removeAddress>DELETE FROM %Schema%cm_address
+			WHERE address_id = ?
+		</removeAddress>
+		<retrieveContactByUserId>SELECT ${InfrastructureSQL.userDefColumns}
+			FROM %Schema%cm_user_def cud
+			WHERE cud.user_id = ?
+		</retrieveContactByUserId>
+		<addContactType>INSERT INTO %Schema%cm_contact_contact_type_xref
+			(contact_id, contact_type_cd, start_date) VALUES(?,?,?)
+		</addContactType>
+		<addContactType1>INSERT INTO %Schema%cm_contact_contact_type_xref
+			(contact_id, contact_type_cd, start_date, end_date) VALUES(?,?,?,?)
+		</addContactType1>
+		<deprecateContactType>UPDATE %Schema%cm_contact_contact_type_xref
+			SET
+			end_date = ?
+			WHERE contact_id = ?
+			AND contact_type_cd = ?
+			AND start_date
+			= ?
+		</deprecateContactType>
+		<modifyContactType>UPDATE %Schema%cm_contact_contact_type_xref
+			SET
+			start_date = ?, end_date = ?, last_modified = ?
+			WHERE contact_id = ?
+			AND contact_type_cd = ?
+			AND last_modified = ?
+		</modifyContactType>
+		<deleteContactTypes>DELETE FROM %Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ?
+		</deleteContactTypes>
+		<deleteStagingContactTypes>DELETE FROM
+			%Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ? and
+			facility_id = ?
+		</deleteStagingContactTypes>
+		<deleteContactType>DELETE FROM %Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ?
+			AND contact_type_cd = ?
+			AND start_date = ?
+			AND
+			end_date = ?
+		</deleteContactType>
+		<deleteContactType1>DELETE FROM %Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ?
+			AND contact_type_cd = ?
+			AND start_date = ?
+			AND
+			end_date is null
+		</deleteContactType1>
+		<retrieveAllUseCases>
+			SELECT ${InfrastructureSQL.useCaseColumns}
+			FROM
+			%Schema%cm_security_template st
+			ORDER BY parent_id
+		</retrieveAllUseCases>
+		<retrieveUseCaseByAppUser>
+			SELECT ${InfrastructureSQL.useCaseColumns}
+			FROM %Schema%cm_security_template st,
+			%Schema%cm_security_user_group_xref sugx, %Schema%cm_security_group
+			sg,
+			%Schema%cm_user_group_xref ugx
+			WHERE ugx.user_id = ?
+			AND
+			ugx.security_group_id = sg.security_group_id
+			AND sg.security_group_id
+			= sugx.security_group_id
+			AND sugx.security_id = st.security_id
+		</retrieveUseCaseByAppUser>
+		<retrieveUseCasesBySecGrpId>
+			SELECT ${InfrastructureSQL.useCaseColumns}
+			FROM %Schema%cm_security_template st,
+			%Schema%cm_security_user_group_xref sugx, %Schema%cm_security_group
+			sg
+			WHERE sg.security_group_id = ?
+			AND sg.security_group_id =
+			sugx.security_group_id
+			AND sugx.security_id = st.security_id
+		</retrieveUseCasesBySecGrpId>
+		<retrieveUserByLoginAndPassword>
+			SELECT user_id, password_exp_dt,
+			network_login_nm
+			FROM %Schema%cm_user_def
+			WHERE active_ind = 'Y'
+			AND
+			network_login_nm = ?
+			AND password_val=?
+		</retrieveUserByLoginAndPassword>
+		<retrieveUserByLogin>
+			SELECT user_id, password_exp_dt,
+			network_login_nm
+			FROM %Schema%cm_user_def
+			WHERE active_ind = 'Y'
+			AND
+			lower(network_login_nm)=lower(?);
+		</retrieveUserByLogin>
+		
+		<retrieveUserByNetworkLogin>
+			SELECT network_login_nm
+			FROM %Schema%cm_user_def
+			WHERE
+			lower(network_login_nm)=lower(?);
+		</retrieveUserByNetworkLogin>
+		
+		<retrieveUserByIdAndPassword>
+			SELECT user_id, network_login_nm,
+			password_exp_dt
+			FROM %Schema%cm_user_def
+			WHERE active_ind = 'Y'
+			AND
+			user_id = ?
+			AND password_val = ?
+		</retrieveUserByIdAndPassword>
+		<createUserDef>
+			INSERT INTO %Schema%cm_User_Def (contact_id,
+			network_login_nm,
+			active_ind, password_val, password_exp_dt,
+			manager_id, user_id)
+			VALUES (?,?,?,?,?,?,?,?)
+		</createUserDef>
+		<createInternalUserByLogin>
+			INSERT INTO %Schema%cm_User_Def
+			(user_id,network_login_nm,
+			active_ind,last_nm)
+			VALUES (?,?,?,?)
+		</createInternalUserByLogin>
+		<modifyUser>UPDATE %Schema%cm_user_def
+			SET
+			first_nm = ?, last_nm = ?, position_number = ?,
+			active_ind = ?,
+			last_modified = ?
+			WHERE user_id = ? and last_modified =
+			?
+		</modifyUser>
+		<modifyUserDef>
+			UPDATE %Schema%cm_User_Def
+			SET active_ind = ?,
+			last_modified = ?
+			WHERE user_id = ?
+			AND last_modified = ?
+		</modifyUserDef>
+		<retrieveUserName>
+			SELECT c.first_nm + ' ' + c.last_nm as name
+			FROM
+			%Schema%cm_contact c, %Schema%cm_user_def ud
+			WHERE ud.user_id = ?
+			AND
+			ud.contact_id = c.contact_id
+		</retrieveUserName>
+		<retrieveState>
+			SELECT state_cd, state_nm, sd.country_cd, country_dsc,
+			sd.last_modified AS
+			state_lm, sd.deprecated
+			FROM %Schema%cm_country_def cd,
+			%Schema%cm_state_def sd
+			WHERE state_cd = ?
+			AND sd.country_cd =
+			cd.country_cd and sd.deprecated!='Y'
+		</retrieveState>
+		<retrieveStates>
+			SELECT state_cd, state_nm, sd.country_cd, country_dsc,
+			sd.last_modified AS
+			state_lm, sd.deprecated
+			FROM %Schema%cm_country_def cd,
+			%Schema%cm_state_def sd
+			WHERE sd.country_cd = cd.country_cd and sd.deprecated!='Y' ORDER BY
+			country_dsc desc, state_nm
+		</retrieveStates>
+		<retrieveDistricts>
+			SELECT do_laa_cd, do_laa_dsc, do_laa_id
+			FROM
+			%Schema%cm_do_laa_def
+			WHERE deprecated = 'N'
+			ORDER BY
+			do_laa_dsc,do_laa_cd
+		</retrieveDistricts>
+		<retrieveCounty>
+			SELECT ${InfrastructureSQL.countyColumns}, ccd.county_nm
+			FROM
+			dbo.cm_county_def ccd
+			WHERE county_cd = ?
+		</retrieveCounty>
+		<retrieveCounties>
+			SELECT ${InfrastructureSQL.countyColumns}
+			FROM
+			dbo.cm_county_def ccd
+			ORDER BY county_nm
+		</retrieveCounties>
+		<retrieveDistrictCounties>
+			SELECT ${InfrastructureSQL.countyColumns}
+			FROM
+			dbo.cm_county_def ccd
+			WHERE ccd.do_laa_cd = ?
+			ORDER BY county_nm
+		</retrieveDistrictCounties>
+		<retrieveCities>
+			SELECT ccd.city_cd as code, ccd.city_nm as description, ccd.county_cd, ccd.last_modified, ccd.deprecated
+			FROM %Schema%cm_city_def ccd order by description asc
+		</retrieveCities>
+		<retrieveCountries>
+			SELECT country_cd, country_dsc, cd.last_modified AS
+			country_lm
+			FROM %Schema%cm_country_def cd ORDER BY country_dsc desc
+		</retrieveCountries>
+		<retrieveCountry>
+			SELECT country_cd, country_dsc, cd.last_modified AS
+			country_lm
+			FROM %Schema%cm_country_def cd
+			WHERE cd.country_cd = ?
+		</retrieveCountry>
+		<createCounty>
+			INSERT INTO %Schema%cm_county_def (county_cd, state_cd,
+			county_nm,
+			do_laa_cd)
+			VALUES (?,?,?,?)
+		</createCounty>
+		<createState>
+			INSERT INTO %Schema%cm_state_def (state_cd, state_nm,
+			country_cd)
+			VALUES (?,?,?)
+		</createState>
+		<modifyCounty>
+			UPDATE %Schema%cm_county_def
+			SET state_cd = ?, county_nm
+			= ?, do_laa_cd = ?,
+			last_modified = ?
+			WHERE county_cd = ?
+			AND
+			last_modified = ?
+		</modifyCounty>
+		<modifyCountry>
+			UPDATE %Schema%cm_country_def
+			SET country_dsc = ?,
+			last_modified = ?
+			WHERE country_cd = ?
+			AND last_modified = ?
+		</modifyCountry>
+		<modifyState>
+			UPDATE %Schema%cm_state_def
+			SET state_nm = ?, country_cd =
+			?, last_modified = ?
+			WHERE state_cd = ?
+			AND last_modified = ?
+		</modifyState>
+		<retrieveDaemonInfoByCode>
+			SELECT cd.daemon_cd, cdd.daemon_dsc,
+			cd.hostname, cd.port_number,
+			cd.last_modified
+			FROM %Schema%cm_daemon
+			cd, %Schema%cm_daemon_def cdd
+			WHERE cd.daemon_cd = cdd.daemon_cd
+			AND
+			cd.daemon_cd = ?
+		</retrieveDaemonInfoByCode>
+		<retrieveDaemonInfoByCodeAndHostname>
+			SELECT cd.daemon_cd,
+			cdd.daemon_dsc,
+			cd.hostname, cd.port_number,
+			cd.last_modified
+			FROM
+			%Schema%cm_daemon
+			cd, %Schema%cm_daemon_def cdd
+			WHERE cd.daemon_cd =
+			cdd.daemon_cd
+			AND
+			cd.daemon_cd = ? and cd.hostname = ?
+		</retrieveDaemonInfoByCodeAndHostname>
+		<createDaemonInfo>
+			INSERT INTO %Schema%cm_daemon (daemon_cd, hostname,
+			port_number)
+			VALUES (?, ?, ?)
+		</createDaemonInfo>
+		<modifyDaemonInfo>
+			UPDATE %Schema%cm_daemon
+			SET port_number = ?,
+			last_modified = ?
+			WHERE daemon_cd = ? AND hostname = ?
+			AND
+			last_modified = ?
+		</modifyDaemonInfo>
+		<retrieveDoLaas>
+			SELECT do_laa_cd AS code, do_laa_dsc AS description,
+			do_laa_id, do_laa_short_dsc,
+			address1, address2, address3, phone,
+			last_modified,
+			deprecated
+			FROM %Schema%cm_do_laa_def ORDER BY do_laa_id
+		</retrieveDoLaas>
+		<retrieveDoLaa>
+			SELECT do_laa_cd AS code, do_laa_dsc AS description,
+			do_laa_id, do_laa_short_dsc,
+			address1, address2, address3, phone,
+			last_modified,
+			deprecated
+			FROM %Schema%cm_do_laa_def
+			WHERE do_laa_cd = ?
+		</retrieveDoLaa>
+		<retrieveUserList>
+			SELECT ud.user_id AS id,
+			ud.LAST_NM + (CASE WHEN
+			ud.FIRST_NM IS NULL THEN '' ELSE ', ' + ud.FIRST_NM END)
+			AS
+			description,
+			ud.active_ind AS deprecated, ud.last_modified
+			FROM
+			%Schema%cm_user_def ud
+			ORDER BY
+			description
+		</retrieveUserList>
+		<retrieveActiveUserList>
+			SELECT ud.user_id AS id,
+			ud.LAST_NM + (CASE
+			WHEN
+			ud.FIRST_NM IS NULL THEN '' ELSE ', ' + ud.FIRST_NM END)
+			AS
+			description,
+			CASE ud.active_ind WHEN 'Y' THEN 'N' WHEN 'N' THEN 'Y'
+			END AS deprecated, ud.last_modified
+			FROM
+			%Schema%cm_user_def ud
+			WHERE ud.active_ind = 'Y'
+			ORDER BY description
+		</retrieveActiveUserList>
+		<retrieveInactiveUserDefs>
+			SELECT ${InfrastructureSQL.userDefColumns},
+			-1 AS security_group_id, '' AS
+			security_group_nm, -1 AS
+			security_group_lm
+			FROM %Schema%cm_user_def cud
+			LEFT OUTER JOIN
+			%Schema%cm_user_group_xref cugx
+			ON (cud.user_id =
+			cugx.user_id)
+			WHERE
+			cud.active_ind = 'N'
+		</retrieveInactiveUserDefs>
+		<retrieveUsersWithUseCase>SELECT cud.user_id
+			FROM %Schema%cm_user_def
+			cud
+			INNER JOIN %Schema%cm_user_group_xref cugx ON (cud.user_id =
+			cugx.user_id
+			AND cud.active_ind = 'Y')
+			INNER JOIN
+			%Schema%cm_security_group csg ON (cugx.security_group_id =
+			csg.security_group_id)
+			INNER JOIN %Schema%cm_security_user_group_xref
+			csugx ON
+			(csg.security_group_id = csugx.security_group_id)
+			INNER JOIN
+			%Schema%cm_security_template cst ON (csugx.security_id =
+			cst.security_id)
+			WHERE cst.usecase = ?
+			AND cud.active_ind = 'Y'
+		</retrieveUsersWithUseCase>
+		<retrieveUseCase>
+			SELECT ${InfrastructureSQL.useCaseColumns} FROM
+			%Schema%cm_security_template st
+			WHERE st.usecase = ?
+		</retrieveUseCase>
+		<createUseCase>INSERT INTO %Schema%cm_security_template
+			(security_id,
+			parent_id, usecase, usecase_nm)
+			VALUES (?, ?, ?, ?)
+		</createUseCase>
+		<retrieveUserDef>
+			SELECT ${InfrastructureSQL.userDefColumns},
+			${InfrastructureSQL.securityGroupColumns}
+			FROM %Schema%cm_user_def cud
+			LEFT OUTER JOIN %Schema%cm_user_group_xref
+			cugx
+			ON (cud.user_id =
+			cugx.user_id) LEFT OUTER JOIN
+			%Schema%cm_security_group csg
+			ON
+			(cugx.security_group_id = csg.security_group_id)
+			WHERE
+			cud.user_id = ?
+		</retrieveUserDef>
+		<addUserRole>
+			INSERT INTO %Schema%cm_user_group_xref (user_id,
+			security_group_id)
+			VALUES (?, ?)
+		</addUserRole>
+		<addUseCase>
+			INSERT INTO %Schema%cm_security_user_group_xref
+			(security_group_id,
+			security_id)
+			VALUES (?, ?)
+		</addUseCase>
+
+		<createSecurityGroup>
+			INSERT INTO %Schema%cm_security_group
+			(security_group_id,
+			security_group_nm)
+			VALUES (?,?)
+		</createSecurityGroup>
+
+		<retrieveSecurityGroup>
+			SELECT
+			${InfrastructureSQL.securityGroupColumns},
+			${InfrastructureSQL.useCaseColumns}
+			FROM %Schema%cm_security_group csg
+			LEFT OUTER JOIN %Schema%cm_security_user_group_xref sugx
+			ON
+			(csg.security_group_id = sugx.security_group_id)
+			LEFT OUTER JOIN
+			%Schema%cm_security_template st
+			ON (st.security_id = sugx.security_id)
+			WHERE csg.security_group_id = ?
+		</retrieveSecurityGroup>
+
+		<retrieveSecurityGroups>
+			SELECT
+			${InfrastructureSQL.securityGroupColumns}
+			FROM
+			%Schema%cm_security_group csg
+		</retrieveSecurityGroups>
+
+		<removeSecurityGroup>
+			DELETE FROM %Schema%cm_security_group
+			WHERE
+			security_group_id = ?
+			AND last_modified = ?
+		</removeSecurityGroup>
+
+
+		<addReportAttribute>INSERT INTO %Schema%cm_report_attributes_xref
+			(report_id, attribute_cd, attribute_dsc, attribute_type,
+			default_value)
+			VALUES (?,?,?,?,?)
+		</addReportAttribute>
+
+		<retrieveReportDef>
+			SELECT crd.report_id, report_nm, report_group_nm,
+			jasper_report_file_nm, report_document,
+			crd.last_modified, crax.attribute_cd AS code,
+			crax.attribute_dsc AS
+			description,
+			crax.attribute_type,
+			crax.default_value, 'N' AS deprecated
+			FROM %Schema%cm_report_def crd
+			LEFT OUTER JOIN %Schema%cm_report_attributes_xref crax ON
+			(crd.report_id
+			= crax.report_id)
+			WHERE crd.report_id = ?
+		</retrieveReportDef>
+
+		<retrieveReportDefs>
+			SELECT report_id, report_nm, report_group_nm,
+			jasper_report_file_nm, report_document,
+			last_modified
+			FROM %Schema%cm_report_def
+		</retrieveReportDefs>
+
+		<createReportDef>
+			INSERT INTO %Schema%cm_report_def (report_id,
+			report_nm, report_group_nm,
+			jasper_report_file_nm, report_document)
+			VALUES (?,?,?,?,?)
+		</createReportDef>
+
+		<modifyReportDef>
+			UPDATE %Schema%cm_report_def
+			SET report_nm = ?,
+			report_group_nm = ?, jasper_report_file_nm = ?,
+			report_document = ?,
+			last_modified = ?
+			WHERE report_id = ?
+			AND last_modified = ?
+		</modifyReportDef>
+
+		<retrieveBulkDef>
+			SELECT crd.bulk_id, bulk_nm, bulk_group_nm,
+			bulk_menu, bulk_dsc,
+			bulk_class,
+			bulk_search_type,
+			correspondence_type_cd, crd.last_modified, crd.template_doc_type_cd,
+			dt.document_id, crax.attributes_cd AS code, crad.attributes_dsc AS
+			description,
+			crad.deprecated
+			FROM %Schema%cm_bulk_def crd
+			LEFT OUTER
+			JOIN %Schema%dc_template_doc_type_def dt
+			ON (crd.template_doc_type_cd
+			= dt.template_doc_type_cd),
+			%Schema%cm_bulk_attributes_xref crax,
+			%Schema%cm_attributes_def crad
+			WHERE crd.bulk_id = crax.bulk_id
+			AND
+			crax.attributes_cd = crad.attributes_cd
+			AND crd.bulk_id = ?
+		</retrieveBulkDef>
+
+		<retrieveBulkDefs>
+			SELECT bulk_id, bulk_nm, bulk_group_nm, bulk_menu,
+			correspondence_type_cd,
+			bulk_dsc, bulk_class, bulk_search_type,
+			crd.template_doc_type_cd,
+			dt.document_id,
+			crd.last_modified
+			FROM
+			%Schema%cm_bulk_def crd
+			LEFT OUTER JOIN
+			%Schema%dc_template_doc_type_def dt
+			ON (crd.template_doc_type_cd =
+			dt.template_doc_type_cd)
+			WHERE bulk_menu = ?
+			ORDER BY bulk_nm
+		</retrieveBulkDefs>
+
+		<createBulkDef>
+			INSERT INTO %Schema%cm_bulk_def (bulk_id, bulk_nm,
+			bulk_group_nm,
+			bulk_menu, bulk_dsc)
+			VALUES (?,?,?,?,?)
+		</createBulkDef>
+
+		<modifyBulkDef>
+			UPDATE %Schema%cm_bulk_def SET bulk_nm = ?,
+			bulk_group_nm = ?, bulk_menu =
+			?,
+			bulk_dsc = ?,last_modified = ?
+			WHERE
+			bulk_id = ?
+			AND last_modified = ?
+		</modifyBulkDef>
+
+		<pollutantColumns>
+			p.pollutant_cd AS code, 
+			p.pollutant_dsc AS description, 
+			p.deprecated,
+			p.category, 
+			p.sort_category,
+			p.ptio_app_1, 
+			p.tvpto_app_sec12, 
+			p.tvpto_app_sec13,
+			p.nsr_app_bact,
+			p.nsr_app_laer, 
+			p.tvpto_app_sec3, 
+			p.emissions_table,
+			p.nsps, 
+			p.non_attain_nsr,
+			p.psd, 
+			p.nei_code, 
+			p.afs_equiv_pollutant_cd, 
+			p.hap_category, 
+			p.cas_no, 
+			p.formula,
+			p.global_warming_potential, 
+			p.ghg, 
+			p.other_regulated_pollutant,
+			p.tv_pollutant_limit,
+			p.last_modified,
+			p.include_in_hc_analysis,
+			p.hc_analysis_sort_order
+		</pollutantColumns>
+
+		<retrievePollutants>
+			SELECT ${InfrastructureSQL.pollutantColumns}
+			FROM
+			%Schema%cm_pollutant_def p
+			ORDER BY
+			sort_category, pollutant_dsc
+		</retrievePollutants>
+		<retrieveValidationControl>
+			SELECT validation_tag AS code,
+			validation_dsc description, 'N' deprecated,
+			req_Admin_Permit_Mod,
+			tv_pto_permit_app,
+			tv_pti_ptio_permit_app, tiv_acid_rain,
+			demegpnt_modeling, psd_screen_modeling, smtv_tv_er, er_eis,
+			er_threashold_exceeded,
+			stack_test, cems_coms_rata_report, facility_check,
+			last_modified
+			FROM
+			%Schema%cm_validation_control
+		</retrieveValidationControl>
+		<retrieveFpIdAndNm>
+			SELECT f.FP_ID AS id, f.FACILITY_ID + ' ' +
+			f.FACILITY_NM AS description,
+			'N' as deprecated , f.LAST_MODIFIED
+			FROM
+			%Schema%FP_FACILITY f
+			WHERE f.VERSION_ID = -1 ORDER BY FACILITY_ID
+		</retrieveFpIdAndNm>
+		<retrieveEventTypeCdAndDesc>
+			SELECT EVENT_TYPE_CD AS code,
+			EVENT_TYPE_DSC AS description, DEPRECATED,
+			LAST_MODIFIED
+			FROM
+			%Schema%FP_EVENT_TYPE_DEF
+		</retrieveEventTypeCdAndDesc>
+		<retrieveContactTypes>SELECT ${InfrastructureSQL.contactTypeColumns},
+			ff.facility_nm, ff.fp_id, ccm.name AS company_name, ccm.cmp_id
+			FROM
+			%Schema%cm_contact_contact_type_xref
+			ccctx,
+			%Schema%fp_facility ff,
+			%Schema%fp_facility_company_xref fc,
+			%Schema%cm_company ccm
+			WHERE
+			ccctx.facility_id = ff.facility_id
+			and
+			ff.end_dt is null
+			and
+			ccctx.contact_id = ?
+			AND
+			ff.facility_id=fc.facility_id
+			AND
+			ccm.company_id=fc.company_id
+			AND
+			fc.end_date is null
+			ORDER BY
+			isnull(ccctx.end_date,' ') ASC,
+			ff.facility_nm
+		</retrieveContactTypes>
+		<retrieveStagingContactTypes>SELECT
+			${InfrastructureSQL.contactTypeColumns},
+			ff.facility_nm, ff.fp_id
+			FROM
+			%Schema%cm_contact_contact_type_xref
+			ccctx,
+			%Schema%fp_facility ff
+			WHERE ccctx.facility_id = ff.facility_id
+			and ff.end_dt is null
+			and
+			ccctx.contact_id = ?
+			and ccctx.facility_id = ?
+			ORDER BY
+			isnull(ccctx.end_date,' ') ASC,
+			ff.facility_nm
+		</retrieveStagingContactTypes>
+		<createFieldAuditLog>
+			INSERT INTO %Schema%fl_field_audit_log
+			(field_audit_log_id, attribute_cd, facility_id, corr_emu_id,
+			unique_id,
+			old_value, new_value, date_entered, user_id)
+			VALUES(?,?,?,?,?,?,?,?,?)
+		</createFieldAuditLog>
+		<createCompanyFieldAuditLog>INSERT INTO %Schema%fl_field_audit_log
+			(field_audit_log_id, attribute_cd, cmp_id,
+			unique_id,
+			old_value,
+			new_value, date_entered, user_id)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createCompanyFieldAuditLog>
+		<retrieveFieldAuditLogsCompany>
+			SELECT ffal.field_audit_log_id,
+			ffal.attribute_cd,
+			facd.category_cd, ffal.facility_id,
+			ff.facility_nm, 
+			ffal.unique_id,
+			ffal.old_value, ffal.new_value,
+			ffal.date_entered, ffal.user_id,
+			ffal.last_modified, ffal.cmp_id,
+			ffal.corr_emu_id,
+			ccm.cmp_id, ccm.name as company_nm
+			FROM
+			%Schema%fl_attribute_category_def facd,
+			%Schema%fl_field_audit_log ffal
+			LEFT OUTER JOIN %Schema%cm_company ccm ON (ffal.cmp_id = ccm.cmp_id)
+			LEFT OUTER JOIN %Schema%fp_facility ff on (ffal.FACILITY_ID = ff.FACILITY_ID and ff.version_id=-1)
+			WHERE ffal.attribute_cd = facd.attribute_cd	
+		</retrieveFieldAuditLogsCompany>
+		<retrieveFieldAuditLogsNonCompany>
+			SELECT ffal.field_audit_log_id,
+			ffal.attribute_cd,
+			facd.category_cd, ffal.facility_id,
+			ff.facility_nm, 
+			ffal.unique_id,
+			ffal.old_value, ffal.new_value,
+			ffal.date_entered, ffal.user_id,
+			ffal.last_modified, 
+			ffal.corr_emu_id,
+			ccm.cmp_id, ccm.name as company_nm
+			FROM
+			%Schema%fl_attribute_category_def facd,
+			%Schema%fl_field_audit_log ffal
+			LEFT JOIN %Schema%fp_facility ff on (ffal.facility_id = ff.facility_id and ff.version_id=-1) 
+			LEFT JOIN fp_facility_company_xref ffcx ON (ffcx.facility_id = ffal.facility_id AND ffcx.end_date IS NULL)
+		  	LEFT JOIN cm_company ccm ON ccm.company_id = ffcx.company_id
+			WHERE ffal.attribute_cd = facd.attribute_cd
+		</retrieveFieldAuditLogsNonCompany>
+		<retrieveFacilityFieldAuditLogs>
+			SELECT ffal.field_audit_log_id,
+			ffal.attribute_cd,
+			facd.category_cd, ffal.facility_id,
+			ff.facility_nm, ffal.unique_id,
+			ffal.old_value, ffal.new_value,
+			ffal.date_entered, ffal.user_id,
+			ffal.last_modified
+			FROM
+			%Schema%fl_attribute_category_def facd, 
+			%Schema%fl_field_audit_log ffal
+			left join %Schema%fp_facility ff on (ffal.facility_id = ff.facility_id and ff.version_id = -1)
+			WHERE ffal.attribute_cd = facd.attribute_cd  
+		</retrieveFacilityFieldAuditLogs>
+		<retrieveCompanyFieldAuditLogs>SELECT ffal.field_audit_log_id,
+			ffal.attribute_cd,
+			facd.category_cd, ffal.cmp_id, ffal.unique_id,
+			ffal.old_value, ffal.new_value,
+			ffal.date_entered, ffal.user_id,
+			ffal.last_modified
+			FROM
+			%Schema%fl_field_audit_log ffal,
+			%Schema%fl_attribute_category_def
+			facd
+			WHERE ffal.attribute_cd =
+			facd.attribute_cd
+		</retrieveCompanyFieldAuditLogs>
+		<retrieveSccCode> SELECT ${InfrastructureSQL.sccCodeColumns}
+			FROM
+			%Schema%cm_scc scc
+			WHERE scc_id = ?
+		</retrieveSccCode>
+		<findSccCodes> SELECT ${InfrastructureSQL.sccCodeColumns}
+			FROM
+			%Schema%cm_scc scc
+		</findSccCodes>
+		<retrieveSccCodes>
+			SELECT scc.scc_id as code,
+			scc.scc_id as description, 
+			1 AS last_modified, 'N' AS deprecated
+			FROM
+			%Schema%cm_scc scc
+			WHERE scc.inactive = 'N'
+			ORDER BY scc.scc_id
+		</retrieveSccCodes>
+		<retrieveDefaultFacilityRoles>
+			SELECT county_cd, facility_role_cd,
+			user_id, last_modified
+			FROM %Schema%cm_default_facility_role_def
+			WHERE
+			county_cd = ?
+		</retrieveDefaultFacilityRoles>
+
+		<retrieveWRAPNDef>
+			SELECT wrapn_cd AS code, wrapn_dsc AS description,
+			noticetypeid,
+			noticeremarkid,
+			default_public_notice_text, deprecated,
+			last_modified
+			FROM %Schema%cm_wrapn_def
+			WHERE wrapn_cd = ?
+		</retrieveWRAPNDef>
+
+		<createTask>INSERT INTO %Schema%cm_task
+			(task_id, fp_id,
+			dependent_task_id, task_type, task_name, task_description,
+			dependent,
+			create_date,
+			user_name, version, internal_id, facility_id,
+			reference_count, core_place_id,
+			non_ro_submission, document_id)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createTask>
+		<modifyTask>UPDATE %Schema%cm_task
+			SET task_name = ?, dependent_task_id
+			= ?, task_description = ?,
+			fp_id = ?, reference_count = ?, dependent =
+			?,
+			non_ro_submission = ?, document_id = ?, last_modified = ?
+			WHERE
+			task_id = ?
+			AND last_modified = ?
+		</modifyTask>
+		<retrieveTask>SELECT ${InfrastructureSQL.taskColumns}
+			FROM
+			%Schema%cm_task
+			WHERE task_id = ?
+		</retrieveTask>
+		<retrieveTasks>SELECT ${InfrastructureSQL.taskColumns}
+			FROM
+			%Schema%cm_task
+			WHERE core_place_id = ?
+		</retrieveTasks>
+		<retrieveTasksByFacId>SELECT ${InfrastructureSQL.taskColumns}
+			FROM
+			%Schema%cm_task
+			WHERE facility_id = ?
+		</retrieveTasksByFacId>
+		<deleteTask>DELETE FROM %Schema%cm_task
+			WHERE task_id = ?
+		</deleteTask>
+		<updateTasksDepTaskId>UPDATE %Schema%cm_task
+			SET dependent_task_id = ?
+			WHERE dependent_task_id = ?
+		</updateTasksDepTaskId>
+
+		<newspaperColumns>
+			county_cd, newspaper_nm, fax_number, phone_number,
+			contact_person,
+			email_address, last_modified AS newspaper_lm
+		</newspaperColumns>
+
+		<retrieveNewspaper>
+			SELECT ${InfrastructureSQL.newspaperColumns}
+			FROM
+			%Schema%cm_county_newspaper
+			WHERE county_cd = ?
+		</retrieveNewspaper>
+
+		<retrieveNoOwnerContactTypes>
+			SELECT contact_type_cd AS code,
+			contact_type_dsc AS description,
+			deprecated, last_modified
+			FROM
+			%Schema%cm_contact_type_def
+			WHERE contact_type_cd != 'ownr'
+			ORDER BY
+			contact_type_dsc
+		</retrieveNoOwnerContactTypes>
+
+		<retrieveFldAudLogCategories>
+			SELECT category_cd AS code, category_dsc
+			AS description, deprecated,
+			last_modified
+			FROM %Schema%fl_category_def
+			WHERE category_cd != 'fevt'
+			ORDER BY category_dsc
+		</retrieveFldAudLogCategories>
+
+		<changeFacilityIdForFieldAuditLogs>UPDATE %Schema%fl_field_audit_log
+			SET unique_id = ?
+			WHERE unique_id = ?
+			AND attribute_cd IN (SELECT
+			attribute_cd FROM
+			%Schema%fl_attribute_category_def WHERE category_cd
+			= 'fac')
+		</changeFacilityIdForFieldAuditLogs>
+
+		<emissionsReportUserId>
+			SELECT user_id as cnt FROM %Schema%wf_process
+			WHERE external_id = ? AND process_template_id in (102, 105) ORDER BY
+			process_id
+		</emissionsReportUserId>
+		<dorApplicationUserId>
+			SELECT user_id as cnt FROM %Schema%wf_process
+			WHERE external_id = ? AND process_template_id = 110
+		</dorApplicationUserId>
+		<retrieveReqestIdFromRelocate>
+			SELECT request_id as cnt FROM
+			%Schema%PA_RELOCATION
+			WHERE application_id = ? ORDER BY request_id
+		</retrieveReqestIdFromRelocate>
+		<applicationUserIdFromPermit>
+			SELECT user_id as cnt FROM
+			%Schema%wf_process
+			WHERE external_id = ? AND process_template_id in
+			(236)
+			ORDER BY process_id
+		</applicationUserIdFromPermit>
+		<applicationUserIdFromRelocate>
+			SELECT user_id as cnt FROM
+			%Schema%wf_process
+			WHERE external_id = ? AND process_template_id = 107
+			ORDER BY process_id
+		</applicationUserIdFromRelocate>
+		<applicationPermitId>
+			SELECT permit_id as cnt FROM
+			%Schema%pt_permit_application_xref
+			WHERE application_id = ? order by
+			cnt
+		</applicationPermitId>
+		<retrieveNspsSubparts>
+			SELECT nsps_subpart_cd AS code, nsps_subPart_dsc
+			description,
+			nsps_subpart_afs_cd,
+			deprecated, last_modified
+			FROM
+			%Schema%pa_nsps_subpart_def order by nsps_subpart_cd
+		</retrieveNspsSubparts>
+		<retrieveNehapSubparts>
+			SELECT neshaps_subpart_cd AS code,
+			neshaps_subpart_dsc AS description,
+			deprecated,
+			neshaps_subpart_afs_cd, pollutant_cd, last_modified
+			FROM
+			%Schema%pa_neshaps_subpart_def
+			ORDER BY neshaps_subpart_dsc
+		</retrieveNehapSubparts>
+		<retrieveMactSubparts>
+			SELECT MACT_SUBPART_CD AS code, MACT_SUBPART_dsc
+			AS description, deprecated,
+			last_modified
+			FROM
+			%Schema%PA_MACT_SUBPART_DEF
+			ORDER BY MACT_SUBPART_dsc
+		</retrieveMactSubparts>
+		<retrieveBasicUsers>
+			SELECT cud.user_id AS id, iif(cud.first_nm is
+			null, cud.last_nm, concat(cud.last_nm, concat(', ', cud.first_nm)))
+			AS
+			description,
+			CASE cud.active_ind WHEN 'Y' THEN 'N' WHEN 'N' THEN 'Y'
+			END
+			AS deprecated, cud.last_modified
+			FROM %Schema%cm_user_def cud
+			LEFT JOIN
+			%Schema%cm_user_group_xref cugx
+			ON (cud.user_id =
+			cugx.user_id)
+			LEFT JOIN
+			%Schema%cm_security_user_group_xref sugx
+			ON (sugx.security_group_id = cugx.security_group_id)
+			INNER JOIN %Schema%CM_SECURITY_TEMPLATE cst 
+			ON (cst.SECURITY_ID = sugx.SECURITY_ID)
+			WHERE cst.USECASE = 'aqdAssignee'
+			group BY cud.active_ind, cud.last_nm, cud.first_nm, cud.user_id, cud.last_modified
+			ORDER BY cud.active_ind DESC, cud.last_nm, cud.first_nm
+		</retrieveBasicUsers>
+		<retreivePollutantsByCategory>
+			SELECT ${InfrastructureSQL.pollutantColumns}
+			FROM
+			%Schema%cm_pollutant_def p
+			WHERE category = ?
+			ORDER BY
+			sort_category, pollutant_dsc
+		</retreivePollutantsByCategory>
+		<retrieveForeignKeyReferences>
+			select tab.name as fk_table_name, col.name fk_column_name from sys.tables tab
+				INNER JOIN sys.columns col ON (tab.object_id = col.object_id)
+					INNER JOIN (select parent_object_id, parent_column_id from sys.foreign_key_columns
+								INNER JOIN (select object_id, column_id from sys.columns  where name=? and
+									object_id in (select object_id from sys.objects where name=? AND
+										schema_id in (select schema_id from sys.schemas where name=?)))fkey
+								ON (referenced_object_id = fkey.object_id AND column_id = fkey.column_id)) refs
+					ON (tab.object_id = refs.parent_object_id AND col.column_id=refs.parent_column_id)
+		</retrieveForeignKeyReferences>
+		<retrieveUserStatusByLogin>
+			SELECT active_ind
+			FROM %Schema%cm_user_def
+			WHERE lower(network_login_nm)=lower(?);
+		</retrieveUserStatusByLogin>
+		
+		<retrieveUserWithPositionNumber>
+			select network_login_nm from dbo.cm_user_def
+			where position_number = ?
+		</retrieveUserWithPositionNumber>
+		
+		<retrieveDefaultOffsetMultipliers>
+			SELECT multiplier_cd AS code, '' AS description,
+			pollutant_cd, area_cd,
+			multiplier, effective_date,
+			last_modified, deprecated
+			FROM %Schema%ot_default_multiplier_def ORDER BY multiplier_cd
+		</retrieveDefaultOffsetMultipliers>
+		
+		<retrieveAttainmentStandards>
+			SELECT attainment_standard_cd AS code, attainment_standard_dsc AS description,
+			attainment_standard_authority as authority,
+			last_modified, deprecated
+			FROM %Schema%ot_attainment_standard_def ORDER BY attainment_standard_cd
+		</retrieveAttainmentStandards>
+		
+		<retrieveContributingPollutants>
+			SELECT code, '' AS description,
+			attainment_standard_cd, pollutant_cd,
+			last_modified, deprecated
+			FROM %Schema%ot_contributing_pollutant_def ORDER BY code
+		</retrieveContributingPollutants>
+		
+		<retrieveNonAttainmentAreas>
+			SELECT area_cd as code, area_name AS description,
+			area_shape, attainment_standard_cd,
+			non_attainment_level_cd,
+			last_modified, deprecated
+			FROM %Schema%ot_non_attainment_area_def ORDER BY area_cd
+		</retrieveNonAttainmentAreas>
+		
+		<addressIntersectsShape>
+			select 
+				s.geog.STIntersects(
+							geography::STPointFromText('POINT(' + CAST([Longitude] AS VARCHAR(20)) + ' ' + 
+				                    CAST([Latitude] AS VARCHAR(20)) + ')', 4326))
+			from
+				%Schema%cm_address a
+			inner join dbo.cm_shape s on s.shape_id = ?
+			where
+			a.address_id = ?
+		</addressIntersectsShape>
+		
+		<getShapeIds>
+			select shape_id from dbo.cm_shape
+		</getShapeIds>
+		
+		<retrieveShapes>
+			select 
+				shape_id
+				,label
+				,description
+				,cast(geog.STArea()/1000/1000 as numeric(38,2)) as area
+				,geog.STNumPoints() as num_points
+				,cast(geog.STLength()/1000 as numeric(38,2)) as length
+				,geog.STAsText() as geog
+				,geog.EnvelopeCenter().ToString() as envelope_center
+				,last_modified
+			from dbo.cm_shape				 
+		</retrieveShapes>
+		
+		<findNonattainmentAreasByAddress>
+			select 
+				na.area_cd as code
+				,na.area_name as description
+				,na.attainment_standard_cd
+				,na.non_attainment_level_cd
+				,na.deprecated
+				,na.last_modified
+				,na.area_shape
+				from
+					%Schema%cm_address a
+				inner join dbo.cm_shape s 
+				on
+					1 = s.geog.STIntersects(
+					geography::STPointFromText('POINT(' + CAST([Longitude] AS VARCHAR(20)) + ' ' + 
+							CAST([Latitude] AS VARCHAR(20)) + ')', 4326))
+				inner join dbo.OT_NON_ATTAINMENT_AREA_DEF na on na.area_shape = s.SHAPE_ID
+			where
+				a.address_id = ?
+				and na.DEPRECATED = 'N'
+		</findNonattainmentAreasByAddress>
+		
+		<findPollutantsByNonattainmentArea>
+			select  ${InfrastructureSQL.pollutantColumns}
+			from
+				OT_NON_ATTAINMENT_AREA_DEF a
+				inner join OT_ATTAINMENT_STANDARD_DEF std on std.ATTAINMENT_STANDARD_CD = a.ATTAINMENT_STANDARD_CD
+				inner join OT_CONTRIBUTING_POLLUTANT_DEF cp on cp.ATTAINMENT_STANDARD_CD = std.ATTAINMENT_STANDARD_CD
+				inner join CM_POLLUTANT_DEF p on p.POLLUTANT_CD = cp.POLLUTANT_CD
+			where
+				a.AREA_CD = ?
+				and a.DEPRECATED = 'N'
+				and std.DEPRECATED = 'N'
+				and cp.DEPRECATED = 'N'
+				and p.DEPRECATED = 'N'
+		</findPollutantsByNonattainmentArea>
+
+		<findContributingPollutantsByNonattainmentArea>
+			select  
+				p.code
+				, '' as description
+				,p.attainment_standard_cd
+				,p.pollutant_cd
+				,p.deprecated
+				,p.last_modified
+			from
+				OT_NON_ATTAINMENT_AREA_DEF a
+				inner join OT_ATTAINMENT_STANDARD_DEF std on std.ATTAINMENT_STANDARD_CD = a.ATTAINMENT_STANDARD_CD
+				inner join OT_CONTRIBUTING_POLLUTANT_DEF p on p.ATTAINMENT_STANDARD_CD = std.ATTAINMENT_STANDARD_CD
+			where
+				a.AREA_CD = ?
+				and a.DEPRECATED = 'N'
+				and std.DEPRECATED = 'N'
+				and p.DEPRECATED = 'N'
+		</findContributingPollutantsByNonattainmentArea>
+		
+		<modifyShape>
+			update dbo.cm_shape
+				set label = ?, description = ?, last_modified = ?
+			where
+				shape_id = ?
+		</modifyShape>
+		
+		<retrieveShape>
+			${InfrastructureSQL.retrieveShapes}
+			where shape_id = ?
+		</retrieveShape>
+		
+		<removeShape>
+			delete from dbo.cm_shape where shape_id = ?
+		</removeShape>
+		
+		<retrieveProjectAttachementTypes>
+			SELECT attachment_type_cd AS code, attachment_type_dsc AS description,
+			project_type_cd,
+			last_modified, deprecated
+			FROM %Schema%po_attachment_type_def ORDER BY attachment_type_dsc
+		</retrieveProjectAttachementTypes>
+		
+		<retrieveProjectTrackingEventTypes>
+			SELECT tracking_event_type_cd AS code, tracking_event_type_dsc AS description,
+			project_type_cd, allow_multiple, sort_order,
+			last_modified, deprecated
+			FROM %Schema%po_tracking_event_type_def ORDER BY tracking_event_type_cd, sort_order
+		</retrieveProjectTrackingEventTypes>
+		
+		<retrieveProjectTrackingEventDependencies>
+			SELECT code, NULL as description,
+			event_type_cd, predecessor_event_type_cd,
+			last_modified, deprecated
+			FROM %Schema%po_tracking_event_dependencies_def ORDER BY code
+		</retrieveProjectTrackingEventDependencies>
+		
+		<retrieveAdjacentStates>
+			SELECT 
+				state_cd as code,
+				state_nm as description,
+				deprecated,
+				last_modified
+				FROM %Schema%cm_state_def
+				WHERE adjacent_to_wyoming = 'Y'
+		</retrieveAdjacentStates>
+		
+		<retrieveAllUsersList>
+			SELECT ud.user_id AS id,
+			ud.LAST_NM + (CASE
+			WHEN
+			ud.FIRST_NM IS NULL THEN '' ELSE ', ' + ud.FIRST_NM END)
+			AS
+			description,
+			CASE ud.active_ind WHEN 'Y' THEN 'N' WHEN 'N' THEN 'Y'
+			END AS deprecated, ud.last_modified
+			FROM
+			%Schema%cm_user_def ud
+			ORDER BY description
+		</retrieveAllUsersList>
+		
+		<retrieveShapeDefs>
+			select 
+				CONVERT(varchar, shape_id) as code
+				, label as description
+				, 'N' as deprecated
+				, last_modified
+			from %Schema%cm_shape order by description				 
+		</retrieveShapeDefs>
+		
+		<retrieveProjectIdsAssociatedWithShape>
+			SELECT pr.project_nbr from
+				%Schema%po_project pr,
+				%Schema%po_nepa_project ne
+				WHERE 
+					pr.project_id = ne.project_id
+					AND pr.project_state_cd='AC'
+					AND ne.shape_id = ?
+		</retrieveProjectIdsAssociatedWithShape>
+		
+		<retrieveProjectTypes>
+			SELECT 
+				project_type_cd AS code
+				, project_type_dsc AS description
+				, security_group_id
+				, last_modified
+				, deprecated
+				FROM %Schema%po_project_type_def 
+					ORDER BY project_type_cd
+		</retrieveProjectTypes>
+		
+		<retrieveProjectTypesByAppUsr>
+			SELECT ptd.project_type_cd AS code
+				, ptd.project_type_dsc AS description
+				, ptd.last_modified
+				, ptd.deprecated
+				FROM %Schema%po_project_type_def ptd
+				LEFT OUTER JOIN %Schema%cm_user_group_xref ugx on ugx.security_group_id = ptd.security_group_id
+					WHERE 
+						ugx.user_id = ? OR ptd.security_group_id IS NULL
+					ORDER BY ptd.project_type_cd
+		</retrieveProjectTypesByAppUsr>
+		
+		<retrieveInactiveProjectIdsAssociatedWithShape>
+			SELECT pr.project_nbr from
+				%Schema%po_project pr,
+				%Schema%po_nepa_project ne
+				WHERE 
+					pr.project_id = ne.project_id
+					AND pr.project_state_cd != 'AC'
+					AND ne.shape_id = ?
+		</retrieveInactiveProjectIdsAssociatedWithShape>
+
+		<fugComponentColumns>
+			fcd.component_cd as code, 
+			fcd.component_dsc as description,
+			fcd.deprecated, fcd.sort_order, fcd.last_modified
+		</fugComponentColumns>
+
+		<retrieveFugComponents>
+			SELECT ${InfrastructureSQL.fugComponentColumns}
+			FROM
+			%Schema%cm_fug_component_def fcd
+			ORDER BY fcd.sort_order
+		</retrieveFugComponents>
+		
+		<getIndianReservationCdByLatLong>
+			SELECT TOP 1 cird.reservation_cd FROM
+			dbo.cm_indian_reservation_def cird
+			INNER JOIN dbo.cm_shape cs ON cird.shape_id = cs.shape_id
+			AND cs.geog.STDisjoint(GEOGRAPHY::Point( ?, ?, geog.STSrid)) = 0
+		</getIndianReservationCdByLatLong>
+		
+		<retrieveIndianReservationShapeIds>
+			SELECT shape_id FROM dbo.cm_indian_reservation_def
+		</retrieveIndianReservationShapeIds>
+		
+		<retrieveMapOptionsConfig>
+			SELECT ${InfrastructureSQL.mapOptionsConfigColumns}
+			FROM dbo.cm_map_property_config_def cmocd
+		</retrieveMapOptionsConfig>
+		
+		<removeAddressXref>
+			DELETE FROM %Schema%fp_facility_address_xref WHERE fp_id = ?
+		</removeAddressXref>
+		
+		<deleteFacilityFieldAuditLog>
+			DELETE FROM   %Schema%FL_FIELD_AUDIT_LOG where FACILITY_ID = ? 
+		</deleteFacilityFieldAuditLog>
+				
+		
+	</InfrastructureSQL>
+</root>

@@ -1,0 +1,1 @@
+<%-- THIS FILE IS NEEDED BECAUSE NOTES ARE SHARED IN comFacility.jsp --%>

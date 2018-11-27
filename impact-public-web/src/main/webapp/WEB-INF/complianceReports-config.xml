@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Reports Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+
+	<!-- Backing beans -->
+
+	<managed-bean>
+		<managed-bean-name>complianceReport</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.compliance.ComplianceReports
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>complianceReportService</property-name>
+			<value>#{complianceReportBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>infrastructureService</property-name>
+			<value>#{infrastructureBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>infraDefs</property-name>
+			<value>#{infraDefs}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>companyProfile</property-name>
+			<value>#{companyProfile}</value>
+		</managed-property>
+
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>complianceReportSearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.compliance.ComplianceReportSearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>complianceReportService</property-name>
+			<value>#{complianceReportBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<!-- Backing beans -->
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>home.compliance.complianceReportDetails</from-outcome>
+			<to-view-id>/compliance/homeComReportDetail.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:viewPDF</from-outcome>
+			<to-view-id>/compliance/documentPrintInfo.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>home.ceta.stackTestReportDetail</from-outcome>
+			<to-view-id>/ceta/homeStackTestDetail.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

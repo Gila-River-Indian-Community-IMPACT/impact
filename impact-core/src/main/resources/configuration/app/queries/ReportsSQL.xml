@@ -1,0 +1,1694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <ReportsSQL>
+
+    <retrieveIssuanceDetailsByDate>
+      SELECT pt.permit_type_cd, pi.issuance_type_cd,
+             do.do_laa_cd, do.do_laa_dsc, do.do_laa_id
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd)
+        WHERE pi.issuance_status_cd = 'I'
+        AND pi.issuance_date &gt;= ? AND pi.issuance_date &lt;= ?
+    </retrieveIssuanceDetailsByDate>
+    
+    <retrievePermitExpirationByDate>
+      SELECT DISTINCT pt.permit_id, pt.permit_nbr, pt.permit_type_cd, pt.PERMIT_GLOBAL_STATUS_CD as issuance_type_cd,
+             do.do_laa_cd, do.do_laa_dsc, do.do_laa_id
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd)
+          LEFT OUTER JOIN %Schema%pt_eu_group eug ON (pt.permit_id = eug.permit_id),
+          %Schema%pt_eu peu, %Schema%fp_emissions_unit feu
+        WHERE pt.PERMIT_GLOBAL_STATUS_CD = 'F'
+          AND eug.permit_eu_group_id = peu.permit_eu_group_id
+          AND feu.fp_id = fp.fp_id AND feu.corr_epa_emu_id = peu.corr_epa_emu_id
+          AND fp.version_id = -1
+          AND pt.EXPIRATION_DATE &gt;= ? AND pt.EXPIRATION_DATE &lt;= ?
+          AND ((pt.permit_type_cd = 'TVPTO' AND
+                ((select count(*) from %Schema%pa_application app
+                    join %Schema%pa_tv_application tvapp on (app.application_id = tvapp.application_id and tvapp.tv_app_purpose_cd = '1')
+                    join %Schema%fp_facility ff on (app.fp_id = ff.fp_id)
+                    where application_type_cd = 'TV' and ff.facility_id = pt.facility_id
+                        and app.received_date > DATEADD([DAY], - 540, pt.expiration_date)) = 0))
+                 OR 
+         		(pt.permit_type_cd in ('NSR') AND
+                    (select count(*) from %Schema%pt_permit pt2
+                        join %Schema%pt_eu_group eug2 on (pt2.permit_id = eug2.permit_id)
+                        join %Schema%pt_eu pteu2 on (eug2.permit_eu_group_id = pteu2.permit_eu_group_id)
+                        join %Schema%fp_emissions_unit feu2 on (pteu2.corr_epa_emu_id = feu2.corr_epa_emu_id)
+                        join %Schema%fp_facility ff2 on (feu2.fp_id = ff2.fp_id)
+                        join %Schema%pa_eu paeu on (feu2.emu_id = paeu.emu_id)
+                        join %Schema%pa_ptio_eu ptioeu on (paeu.application_eu_id = ptioeu.application_eu_id)
+                        join %Schema%pa_ptio_eu_purpose_xref px on (paeu.application_eu_id = px.application_eu_id and px.ptio_eu_purpose_cd = '5')
+                        join %Schema%pa_application app2 on (paeu.application_id = app2.application_id and app2.application_type_cd = 'PTIO')
+                        where pt2.permit_id = pt.permit_id  and ff2.facility_id = pt.facility_id and app2.received_date > pt.effective_date) = 0
+                ))
+    </retrievePermitExpirationByDate>
+    <!--
+    <retrievePTIPermitExpirationByDate>
+      SELECT pt.permit_type_cd, pt.PERMIT_GLOBAL_STATUS_CD as issuance_type_cd,
+             do.do_laa_cd, do.do_laa_dsc, do.do_laa_id
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd)
+        WHERE pt.PERMIT_GLOBAL_STATUS_CD = 'F'
+          AND fp.version_id = -1
+          AND pt.permit_type_cd = 'TVPTI'
+          AND pt.EFFECTIVE_DATE &gt;= ? AND pt.EFFECTIVE_DATE &lt;= ?
+    </retrievePTIPermitExpirationByDate>
+
+    <retrieveIssuancePtiDetailsByDate>
+      SELECT pt.permit_id, pt.permit_nbr, pt.expiration_date, pt.effective_date, 
+             ptio.general_permit_flag, prd.reason_dsc, pi.issuance_type_cd,
+             pi.issuance_date, pi.public_notice_publish_date, pi.public_comment_end_date,
+             pi.issuance_status_cd, pd.issuance_type_dsc, fp.facility_id, fp.facility_nm,
+             do.do_laa_dsc, pid.issuance_date as draft_date, pif.issuance_date as final_date,
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pt.PERMIT_ID
+             ) as eu_count
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_ptio_permit ptio ON (pt.permit_id = ptio.permit_id)
+          INNER JOIN %Schema%pt_reason_def prd ON (pt.primary_reason_cd = prd.reason_cd)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid ON (pt.permit_id = pid.permit_id AND pid.ISSUANCE_TYPE_CD = 'D' and pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif ON (pt.permit_id = pif.permit_id AND pif.ISSUANCE_TYPE_CD = 'F' and pif.ISSUANCE_STATUS_CD = 'I')
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance_type_def pd ON (pi.issuance_type_cd = pd.issuance_type_cd)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd) 
+        WHERE pt.permit_type_cd = 'TVPTI'
+          AND pi.issuance_status_cd = 'I'
+          AND pi.issuance_date &gt;= ? AND pi.issuance_date &lt;= ?
+    </retrieveIssuancePtiDetailsByDate>
+ 
+    <retrieveExpiredPtiDetailsByDate>
+      SELECT pt.permit_id, pt.permit_nbr, pt.expiration_date, pt.effective_date, 
+             ptio.general_permit_flag, prd.reason_dsc, pi.issuance_type_cd,
+             pi.issuance_date, pi.public_notice_publish_date, pi.public_comment_end_date,
+             pi.issuance_status_cd, pd.issuance_type_dsc, fp.facility_id, fp.facility_nm,
+             do.do_laa_dsc
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_ptio_permit ptio ON (pt.permit_id = ptio.permit_id)
+          INNER JOIN %Schema%pt_reason_def prd ON (pt.primary_reason_cd = prd.reason_cd)
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance_type_def pd ON (pi.issuance_type_cd = pd.issuance_type_cd)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd) 
+        WHERE pt.permit_type_cd = 'TVPTI'
+          AND pi.issuance_status_cd = 'I'
+          AND pt.effective_date &gt;= ? AND pt.effective_date &lt;= ?
+    </retrieveExpiredPtiDetailsByDate>
+ -->
+    <retrieveIssuancePtioDetailsByDate>
+      SELECT pt.permit_id, pt.permit_nbr, pt.expiration_date, pt.effective_date, 
+             ptio.general_permit_flag, ptio.fe_ptio_flag, prd.reason_dsc, pi.issuance_type_cd,
+             pi.issuance_date, pi.public_notice_publish_date, pi.public_comment_end_date,
+             pi.issuance_status_cd, pd.issuance_type_dsc, fp.facility_id, fp.facility_nm,
+             fp.permit_classification_cd, do.do_laa_dsc, pid.issuance_date as draft_date, pif.issuance_date as final_date,
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pt.PERMIT_ID
+             ) as eu_count
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_ptio_permit ptio ON (pt.permit_id = ptio.permit_id)
+          INNER JOIN %Schema%pt_reason_def prd ON (pt.primary_reason_cd = prd.reason_cd)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid ON (pt.permit_id = pid.permit_id AND pid.ISSUANCE_TYPE_CD = 'D' and pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif ON (pt.permit_id = pif.permit_id AND pif.ISSUANCE_TYPE_CD = 'F' and pif.ISSUANCE_STATUS_CD = 'I')
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance_type_def pd ON (pi.issuance_type_cd = pd.issuance_type_cd)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd) 
+        WHERE pt.permit_type_cd='PTIO'
+          AND pi.issuance_status_cd = 'I'
+          AND pi.issuance_date &gt;= ? AND pi.issuance_date &lt;= ?
+    </retrieveIssuancePtioDetailsByDate>
+ 
+    <retrieveExpiredPtioDetailsByDate>
+      SELECT DISTINCT pt.permit_id, pt.permit_nbr, pt.expiration_date, pt.effective_date, 
+             ptio.general_permit_flag, ptio.fe_ptio_flag, prd.reason_dsc, pi.issuance_type_cd,
+             pi.issuance_date, pi.public_notice_publish_date, pi.public_comment_end_date,
+             pi.issuance_status_cd, pd.issuance_type_dsc, fp.facility_id, fp.facility_nm,
+             fp.permit_classification_cd, do.do_laa_dsc, pid.issuance_date as draft_date, pif.issuance_date as final_date,
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pt.PERMIT_ID
+             ) as eu_count
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_ptio_permit ptio ON (pt.permit_id = ptio.permit_id)
+          INNER JOIN %Schema%pt_reason_def prd ON (pt.primary_reason_cd = prd.reason_cd)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid ON (pt.permit_id = pid.permit_id AND pid.ISSUANCE_TYPE_CD = 'D' and pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif ON (pt.permit_id = pif.permit_id AND pif.ISSUANCE_TYPE_CD = 'F' and pif.ISSUANCE_STATUS_CD = 'I')
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance_type_def pd ON (pi.issuance_type_cd = pd.issuance_type_cd)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd) 
+          LEFT OUTER JOIN %Schema%pt_eu_group eug ON (pt.permit_id = eug.permit_id),
+          %Schema%pt_eu peu, %Schema%fp_emissions_unit feu
+        WHERE pt.permit_type_cd='PTIO'
+          AND pi.issuance_status_cd = 'I'
+          AND eug.permit_eu_group_id = peu.permit_eu_group_id
+          AND feu.fp_id = fp.fp_id AND feu.corr_epa_emu_id = peu.corr_epa_emu_id
+          AND pt.expiration_date &gt;= ? AND pt.expiration_date &lt;= ?
+          AND (select count(*) from %Schema%pt_permit pt2
+                        join %Schema%pt_eu_group eug2 on (pt2.permit_id = eug2.permit_id)
+                        join %Schema%pt_eu pteu2 on (eug2.permit_eu_group_id = pteu2.permit_eu_group_id)
+                        join %Schema%fp_emissions_unit feu2 on (pteu2.corr_epa_emu_id = feu2.corr_epa_emu_id)
+                        join %Schema%fp_facility ff2 on (feu2.fp_id = ff2.fp_id)
+                        join %Schema%pa_eu paeu on (feu2.emu_id = paeu.emu_id)
+                        join %Schema%pa_ptio_eu ptioeu on (paeu.application_eu_id = ptioeu.application_eu_id)
+                        join %Schema%pa_ptio_eu_purpose_xref px on (paeu.application_eu_id = px.application_eu_id and px.ptio_eu_purpose_cd = '5')
+                        join %Schema%pa_application app2 on (paeu.application_id = app2.application_id and app2.application_type_cd = 'PTIO')
+                        where pt2.permit_id = pt.permit_id  and ff2.facility_id = pt.facility_id and app2.received_date > pt.effective_date) = 0
+    </retrieveExpiredPtioDetailsByDate>
+ 
+ <!--  
+    <retrieveExpiredSptoDetailsByDate>
+      SELECT DISTINCT pt.permit_id, pt.permit_nbr, pt.expiration_date, pt.effective_date, 
+             ptio.general_permit_flag, ptio.fe_ptio_flag, prd.reason_dsc, pi.issuance_type_cd,
+             pi.issuance_date, pi.public_notice_publish_date, pi.public_comment_end_date,
+             pi.issuance_status_cd, pd.issuance_type_dsc, fp.facility_id, fp.facility_nm,
+             fp.permit_classification_cd, do.do_laa_dsc, pid.issuance_date as draft_date, pif.issuance_date as final_date,
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pt.PERMIT_ID
+             ) as eu_count
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_ptio_permit ptio ON (pt.permit_id = ptio.permit_id)
+          INNER JOIN %Schema%pt_reason_def prd ON (pt.primary_reason_cd = prd.reason_cd)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid ON (pt.permit_id = pid.permit_id AND pid.ISSUANCE_TYPE_CD = 'D' and pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif ON (pt.permit_id = pif.permit_id AND pif.ISSUANCE_TYPE_CD = 'F' and pif.ISSUANCE_STATUS_CD = 'I')
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance_type_def pd ON (pi.issuance_type_cd = pd.issuance_type_cd)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd) 
+          LEFT OUTER JOIN %Schema%pt_eu_group eug ON (pt.permit_id = eug.permit_id),
+          %Schema%pt_eu peu, %Schema%fp_emissions_unit feu
+        WHERE pt.permit_type_cd='SPTO'
+          AND pi.issuance_status_cd = 'I'
+          AND eug.permit_eu_group_id = peu.permit_eu_group_id
+          AND feu.fp_id = fp.fp_id AND feu.corr_epa_emu_id = peu.corr_epa_emu_id
+          AND pt.expiration_date &gt;= ? AND pt.expiration_date &lt;= ?
+          AND (select count(*) from %Schema%pt_permit pt2
+                        join %Schema%pt_eu_group eug2 on (pt2.permit_id = eug2.permit_id)
+                        join %Schema%pt_eu pteu2 on (eug2.permit_eu_group_id = pteu2.permit_eu_group_id)
+                        join %Schema%fp_emissions_unit feu2 on (pteu2.corr_epa_emu_id = feu2.corr_epa_emu_id)
+                        join %Schema%fp_facility ff2 on (feu2.fp_id = ff2.fp_id)
+                        join %Schema%pa_eu paeu on (feu2.emu_id = paeu.emu_id)
+                        join %Schema%pa_ptio_eu ptioeu on (paeu.application_eu_id = ptioeu.application_eu_id)
+                        join %Schema%pa_ptio_eu_purpose_xref px on (paeu.application_eu_id = px.application_eu_id and px.ptio_eu_purpose_cd = '5')
+                        join %Schema%pa_application app2 on (paeu.application_id = app2.application_id and app2.application_type_cd = 'PTIO')
+                        where pt2.permit_id = pt.permit_id  and ff2.facility_id = pt.facility_id and app2.received_date > pt.effective_date) = 0
+    </retrieveExpiredSptoDetailsByDate>
+ -->
+    <retrieveIssuanceTvDetailsByDate>
+      SELECT pt.permit_id, pt.permit_nbr, pt.expiration_date, pt.effective_date, 
+             prd.reason_dsc, pi.issuance_type_cd,
+             pi.issuance_date, pi.public_notice_publish_date, pi.public_comment_end_date,
+             pi.issuance_status_cd, pd.issuance_type_dsc, fp.facility_id, fp.facility_nm, fp.permit_classification_cd,
+             do.do_laa_dsc, pid.issuance_date as draft_date, pif.issuance_date as final_date,
+             pipp.issuance_date as pp_date, pippp.issuance_date as ppp_date,
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pt.PERMIT_ID
+             ) as eu_count
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_reason_def prd ON (pt.primary_reason_cd = prd.reason_cd)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid ON (pt.permit_id = pid.permit_id AND pid.ISSUANCE_TYPE_CD = 'D' and pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pipp ON (pt.permit_id = pipp.permit_id AND pipp.ISSUANCE_TYPE_CD = 'PP' and pipp.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pippp ON (pt.permit_id = pippp.permit_id AND pippp.ISSUANCE_TYPE_CD = 'PPP' and pippp.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif ON (pt.permit_id = pif.permit_id AND pif.ISSUANCE_TYPE_CD = 'F' and pif.ISSUANCE_STATUS_CD = 'I')
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance_type_def pd ON (pi.issuance_type_cd = pd.issuance_type_cd)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd) 
+        WHERE pt.permit_type_cd='TVPTO'
+          AND pi.issuance_status_cd = 'I'
+          AND pi.issuance_date &gt;= ? AND pi.issuance_date &lt;= ?
+    </retrieveIssuanceTvDetailsByDate>
+ 
+    <retrieveExpiredTvDetailsByDate>
+      SELECT DISTINCT pt.permit_id, pt.permit_nbr, pt.expiration_date, pt.effective_date, 
+             prd.reason_dsc, pi.issuance_type_cd,
+             pi.issuance_date, pi.public_notice_publish_date, pi.public_comment_end_date,
+             pi.issuance_status_cd, pd.issuance_type_dsc, fp.facility_id, fp.facility_nm, fp.permit_classification_cd,
+             do.do_laa_dsc, pid.issuance_date as draft_date, pif.issuance_date as final_date,
+             pipp.issuance_date as pp_date, pippp.issuance_date as ppp_date,
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pt.PERMIT_ID
+             ) as eu_count
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_reason_def prd ON (pt.primary_reason_cd = prd.reason_cd)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid ON (pt.permit_id = pid.permit_id AND pid.ISSUANCE_TYPE_CD = 'D' and pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pipp ON (pt.permit_id = pipp.permit_id AND pipp.ISSUANCE_TYPE_CD = 'PP' and pipp.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pippp ON (pt.permit_id = pippp.permit_id AND pippp.ISSUANCE_TYPE_CD = 'PPP' and pippp.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif ON (pt.permit_id = pif.permit_id AND pif.ISSUANCE_TYPE_CD = 'F' and pif.ISSUANCE_STATUS_CD = 'I')
+          INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance_type_def pd ON (pi.issuance_type_cd = pd.issuance_type_cd)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd) 
+          LEFT OUTER JOIN %Schema%pt_eu_group eug ON (pt.permit_id = eug.permit_id),
+          %Schema%pt_eu peu, %Schema%fp_emissions_unit feu
+        WHERE pt.permit_type_cd='TVPTO'
+          AND eug.permit_eu_group_id = peu.permit_eu_group_id
+          AND feu.fp_id = fp.fp_id AND feu.corr_epa_emu_id = peu.corr_epa_emu_id
+          AND pi.issuance_status_cd = 'I'
+          AND pt.expiration_date &gt;= ? AND pt.expiration_date &lt;= ?
+          AND ((select count(*) from %Schema%pa_application app
+                    join %Schema%pa_tv_application tvapp on (app.application_id = tvapp.application_id and tvapp.tv_app_purpose_cd = '1')
+                    join %Schema%fp_facility ff on (app.fp_id = ff.fp_id)
+                    where application_type_cd = 'TV' and ff.facility_id = pt.facility_id
+                        and app.received_date > DATEADD([DAY], - 540, pt.expiration_date)) = 0)
+    </retrieveExpiredTvDetailsByDate>
+ 
+    <retrieveIssuancePbrDetailsByDate>
+      SELECT pt.permit_id, fp.facility_id, fp.facility_nm, feu.epa_emu_id, 
+             do.do_laa_id, do.do_laa_dsc, pa.received_date, pbr.disposition_flag,
+             peu.eu_dapc_dsc,  rd.pbr_reason_dsc, td.pbr_type_dsc, pt.permit_nbr
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_eu_group peg ON (pt.permit_id = peg.permit_id)
+          INNER JOIN %Schema%pt_eu peu ON (peg.permit_eu_group_id = peu.permit_eu_group_id)
+          INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+          INNER JOIN %Schema%cm_do_laa_def do ON (fp.do_laa_cd = do.do_laa_cd)
+          INNER JOIN %Schema%pt_permit_application_xref pax ON (pt.permit_id = pax.permit_id)
+          INNER JOIN %Schema%pa_application pa
+            ON (pax.application_id = pa.application_id AND pa.application_type_cd='PBR')
+          INNER JOIN %Schema%pa_pbr_notification pbr ON (pa.application_id = pbr.application_id)
+          INNER JOIN %Schema%pa_eu paeu ON (pa.application_id = paeu.application_id AND paeu.excluded_flag = 'N')
+          INNER JOIN %Schema%fp_emissions_unit feu ON (paeu.emu_id = feu.emu_id)
+          INNER JOIN %Schema%pa_pbr_reason_def rd ON (pbr.pbr_reason_cd = rd.pbr_reason_cd)
+          INNER JOIN %Schema%pa_pbr_type_def td ON (pbr.pbr_type_cd = td.pbr_type_cd)
+        WHERE pbr.disposition_flag='a'
+          AND pa.received_date &gt;= ? AND pa.received_date &lt;= ?
+    </retrieveIssuancePbrDetailsByDate>
+    
+ <retrievePermitParams>
+       SELECT so.param_id,  so.schedule, so.activity_template_nm,
+         so.warning_duration, so.danger_duration, so.permit_global_status_cd
+       FROM %Schema%WF_PERMIT_SOP_DEF so
+ </retrievePermitParams>
+ 
+ <retrieveIssuedPermitsByDoLaaByType>
+   SELECT count(pi.issuance_id) as id, do.do_laa_dsc as description,
+              1 AS last_modified, 'N' AS deprecated 
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%FP_FACILITY fp, %Schema%CM_DO_LAA_DEF do
+     WHERE fp.do_laa_cd=do.do_laa_cd and 
+         pt.facility_Id=fp.facility_id and 
+         fp.version_id = -1 and
+         pt.permit_id = pi.permit_id  and
+         pt.permit_type_cd=? and
+         pi.issuance_status_cd='I' and
+         pi.issuance_date &gt;=? and pi.issuance_date &lt;=?
+     </retrieveIssuedPermitsByDoLaaByType>
+ 
+    <retrieveExpiredPermitsByDoLaaByType>
+      SELECT count(pi.issuance_id) as id, do.do_laa_dsc as description,
+              1 AS last_modified, 'N' AS deprecated 
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%FP_FACILITY fp, %Schema%CM_DO_LAA_DEF do
+      WHERE fp.do_laa_cd=do.do_laa_cd and 
+         pt.facility_Id=fp.facility_id and 
+         fp.version_id = -1 and
+         pt.permit_global_status_cd = 'F' and
+         pt.permit_id = pi.permit_id  and
+         pt.permit_type_cd=? and
+     </retrieveExpiredPermitsByDoLaaByType>
+     
+     <retrieveActivePermitsByDoLaaByType>
+   SELECT count(pt.permit_id) as id, do.do_laa_dsc as description,
+              1 AS last_modified, 'N' AS deprecated  
+         FROM %Schema%PT_PERMIT pt, %Schema%FP_FACILITY fp, %Schema%CM_DO_LAA_DEF do, %Schema%WF_PROCESS wp,
+              %Schema%WF_PROCESS_ACTIVITY pa, %Schema%WF_PROCESS_TEMPLATE t,
+              %Schema%WF_ACTIVITY_TEMPLATE wt
+     WHERE fp.do_laa_cd=do.do_laa_cd and 
+         pt.facility_Id=fp.facility_id and fp.version_id = -1 and
+         wt.activity_template_id=pa.activity_template_id and
+         wp.process_id = pa.process_id and 
+         wp.process_template_id=t.process_template_id and
+         wp.external_id = pt.permit_id and t.process_cd='perm' and
+             wp.process_id = pa.process_id    
+     </retrieveActivePermitsByDoLaaByType>
+     
+     <retrieveIssuedPermitsByIssuanceType>
+       SELECT count(pi.issuance_id) as id, pi.issuance_type_cd as description,
+              1 AS last_modified, 'N' AS deprecated  
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, 
+              %Schema%FP_FACILITY fp, %Schema%cm_do_laa_def do
+     WHERE fp.do_laa_cd = do.do_laa_cd
+           AND pt.facility_Id = fp.facility_id
+       AND fp.version_id = -1
+       AND pt.permit_id = pi.permit_id
+       AND pi.issuance_status_cd = 'I'
+       AND pt.permit_type_cd = ?
+       AND pi.issuance_date &gt;= ? and pi.issuance_date &lt;= ?
+     </retrieveIssuedPermitsByIssuanceType>
+     
+     <retrieveExpiredPermitsByIssuanceType>
+       SELECT count(pi.issuance_id) as id, pi.issuance_type_cd as description,
+              1 AS last_modified, 'N' AS deprecated  
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, 
+              %Schema%FP_FACILITY fp, %Schema%cm_do_laa_def do
+     WHERE fp.do_laa_cd = do.do_laa_cd
+           AND pt.facility_Id = fp.facility_id
+       AND fp.version_id = -1
+       AND pt.permit_id = pi.permit_id
+       AND pi.issuance_status_cd = 'I'
+       AND pt.permit_type_cd = ?
+     </retrieveExpiredPermitsByIssuanceType>
+     
+     <retrieveActivePermitsByIssuanceType>
+       SELECT count(pt.permit_id) as id, pt.permit_global_status_cd as description,
+              1 AS last_modified, 'N' AS deprecated
+         FROM %Schema%PT_PERMIT pt, %Schema%FP_FACILITY fp, %Schema%CM_DO_LAA_DEF do,
+              %Schema%WF_PROCESS_ACTIVITY pa, %Schema%WF_PROCESS_TEMPLATE t, 
+              %Schema%WF_ACTIVITY_TEMPLATE wt, %Schema%WF_PROCESS wp
+     WHERE fp.do_laa_cd = do.do_laa_cd 
+           AND pt.facility_Id = fp.facility_id
+           AND fp.version_id = -1
+           AND wt.activity_template_id = pa.activity_template_id
+           AND wp.process_id = pa.process_id
+           AND wp.process_template_id = t.process_template_id
+           AND wp.end_dt IS NULL
+           AND wp.external_id = pt.permit_id and t.process_cd = 'perm'
+           AND wt.deprecated_ind = 'N'
+           AND (pt.permit_global_status_cd = 'N' 
+                  OR pt.permit_global_status_cd = 'D'
+                  OR pt.permit_global_status_cd = 'PP'
+                  OR pt.permit_global_status_cd = 'PPP')
+     </retrieveActivePermitsByIssuanceType>
+     
+      <retrieveIssuedPermitsByGeneralByType>
+   SELECT count(pi.issuance_id) as id, ppp.general_permit_flag as description,
+              1 AS last_modified, 'N' AS deprecated  
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%FP_FACILITY fp, %Schema%CM_DO_LAA_DEF do, 
+         %Schema%PT_PTIO_PERMIT ppp
+     WHERE fp.do_laa_cd=do.do_laa_cd and pt.facility_Id=fp.facility_id and 
+         fp.version_id = -1 and
+         pt.permit_id = pi.permit_id  and
+         pi.issuance_status_cd='I' and
+         pi.issuance_type_cd=? and pt.permit_type_cd=? and
+         ppp.permit_id = pt.permit_id and
+         pi.issuance_date &gt;=? and pi.issuance_date &lt;=?
+     </retrieveIssuedPermitsByGeneralByType>
+     
+      <retrieveExpiredPermitsByGeneralByType>
+   SELECT count(pi.issuance_id) as id, ppp.general_permit_flag as description,
+              1 AS last_modified, 'N' AS deprecated  
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%FP_FACILITY fp, %Schema%CM_DO_LAA_DEF do, 
+         %Schema%PT_PTIO_PERMIT ppp
+     WHERE fp.do_laa_cd=do.do_laa_cd and pt.facility_Id=fp.facility_id and 
+         fp.version_id = -1 and
+         pt.permit_id = pi.permit_id  and
+         pt.permit_type_cd=? and
+         pi.issuance_status_cd='I' and
+         ppp.permit_id = pt.permit_id and
+     </retrieveExpiredPermitsByGeneralByType>
+     
+     <retrieveActivePermitsByGeneralByType>
+   SELECT count(pt.permit_id) as id, ppp.general_permit_flag as description,
+              1 AS last_modified, 'N' AS deprecated  
+         FROM %Schema%PT_PERMIT pt,  %Schema%FP_FACILITY fp, %Schema%CM_DO_LAA_DEF do, 
+         %Schema%PT_PTIO_PERMIT ppp,  %Schema%WF_PROCESS wp, %Schema%WF_PROCESS_ACTIVITY pa, 
+         %Schema%WF_PROCESS_TEMPLATE t,%Schema%WF_ACTIVITY_TEMPLATE wt
+     WHERE fp.do_laa_cd=do.do_laa_cd and pt.facility_Id=fp.facility_id and 
+         fp.version_id = -1 and pa.is_current = 'Y' and
+         wt.activity_template_id=pa.activity_template_id and
+         wp.process_id = pa.process_id and 
+         wp.process_template_id=t.process_template_id and
+         wp.external_id = pt.permit_id and t.process_cd='perm' and
+         pt.permit_type_cd=? and
+         ppp.permit_id = pt.permit_id 
+     </retrieveActivePermitsByGeneralByType>
+     
+     <retrieveIssuedPermitsByReasonByType>
+         SELECT pt.permit_id, prd.reason_dsc
+         FROM   %Schema%PT_PERMIT pt, %Schema%FP_FACILITY fp, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%CM_DO_LAA_DEF do,
+                %Schema%PT_REASON_DEF prd
+         WHERE pt.permit_id = pi.permit_id and
+               pi.issuance_type_cd=? and pt.permit_type_cd=? and
+               pt.facility_Id=fp.facility_id and 
+               fp.version_id = -1 and
+               fp.do_laa_cd=do.do_laa_cd and
+               pt.permit_id=pi.permit_id and
+               prd.reason_cd=pt.primary_reason_cd and
+               pi.issuance_status_cd='I' and
+               pi.issuance_date &gt;=? and pi.issuance_date &lt;=? 
+     </retrieveIssuedPermitsByReasonByType>
+     
+     <retrieveExpiredPermitsByReasonByType>
+         SELECT distinct pt.permit_id, prd.reason_dsc
+         FROM   %Schema%PT_PERMIT pt, %Schema%FP_FACILITY fp, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%CM_DO_LAA_DEF do,
+                %Schema%PT_REASON_DEF prd
+         WHERE pt.permit_id = pi.permit_id and
+               pt.permit_type_cd=? and
+               pt.facility_Id=fp.facility_id and 
+               fp.version_id = -1 and
+               fp.do_laa_cd=do.do_laa_cd and
+               pt.permit_id=pi.permit_id and
+               prd.reason_cd=pt.primary_reason_cd and
+               pi.issuance_status_cd='I'
+     </retrieveExpiredPermitsByReasonByType>
+     
+     <retrieveActivePermitsByReasonByType>
+         SELECT pt.permit_id, prd.reason_dsc
+         FROM   %Schema%PT_PERMIT pt, %Schema%FP_FACILITY fp,  %Schema%CM_DO_LAA_DEF do,
+                %Schema%PT_REASON_DEF prd, %Schema%WF_PROCESS wp,
+                %Schema%WF_PROCESS_TEMPLATE t, %Schema%WF_PROCESS_ACTIVITY pa, %Schema%WF_ACTIVITY_TEMPLATE wt
+         WHERE pt.permit_type_cd=? and
+               pa.is_current = 'Y' and
+           wt.activity_template_id=pa.activity_template_id and
+           wp.process_id = pa.process_id and 
+           wp.process_template_id=t.process_template_id and
+           wp.external_id = pt.permit_id and t.process_cd='perm' and
+               pt.facility_Id=fp.facility_id and 
+               fp.version_id = -1 and
+               fp.do_laa_cd=do.do_laa_cd and
+               prd.reason_cd=pt.primary_reason_cd 
+     </retrieveActivePermitsByReasonByType>
+     
+     <retrieveIssuedPermitsByFinalByType>
+   SELECT pt.permit_id 
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%CM_DO_LAA_DEF do, %Schema%FP_FACILITY fp
+     WHERE pt.permit_id = pi.permit_id and 
+         fp.do_laa_cd=do.do_laa_cd and pt.facility_Id=fp.facility_id and
+         fp.version_id = -1 and
+         pi.issuance_type_cd=? and pt.permit_type_cd=? and 
+         pi.issuance_status_cd='I' and
+         pi.permit_id = pt.permit_id and
+         pi.issuance_date &gt;=? and pi.issuance_date &lt;=?
+     </retrieveIssuedPermitsByFinalByType>
+     
+     <retrieveExpiredPermitsByFinalByType>
+   SELECT distinct pt.permit_id 
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi, %Schema%CM_DO_LAA_DEF do, %Schema%FP_FACILITY fp
+     WHERE pt.permit_id = pi.permit_id and 
+         fp.do_laa_cd=do.do_laa_cd and pt.facility_Id=fp.facility_id and
+         fp.version_id = -1 and
+         pt.permit_type_cd=? and 
+         pi.issuance_status_cd='I' and
+         pi.permit_id = pt.permit_id and
+     </retrieveExpiredPermitsByFinalByType>
+     
+     <retrieveIssuedPermitsByDraftByType>
+   SELECT pt.permit_id 
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi
+     WHERE pt.permit_id = pi.permit_id and pi.issuance_type_cd='D' and 
+           pt.permit_type_cd=? and pi.issuance_status_cd='I' 
+     </retrieveIssuedPermitsByDraftByType>
+     
+     <retrieveExpiredPermitsByDraftByType>
+       SELECT pt.permit_id 
+         FROM %Schema%PT_PERMIT pt, %Schema%PT_PERMIT_ISSUANCE pi
+       WHERE pt.permit_id = pi.permit_id and pi.issuance_type_cd='D' and 
+           pt.permit_type_cd=? and pi.issuance_status_cd='I' and
+     </retrieveExpiredPermitsByDraftByType>
+
+    <retrieveApplicationCountsByType>
+       SELECT COUNT(*) AS app_count, fp.do_laa_cd, app.application_type_cd
+         FROM %Schema%pa_application app
+           INNER JOIN %Schema%fp_facility fp ON (app.fp_id = fp.fp_id)
+         WHERE app.received_date &gt;= ?
+           AND app.received_date &lt;= ?
+         GROUP BY app.application_type_cd, fp.do_laa_cd
+    </retrieveApplicationCountsByType>
+
+    <retrievePermitOnTimeMetrics>
+       SELECT COUNT(*) AS metric_count, fp.do_laa_cd, pt.permit_type_cd,
+              AVG(DATEDIFF(DD, wp.start_dt, wp.end_dt)) AS avg_days
+         FROM %Schema%pt_permit pt
+           INNER JOIN %Schema%fp_facility fp 
+             ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+           INNER JOIN %Schema%pt_permit_issuance pi 
+             ON (pt.permit_id = pi.permit_id AND pi.issuance_type_cd = 'F' AND pi.issuance_status_cd = 'I'
+                   AND pi.issuance_date &gt;= ? AND pi.issuance_date &lt;= ?)
+           INNER JOIN %Schema%wf_process wp 
+             ON (pt.permit_id = wp.external_id AND wp.end_dt IS NOT NULL AND wp.end_dt &lt;= wp.due_dt)
+         WHERE pt.permit_global_status_cd = 'F'
+         GROUP BY fp.do_laa_cd, pt.permit_type_cd
+    </retrievePermitOnTimeMetrics>
+
+    <retrievePermitOverTimeMetrics>
+       SELECT COUNT(*) AS metric_count, fp.do_laa_cd, pt.permit_type_cd,
+              AVG(DATEDIFF(DD, wp.start_dt, wp.end_dt)) AS avg_days
+         FROM %Schema%pt_permit pt
+           INNER JOIN %Schema%fp_facility fp 
+             ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+           INNER JOIN %Schema%pt_permit_issuance pi 
+             ON (pt.permit_id = pi.permit_id AND pi.issuance_type_cd = 'F' AND pi.issuance_status_cd = 'I'
+                   AND pi.issuance_date &gt;= ? AND pi.issuance_date &lt;= ?)
+           INNER JOIN %Schema%wf_process wp 
+             ON (pt.permit_id = wp.external_id AND wp.end_dt IS NOT NULL AND wp.end_dt &gt; wp.due_dt)
+         WHERE pt.permit_global_status_cd = 'F'
+         GROUP BY fp.do_laa_cd, pt.permit_type_cd
+    </retrievePermitOverTimeMetrics>
+
+    <retrievePbrCountsByType>     
+       SELECT dldef.do_laa_cd, pbr_type_cd, disposition_flag, COUNT(*) AS pbr_by_type_and_disposition,
+              AVG(DATEDIFF(DD, app.received_date, pt.effective_date)) AS avg_days_in_process
+         FROM %Schema%pa_pbr_notification pbr
+           INNER JOIN %Schema%pa_application app ON (pbr.application_id = app.application_id)
+           INNER JOIN %Schema%pt_permit_application_xref pax ON (app.application_id = pax.application_id)
+           INNER JOIN %Schema%pt_permit pt ON (pax.permit_id = pt.permit_id)
+           INNER JOIN %Schema%fp_facility fac ON (app.fp_id = fac.fp_id)
+           INNER JOIN %Schema%cm_do_laa_def dldef ON (fac.do_laa_cd = dldef.do_laa_cd)
+         WHERE app.received_date &gt;= ? AND app.received_date &lt;= ?
+         GROUP BY dldef.do_laa_cd, pbr.pbr_type_cd, pbr.disposition_flag
+     </retrievePbrCountsByType>
+
+    <retrieveFacilityCountsByPermitType>
+      SELECT COUNT(*) AS facility_count, fac_cnt.permit_type_cd 
+        FROM (SELECT COUNT(*), fp.facility_id, pt.permit_type_cd
+                FROM %Schema%fp_facility fp
+                  INNER JOIN %Schema%pt_permit pt 
+                    ON (fp.facility_id = pt.facility_id AND fp.version_id = -1 AND fp.operating_status_cd != 'sd')
+                  INNER JOIN %Schema%pt_eu_group peug
+                    ON (pt.permit_id = peug.permit_id)
+                  INNER JOIN %Schema%pt_eu peu
+                    ON (peug.permit_eu_group_id = peu.permit_eu_group_id 
+                          AND ((pt.permit_type_cd != 'TVPTI') 
+                                  OR (pt.permit_type_cd = 'TVPTI' AND peu.terminated_dt IS NULL)))
+                  INNER JOIN %Schema%pt_permit_issuance pi 
+                    ON (pt.permit_id = pi.permit_id AND pi.issuance_type_cd = 'F' AND pi.issuance_status_cd = 'I')
+                WHERE pt.effective_date &lt;= ?
+                GROUP BY fp.facility_id, pt.permit_type_cd) fac_cnt
+        GROUP BY fac_cnt.permit_type_cd
+    </retrieveFacilityCountsByPermitType>
+
+    <retrieveFacilityCountsByExpiredPermitType>
+      SELECT COUNT(*) as facility_count, fac_cnt.permit_type_cd
+        FROM (SELECT COUNT(*), fp.facility_id, pmt.permit_type_cd
+                FROM %Schema%fp_facility fp
+                  INNER JOIN (SELECT DISTINCT pt.permit_id, pt.facility_id, pt.permit_type_cd, pt.effective_date 
+                                FROM %Schema%pt_permit pt
+                                  INNER JOIN (SELECT fac.facility_id, count(*) AS has_no_apps
+                                                FROM %Schema%fp_facility fac
+                                                  LEFT OUTER JOIN (SELECT fpl.facility_id, count(*) AS num_apps
+                                                                     FROM %Schema%fp_facility fpl 
+                                                                       INNER JOIN %Schema%pa_application pa
+                                                                         ON (fpl.fp_id = pa.fp_id)
+                                                                       INNER JOIN %Schema%pt_permit_application_xref ptx
+                                                                         ON (pa.application_id = ptx.application_id)
+                                                                       INNER JOIN %Schema%pt_permit ptt
+                                                                         ON (ptx.permit_id = ptt.permit_id)
+                                                                     WHERE pa.submitted_date IS NOT NULL
+                                                                       AND pa.received_date &lt;= ?
+                                                                       AND pa.received_date &gt; ptt.effective_date
+                                                                       AND ((pa.application_type_cd = 'TV'
+                                                                               AND pa.received_date &lt;= ptt.expiration_date - 180)
+                                                                              OR (pa.application_type_cd = 'PTIO'
+                                                                                    AND pa.received_date &lt;= ptt.expiration_date))
+                                                                     GROUP BY fpl.facility_id) has_apps
+                                                    ON (fac.facility_id = has_apps.facility_id)
+                                                WHERE has_apps.num_apps IS NULL
+                                                GROUP BY fac.facility_id) no_apps
+                                    ON (pt.facility_id = no_apps.facility_id)
+                                  INNER JOIN %Schema%pt_eu_group eug 
+                                    ON (pt.permit_id = eug.permit_id)
+                                  INNER JOIN %Schema%pt_eu eu 
+                                    ON (eug.permit_eu_group_id = eu.permit_eu_group_id
+                                          AND eu.permit_status_cd != 'S')
+                                WHERE pt.expiration_date &lt; ? AND pt.effective_date &lt;= ?) pmt
+                    ON (fp.facility_id = pmt.facility_id AND fp.version_id = -1)
+                  INNER JOIN %Schema%pt_permit_issuance pi 
+                    ON (pmt.permit_id = pi.permit_id AND pi.issuance_type_cd = 'F' AND pi.issuance_status_cd = 'I')
+                GROUP BY fp.facility_id, pmt.permit_type_cd) fac_cnt
+        GROUP BY fac_cnt.permit_type_cd
+    </retrieveFacilityCountsByExpiredPermitType>
+
+    <retrieveFacilityCountsByActivePermitType>
+      SELECT COUNT(*) as facility_count, fac_cnt.permit_type_cd
+        FROM (SELECT COUNT(*), fp.facility_id, pmt.permit_type_cd
+                FROM %Schema%fp_facility fp
+                  INNER JOIN (SELECT DISTINCT pt.permit_id, pt.facility_id, pt.permit_type_cd 
+                                FROM %Schema%pt_permit pt
+                                  INNER JOIN %Schema%pt_eu_group eug 
+                                    ON (pt.permit_id = eug.permit_id)
+                                  INNER JOIN %Schema%pt_eu eu 
+                                    ON (eug.permit_eu_group_id = eu.permit_eu_group_id
+                                          AND eu.permit_status_cd = 'A')
+                                WHERE pt.expiration_date &gt; ? AND pt.effective_date &lt;= ?) pmt
+                    ON (fp.facility_id = pmt.facility_id AND fp.version_id = -1)
+                  INNER JOIN %Schema%pt_permit_issuance pi 
+                    ON (pmt.permit_id = pi.permit_id AND pi.issuance_type_cd = 'F' AND pi.issuance_status_cd = 'I')
+                GROUP BY fp.facility_id, pmt.permit_type_cd) fac_cnt
+        GROUP BY fac_cnt.permit_type_cd
+    </retrieveFacilityCountsByActivePermitType>
+
+    <retrieveFacilityCountsBySupersededPermitType>
+      SELECT COUNT(*) as facility_count, fac_cnt.permit_type_cd
+        FROM (SELECT COUNT(*), fp.facility_id, pmt.permit_type_cd
+                FROM %Schema%fp_facility fp
+                  INNER JOIN (SELECT DISTINCT pt.permit_id, pt.facility_id, pt.permit_type_cd 
+                                FROM %Schema%pt_permit pt
+                                  INNER JOIN %Schema%pt_eu_group eug 
+                                    ON (pt.permit_id = eug.permit_id)
+                                  INNER JOIN %Schema%pt_eu eu 
+                                    ON (eug.permit_eu_group_id = eu.permit_eu_group_id
+                                          AND eu.permit_status_cd = 'S')
+                                WHERE pt.effective_date &lt;= ?) pmt
+                    ON (fp.facility_id = pmt.facility_id AND fp.version_id = -1)
+                  INNER JOIN %Schema%pt_permit_issuance pi 
+                    ON (pmt.permit_id = pi.permit_id AND pi.issuance_type_cd = 'F' AND pi.issuance_status_cd = 'I')
+                GROUP BY fp.facility_id, pmt.permit_type_cd) fac_cnt
+        GROUP BY fac_cnt.permit_type_cd
+    </retrieveFacilityCountsBySupersededPermitType>
+ 
+    <retrieveFacilityCountsByExtendedPermitType>
+      SELECT COUNT(*) as facility_count, fac_cnt.permit_type_cd
+        FROM (SELECT COUNT(*), fp.facility_id, pmt.permit_type_cd
+                FROM %Schema%fp_facility fp
+                  INNER JOIN (SELECT DISTINCT pt.permit_id, pt.facility_id, pt.permit_type_cd 
+                                FROM %Schema%pt_permit pt
+                                  INNER JOIN (SELECT fpl.facility_id, count(*) AS num_apps
+                                                FROM %Schema%fp_facility fpl 
+                                                  INNER JOIN %Schema%pa_application pa
+                                                    ON (fpl.fp_id = pa.fp_id)
+                                                  INNER JOIN %Schema%pt_permit_application_xref ptx
+                                                    ON (pa.application_id = ptx.application_id)
+                                                  INNER JOIN %Schema%pt_permit ptt
+                                                    ON (ptx.permit_id = ptt.permit_id)
+                                                WHERE pa.submitted_date IS NOT NULL
+                                                  AND pa.received_date &lt;= ?
+                                                  AND pa.received_date &gt; ptt.effective_date
+                                                  AND ((pa.application_type_cd = 'TV'
+                                                          AND pa.received_date &lt;= ptt.expiration_date - 180)
+                                                        OR (pa.application_type_cd = 'PTIO'
+                                                          AND pa.received_date &lt;= ptt.expiration_date))
+                                                 GROUP BY fpl.facility_id) has_apps
+                                    ON (pt.facility_id = has_apps.facility_id)
+                                  INNER JOIN %Schema%pt_eu_group eug 
+                                    ON (pt.permit_id = eug.permit_id)
+                                  INNER JOIN %Schema%pt_eu eu 
+                                    ON (eug.permit_eu_group_id = eu.permit_eu_group_id
+                                          AND eu.permit_status_cd = 'EX')
+                                WHERE pt.expiration_date &gt; ? AND pt.effective_date &lt;= ?) pmt
+                    ON (fp.facility_id = pmt.facility_id AND fp.version_id = -1)
+                  INNER JOIN %Schema%pt_permit_issuance pi 
+                    ON (pmt.permit_id = pi.permit_id AND pi.issuance_type_cd = 'F' AND pi.issuance_status_cd = 'I')
+                GROUP BY fp.facility_id, pmt.permit_type_cd) fac_cnt
+        GROUP BY fac_cnt.permit_type_cd
+    </retrieveFacilityCountsByExtendedPermitType>
+
+    <retrieveIssuedFinalPermitsCountByType>
+      SELECT COUNT(*) as final_count, pt.permit_type_cd, fp.do_laa_cd
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%pt_permit_issuance pi
+            ON (pt.permit_id = pi.permit_id 
+                  AND pi.issuance_type_cd = 'F'
+                  AND pi.issuance_date &gt;= ?
+                  AND pi.issuance_date &lt;= ?)
+          INNER JOIN %Schema%fp_facility fp
+            ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+        GROUP BY do_laa_cd, permit_type_cd
+    </retrieveIssuedFinalPermitsCountByType>
+
+    <retrieveIssuedDeniedPermitsCountByType>
+      SELECT COUNT(*) as final_count, pt.permit_type_cd, fp.do_laa_cd
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%is_generic_issuance gi
+            ON (pt.permit_id = gi.permit_id
+                  AND gi.issued_flag = 'Y'
+                  AND gi.issuance_date &gt;= ?
+                  AND gi.issuance_date &lt;= ?)
+          INNER JOIN %Schema%fp_facility fp
+            ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+        WHERE pt.permit_global_status_cd = 'ID'
+        GROUP BY do_laa_cd, permit_type_cd
+    </retrieveIssuedDeniedPermitsCountByType>
+
+    <retrievePermitProcessTime>
+      SELECT permit_nbr, permit_type_cd, agency_time, applicant_time, other_time,
+             DATEDIFF(DD, wp.start_dt, GETDATE()) AS elapsed_time
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%wf_process wp 
+            ON (pt.permit_id = wp.external_id)
+          INNER JOIN %Schema%wf_process_template wt
+            ON (wp.process_template_id = wt.process_template_id
+                  AND wt.process_cd = 'perm')
+          LEFT OUTER JOIN (SELECT SUM(EXTRACT(DAY FROM (end_dt - start_dt))) AS agency_time, 
+                               process_id
+                             FROM %Schema%wf_process_activity
+                             WHERE start_dt IS NOT NULL
+                               AND end_dt IS NOT NULL
+                               AND (activity_referral_type_id IS NULL
+                                      OR activity_referral_type_id = 5
+                                      OR activity_referral_type_id = 6
+                                      OR activity_referral_type_id = 7
+                                      OR activity_referral_type_id = 8)
+                             GROUP BY process_id) wagc
+            ON (wp.process_id = wagc.process_id)
+          LEFT OUTER JOIN (SELECT SUM(DATEDIFF(DD, start_dt, end_dt))) AS applicant_time, 
+                               process_id
+                             FROM %Schema%wf_process_activity
+                             WHERE start_dt IS NOT NULL
+                               AND end_dt IS NOT NULL
+                               AND (activity_referral_type_id &lt; 5)
+                             GROUP BY process_id) wapp
+            ON (wp.process_id = wapp.process_id)
+          LEFT OUTER JOIN (SELECT SUM(DATEDIFF(DD, start_dt, end_dt))) AS other_time, 
+                               process_id
+                             FROM %Schema%wf_process_activity
+                             WHERE start_dt IS NOT NULL
+                               AND end_dt IS NOT NULL
+                               AND (activity_referral_type_id &gt;= 9)
+                             GROUP BY process_id) woth
+            ON (wp.process_id = woth.process_id)
+        WHERE permit_global_status_cd != 'F' AND permit_global_status_cd != 'E'
+        ORDER BY permit_type_cd
+    </retrievePermitProcessTime>
+
+     <retrieveIssuedPbrsByDoLaa>
+   SELECT count(pa.application_id) as id, do.do_laa_dsc as description,
+              1 AS last_modified, 'N' AS deprecated  
+          FROM %Schema%PT_PERMIT pt
+           INNER JOIN %Schema%FP_FACILITY fp 
+             ON (pt.facility_id = fp.facility_id AND fp.version_id = -1)
+           INNER JOIN %Schema%CM_DO_LAA_DEF do
+             ON (fp.do_laa_cd = do.do_laa_cd)
+           INNER JOIN %Schema%PT_PERMIT_APPLICATION_XREF pax
+             ON (pt.permit_id = pax.permit_id)
+           INNER JOIN %Schema%PA_APPLICATION pa
+             ON (pax.application_id = pa.application_id AND pa.application_type_cd='PBR')
+           INNER JOIN %Schema%PA_PBR_NOTIFICATION pbr
+             ON (pa.application_id = pbr.application_id)
+           INNER JOIN %Schema%PA_PBR_REASON_DEF rd
+             ON (pbr.pbr_reason_cd = rd.pbr_reason_cd)
+           INNER JOIN %Schema%PA_PBR_TYPE_DEF td
+             ON (pbr.pbr_type_cd = td.pbr_type_cd)
+         WHERE pbr.disposition_flag='a' and
+               pa.received_date &gt;= ? AND pa.received_date &lt;= ?
+     </retrieveIssuedPbrsByDoLaa>
+ 
+ <!--<retrievePermitWorkers>
+   SELECT DISTINCT pa.user_id, cc.last_nm, cc.first_nm, 
+          wt.activity_template_nm, do.do_laa_dsc, do.do_laa_cd, do.do_laa_id, do.do_laa_short_dsc
+         FROM %Schema%WF_ACTIVITY_TEMPLATE wt, %Schema%CM_USER_DEF ud,
+         %Schema%WF_PROCESS_ACTIVITY pa, %Schema%WF_PROCESS wp, %Schema%FP_FACILITY fp, %Schema%CM_CONTACT cc,
+         %Schema%CM_DO_LAA_DEF do
+       WHERE (wt.activity_template_nm='Technically Complete/T&amp;C ready to review' or
+         wt.activity_template_nm='DO/LAA Permit Approval' or
+         wt.activity_template_nm='CO Permit Review' or
+         wt.activity_template_nm='CO Permit Approval') and
+         wt.activity_template_def_id=wt.activity_template_def_id and
+         wt.activity_template_id=pa.activity_template_id and
+         wp.process_id = pa.process_id and wt.deprecated_ind='N' and
+         wp.fp_id = fp.fp_id and fp.version_id = -1 and
+         cc.contact_id=ud.contact_id and ud.user_id = pa.user_id
+         and do.do_laa_cd = fp.do_laa_cd
+     </retrievePermitWorkers>-->
+     <retrievePermitWorkers>
+		SELECT DISTINCT pa.user_id, ud.last_nm, ud.first_nm, 
+          wt.activity_template_nm, do.do_laa_dsc, do.do_laa_cd, do.do_laa_id, do.do_laa_short_dsc
+         FROM dbo.WF_ACTIVITY_TEMPLATE wt, dbo.CM_USER_DEF ud,
+         dbo.WF_PROCESS_ACTIVITY pa, dbo.WF_PROCESS wp, dbo.FP_FACILITY fp,
+         dbo.CM_DO_LAA_DEF do
+       	 WHERE (wt.activity_template_nm='Completeness Review' or
+			wt.activity_template_nm='Tech Review/Draft Permit/Waiver' or
+			wt.activity_template_nm='Permit Peer Review' or
+			wt.activity_template_nm='Manager/Supervisor Review') and
+         wt.activity_template_def_id=wt.activity_template_def_id and
+         wt.activity_template_id=pa.activity_template_id and
+         wp.process_id = pa.process_id and wt.deprecated_ind='N' and
+         wp.fp_id = fp.fp_id and fp.version_id = -1 and
+		 ud.user_id = pa.user_id
+         and do.do_laa_cd = fp.do_laa_cd
+     </retrievePermitWorkers>
+     
+     <!-- <retrieveWorkloadDetails>
+     SELECT wp.process_id, pa.user_id, wt.activity_template_nm, pt.permit_type_cd, 
+            pt.permit_global_status_cd, pa.activity_status_cd, do.do_laa_cd, do.do_laa_dsc,
+            do.do_laa_id, do.do_laa_short_dsc
+         FROM %Schema%WF_ACTIVITY_TEMPLATE wt,
+         %Schema%WF_PROCESS_ACTIVITY pa, %Schema%WF_PROCESS wp, %Schema%FP_FACILITY fp,
+         %Schema%PT_PERMIT pt, %Schema%WF_PROCESS_TEMPLATE t, %Schema%CM_DO_LAA_DEF do
+       WHERE (wt.activity_template_nm='Technically Complete/T&amp;C ready to review' or 
+              wt.activity_template_nm='DO/LAA Permit Approval' or
+              wt.activity_template_nm='CO Permit Review' or
+              wt.activity_template_nm='DO/LAA Preliminary Review' or
+              wt.activity_template_nm='CO Permit Approval') and
+         wp.process_template_id=t.process_template_id and
+         wp.external_id = pt.permit_id and t.process_cd='perm' and
+         wp.process_id = pa.process_id and
+         wt.activity_template_id=pa.activity_template_id and
+         fp.version_id = -1 and pt.facility_id = fp.facility_id and
+         wp.end_dt is null and 
+         (pt.permit_global_status_cd='N' or pt.permit_global_status_cd='D' or
+          pt.permit_global_status_cd='PP' or pt.permit_global_status_cd='PPP')
+          and do.do_laa_cd = fp.do_laa_cd 
+     </retrieveWorkloadDetails>-->
+     <retrieveWorkloadDetails>
+     	SELECT wp.process_id, pa.user_id, wt.activity_template_nm, pt.permit_type_cd, 
+            pt.permit_global_status_cd, pa.activity_status_cd, do.do_laa_cd, do.do_laa_dsc,
+            do.do_laa_id, do.do_laa_short_dsc
+         FROM %Schema%WF_ACTIVITY_TEMPLATE wt,
+         %Schema%WF_PROCESS_ACTIVITY pa, %Schema%WF_PROCESS wp, %Schema%FP_FACILITY fp,
+         %Schema%PT_PERMIT pt, %Schema%WF_PROCESS_TEMPLATE t, %Schema%CM_DO_LAA_DEF do
+       WHERE (wt.activity_template_nm='Completeness Review' or
+			wt.activity_template_nm='Tech Review/Draft Permit/Waiver' or
+			wt.activity_template_nm='Permit Peer Review' or
+			wt.activity_template_nm='Manager/Supervisor Review') and
+         wp.process_template_id=t.process_template_id and
+         wp.external_id = pt.permit_id and t.process_cd='perm' and
+         wp.process_id = pa.process_id and
+         wt.activity_template_id=pa.activity_template_id and
+         fp.version_id = -1 and pt.facility_id = fp.facility_id and
+         wp.end_dt is null and 
+         (pt.permit_global_status_cd='N' or pt.permit_global_status_cd='D' or
+          pt.permit_global_status_cd='PP' or pt.permit_global_status_cd='PPP')
+          and do.do_laa_cd = fp.do_laa_cd
+     </retrieveWorkloadDetails>
+     
+     <retrieveActivities>
+      SELECT DISTINCT ${WorkFlowSQL.processActivityColumns}, ATD.performer_type_cd,
+          ATD.ACTIVITY_TEMPLATE_NM
+      FROM %Schema%WF_Process_Activity PA, %Schema%WF_Process_Template PT, 
+           %Schema%WF_Process P LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd 
+                  on pd.DATA_DETAIL_ID = 0 AND p.PROCESS_ID = pd.PROCESS_ID, 
+           %Schema%WF_Activity_Template AT, %Schema%WF_Activity_Template_Def ATD, 
+           %Schema%FP_facility A, %Schema%PT_PERMIT PER
+      WHERE P.Process_Id = PA.Process_Id 
+            AND PA.Activity_Template_Id = AT.Activity_Template_Id  
+            AND ATD.Process_Template_Id is null  
+            AND ATD.Activity_Template_Def_Id = AT.Activity_Template_Def_Id  
+            AND P.fp_id=A.fp_id  
+            AND PT.Process_Template_Id=P.Process_Template_Id 
+            AND P.external_id=PER.Permit_id  
+    </retrieveActivities>
+
+    <retrievePermitSOPData>
+      SELECT p.process_id, p.start_dt, at.activity_template_nm,
+             pa.start_dt AS task_start_dt, pa.activity_status_cd,
+             pa.end_dt AS task_end_dt, pa.extend_process_end_date,
+             pm.permit_id, pm.permit_nbr, pm.permit_type_cd, pm.permit_global_status_cd,
+             pm.issue_draft_flag, pid.issuance_date AS draft_issuance_date,
+             pid.public_comment_end_date AS draft_comment_end_date,
+             ptio.general_permit_flag, ptio.express_flag, pr.reason_dsc,
+             fp.facility_id, fp.facility_nm, fp.permit_classification_cd, fp.operating_status_cd,
+             pa.ACTIVITY_REFERRAL_TYPE_ID,
+             %Schema%F_LIST_NAICS_CODES(fp.fp_id) AS naics, fp.fp_id,
+             do.do_laa_dsc, do.do_laa_cd, do_laa_short_dsc, do.do_laa_id, pa.USER_ID, pa.IS_CURRENT,
+             (SELECT COUNT(peu.permit_eu_id) 
+                FROM %Schema%pt_eu_group eug 
+                JOIN %Schema%pt_eu peu ON (peu.permit_eu_group_id = eug.permit_eu_group_id)
+                JOIN %Schema%fp_emissions_unit feu ON (feu.corr_epa_emu_id = peu.corr_epa_emu_id)
+                WHERE eug.permit_id = pm.permit_id AND feu.fp_id = fp.fp_id AND feu.operating_status_cd NOT IN ('iv','sd')) AS valid_permit_eu_count,
+             (SELECT COUNT(peu.permit_eu_id) 
+                FROM %Schema%pt_eu_group eug 
+                JOIN %Schema%pt_eu peu ON (peu.permit_eu_group_id = eug.permit_eu_group_id)
+                WHERE eug.permit_id = pm.permit_id) AS total_permit_eu_count,
+             (SELECT paa.received_date
+                   FROM %Schema%pa_application paa
+                  WHERE (paa.APPLICATION_ID =
+                          (SELECT mpax.application_id
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID,
+                                          mrpa.received_date,
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID
+                                                            ORDER BY mrpa.received_date) AS rn
+                                     FROM %Schema%pt_permit_application_xref mpa
+                                    INNER JOIN %Schema%PA_APPLICATION mrpa
+                                            ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                  ) mpax
+                            WHERE mpax.permit_id = pm.permit_id and mpax.rn = 1
+                          )
+                        )
+                ) AS application_received_date,
+             (SELECT paa.received_date
+                   FROM %Schema%pa_application paa
+                  WHERE (paa.APPLICATION_ID =
+                          (SELECT mpax.application_id
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID,
+                                          mrpa.received_date,
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID
+                                                            ORDER BY mrpa.received_date ASC) AS rn
+                                     FROM %Schema%pt_permit_application_xref mpa
+                                    INNER JOIN %Schema%PA_APPLICATION mrpa
+                                            ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                    INNER JOIN %Schema%PA_TV_APPLICATION tva
+                                    		ON (mrpa.APPLICATION_ID = tva.APPLICATION_ID AND
+                                    			tva.TV_APP_PURPOSE_CD = '1')
+                                  ) mpax
+                            WHERE mpax.permit_id = pm.permit_id and mpax.rn = 1
+                          )
+                        )
+                ) AS renewal_received_date,
+      FROM %Schema%wf_process_activity pa, 
+           %Schema%wf_process p, %Schema%wf_activity_template at,
+           %Schema%wf_process_template pt, %Schema%wf_activity_template_def atd,
+           %Schema%pt_permit pm 
+           LEFT OUTER JOIN %Schema%pt_ptio_permit ptio 
+                  ON (pm.permit_id = ptio.permit_id)
+           LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            ON (pm.PERMIT_ID = pid.PERMIT_ID
+                AND pid.ISSUANCE_TYPE_CD = 'D'
+                AND pid.ISSUANCE_STATUS_CD = 'I'),
+           %Schema%pt_reason_def pr, %Schema%fp_facility fp,
+           %Schema%cm_do_laa_def do
+      WHERE pa.process_id = p.process_id AND p.end_dt IS NULL AND pa.start_dt IS NOT NULL
+        AND pa.activity_template_id = at.activity_template_id
+        AND p.process_template_id = pt.process_template_id AND pt.process_cd = 'perm'
+        AND at.activity_template_def_id = atd.activity_template_def_id AND atd.process_template_id IS NULL
+        AND p.external_id = pm.permit_id
+               AND (pm.permit_global_status_cd = 'N'
+                     OR pm.permit_global_status_cd = 'D'
+                     OR pm.permit_global_status_cd = 'PP'
+                     OR pm.permit_global_status_cd = 'PPP')
+        AND pm.primary_reason_cd = pr.reason_cd
+        AND pm.facility_id = fp.facility_id AND fp.version_id = -1
+        AND fp.do_laa_cd = do.do_laa_cd
+    </retrievePermitSOPData>
+    
+    
+    <retrieveLatePermitsData>
+      SELECT p.process_id, p.start_dt, at.activity_template_nm,
+             pa.start_dt AS task_start_dt, pa.activity_status_cd,
+             pa.end_dt AS task_end_dt, pa.extend_process_end_date,
+             pm.permit_id, pm.permit_nbr, pm.permit_type_cd, pm.permit_global_status_cd,
+             pm.issue_draft_flag,
+             ptio.general_permit_flag, ptio.express_flag, pr.reason_dsc,
+             fp.facility_id, fp.facility_nm, fp.fp_id,
+             do.do_laa_dsc, do.do_laa_cd, do.do_laa_id, pa.USER_ID, pa.IS_CURRENT
+      FROM %Schema%wf_process_activity pa, %Schema%wf_process p, %Schema%wf_activity_template at,
+           %Schema%wf_process_template pt, %Schema%wf_activity_template_def atd,
+           %Schema%pt_permit pm LEFT OUTER JOIN %Schema%pt_ptio_permit ptio ON (pm.permit_id = ptio.permit_id),
+           %Schema%pt_reason_def pr, %Schema%fp_facility fp,
+           %Schema%cm_do_laa_def do
+      WHERE pa.process_id = p.process_id AND p.end_dt IS NULL
+        AND pa.activity_template_id = at.activity_template_id
+        AND p.process_template_id = pt.process_template_id AND pt.process_cd = 'perm'
+        AND at.activity_template_def_id = atd.activity_template_def_id AND atd.process_template_id IS NULL
+        AND p.external_id = pm.permit_id
+               AND (pm.permit_global_status_cd = 'N'
+                     OR pm.permit_global_status_cd = 'D'
+                     OR pm.permit_global_status_cd = 'PP'
+                     OR pm.permit_global_status_cd = 'PPP')
+        AND pm.primary_reason_cd = pr.reason_cd
+        AND pm.facility_id = fp.facility_id AND fp.version_id = -1
+        AND fp.do_laa_cd = do.do_laa_cd
+    </retrieveLatePermitsData>
+    
+    <retrievePreliminaryReviewCompletedData>
+      SELECT p.process_id, p.start_dt, at.activity_template_nm,
+             pa.start_dt AS task_start_dt, pa.activity_status_cd,
+             pa.end_dt AS task_end_dt, pa.extend_process_end_date,
+             pm.permit_id, pm.permit_nbr, pm.permit_type_cd, 
+             pm.permit_global_status_cd, pm.issue_draft_flag,
+             ptio.general_permit_flag, ptio.express_flag, pr.reason_dsc,
+             fp.facility_id, fp.facility_nm, fp.permit_classification_cd, 
+             %Schema%F_LIST_NAICS_CODES(fp.fp_id) AS naics, fp.fp_id, '' as draft_issuance_date,
+             do.do_laa_dsc, do.do_laa_cd, do.do_laa_short_dsc, do.do_laa_id, pa.USER_ID, pa.IS_CURRENT
+      FROM %Schema%wf_process_activity pa, %Schema%wf_process p, 
+           %Schema%wf_activity_template at, %Schema%wf_process_template pt, 
+           %Schema%wf_activity_template_def atd, 
+           %Schema%pt_permit pm LEFT OUTER JOIN %Schema%pt_ptio_permit ptio 
+                  ON (pm.permit_id = ptio.permit_id),
+           %Schema%pt_reason_def pr, %Schema%fp_facility fp,
+           %Schema%cm_do_laa_def do
+      WHERE pa.process_id = p.process_id
+        AND pa.activity_template_id = at.activity_template_id
+        AND p.process_template_id = pt.process_template_id 
+        AND pt.process_cd = 'perm'
+        AND at.activity_template_def_id = atd.activity_template_def_id 
+        AND atd.process_template_id IS NULL
+        AND (atd.activity_template_def_id = 2 
+              OR (atd.activity_template_def_id = 3 AND pa.IS_CURRENT = 'Y'))
+        AND p.external_id = pm.permit_id
+        AND pm.primary_reason_cd = pr.reason_cd
+        AND pm.facility_id = fp.facility_id AND fp.version_id = -1
+        AND fp.do_laa_cd = do.do_laa_cd
+    </retrievePreliminaryReviewCompletedData>
+    
+    <retrieveIssuedMetricsData>
+      SELECT p.process_id, p.start_dt, p.END_DT, at.activity_template_nm,
+             pa.start_dt AS task_start_dt, pa.activity_status_cd,
+             pa.end_dt AS task_end_dt, pa.USER_ID, pa.IS_CURRENT,
+             pa.loop_cnt,
+             pm.permit_id, pm.permit_nbr, pm.permit_type_cd, 
+             pm.permit_global_status_cd,
+             ptio.general_permit_flag, ptio.express_flag, 
+             ptio.action_type, ptio.subject_to_psd_flag, ptio.subject_to_nansr_flag, 
+             pr.reason_dsc,
+             fp.facility_id, fp.facility_nm, fp.fp_id, pa.ACTIVITY_REFERRAL_TYPE_ID,
+             do.do_laa_dsc, do.do_laa_short_dsc, do.do_laa_cd, do.do_laa_id, 
+             pid.issuance_date AS draft_issuance_date, 
+             pid.public_notice_publish_date,
+             pif.issuance_date AS final_issuance_date, 
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pm.PERMIT_ID
+             ) as eu_count,
+             ccd.county_nm,
+             wfartd.EXTEND_PROCESS_END_DATE
+      FROM %Schema%wf_process_activity pa left outer join 
+			%Schema%WF_ACTIVITY_REFERRAL_TYPE_DEF wfartd 
+		on pa.ACTIVITY_REFERRAL_TYPE_ID = wfartd.ACTIVITY_REFERRAL_TYPE_ID,
+		   %Schema%wf_process p, 
+           %Schema%wf_activity_template at, %Schema%wf_process_template pt, 
+           %Schema%wf_activity_template_def atd, 
+           %Schema%pt_permit pm LEFT OUTER JOIN %Schema%pt_ptio_permit ptio 
+                  ON (pm.permit_id = ptio.permit_id)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            ON (pm.PERMIT_ID = pid.PERMIT_ID
+                AND pid.ISSUANCE_TYPE_CD = 'D'
+                AND pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+            ON (pm.PERMIT_ID = pif.PERMIT_ID
+                AND pif.ISSUANCE_TYPE_CD = 'F'
+                AND pif.ISSUANCE_STATUS_CD = 'I'),
+           %Schema%pt_reason_def pr, %Schema%fp_facility fp
+           INNER JOIN %Schema%fp_facility_address_xref ffax ON (fp.fp_id = ffax.fp_id AND fp.version_id = -1)
+		   INNER JOIN %Schema%cm_address ca ON (ffax.address_id = ca.address_id AND ca.end_dt IS NULL)
+		   INNER JOIN %Schema%cm_county_def ccd ON (ca.county_cd = ccd.county_cd),
+           %Schema%cm_do_laa_def do
+      WHERE pa.process_id = p.process_id
+        AND pa.activity_template_id = at.activity_template_id
+        AND p.process_template_id = pt.process_template_id 
+        AND pt.process_cd = 'perm'
+        AND at.activity_template_def_id = atd.activity_template_def_id 
+        AND atd.process_template_id IS NULL
+        AND p.external_id = pm.permit_id
+        AND pm.primary_reason_cd = pr.reason_cd
+        AND pm.facility_id = fp.facility_id AND fp.version_id = -1
+        AND fp.do_laa_cd = do.do_laa_cd
+        AND pa.START_DT is not null
+        AND p.END_DT is not null
+        AND pm.permit_global_status_cd = 'F'
+    </retrieveIssuedMetricsData>
+
+	<retrieveIssuedMetricsBenchmarkDefData>
+		SELECT ISSUED_METRICS_BENCHMARK_CD AS code,
+		ISSUED_METRICS_BENCHMARK_DESC AS description, DEPRECATED,
+		LAST_MODIFIED, ISSUED_METRICS_BENCHMARK_DAYS FROM %Schema%PT_ISSUED_METRICS_BENCHMARK_DEF
+		ORDER BY ISSUED_METRICS_BENCHMARK_DESC
+	</retrieveIssuedMetricsBenchmarkDefData>	
+	
+    <topsPartTwoA>
+	  SELECT COUNT(*) AS tv_facility_count
+        FROM (SELECT COUNT(fp.facility_id) fpIdCnt
+                FROM %Schema%fp_facility fp
+                WHERE fp.version_id = -1
+                  AND fp.operating_status_cd = 'op'
+                  AND fp.permit_classification_cd = 'tv' 
+                GROUP BY fp.facility_id) tvFacCnt
+    </topsPartTwoA>
+
+    <topsPartTwoB>
+      SELECT COUNT(*) AS smtv_facility_count
+        FROM (SELECT COUNT(fp.facility_id) fpIdCnt
+                FROM %Schema%fp_facility fp
+               WHERE fp.version_id = -1
+                 AND fp.operating_status_cd = 'op'
+                 AND fp.transitional_status_cd = 'msmt'
+               GROUP BY fp.facility_id) smtvFacCnt
+    </topsPartTwoB>
+
+    <!-- topsPartTwoC is A + B -->
+
+    <!-- <topsPartTwoD>
+      SELECT COUNT(*) AS tv_facility_count
+        FROM %Schema%fp_facility fp
+        WHERE fp.version_id = -1
+          AND (fp.operating_status_cd = 'op' OR fp.operating_status_cd = 'ia')
+          AND ((fp.permit_classification_cd = 'tv' 
+                  AND (fp.transitional_status_cd IS NULL OR fp.transitional_status_cd != 'msmt'))
+                OR fp.transitional_status_cd = 'mtv')
+    </topsPartTwoD>-->
+    <topsPartTwoD>
+	  SELECT COUNT(*) AS tv_permits_apps_cnt FROM
+		(SELECT  fp.facility_id as tvFac FROM %Schema%fp_facility fp
+			INNER JOIN 
+				(SELECT prmt.permit_id, prmt.facility_id FROM
+					(SELECT ROW_NUMBER() OVER (PARTITION BY pt.facility_id ORDER BY pt.expiration_date desc) AS rn, 
+						pt.permit_id, pt.facility_id, pt.expiration_date FROM %Schema%pt_permit pt
+			  			INNER JOIN %Schema%pt_permit_reason_xref prx ON (pt.permit_id = prx.permit_id)
+			  			INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+						WHERE pt.permit_type_cd = 'tvpto'
+							AND pt.expiration_date >= GETDATE()
+							AND (prx.reason_cd = 'I' OR prx.reason_cd = 'R')
+							AND (pi.issuance_type_cd='F' AND pi.issuance_status_cd='I'))prmt
+			  		WHERE prmt.rn=1) tvp
+			ON (fp.facility_id = tvp.facility_id)
+				WHERE fp.version_id=-1
+					AND fp.operating_status_cd='op'
+					AND fp.permit_classification_cd='tv'
+		UNION
+		SELECT pt.facility_id as tvFac  FROM %Schema%pt_permit pt 
+			INNER JOIN %Schema%pt_permit_application_xref pax ON (pt.permit_id = pax.permit_id)
+			INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id)
+				WHERE pt.permit_type_cd = 'tvpto'
+					AND (pt.primary_reason_cd = 'I' OR pt.primary_reason_cd = 'R')
+					AND (pt.permit_global_status_cd != 'DP' AND pt.permit_global_status_cd != 'E' 
+						AND pt.permit_global_status_cd != 'ID' AND pt.permit_global_status_cd != 'F')
+					AND fp.version_id = -1
+					AND fp.operating_status_cd = 'op') tvPrmtAndApp
+    </topsPartTwoD>
+<!--  2559 0005684
+    <topsPartThree>
+      SELECT COUNT(*) AS tv_active_pto
+        FROM (SELECT COUNT(*), pt.facility_id
+                FROM %Schema%pt_permit pt
+                  INNER JOIN (SELECT COUNT(*) AS active_eus,  permit_id
+                                FROM %Schema%pt_eu_group peug
+                                  INNER JOIN %Schema%pt_eu peu 
+                                    ON (peug.permit_eu_group_id = peu.permit_eu_group_id)
+                                WHERE (peu.permit_status_cd = 'A' OR peu.permit_status_cd = 'EX')                                    
+                                GROUP BY permit_id) peuc
+                    ON (pt.permit_id = peuc.permit_id)
+                  INNER JOIN %Schema%fp_facility fp 
+                    ON (pt.facility_id = fp.facility_id)
+                WHERE pt.permit_type_cd = 'TVPTO'
+                  AND pt.PERMIT_GLOBAL_STATUS_CD = 'F'
+                  AND pt.effective_date &lt;= ?
+                  AND fp.version_id = -1 
+                  AND (fp.operating_status_cd = 'op' OR fp.operating_status_cd = 'ia')
+                  AND fp.permit_classification_cd = 'tv'
+                  AND (fp.permit_status_cd = 'A' OR fp.permit_status_cd = 'EX')
+                GROUP BY pt.facility_id)
+    </topsPartThree>
+-->
+    <topsPartThree>
+      SELECT COUNT(*) AS tv_active_pto FROM %Schema%fp_facility fp
+		INNER JOIN 
+		(SELECT prmt.permit_id, prmt.facility_id FROM
+			(SELECT ROW_NUMBER() OVER (PARTITION BY pt.facility_id ORDER BY pt.expiration_date desc) AS rn, 
+				pt.permit_id, pt.facility_id FROM %Schema%pt_permit pt
+			  INNER JOIN %Schema%pt_permit_reason_xref prx ON (pt.permit_id = prx.permit_id)
+			  INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+				WHERE pt.permit_type_cd = 'tvpto'
+					AND pt.expiration_date >= GETDATE()
+					AND (prx.reason_cd = 'I' OR prx.reason_cd = 'R')
+					AND (pi.issuance_type_cd='F' AND pi.issuance_status_cd='I'))prmt
+			  WHERE prmt.rn=1
+			) tvp
+		ON (fp.facility_id = tvp.facility_id)
+			WHERE fp.version_id=-1
+				AND fp.operating_status_cd='op'
+				AND fp.permit_classification_cd='tv'
+    </topsPartThree>
+    
+    <topsPartFourA>
+      SELECT COUNT(*) AS tv_initial
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%FP_FACILITY fp
+             ON (pt.FACILITY_ID = fp.FACILITY_ID)
+          INNER JOIN %Schema%pt_permit_reason_xref prx
+             ON (pt.permit_id = prx.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance pi
+             ON (pt.permit_id = pi.permit_id 
+                  AND pi.issuance_type_cd = 'F'
+                  AND pi.issuance_status_cd = 'I')
+        WHERE pt.permit_type_cd = 'TVPTO'
+          AND fp.version_id = -1 
+          AND prx.reason_cd = 'I'
+          AND fp.operating_status_cd = 'op'
+          AND (DATEADD(day, 180, pi.issuance_date)) &gt;= ?
+          AND pi.issuance_date &lt;= ?
+    </topsPartFourA>
+
+    <topsPartFourB>
+      SELECT COUNT(*) AS tv_ontime
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%FP_FACILITY fp
+             ON (pt.FACILITY_ID = fp.FACILITY_ID)
+          INNER JOIN %Schema%pt_permit_reason_xref prx
+             ON (pt.permit_id = prx.permit_id)         
+          INNER JOIN (SELECT pa.application_id, pi.permit_id 
+                        FROM %Schema%pt_permit_application_xref pacnt
+                          INNER JOIN %Schema%pa_application pa
+                             ON (pacnt.application_id = pa.application_id)
+                          INNER JOIN %Schema%pt_permit_issuance pi
+                             ON (pacnt.permit_id = pi.permit_id 
+                                  AND pi.issuance_type_cd = 'F'
+                                  AND pi.issuance_status_cd = 'I')
+                       WHERE (DATEADD(day, 180, pi.issuance_date)) &gt;= ?
+                         AND pi.issuance_date &lt;= ?
+                         AND (DATEADD(day, -548, pi.issuance_date)) &lt;= pa.RECEIVED_DATE
+                     ) pax
+             ON (pt.permit_id = pax.permit_id
+                 AND pax.application_id = 
+                          (SELECT mpax.application_id 
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID, 
+                                          mrpa.RECEIVED_DATE, 
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID 
+                                                            ORDER BY mrpa.RECEIVED_DATE) AS rn                        
+                                     FROM %Schema%pt_permit_application_xref mpa 
+                                       INNER JOIN %Schema%PA_APPLICATION mrpa 
+                                          ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                       INNER JOIN %Schema%PA_TV_APPLICATION tvpa 
+                                          ON (mpa.APPLICATION_ID = tvpa.APPLICATION_ID)
+                                  ) mpax 
+                            WHERE mpax.permit_id = pt.permit_id and mpax.rn = 1
+                          )
+                )
+       WHERE pt.permit_type_cd = 'TVPTO'
+         AND fp.version_id = -1 
+         AND prx.reason_cd = 'I'
+         AND fp.operating_status_cd = 'op'
+    </topsPartFourB>
+
+    <topsPartFive>
+      SELECT COUNT(*) AS tv_overtime
+        FROM (SELECT COUNT(*) AS not_on_time, fp.facility_id
+                FROM %Schema%pt_permit pt
+                  INNER JOIN %Schema%pt_permit_reason_xref prx
+                     ON (pt.permit_id = prx.permit_id)
+                  INNER JOIN %Schema%fp_facility fp 
+                     ON (pt.facility_id = fp.facility_id)
+                  INNER JOIN %Schema%pa_application pa
+                     ON (pa.APPLICATION_ID = 
+                          (SELECT mpax.application_id 
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID, 
+                                          mrpa.RECEIVED_DATE, 
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID 
+                                                            ORDER BY mrpa.RECEIVED_DATE) AS rn                        
+                                     FROM %Schema%pt_permit_application_xref mpa 
+                                       INNER JOIN %Schema%PA_APPLICATION mrpa 
+                                          ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                       INNER JOIN %Schema%PA_TV_APPLICATION tvpa 
+                                          ON (mpa.APPLICATION_ID = tvpa.APPLICATION_ID)
+                                    WHERE tvpa.TV_APP_PURPOSE_CD = 0
+                                  ) mpax 
+                            WHERE mpax.permit_id = pt.permit_id and mpax.rn = 1
+                          )
+                        )
+                  WHERE pt.permit_type_cd = 'TVPTO'
+                    AND (DATEADD(day, 548, pa.RECEIVED_DATE)) &lt; ?
+                    AND pt.permit_global_status_cd != 'F'
+                    AND pt.permit_global_status_cd != 'E'
+                    AND pt.permit_global_status_cd != 'ID'
+                    AND prx.reason_cd = 'I'
+                    AND fp.version_id = -1 
+                    AND fp.operating_status_cd = 'op'
+                    AND (fp.permit_classification_cd = 'tv' 
+                            OR fp.transitional_status_cd = 'mtv')
+                  GROUP BY fp.facility_id) outstandingPart70
+    </topsPartFive>
+<!--  bug 2068 no join with permit eu status.
+    <topsPartSixA>
+      SELECT COUNT(*) AS tv_expired_count
+        FROM (SELECT COUNT(*), pt.facility_id
+                FROM %Schema%pt_permit pt
+                  INNER JOIN %Schema%pt_permit_issuance pi
+                    ON (pt.permit_id = pi.permit_id
+                          AND pi.issuance_type_cd = 'F'
+                          AND pi.issuance_status_cd = 'I')
+                  INNER JOIN (SELECT COUNT(*) AS active_eus,  permit_id
+                                FROM %Schema%pt_eu_group peug
+                                  INNER JOIN %Schema%pt_eu peu 
+                                    ON (peug.permit_eu_group_id = peu.permit_eu_group_id
+                                          AND (peu.permit_status_cd = 'E'))
+                                GROUP BY permit_id) peuc
+                    ON (pt.permit_id = peuc.permit_id)
+                  INNER JOIN %Schema%fp_facility fp 
+                    ON (pt.facility_id = fp.facility_id 
+                          AND fp.version_id = -1 
+                          AND fp.operating_status_cd = 'op'
+                          AND fp.permit_classification_cd = 'tv'
+                          AND fp.permit_status_cd = 'E')
+                WHERE pt.permit_type_cd = 'TVPTO'
+                  AND pt.expiration_date &lt;= ?
+                GROUP BY pt.facility_id)
+    </topsPartSixA>
+     -->
+     <!-- 2559 0005687
+    <topsPartSixA>
+      SELECT COUNT(*) AS tv_expired_count
+        FROM (SELECT COUNT(*), pt.facility_id
+                FROM %Schema%pt_permit pt
+                  INNER JOIN %Schema%pt_permit_issuance pi
+                    ON (pt.permit_id = pi.permit_id
+                          AND pi.issuance_type_cd = 'F'
+                          AND pi.issuance_status_cd = 'I')
+                  INNER JOIN %Schema%fp_facility fp 
+                    ON (pt.facility_id = fp.facility_id 
+                          AND fp.version_id = -1 
+                          AND (fp.operating_status_cd = 'op' OR fp.operating_status_cd = 'ia')
+                          AND fp.permit_classification_cd = 'tv'
+                          AND fp.permit_status_cd = 'E')
+                WHERE pt.permit_type_cd = 'TVPTO'
+                  AND pt.expiration_date &lt;= ?
+                GROUP BY pt.facility_id)
+    </topsPartSixA>
+ -->
+    <topsPartSixA>
+      SELECT COUNT(*) AS tv_expired_count
+        FROM %Schema%fp_facility fp
+        WHERE fp.version_id = -1 
+          AND fp.operating_status_cd = 'op'
+          AND fp.permit_classification_cd = 'tv'
+          AND fp.permit_status_cd = 'E'
+    </topsPartSixA>
+
+    <topsPartSixB>
+      SELECT COUNT(*) AS tv_extended_count
+        FROM %Schema%fp_facility fp
+        WHERE fp.version_id = -1 
+          AND fp.operating_status_cd = 'op'
+          AND fp.permit_classification_cd = 'tv'
+          AND fp.permit_status_cd = 'EX'
+    </topsPartSixB>
+
+    <topsPartSevenA>
+      SELECT COUNT(*) AS tv_spm
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%FP_FACILITY fp
+                    ON (pt.FACILITY_ID = fp.FACILITY_ID)
+          INNER JOIN %Schema%pt_permit_reason_xref prx
+            ON (pt.permit_id = prx.permit_id)
+          INNER JOIN %Schema%pt_permit_issuance pi
+            ON (pt.permit_id = pi.permit_id 
+                  AND pi.issuance_type_cd = 'F'
+                  AND pi.issuance_status_cd = 'I')
+        WHERE pt.permit_type_cd = 'TVPTO'
+          AND (DATEADD(day, 180, pi.issuance_date)) &gt;= ?
+          AND pi.issuance_date &lt;= ?
+          AND fp.version_id = -1 
+          AND fp.operating_status_cd = 'op'
+          AND prx.reason_cd = 'S'
+    </topsPartSevenA>
+
+    <topsPartSevenB>
+      SELECT COUNT(*) AS tv_spm_ontime
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%FP_FACILITY fp
+                    ON (pt.FACILITY_ID = fp.FACILITY_ID)
+          INNER JOIN %Schema%pt_permit_reason_xref prx
+            ON (pt.permit_id = prx.permit_id)         
+          INNER JOIN (SELECT pa.application_id, pi.permit_id 
+                        FROM %Schema%pt_permit_application_xref pacnt
+                          INNER JOIN %Schema%pa_application pa
+                            ON (pacnt.application_id = pa.application_id)
+                          INNER JOIN %Schema%pt_permit_issuance pi
+                            ON (pacnt.permit_id = pi.permit_id 
+                                  AND pi.issuance_type_cd = 'F'
+                                  AND pi.issuance_status_cd = 'I')
+                          WHERE (DATEADD(day, 180, pi.issuance_date)) &gt;= ?
+                            AND pi.issuance_date &lt;= ?
+                            AND (DATEADD(day, -548, pi.issuance_date)) &lt;= pa.RECEIVED_DATE
+                     ) pax
+            ON (pt.permit_id = pax.permit_id
+                AND pax.application_id = 
+                          (SELECT mpax.application_id 
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID, 
+                                          mrpa.RECEIVED_DATE, 
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID 
+                                                            ORDER BY mrpa.RECEIVED_DATE) AS rn                        
+                                     FROM %Schema%pt_permit_application_xref mpa 
+                                    INNER JOIN %Schema%PA_APPLICATION mrpa 
+                                            ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                    INNER JOIN %Schema%PA_TV_APPLICATION tvpa 
+                                            ON (mpa.APPLICATION_ID = tvpa.APPLICATION_ID)
+                                  ) mpax 
+                            WHERE mpax.permit_id = pt.permit_id and mpax.rn = 1
+                          )
+               )
+        WHERE pt.permit_type_cd = 'TVPTO'
+          AND fp.version_id = -1 
+          AND fp.operating_status_cd = 'op'
+          AND prx.reason_cd = 'S'
+    </topsPartSevenB>
+
+    <topsPartSevenC>
+      SELECT COUNT(*) AS tv_spm_ontime
+        FROM %Schema%pt_permit pt
+          INNER JOIN %Schema%FP_FACILITY fp
+                    ON (pt.FACILITY_ID = fp.FACILITY_ID)
+          INNER JOIN %Schema%pt_permit_reason_xref prx
+            ON (pt.permit_id = prx.permit_id)         
+          INNER JOIN (SELECT pa.application_id, pi.permit_id 
+                        FROM %Schema%pt_permit_application_xref pacnt
+                          INNER JOIN %Schema%pa_application pa
+                            ON (pacnt.application_id = pa.application_id)
+                          INNER JOIN %Schema%pt_permit_issuance pi
+                            ON (pacnt.permit_id = pi.permit_id 
+                                  AND pi.issuance_type_cd = 'F'
+                                  AND pi.issuance_status_cd = 'I')
+                        WHERE (DATEADD(day, 180, pi.issuance_date)) &gt;= ?
+                          AND pi.issuance_date &lt;= ?
+                          AND (DATEADD(day, -270, pi.issuance_date)) &lt;= pa.RECEIVED_DATE
+                     ) pax
+            ON (pt.permit_id = pax.permit_id
+                AND pax.application_id = 
+                          (SELECT mpax.application_id 
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID, 
+                                          mrpa.RECEIVED_DATE, 
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID 
+                                                            ORDER BY mrpa.RECEIVED_DATE) AS rn                        
+                                     FROM %Schema%pt_permit_application_xref mpa 
+                                    INNER JOIN %Schema%PA_APPLICATION mrpa 
+                                            ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                    INNER JOIN %Schema%PA_TV_APPLICATION tvpa 
+                                            ON (mpa.APPLICATION_ID = tvpa.APPLICATION_ID)
+                                  ) mpax 
+                            WHERE mpax.permit_id = pt.permit_id and mpax.rn = 1
+                          )
+               )
+        WHERE pt.permit_type_cd = 'TVPTO'
+          AND fp.version_id = -1 
+          AND fp.operating_status_cd = 'op'
+          AND prx.reason_cd = 'S'
+    </topsPartSevenC>
+
+    <topsPartEight>
+      SELECT COUNT(*) AS tv_spm_overtime
+                FROM %Schema%pt_permit pt
+                  INNER JOIN %Schema%FP_FACILITY fp
+                    ON (pt.FACILITY_ID = fp.FACILITY_ID)
+                  INNER JOIN %Schema%pt_permit_reason_xref prx
+                    ON (pt.permit_id = prx.permit_id)
+                  INNER JOIN %Schema%pa_application pa
+                    ON (pa.APPLICATION_ID = 
+                          (SELECT mpax.application_id 
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID, 
+                                          mrpa.RECEIVED_DATE, 
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID 
+                                                            ORDER BY mrpa.RECEIVED_DATE) AS rn                        
+                                     FROM %Schema%pt_permit_application_xref mpa 
+                                    INNER JOIN %Schema%PA_APPLICATION mrpa 
+                                            ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                    INNER JOIN %Schema%PA_TV_APPLICATION tvpa 
+                                            ON (mpa.APPLICATION_ID = tvpa.APPLICATION_ID)
+                                  ) mpax 
+                            WHERE mpax.permit_id = pt.permit_id and mpax.rn = 1
+                          )
+                      )
+                WHERE pt.permit_type_cd = 'TVPTO'
+                  AND (DATEADD(day, 548, pa.RECEIVED_DATE)) &lt; ?
+                  AND fp.version_id = -1 
+                  AND fp.operating_status_cd = 'op'
+                  AND prx.reason_cd = 'S'
+                  AND pt.permit_global_status_cd != 'F'
+                  AND pt.permit_global_status_cd != 'E'
+                  AND pt.permit_global_status_cd != 'ID'
+    </topsPartEight>
+
+    <topsPartTen>
+      SELECT COUNT(*) AS tv_mpm_overtime
+                FROM %Schema%pt_permit pt
+                  INNER JOIN %Schema%FP_FACILITY fp
+                    ON (pt.FACILITY_ID = fp.FACILITY_ID)
+                  INNER JOIN %Schema%pt_permit_reason_xref prx
+                    ON (pt.permit_id = prx.permit_id)
+                  INNER JOIN %Schema%pa_application pa
+                    ON (pa.APPLICATION_ID = 
+                          (SELECT mpax.application_id 
+                             FROM (SELECT mpa.application_id, mpa.PERMIT_ID, 
+                                          mrpa.RECEIVED_DATE, 
+                                          ROW_NUMBER() OVER(PARTITION BY mpa.PERMIT_ID 
+                                                            ORDER BY mrpa.RECEIVED_DATE) AS rn                        
+                                     FROM %Schema%pt_permit_application_xref mpa 
+                                    INNER JOIN %Schema%PA_APPLICATION mrpa 
+                                            ON (mpa.APPLICATION_ID = mrpa.APPLICATION_ID)
+                                    INNER JOIN %Schema%PA_TV_APPLICATION tvpa 
+                                            ON (mpa.APPLICATION_ID = tvpa.APPLICATION_ID)
+                                    WHERE tvpa.REASON_CD = 'M'
+                                  ) mpax 
+                            WHERE mpax.permit_id = pt.permit_id and mpax.rn = 1
+                          )
+                      )
+                WHERE pt.permit_type_cd = 'TVPTO'
+                  AND (DATEADD(day, 90, pa.RECEIVED_DATE)) &lt; ?
+                  AND fp.version_id = -1 
+                  AND fp.operating_status_cd = 'op'
+                  AND prx.reason_cd = 'M'
+                  AND pt.permit_global_status_cd != 'F'
+                  AND pt.permit_global_status_cd != 'E'
+                  AND pt.permit_global_status_cd != 'ID'
+    </topsPartTen>
+    
+<!-- Should count on application not facility.  Yehp
+    <topsPartEight>
+      SELECT COUNT(*) AS tv_spm_overtime
+        FROM (SELECT COUNT(*) AS not_on_time, facility_id
+                FROM %Schema%pt_permit pt
+                  INNER JOIN %Schema%pt_permit_reason_xref prx
+                    ON (pt.permit_id = prx.permit_id AND prx.reason_cd = 'S')
+                  INNER JOIN %Schema%pt_permit_application_xref pax
+                    ON (pt.permit_id = pax.permit_id)
+                  INNER JOIN %Schema%pa_application pa
+                    ON (pax.application_id = pa.application_id
+                          AND (pa.RECEIVED_DATE + 548) &lt; ?)
+                WHERE pt.permit_type_cd = 'TVPTO'
+                  AND pt.permit_global_status_cd != 'F'
+                  AND pt.permit_global_status_cd != 'E'
+                  AND pt.permit_global_status_cd != 'ID'
+                GROUP BY facility_id)
+    </topsPartEight>
+
+    <topsPartTen>
+      SELECT COUNT(*) AS tv_mpm_overtime
+        FROM (SELECT COUNT(*) AS not_on_time, facility_id
+                FROM %Schema%pt_permit pt
+                  INNER JOIN %Schema%pt_permit_reason_xref prx
+                    ON (pt.permit_id = prx.permit_id AND prx.reason_cd = 'M')
+                  INNER JOIN %Schema%pt_permit_application_xref pax
+                    ON (pt.permit_id = pax.permit_id)
+                  INNER JOIN %Schema%pa_application pa
+                    ON (pax.application_id = pa.application_id
+                          AND (pa.RECEIVED_DATE + 90) &lt; ?)
+                WHERE pt.permit_type_cd = 'TVPTO'
+                  AND pt.permit_global_status_cd != 'F'
+                  AND pt.permit_global_status_cd != 'E'
+                  AND pt.permit_global_status_cd != 'ID'
+                GROUP BY facility_id)
+    </topsPartTen>
+-->
+
+    <AppsReceivedMonthly>
+      SELECT ms.month, ff.DO_LAA_CD, COUNT (*) as appCount
+        FROM 
+          (SELECT add_months(to_date('1 1986','MM YYYY'),level-1) as month
+             FROM dual
+          CONNECT BY level &lt;= months_between(sysdate,to_date('1 1986','MM YYYY'))+1
+          ) ms 
+       LEFT JOIN %Schema%PA_APPLICATION pa ON (pa.RECEIVED_DATE &gt; ms.month
+                  AND pa.RECEIVED_DATE &lt; last_day(month)+1)
+      LEFT JOIN %Schema%PT_PERMIT_APPLICATION_XREF ppax ON (ppax.APPLICATION_ID = pa.APPLICATION_ID)
+      LEFT JOIN %Schema%PT_PERMIT pp ON (pp.PERMIT_ID = ppax.PERMIT_ID)
+      LEFT JOIN %Schema%FP_FACILITY ff ON (pa.FP_ID = ff.FP_ID)
+      WHERE pp.PERMIT_TYPE_CD in (%type%)
+        AND pp.PRIMARY_REASON_CD in (%reason%)
+      GROUP BY ms.month, ff.DO_LAA_CD
+      ORDER BY ms.month
+    </AppsReceivedMonthly>
+    
+    <PermitsIssuedMonthly>
+      SELECT ms.month, ff.DO_LAA_CD, COUNT (*) as permitCount
+        FROM 
+          (SELECT add_months(to_date('1 1986','MM YYYY'),level-1) as month
+             FROM dual
+          CONNECT BY level &lt;= months_between(sysdate,to_date('1 1986','MM YYYY'))+1
+          ) ms 
+       LEFT JOIN %Schema%PT_PERMIT_ISSUANCE ppi ON (ppi.ISSUANCE_DATE &gt; ms.month
+                  AND ppi.ISSUANCE_DATE &lt; last_day(month)+1)
+      LEFT JOIN %Schema%PT_PERMIT pp ON (pp.PERMIT_ID = ppi.PERMIT_ID)
+      LEFT JOIN %Schema%FP_FACILITY ff ON (pp.FACILITY_ID = ff.FACILITY_ID)
+      WHERE pp.PERMIT_TYPE_CD in (%type%)
+        AND pp.PRIMARY_REASON_CD in (%reason%)
+        AND ppi.issuance_status_cd = 'I'
+        AND ppi.issuance_type_cd = 'F'
+        AND ff.VERSION_ID = -1
+      GROUP BY ms.month, ff.DO_LAA_CD
+      ORDER BY ms.month
+    </PermitsIssuedMonthly>
+    
+    <WorkflowOutstandingMonthly>
+      SELECT ms.month, ff.DO_LAA_CD, COUNT (*) as workflowCount
+        FROM 
+          (SELECT add_months(to_date('1 1986','MM YYYY'),level-1) as month
+             FROM dual
+          CONNECT BY level &lt;= months_between(sysdate,to_date('1 1986','MM YYYY'))+1
+          ) ms 
+       LEFT JOIN %Schema%WF_PROCESS wp ON (wp.START_DT &lt; last_day(ms.month)
+                  AND (wp.END_DT is null OR wp.END_DT &gt; last_day(ms.month)+1))
+       LEFT JOIN %Schema%WF_PROCESS_TEMPLATE wpt on (wp.PROCESS_TEMPLATE_ID = wpt.PROCESS_TEMPLATE_ID)
+       LEFT JOIN %Schema%PT_PERMIT pp on (wp.EXTERNAL_ID = pp.PERMIT_ID)
+       LEFT JOIN %Schema%FP_FACILITY ff ON (wp.FP_ID = ff.FP_ID)
+      WHERE wpt.PROCESS_CD = 'perm'
+        AND pp.PERMIT_TYPE_CD in (%type%)
+        AND pp.PRIMARY_REASON_CD in (%reason%)
+      GROUP BY ms.month, ff.DO_LAA_CD
+      ORDER BY ms.month
+    </WorkflowOutstandingMonthly>
+    
+    <retrieveGenericIssuanceCount>
+      SELECT gi.ISSUANCE_TYPE_CD, dld.DO_LAA_DSC,  COUNT(ff.DO_LAA_CD) as count
+      FROM %Schema%IS_GENERIC_ISSUANCE gi
+      LEFT JOIN %Schema%FP_FACILITY ff 
+          ON (gi.FACILITY_ID = ff.FACILITY_ID)
+      LEFT JOIN %Schema%CM_DO_LAA_DEF dld
+          ON (dld.DO_LAA_CD = ff.DO_LAA_CD)
+      WHERE ff.VERSION_ID = -1
+      AND gi.ISSUED_FLAG = 'Y'
+      AND gi.ISSUANCE_DATE &gt;= ? 
+      AND gi.ISSUANCE_DATE &lt;= ?
+      AND ff.DO_LAA_CD in (%DO_LAA_CDs%)
+      AND gi.ISSUANCE_TYPE_CD in (%ISSUANCE_TYPE_CDs%)
+      GROUP BY (gi.ISSUANCE_TYPE_CD, dld.DO_LAA_DSC)
+      ORDER BY (gi.ISSUANCE_TYPE_CD)
+    </retrieveGenericIssuanceCount>
+    
+   <retrieveNotIssuedMetricsData>
+      SELECT p.process_id, p.start_dt, p.END_DT, at.activity_template_nm,
+             pa.start_dt AS task_start_dt, pa.activity_status_cd,
+             pa.end_dt AS task_end_dt, pa.USER_ID, pa.IS_CURRENT,
+             pa.loop_cnt,
+             pm.permit_id, pm.permit_nbr, pm.permit_type_cd, 
+             pm.permit_global_status_cd,
+             ptio.general_permit_flag, ptio.express_flag, 
+             ptio.action_type, ptio.subject_to_psd_flag, ptio.subject_to_nansr_flag, 
+             pr.reason_dsc,
+             fp.facility_id, fp.facility_nm, fp.fp_id, pa.ACTIVITY_REFERRAL_TYPE_ID,
+             do.do_laa_dsc, do.do_laa_short_dsc, do.do_laa_cd, do.do_laa_id, 
+             pid.issuance_date AS draft_issuance_date, 
+             pid.public_notice_publish_date,
+             pif.issuance_date AS final_issuance_date, 
+             (SELECT COUNT(peu.PERMIT_EU_ID) 
+                FROM %Schema%PT_EU_GROUP peg 
+               INNER JOIN %Schema%PT_EU peu ON (peg.PERMIT_EU_GROUP_ID = peu.PERMIT_EU_GROUP_ID)
+               WHERE peg.PERMIT_ID = pm.PERMIT_ID
+             ) as eu_count,
+             ccd.county_nm,
+             wfartd.EXTEND_PROCESS_END_DATE
+      FROM %Schema%wf_process_activity pa left outer join 
+			%Schema%WF_ACTIVITY_REFERRAL_TYPE_DEF wfartd 
+		on pa.ACTIVITY_REFERRAL_TYPE_ID = wfartd.ACTIVITY_REFERRAL_TYPE_ID,
+		   %Schema%wf_process p, 
+           %Schema%wf_activity_template at, %Schema%wf_process_template pt, 
+           %Schema%wf_activity_template_def atd, 
+           %Schema%pt_permit pm LEFT OUTER JOIN %Schema%pt_ptio_permit ptio 
+                  ON (pm.permit_id = ptio.permit_id)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            ON (pm.PERMIT_ID = pid.PERMIT_ID
+                AND pid.ISSUANCE_TYPE_CD = 'D')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+            ON (pm.PERMIT_ID = pif.PERMIT_ID
+                AND pif.ISSUANCE_TYPE_CD = 'F'
+                AND pif.ISSUANCE_STATUS_CD != 'I'),
+           %Schema%pt_reason_def pr, %Schema%fp_facility fp
+           INNER JOIN %Schema%fp_facility_address_xref ffax ON (fp.fp_id = ffax.fp_id AND fp.version_id = -1)
+		   INNER JOIN %Schema%cm_address ca ON (ffax.address_id = ca.address_id AND ca.end_dt IS NULL)
+		   INNER JOIN %Schema%cm_county_def ccd ON (ca.county_cd = ccd.county_cd),
+           %Schema%cm_do_laa_def do
+      WHERE pa.process_id = p.process_id
+        AND pa.activity_template_id = at.activity_template_id
+        AND p.process_template_id = pt.process_template_id 
+        AND pt.process_cd = 'perm'
+        AND at.activity_template_def_id = atd.activity_template_def_id 
+        AND atd.process_template_id IS NULL
+        AND p.external_id = pm.permit_id
+        AND pm.primary_reason_cd = pr.reason_cd
+        AND pm.facility_id = fp.facility_id AND fp.version_id = -1
+        AND fp.do_laa_cd = do.do_laa_cd
+        AND pa.START_DT is not null
+        AND (p.END_DT is null OR pm.permit_global_status_cd = 'ID')
+    </retrieveNotIssuedMetricsData>
+  </ReportsSQL>
+</root>

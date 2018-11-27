@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<CompanySQL>
+		<companyColumns>
+			ccm.company_id, ccm.name, ccm.alias, ccm.phone,
+			ccm.fax,
+			ccm.address_id, ccm.last_modified,
+			ccm.cmp_id,
+			ccm.envite_company_id,
+			ccm.paykey, ccm.vendor_number
+		</companyColumns>
+		<emissionsOffsetAdjustmentColumns>
+			eoa.emissions_offset_adjustment_id, eoa.company_id,
+			eoa.area_cd, eoa.date, eoa.comment,
+			eoa.pollutant_cd, eoa.amount,
+			eoa.include_in_total, eoa.last_modified
+		</emissionsOffsetAdjustmentColumns>
+		<createCompany>INSERT INTO %Schema%cm_company (company_id, name,
+			alias,
+			phone, fax,
+			address_id, envite_company_id,
+			paykey, vendor_number)
+			VALUES
+			(?,?,?,?,?,?,?,?,?)
+		</createCompany>
+		<addCompanyAddress>
+			INSERT INTO %Schema%cm_company (company_id,
+			address_id)
+			VALUES (?,?)
+		</addCompanyAddress>
+		<retrieveCmpId>
+			SELECT cmp_id AS 'cmp_id'
+			FROM
+			%Schema%cm_company ccm
+			WHERE
+			ccm.company_id = ?
+		</retrieveCmpId>
+		<findCompanies>
+			SELECT ${CompanySQL.companyColumns},
+			${InfrastructureSQL.addressColumns}
+			, cc.county_nm
+			FROM %Schema%cm_company ccm
+			LEFT
+			OUTER JOIN %Schema%cm_address ca
+			ON ccm.address_id = ca.address_id
+			left join dbo.cm_county_def cc on cc.county_cd = ca.county_cd
+			WHERE 1=1
+		</findCompanies>
+		<retrieveAllCompanies>
+			SELECT ${CompanySQL.companyColumns}
+			FROM
+			%Schema%cm_company ccm
+		</retrieveAllCompanies>
+		<retrieveCompany>
+			SELECT ${CompanySQL.companyColumns}
+			FROM
+			%Schema%cm_company ccm
+			WHERE ccm.company_id = ?
+		</retrieveCompany>
+		<retrieveCompanyByExternalCompanyId>
+			SELECT ${CompanySQL.companyColumns}
+			FROM
+			%Schema%cm_company ccm
+			WHERE ccm.envite_company_id = ?
+		</retrieveCompanyByExternalCompanyId>
+		<retrieveCompanyAddress>
+			SELECT ${InfrastructureSQL.addressColumns}
+			FROM %Schema%cm_company ccm,
+			%Schema%cm_address ca
+			WHERE ccm.address_id
+			=
+			ca.address_id AND
+			ccm.company_id = ?
+		</retrieveCompanyAddress>
+		<modifyCompany>UPDATE %Schema%cm_company
+			SET name = ?, alias = ?, phone
+			= ?, fax = ?, address_id = ?, envite_company_id = ?, 
+			paykey = ?, vendor_number = ?, last_modified =
+			?
+			WHERE company_id = ?
+			AND last_modified = ?
+		</modifyCompany>
+		<retrieveCompanyFromCmpId>
+			SELECT ${CompanySQL.companyColumns}
+			FROM
+			%Schema%cm_company ccm
+			WHERE ccm.cmp_id = ?
+		</retrieveCompanyFromCmpId>
+
+		<retrieveCompanyNotes>SELECT ${InfrastructureSQL.noteColumns},
+			ccnx.company_id, ccnx.cmp_id
+			FROM %Schema%cm_company_note_xref ccnx,
+			%Schema%cm_note cn
+			WHERE ccnx.cmp_id = ?
+			AND ccnx.note_id = cn.note_id
+			AND cn.note_type_cd != 'hist'
+			ORDER BY note_id DESC
+		</retrieveCompanyNotes>
+		<addCompanyNote>INSERT INTO %Schema%cm_company_note_xref (company_id,
+			note_id, cmp_id, last_modified)
+			VALUES (?,?,?,?)
+		</addCompanyNote>
+
+		<retrieveOwnedFacilities>
+			SELECT ${FacilitySQL.facilityListColumns},
+			${InfrastructureSQL.addressColumns}, fc.start_date, fc.end_date
+			, ccd.county_nm
+			FROM
+			%Schema%fp_facility ff,
+			(%Schema%cm_address ca left join dbo.cm_county_def ccd on ccd.county_cd = ca.county_cd),
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%fp_facility_company_xref fc,
+			%Schema%cm_company ccm
+			WHERE
+			ff.version_id = -1
+			AND ff.fp_id = faxr.fp_id
+			AND faxr.address_id =
+			ca.address_id
+			AND ff.facility_id=fc.facility_id
+			AND
+			ccm.company_id=fc.company_id
+			AND ca.end_dt is null
+			AND ccm.cmp_id = ?
+		</retrieveOwnedFacilities>
+
+		<retrieveTotalFacilitiesOwned>
+			SELECT COUNT(ff.facility_id)
+			FROM
+			%Schema%fp_facility ff,
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%fp_facility_company_xref fc,
+			%Schema%cm_company ccm
+			WHERE
+			ff.version_id = -1
+			AND ff.fp_id = faxr.fp_id
+			AND faxr.address_id =
+			ca.address_id
+			AND ff.facility_id=fc.facility_id
+			AND
+			ccm.company_id=fc.company_id
+			AND ca.end_dt is null
+			AND ccm.cmp_id = ?
+		</retrieveTotalFacilitiesOwned>
+
+		<retrieveAuthorizedFacilities>
+			SELECT
+			${FacilitySQL.facilityListColumns},
+			${InfrastructureSQL.addressColumns}, fc.start_date, fc.end_date
+			, ccd.county_nm
+			FROM
+			%Schema%fp_facility ff,
+			%Schema%cm_address ca 
+				left join dbo.cm_county_def ccd on ccd.county_cd = ca.county_cd,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%fp_facility_company_xref fc,
+			%Schema%cm_company ccm
+			WHERE
+			ff.version_id = -1
+			AND ff.fp_id = faxr.fp_id
+			AND faxr.address_id =
+			ca.address_id
+			AND ff.facility_id=fc.facility_id
+			AND
+			ccm.company_id=fc.company_id
+			AND ca.end_dt is null
+			AND ccm.cmp_id = ?
+			AND
+			fc.end_date is null
+			AND
+			ff.facility_id NOT IN
+			(SELECT DISTINCT
+			ccfn.facility
+			FROM %Schema%cm_contact_facility_noauth ccfn
+			LEFT JOIN
+			%Schema%cm_contact
+			cc
+			ON
+			cc.contact_id=ccfn.contact
+			WHERE
+			cc.envite_username=?)
+		</retrieveAuthorizedFacilities>
+
+		<retrieveAuthorizedCompanies>
+			SELECT ${CompanySQL.companyColumns},
+			ccca.company, ccca.contact
+			FROM
+			%Schema%cm_company ccm,
+			%Schema%cm_contact_company_auth ccca
+			LEFT JOIN
+			%Schema%cm_contact cc
+			ON
+			ccca.contact = cc.contact_id
+			WHERE
+			ccm.company_id=ccca.company
+			AND
+			upper(cc.envite_username)=upper(?)
+		</retrieveAuthorizedCompanies>
+
+		<retrieveCompanyByExternalId>
+			SELECT ${CompanySQL.companyColumns}
+			FROM
+			%Schema%cm_company ccm
+			WHERE
+			ccm.envite_company_id=?
+		</retrieveCompanyByExternalId>
+		<isDuplicateCompanyName>
+			SELECT count(1) as count
+			FROM
+			%Schema%CM_COMPANY
+			WHERE UPPER(name) = UPPER(?) AND
+			(company_id
+			&lt;&gt; ? OR ? IS NULL)
+		</isDuplicateCompanyName>
+		<removeCompany>DELETE FROM %Schema%cm_company
+			WHERE company_id = ?
+		</removeCompany>
+		<modifyCompanyNoteXrefs>UPDATE %Schema%cm_company_note_xref SET
+			company_id = ?, cmp_id = ?
+			WHERE
+			company_id = ? AND cmp_id = ?
+		</modifyCompanyNoteXrefs>
+		<modifyFacilityCompanyXrefs>UPDATE %Schema%fp_facility_company_xref
+			SET
+			company_id = ?
+			WHERE
+			company_id = ?
+		</modifyFacilityCompanyXrefs>
+		<modifyCompanyContacts>UPDATE %Schema%cm_contact
+			SET
+			company_id = ?
+			WHERE
+			company_id = ?
+		</modifyCompanyContacts>
+		<removeCompanyNotes>
+			DELETE FROM %Schema%cm_company_note_xref
+			WHERE
+			company_id = ? AND cmp_id = ?
+		</removeCompanyNotes>
+		<retrieveEmissionsOffsetsByCompanyId>
+			select 
+				cm.company_id
+				, fp.FACILITY_ID
+				, fp.FP_ID
+				, fp.FACILITY_NM
+				, pt.permit_id
+				, pt.PERMIT_NBR
+				, CASE WHEN pt.PERMIT_GLOBAL_STATUS_CD = 'F' 
+						THEN
+							pi.ISSUANCE_DATE
+						ELSE
+							NULL
+                      END AS FINAL_ISSUANCE_DATE 
+				, eo.EMISSIONS_OFFSET_ID
+				, eo.AREA_CD
+				, eo.ATTAINMENT_STANDARD_CD
+				, eo.POLLUTANT_CD
+				, eo.CURRENT_OFFSET
+				, eo.BASE_OFFSET
+				, eo.DELTA
+				, eo.EMISSIONS_REDUCTION_MULTIPLE
+				, eo.OFFSET_MULTIPLE
+				, eo.OFFSET_AMOUNT
+				, eo.COMMENTS
+				, eo.LAST_MODIFIED
+				from 
+				%Schema%OT_EMISSIONS_OFFSET eo
+				inner join %Schema%pt_permit pt on pt.PERMIT_ID = eo.PERMIT_ID
+				inner join %Schema%pt_ptio_permit ptio on ptio.PERMIT_ID = pt.PERMIT_ID
+				inner join %Schema%PT_PERMIT_ISSUANCE pi on pi.PERMIT_ID = pt.PERMIT_ID
+				inner join %Schema%fp_facility fp on fp.FACILITY_ID = pt.FACILITY_ID
+				inner join %Schema%FP_FACILITY_COMPANY_XREF fcxref on fcxref.FACILITY_ID = fp.FACILITY_ID
+				inner join %Schema%CM_COMPANY cm on cm.COMPANY_ID = fcxref.COMPANY_ID
+				where 
+					fp.VERSION_ID = -1
+					AND pi.ISSUANCE_TYPE_CD = 'F'
+					AND fcxref.END_DATE is NULL
+					AND ptio.OFFSET_INFORMATION_VERIFIED = 'Y'
+					AND cm.COMPANY_ID = ?
+		</retrieveEmissionsOffsetsByCompanyId>
+		<createEmissionsOffsetAdjustment>
+			insert into %Schema%ot_emissions_offset_adjustment (
+				emissions_offset_adjustment_id, 
+				company_id,
+				area_cd, 
+				date, 
+				comment,
+				pollutant_cd, 
+				amount,
+				include_in_total) 
+				values (?, ?, ?, ?, ?, ?, ?, ?)
+		</createEmissionsOffsetAdjustment>
+		<retrieveEmissionsOffsetAdjustment>
+			select ${CompanySQL.emissionsOffsetAdjustmentColumns}
+				from %Schema%ot_emissions_offset_adjustment eoa
+				where eoa.emissions_offset_adjustment_id = ?
+		</retrieveEmissionsOffsetAdjustment>
+		<retrieveEmissionsOffsetAdjustmentsByCompanyId>
+			select ${CompanySQL.emissionsOffsetAdjustmentColumns}
+				from %Schema%ot_emissions_offset_adjustment eoa
+				where 1 = 1
+		</retrieveEmissionsOffsetAdjustmentsByCompanyId>
+		<modifyEmissionsOffsetAdjustment>
+			update %Schema%ot_emissions_offset_adjustment
+				set
+					company_id = ?,
+					area_cd = ?, 
+					date = ?, 
+					comment = ?,
+					pollutant_cd = ?, 
+					amount = ?,
+					include_in_total = ?,
+					last_modified = ?
+					where
+						emissions_offset_adjustment_id = ?
+						and last_modified = ?
+		</modifyEmissionsOffsetAdjustment>
+		<deleteEmissionsOffsetAdjustment>
+			delete from %Schema%ot_emissions_offset_adjustment
+				where emissions_offset_adjustment_id = ?
+		</deleteEmissionsOffsetAdjustment>
+		<deleteEmissionsOffsetAdjustmentsByCompanyId>
+			delete from %Schema%ot_emissions_offset_adjustment
+				where company_id = ?			
+		</deleteEmissionsOffsetAdjustmentsByCompanyId>
+		<retrieveOffsetSummaryLineItems>
+			select * from (
+				select 
+					cm.COMPANY_ID
+					, cm.CMP_ID
+					, cm.NAME AS COMPANY_NM
+					, fp.FACILITY_ID
+					, fp.FACILITY_NM
+					, fp.FP_ID
+					, pt.PERMIT_ID
+					, pt.PERMIT_NBR
+					, CASE WHEN pt.PERMIT_GLOBAL_STATUS_CD = 'F' 
+						THEN
+							pi.ISSUANCE_DATE
+						ELSE
+							NULL
+                      END AS FINAL_ISSUANCE_DATE 
+					, eo.EMISSIONS_OFFSET_ID
+					, eo.AREA_CD
+					, eo.ATTAINMENT_STANDARD_CD
+					, eo.POLLUTANT_CD
+					, eo.CURRENT_OFFSET
+					, eo.BASE_OFFSET
+					, eo.DELTA
+					, eo.EMISSIONS_REDUCTION_MULTIPLE
+					, eo.OFFSET_MULTIPLE
+					, eo.OFFSET_AMOUNT
+					, eo.COMMENTS 
+					, eo.LAST_MODIFIED
+					, NULL AS EMISSIONS_OFFSET_ADJUSTMENT_ID
+					, NULL AS EMISSIONS_OFFSET_ADJUSTMENT_DATE
+					, 'Y' AS INCLUDE_IN_TOTAL
+					from 
+						%Schema%OT_EMISSIONS_OFFSET eo
+						inner join %Schema%pt_permit pt on pt.PERMIT_ID = eo.PERMIT_ID
+						inner join %Schema%pt_ptio_permit ptio on ptio.PERMIT_ID = pt.PERMIT_ID
+						inner join %Schema%PT_PERMIT_ISSUANCE pi on pi.PERMIT_ID = pt.PERMIT_ID
+						inner join %Schema%fp_facility fp on fp.FACILITY_ID = pt.FACILITY_ID
+						inner join %Schema%FP_FACILITY_COMPANY_XREF fcxref on fcxref.FACILITY_ID = fp.FACILITY_ID
+						inner join %Schema%CM_COMPANY cm on cm.COMPANY_ID = fcxref.COMPANY_ID
+					where 
+						fp.VERSION_ID = -1
+						AND pi.ISSUANCE_TYPE_CD = 'F'
+						AND ptio.OFFSET_INFORMATION_VERIFIED = 'Y'
+						AND fcxref.END_DATE is NULL
+				UNION 
+				SELECT
+					eoa.COMPANY_ID
+					, cm.CMP_ID
+					, cm.NAME AS COMPANY_NM
+					, NULL AS FACILITY_ID
+					, NULL AS FACILITY_NM
+					, NULL AS FP_ID
+					, NULL AS PERMIT_ID
+					, NULL AS PERMIT_NBR
+					, NULL AS FINAL_ISSUANCE_DATE
+					, NULL AS EMISSIONS_OFFSET_ID
+					, eoa.AREA_CD
+					, NULL AS ATTAINMENT_STANDARD_CD
+					, eoa.POLLUTANT_CD
+					, NULL AS CURRENT_OFFSET
+					, NULL AS BASE_OFFSET
+					, NULL AS DELTA
+					, NULL AS EMISSIONS_REDUCTION_MULTIPLE
+					, NULL AS OFFSET_MULTIPLE
+					, eoa.AMOUNT AS OFFSET_AMOUNT
+					, eoa.COMMENT AS COMMENTS 
+					, eoa.LAST_MODIFIED
+					, eoa.EMISSIONS_OFFSET_ADJUSTMENT_ID
+					, eoa.DATE AS EMISSIONS_OFFSET_ADJUSTMENT_DATE
+					, eoa.INCLUDE_IN_TOTAL
+					 FROM 
+						%Schema%OT_EMISSIONS_OFFSET_ADJUSTMENT eoa
+						INNER JOIN %Schema%CM_COMPANY cm on cm.COMPANY_ID = eoa.COMPANY_ID
+			) res WHERE 1 = 1			
+		</retrieveOffsetSummaryLineItems>
+	</CompanySQL>
+</root>

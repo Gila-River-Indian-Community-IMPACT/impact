@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="TVPTI_With_No_PTO_App"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="552"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="NUM_DAYS" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(365)]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT pt.permit_nbr, TO_CHAR(pt.effective_date, 'MON dd, yyyy') AS pt_effective_date,
+       fpeu.epa_emu_id, fpeu.emu_id, fp.facility_id, fp.facility_nm
+  FROM Stars2.pt_permit pt
+    INNER JOIN Stars2.pt_eu_group peg ON (pt.permit_id = peg.permit_id)
+    INNER JOIN Stars2.pt_eu peu 
+      ON (peg.permit_eu_group_id = peu.permit_eu_group_id 
+            AND (peu.terminated_dt IS NULL OR peu.terminated_dt < (SELECT SYSDATE FROM DUAL))
+            AND (peu.superseded_dt IS NULL OR peu.superseded_dt < (SELECT SYSDATE FROM DUAL))
+            AND (peu.revocation_dt IS NULL OR peu.revocation_dt < (SELECT SYSDATE FROM DUAL)))
+    INNER JOIN Stars2.fp_facility fp 
+      ON (pt.facility_id = fp.facility_id AND fp.version_id = -1 AND fp.operating_status_cd != 'sd')
+    INNER JOIN Stars2.fp_emissions_unit fpeu ON (peu.facility_eu_id = fpeu.emu_id)
+    INNER JOIN (SELECT fpeu_no.emu_id, COUNT(*) AS no_app
+                  FROM Stars2.pt_permit pt_no
+                    INNER JOIN Stars2.pt_eu_group peg_no ON (pt_no.permit_id = peg_no.permit_id)
+                    INNER JOIN Stars2.pt_eu peu_no ON (peg_no.permit_eu_group_id = peu_no.permit_eu_group_id)
+                    INNER JOIN Stars2.fp_emissions_unit fpeu_no ON (peu_no.facility_eu_id = fpeu_no.emu_id)
+                    LEFT OUTER JOIN (SELECT feu_yes.corr_epa_emu_id, COUNT(*) AS app_count
+                                       FROM Stars2.pa_application pa_yes
+                                         INNER JOIN Stars2.pa_eu paeu_yes 
+                                           ON (pa_yes.application_id = paeu_yes.application_id)
+                                          INNER JOIN Stars2.fp_emissions_unit feu_yes 
+                                           ON (paeu_yes.emu_id = feu_yes.emu_id)
+                                       WHERE (pa_yes.application_type_cd = 'TV'
+                                                OR pa_yes.application_type_cd = 'PTIO')
+                                         AND pa_yes.submitted_date IS NOT NULL
+                                       GROUP BY feu_yes.corr_epa_emu_id) has_app
+                      ON (peu_no.corr_epa_emu_id = has_app.corr_epa_emu_id)
+                  WHERE pt_no.permit_type_cd = 'TVPTI'
+                    AND has_app.app_count IS NULL
+                    AND pt_no.effective_date + 365 < (SELECT SYSDATE FROM DUAL)
+                  GROUP BY fpeu_no.emu_id) no_apps
+      ON (fpeu.emu_id = no_apps.emu_id)
+  WHERE pt.permit_type_cd = 'TVPTI'
+    AND pt.effective_date + $P{NUM_DAYS} < (SELECT SYSDATE FROM DUAL)
+  ORDER BY fp.facility_id, pt.permit_nbr, epa_emu_id
+]]></queryString>
+
+	<field name="PERMIT_NBR" class="java.lang.String"/>
+	<field name="PT_EFFECTIVE_DATE" class="java.lang.String"/>
+	<field name="EPA_EMU_ID" class="java.lang.String"/>
+	<field name="EMU_ID" class="java.math.BigDecimal"/>
+	<field name="FACILITY_ID" class="java.lang.String"/>
+	<field name="FACILITY_NM" class="java.lang.String"/>
+
+
+		<group  name="Facility" >
+			<groupExpression><![CDATA[$F{FACILITY_ID}]]></groupExpression>
+			<groupHeader>
+			<band height="45"  isSplitAllowed="true" >
+				<rectangle>
+					<reportElement
+						x="53"
+						y="0"
+						width="429"
+						height="26"
+						backcolor="#CCCCCC"
+						key="rectangle-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<staticText>
+					<reportElement
+						x="67"
+						y="6"
+						width="54"
+						height="13"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Facility ID:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="121"
+						y="6"
+						width="61"
+						height="13"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FACILITY_ID}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="188"
+						y="6"
+						width="71"
+						height="13"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Facility Name:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="259"
+						y="6"
+						width="209"
+						height="13"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FACILITY_NM}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="31"
+						width="79"
+						height="13"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Permit Number]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="31"
+						width="74"
+						height="13"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Effective Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="164"
+						y="31"
+						width="87"
+						height="13"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Emissions Unit ID]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="44"
+						width="552"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="6"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="33"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="73"
+						y="0"
+						width="384"
+						height="25"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="18" isBold="true"/>
+					</textElement>
+				<text><![CDATA[PTIs With No PTO Application]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="6"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="7"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="15"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="79"
+						height="13"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{PERMIT_NBR}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="84"
+						y="-1"
+						width="74"
+						height="13"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{PT_EFFECTIVE_DATE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="164"
+						y="0"
+						width="87"
+						height="13"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{EPA_EMU_ID}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="6"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="21"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="3"
+						width="117"
+						height="16"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}.toString()]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="25"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="5"
+						width="117"
+						height="16"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}.toString()]]></textFieldExpression>
+				</textField>
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="50"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,1198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<VirtualExchangeServiceEisSQL>
+	
+	
+		<createTransferLogEntry>
+			INSERT INTO [dbo].[VS_TRANSFER_LOG]
+			           ([TRANSFER_ID]
+			           ,[TRANSFER_TYPE]
+			           ,[REPORTING_YEAR]
+			           ,[FACILITY_TYPES]
+			           ,[CREATED_BY]
+			           ,[STATUS]
+			           ,[DOMAIN]
+			           ,[START_DT])
+			     VALUES
+			           (?,?,?,?,?,?,?,?)
+   		</createTransferLogEntry>
+		
+		<updateTransferLogEntry>
+			UPDATE [dbo].[VS_TRANSFER_LOG]
+			   SET [TRANSFER_ID] = ?
+			      ,[TRANSFER_TYPE] = ?
+	              ,[REPORTING_YEAR] = ?
+	              ,[FACILITY_TYPES] = ?
+			      ,[CREATED_BY] = ?
+			      ,[STATUS] = ?
+			      ,[MESSAGE] = ?
+			      ,[START_DT] = ?
+			      ,[END_DT] = ?
+			      ,[DURATION] = ?
+			      ,[PROGRESS_PERCENT] = ?
+ 	              ,[DOMAIN] = ?
+			      ,[LAST_MODIFIED] = ?
+			 WHERE 
+			 	[TRANSFER_ID] = ? AND [LAST_MODIFIED] = ?
+		</updateTransferLogEntry>
+		
+		<retrieveTransferLogEntries>
+			SELECT [TRANSFER_ID]
+			      ,[TRANSFER_TYPE]
+		          ,[REPORTING_YEAR]
+		          ,[FACILITY_TYPES]
+			      ,[CREATED_BY]
+			      ,[STATUS]
+			      ,[MESSAGE]
+			      ,[START_DT]
+			      ,[END_DT]
+			      ,[DURATION]
+			      ,[PROGRESS_PERCENT]
+	              ,[DOMAIN]
+			      ,[LAST_MODIFIED]
+			  FROM [dbo].[VS_TRANSFER_LOG]
+			  ORDER BY [TRANSFER_ID] DESC
+		</retrieveTransferLogEntries>		
+		
+		<retrieveTransferLogEntry>
+			SELECT [TRANSFER_ID]
+			      ,[TRANSFER_TYPE]
+		          ,[REPORTING_YEAR]
+		          ,[FACILITY_TYPES]
+			      ,[CREATED_BY]
+			      ,[STATUS]
+			      ,[MESSAGE]
+			      ,[START_DT]
+			      ,[END_DT]
+			      ,[DURATION]
+			      ,[PROGRESS_PERCENT]
+		          ,[DOMAIN]
+			      ,[LAST_MODIFIED]
+			  FROM [dbo].[VS_TRANSFER_LOG]
+			  WHERE TRANSFER_ID = ?
+			  ORDER BY [TRANSFER_ID] DESC
+		</retrieveTransferLogEntry>
+		
+		<retrievePendingTransferLogEntries>
+			SELECT [TRANSFER_ID]
+			      ,[TRANSFER_TYPE]
+		          ,[REPORTING_YEAR]
+		          ,[FACILITY_TYPES]
+			      ,[CREATED_BY]
+			      ,[STATUS]
+			      ,[MESSAGE]
+			      ,[START_DT]
+			      ,[END_DT]
+			      ,[DURATION]
+			      ,[PROGRESS_PERCENT]
+		          ,[DOMAIN]
+			      ,[LAST_MODIFIED]
+			  FROM [dbo].[VS_TRANSFER_LOG]
+			  WHERE STATUS = 'Pending'
+			  ORDER BY [TRANSFER_ID] DESC
+		</retrievePendingTransferLogEntries>
+		
+		
+		<removeFacilityViewVars>
+			DELETE FROM [dbo].[VS_FACILITY_VIEW_VARS] 
+		</removeFacilityViewVars>
+		
+		<createFacilityViewVars>
+			insert into [dbo].VS_FACILITY_VIEW_VARS values (1,?,?)
+		</createFacilityViewVars>
+
+
+
+		<removeFacilityViewPermitClassCdVars>
+			DELETE FROM [dbo].[VS_FACILITY_VIEW_PERMIT_CLASSIFICATION_CD_VAR] 
+		</removeFacilityViewPermitClassCdVars>
+
+		<createFacilityViewPermitClassCdVar>
+			insert into [dbo].VS_FACILITY_VIEW_PERMIT_CLASSIFICATION_CD_VAR values (1,?)
+		</createFacilityViewPermitClassCdVar>
+
+
+
+		<removeFacEmisRprtViewVars>
+			DELETE FROM [dbo].[VS_FAC_EMIS_RPRT_VIEW_VARS] 
+		</removeFacEmisRprtViewVars>
+
+		<createFacEmisRprtViewVars>
+			insert into [dbo].VS_FAC_EMIS_RPRT_VIEW_VARS values (1,?)
+		</createFacEmisRprtViewVars>
+
+
+
+		<removeEuProcRptPeriodViewVars>
+			DELETE FROM [dbo].[VS_EU_PROC_RPT_PERIOD_VIEW_VARS] 
+		</removeEuProcRptPeriodViewVars>
+		
+		<createEuProcRptPeriodViewVars>
+			insert into [dbo].VS_EU_PROC_RPT_PERIOD_VIEW_VARS values (1,?,?)
+		</createEuProcRptPeriodViewVars>
+
+
+
+		<removeCersEntries>
+			DELETE FROM %s.%s.[dbo].[CERS_CERS]
+		</removeCersEntries>
+		
+		<createCersEntry>
+			INSERT INTO %s.%s.[dbo].[CERS_CERS] (
+				CERS_ID, DATA_CATEGORY, USER_IDEN, PROG_SYS_CODE, EMIS_YEAR, EMIS_CRTN_DATE)
+			VALUES (?, ?, ?, ?, ?, ?)
+		</createCersEntry>
+
+		<countCersEntries>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_CERS]
+		</countCersEntries>
+
+
+		
+		<removeFacSites>
+			DELETE FROM %s.%s.[dbo].[CERS_FAC_SITE] 
+		</removeFacSites>
+
+		<createFacSites>
+			INSERT INTO %s.%s.[dbo].[CERS_FAC_SITE]
+				SELECT 
+					FAC_SITE_ID, 
+					? AS CERS_ID,
+					FAC_CATG_CODE, 
+					FAC_SITE_NAME,
+					FAC_SITE_DESC,
+					FAC_SITE_STAT_CODE,
+			 		NULL AS FAC_SITE_STAT_CODE_YEAR,
+			 		SECT_TYPE_CODE,
+					--Should put 'GRIC', 'Maricopa County','Pinal County', 'Pima County', 'Ft. McDowell' accordingly
+			  		NULL AS AGN_NAME,
+			 		NULL AS FAC_SITE_CMNT,
+			 		LAT_MEAS, 
+			 		LONG_MEAS,
+			 		NULL AS SRC_MAP_SCALE_NUM,
+			 		NULL AS HORZ_ACC_MEAS,
+			 		NULL AS HORZ_ACC_UNT_MEAS,
+			 		NULL AS HORZ_COLL_METH_CODE,
+			 		NULL AS HORZ_REF_DATUM_CODE,
+					NULL AS GEO_REF_PT_CODE,
+			 		NULL AS DATA_COLL_DATE,
+			 		NULL AS GEO_CMNT,
+			 		NULL AS VERT_MEAS,
+			 		NULL AS VERT_UNT_MEAS_CODE,
+			 		NULL AS VERT_COLL_METH_CODE,
+			 		NULL AS VERT_REF_DATUM_CODE,
+			 		NULL AS VERF_METH_CODE,
+			 		NULL AS COORD_DATA_SRC_CODE,
+			 		NULL AS GEOM_TYPE_CODE,
+			 		NULL AS AREA_WTIN_PERM,
+					NULL AS AREA_WTIN_PERM_UNT_MEAS_CODE,
+			 		NULL AS PCNT_AREA_PROD_EMIS,
+			 		NULL AS ATCH_FILE_CONT,
+			 		NULL AS ATCH_FILE_NAME,
+			 		NULL AS ATCH_FILE_DESC,
+			 		NULL AS ATCH_FILE_SIZE,
+			 		NULL AS ATCH_FILE_CONT_TYPE_CODE
+				FROM dbo.VS_FACILITY_VIEW
+		</createFacSites>
+		
+		<countFacSites>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_FAC_SITE]
+		</countFacSites>
+		
+		
+		
+		<removeFacIdens>
+			DELETE FROM %s.%s.[dbo].[CERS_FAC_IDEN] 
+		</removeFacIdens>
+		
+		<createFacIdens>
+			INSERT INTO %s.%s.[dbo].[CERS_FAC_IDEN]
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY VS_FACILITY_VIEW.FAC_SITE_ID ASC) AS FAC_IDEN_ID,
+				VS_FACILITY_VIEW.FAC_SITE_ID,
+				FAC_SITE_IDEN,
+				PROG_SYS_CODE,
+				STA_AND_CNTY_FIPS_CODE,
+				NULL AS TRIB_CODE,
+				NULL AS STA_AND_CTRY_FIPS_CODE,
+				NULL AS EFFC_DATE,
+				NULL AS END_DATE
+			FROM dbo.VS_FACILITY_VIEW
+		</createFacIdens>
+		
+		<countFacIdens>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_FAC_IDEN]
+		</countFacIdens>
+		
+		
+
+		<removeFacNaics>
+			DELETE FROM %s.%s.[dbo].[CERS_FAC_NAICS] 
+		</removeFacNaics>
+		
+		<createFacNaics>
+			INSERT INTO %s.%s.[dbo].[CERS_FAC_NAICS]
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY VS_FACILITY_VIEW.FAC_SITE_ID ASC) AS FAC_NAICS_ID,
+				VS_FACILITY_VIEW.FAC_SITE_ID,
+				NAICS_CD AS NAICS_CODE,
+				--Is there any other source that could provide the information for primary indicator?
+				--Currently one facility could end up having multiple NAICS code and every NAICS code would be marked as primary
+				'Unknown' AS NAICS_PRI_IND
+			FROM dbo.VS_FACILITY_VIEW
+				INNER JOIN dbo.FP_FACILITY_NAICS_XREF
+					ON VS_FACILITY_VIEW.FP_ID = FP_FACILITY_NAICS_XREF.FP_ID
+		</createFacNaics>
+
+		<countFacNaics>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_FAC_NAICS]
+		</countFacNaics>
+
+
+
+		<removeFacSiteAddrs>
+			DELETE FROM %s.%s.[dbo].[CERS_FAC_SITE_ADDR] 
+		</removeFacSiteAddrs>
+		
+		<createFacSiteAddrs>
+			INSERT INTO %s.%s.[dbo].[CERS_FAC_SITE_ADDR]
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY VS_FACILITY_VIEW.FAC_SITE_ID ASC) AS FAC_SITE_ADDR_ID,
+				VS_FACILITY_VIEW.FAC_SITE_ID,
+				NULL AS MAIL_ADDR_TXT,
+				NULL AS SUPP_ADDR_TXT,
+				NULL AS MAIL_ADDR_CITY_NAME,
+				NULL AS MAIL_ADDR_CNTY_TXT,
+				NULL AS MAIL_ADDR_STA_CODE,
+				NULL AS MAIL_ADDR_POST_CODE,
+				NULL AS MAIL_ADDR_CTRY_CODE,
+				LOC_ADDR_TXT,
+				NULL AS SUPP_LOC_TXT,
+				LOCA_NAME,
+				LOC_ADDR_STA_CODE,
+				LOC_ADDR_POST_CODE,
+				LOC_ADDR_CTRY_CODE,
+				NULL AS ADDR_CMNT
+			FROM dbo.VS_FACILITY_VIEW
+		</createFacSiteAddrs>
+
+		<countFacSiteAddrs>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_FAC_SITE_ADDR]
+		</countFacSiteAddrs>
+
+
+
+		<removeCersEmisUnits>
+			DELETE FROM %s.%s.[dbo].[CERS_EMIS_UNIT] 
+		</removeCersEmisUnits>
+
+		<createCersEmisUnits>
+			INSERT INTO %s.%s.[dbo].[CERS_EMIS_UNIT]
+				SELECT 
+					EMIS_UNIT_ID,		
+					FAC_SITE_ID,
+					NULL AS SCOPE,
+					UNIT_DESC,
+					UNIT_TYPE_CODE,
+					NULL AS UNIT_SRC_LOC,
+					NULL AS INSIG_SRC_IND,
+					NULL AS UNIT_DSGN_CAP,
+					NULL AS UNIT_DSGN_CAP_UNT_MEAS_CODE,
+					UNIT_STAT_CODE,
+					NULL AS UNIT_STAT_CODE_YEAR,
+					UNIT_OPER_DATE,
+					NULL AS UNIT_COMMER_OPER_DATE,
+					NULL AS UNIT_CMNT,
+					----Control Approach related information: Shouls we put Emission Unit Process Control Approach related information here??--------
+					NULL AS CTRL_APCH_DESC,
+					NULL AS PCNT_CTRL_APCH_CAP_EFCY,
+					NULL AS PCNT_CTRL_APCH_EFCT,
+					--PCNT_CTRL_APCH_PEN is for Non-Point Source ONLY
+					NULL AS PCNT_CTRL_APCH_PEN,
+					--FIRST_INVEN_YEAR is for Point Source ONLY
+					NULL AS FIRST_INVEN_YEAR,
+					--LAST_INVEN_YEAR is for Point Source ONLY
+					NULL AS LAST_INVEN_YEAR,
+					NULL AS CTRL_APCH_CMNT
+					----End of Control Approach related information----------------------------------------------------------------------------------
+				FROM dbo.VS_EMISSION_UNIT_VIEW
+		</createCersEmisUnits>
+		
+		<countCersEmisUnits>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMIS_UNIT]
+		</countCersEmisUnits>
+
+
+
+		<removeCersEmisUnitIdens>
+			DELETE FROM %s.%s.[dbo].[CERS_EMIS_UNIT_IDEN] 
+		</removeCersEmisUnitIdens>
+		
+		<createCersEmisUnitIdens>
+			INSERT INTO %s.%s.[dbo].[CERS_EMIS_UNIT_IDEN]
+				SELECT
+					ROW_NUMBER() OVER (ORDER BY VS_EMISSION_UNIT_VIEW.EMIS_UNIT_ID ASC) AS EMIS_UNIT_IDEN_ID,
+					VS_EMISSION_UNIT_VIEW.EMIS_UNIT_ID,
+					IDEN,
+					PROG_SYS_CODE,
+					NULL AS EFFC_DATE,
+					NULL AS END_DATE
+				FROM dbo.VS_EMISSION_UNIT_VIEW
+		</createCersEmisUnitIdens>
+
+		<countCersEmisUnitIdens>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMIS_UNIT_IDEN]
+		</countCersEmisUnitIdens>
+		
+		
+
+		<removeCersEmisUnitProcs>
+			DELETE FROM %s.%s.[dbo].[CERS_EMIS_UNIT_PROC] 
+		</removeCersEmisUnitProcs>
+		
+		<createCersEmisUnitProcs>
+			INSERT INTO %s.%s.[dbo].[CERS_EMIS_UNIT_PROC]
+				SELECT
+					EMIS_UNIT_PROC_ID,
+					EMIS_UNIT_ID,
+					SRC_CLASS_CODE,
+					NULL AS EMIS_TYPE_CODE,
+					NULL AS AIRCRAFT_ENGINE_TYPE_CODE,
+					NULL AS PROC_TYPE_CODE,
+					PROC_DESC,
+					NULL AS LAST_EMIS_YEAR,
+					NULL AS PROC_CMNT,
+					CTRL_APCH_DESC,
+					NULL AS PCNT_CTRL_APCH_CAP_EFCY,
+					NULL AS PCNT_CTRL_APCH_EFCT,
+					NULL AS PCNT_CTRL_APCH_PEN,
+					NULL AS FIRST_INVEN_YEAR,
+					NULL AS LAST_INVEN_YEAR,
+					CTRL_APCH_CMNT
+				FROM dbo.VS_EU_PROCESS_VIEW
+		</createCersEmisUnitProcs>
+
+		<countCersEmisUnitProcs>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMIS_UNIT_PROC]
+		</countCersEmisUnitProcs>
+
+
+
+		<removeCersEmisUnitProcIdens>
+			DELETE FROM %s.%s.[dbo].[CERS_EMIS_UNIT_PROC_IDEN] 
+		</removeCersEmisUnitProcIdens>
+		
+		<createCersEmisUnitProcIdens>
+			INSERT INTO %s.%s.[dbo].[CERS_EMIS_UNIT_PROC_IDEN]
+				SELECT
+					ROW_NUMBER() OVER (ORDER BY VS_EU_PROCESS_VIEW.EMIS_UNIT_PROC_ID ASC) AS EMIS_UNIT_PROC_IDEN_ID,
+					VS_EU_PROCESS_VIEW.EMIS_UNIT_PROC_ID,
+					IDEN,
+					PROG_SYS_CODE,
+					NULL AS EFFC_DATE,
+					NULL AS END_DATE
+				FROM dbo.VS_EU_PROCESS_VIEW
+		</createCersEmisUnitProcIdens>
+
+		<countCersEmisUnitProcIdens>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMIS_UNIT_PROC_IDEN]
+		</countCersEmisUnitProcIdens>
+
+
+
+		<removeCersEmsUntPrcCtrApcCtMss>
+			DELETE FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_CTR_APC_CT_MS] 
+		</removeCersEmsUntPrcCtrApcCtMss>
+		
+		<createCersEmsUntPrcCtrApcCtMss>
+			INSERT INTO %s.%s.[dbo].[CERS_EMS_UNT_PRC_CTR_APC_CT_MS]
+				SELECT
+					ROW_NUMBER() OVER (ORDER BY EMIS_UNIT_PROC_ID ASC) AS EMS_UNT_PRC_CTRL_APC_CTR_MS_ID,
+					EMIS_UNIT_PROC_ID,
+					(CASE EQUIPMENT_TYPE_CD
+						WHEN 'ADS' THEN '48'
+						WHEN 'BAG' THEN '127'
+						WHEN 'CAI' THEN '109'
+						WHEN 'CNC' THEN '139'
+						WHEN 'CON' THEN '132'
+						WHEN 'CYC' THEN '75'
+						WHEN 'DSC' THEN '119'
+						WHEN 'ESP' THEN '128'
+						WHEN 'FDS' THEN '217'
+						WHEN 'FGR' THEN '26'
+						WHEN 'FLA' THEN '23'
+						WHEN 'FRT' THEN '99'
+						WHEN 'LNB' THEN '205'
+						WHEN 'OFA' THEN '204'
+						WHEN 'OTH' THEN '311'
+						WHEN 'OXI' THEN '312'
+						WHEN 'PAF' THEN '127'
+						WHEN 'SEC' THEN '201'
+						WHEN 'TIN' THEN '133'
+						WHEN 'VRU' THEN '110'
+						WHEN 'WSC' THEN '141'
+						ELSE 'Unknown' 
+					END) AS CTRL_MEAS_CODE,
+					NULL AS CTRL_MEAS_SEQ
+				FROM	
+					(SELECT DISTINCT 
+						EMIS_UNIT_PROC_ID, EQUIPMENT_TYPE_CD 
+					FROM dbo.VS_EU_PROCESS_VIEW EUP
+						CROSS APPLY dbo.udf_GetAssociatedControlEquipment(EUP.FPNODE_ID) CE
+						CROSS APPLY dbo.FP_POLLUTANTS_CONTROLLED PC
+					WHERE CE.FPNODE_ID = PC.FPNODE_ID
+						AND pc.POLLUTANT_CD not in ('PM-PRI', 'NO', 'NO2', 'VE', '7664939', 'HAPS_TOT', 'FL', '199', '95501', 'CO2E', 'NMOCs', '195', '67641', '74931', '74986', '246', '40', 'PM-FIL')
+					) DstnctECType
+		</createCersEmsUntPrcCtrApcCtMss>
+
+		<countCersEmsUntPrcCtrApcCtMss>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_CTR_APC_CT_MS]
+		</countCersEmsUntPrcCtrApcCtMss>
+		
+		
+
+		<removeCersEmsUntPrcCtrApcCtPls>
+			DELETE FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_CTR_APC_CT_PL] 
+		</removeCersEmsUntPrcCtrApcCtPls>
+		
+		<createCersEmsUntPrcCtrApcCtPls>
+			INSERT INTO %s.%s.[dbo].[CERS_EMS_UNT_PRC_CTR_APC_CT_PL]
+				SELECT 
+					ROW_NUMBER() OVER (ORDER BY EMIS_UNIT_PROC_ID ASC) AS EMS_UNT_PRC_CTR_APC_CTR_PLT_ID,
+					EMIS_UNIT_PROC_ID,
+					POLT_CODE,
+					PCNT_CTRL_MEAS_REDC_EFCY
+				FROM 
+					(SELECT DISTINCT 
+						EUP.EMIS_UNIT_PROC_ID AS EMIS_UNIT_PROC_ID,
+						PC.POLLUTANT_CD AS POLT_CODE,
+						CAST(ISNULL(NULLIF(PC.OPERATING_CONTROL_EFF, ''), 0) * (PC.CAPTURE_EFF/100.0) AS NUMERIC(38,1)) AS PCNT_CTRL_MEAS_REDC_EFCY
+					FROM dbo.VS_EU_PROCESS_VIEW EUP
+						CROSS APPLY dbo.udf_GetAssociatedControlEquipment(EUP.FPNODE_ID) CE
+						CROSS APPLY dbo.FP_POLLUTANTS_CONTROLLED PC
+						WHERE CE.FPNODE_ID = PC.FPNODE_ID
+							AND pc.POLLUTANT_CD not in ('PM-PRI', 'NO', 'NO2', 'VE', '7664939', 'HAPS_TOT', 'FL', '199', '95501', 'CO2E', 'NMOCs', '195', '67641', '74931', '74986', '246', '40', 'PM-FIL')
+					) DstnctPollutant
+		</createCersEmsUntPrcCtrApcCtPls>
+
+		<countCersEmsUntPrcCtrApcCtPls>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_CTR_APC_CT_PL]
+		</countCersEmsUntPrcCtrApcCtPls>
+
+
+
+		<removeCersEmsUntPrcRlPtApprs>
+			DELETE FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_RL_PT_APPR] 
+		</removeCersEmsUntPrcRlPtApprs>
+		
+		<createCersEmsUntPrcRlPtApprs>
+			INSERT INTO %s.%s.[dbo].[CERS_EMS_UNT_PRC_RL_PT_APPR]
+				SELECT 
+					EMIS_UNIT_PROC_REL_PT_APPR_ID,
+					EMIS_UNIT_PROC_ID,
+					AVE_PCNT_EMIS,
+					NULL AS REL_PT_APPR_CMNT
+				FROM dbo.VS_EU_PROC_RP_VIEW
+		</createCersEmsUntPrcRlPtApprs>
+
+		<countCersEmsUntPrcRlPtApprs>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_RL_PT_APPR]
+		</countCersEmsUntPrcRlPtApprs>
+
+
+
+		<removeCersEmsUntPrcRlPtAppIdns>
+			DELETE FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_RL_PT_APP_IDN] 
+		</removeCersEmsUntPrcRlPtAppIdns>
+		
+		<createCersEmsUntPrcRlPtAppIdns>
+			INSERT INTO %s.%s.[dbo].[CERS_EMS_UNT_PRC_RL_PT_APP_IDN]
+				SELECT 
+					ROW_NUMBER() OVER (ORDER BY EMIS_UNIT_PROC_REL_PT_APPR_ID ASC) AS EMS_UNT_PRC_RL_PT_APPR_IDN_ID,
+					EMIS_UNIT_PROC_REL_PT_APPR_ID,
+					IDEN,
+					PROG_SYS_CODE,
+					NULL AS EFFC_DATE,
+					NULL AS END_DATE
+				FROM dbo.VS_EU_PROC_RP_VIEW
+		</createCersEmsUntPrcRlPtAppIdns>
+
+		<countCersEmsUntPrcRlPtAppIdns>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_RL_PT_APP_IDN]
+		</countCersEmsUntPrcRlPtAppIdns>
+
+
+
+		<removeCersRelPts>
+			DELETE FROM %s.%s.[dbo].[CERS_REL_PT] 
+		</removeCersRelPts>
+		
+		<createCersRelPts>
+			INSERT INTO %s.%s.[dbo].[CERS_REL_PT]
+				SELECT 
+					REL_PT_ID,
+					FAC_SITE_ID,
+					REL_PT_TYPE_CODE,
+					REL_PT_DESC,
+					REL_PT_STK_HGT_MEAS,
+					REL_PT_STK_HGT_UNT_MEAS_CODE,
+					REL_PT_STK_DIA_MEAS,
+					REL_PT_STK_DIA_UNT_MEAS_CODE,
+					REL_PT_EXIT_GAS_VEL_MEAS,
+					RL_PT_EXT_GS_VL_UNT_MS_CDE,
+					REL_PT_EXIT_GAS_FLOW_RATE_MEAS,
+					RL_PT_EXT_GS_FLW_RTE_UNT_MS_CD,
+					REL_PT_EXIT_GAS_TMP_MEAS,
+					NULL AS REL_PT_FENCE_LINE_DIST_MEAS,
+					NULL AS RL_PT_FNCE_LNE_DST_UNT_MS_CDE,
+					NULL AS REL_PT_FGTV_HGT_MEAS,
+					NULL AS REL_PT_FGTV_HGT_UNT_MEAS_CODE,
+					NULL AS REL_PT_FGTV_WID_MEAS,
+					NULL AS REL_PT_FGTV_WID_UNT_MEAS_CODE,
+					NULL AS REL_PT_FGTV_LEN_MEAS,
+					NULL AS REL_PT_FGTV_LEN_UNT_MEAS_CODE,
+					NULL AS REL_PT_FGTV_ANGLE_MEAS,
+					NULL AS REL_PT_CMNT,
+					REL_PT_STAT_CODE,
+					NULL AS REL_PT_STAT_CODE_YEAR,
+					LAT_MEAS,
+					LONG_MEAS,
+					NULL AS SRC_MAP_SCALE_NUM,
+					NULL AS HORZ_ACC_MEAS,
+					NULL AS HORZ_ACC_UNT_MEAS,
+					HORZ_COLL_METH_CODE,
+					NULL AS HORZ_REF_DATUM_CODE,
+					GEO_REF_PT_CODE,
+					NULL AS DATA_COLL_DATE,
+					NULL AS GEO_CMNT,
+					NULL AS VERT_MEAS,
+					NULL AS VERT_UNT_MEAS_CODE,
+					NULL AS VERT_COLL_METH_CODE,
+					NULL AS VERT_REF_DATUM_CODE,
+					NULL AS VERF_METH_CODE,
+					COORD_DATA_SRC_CODE,
+					NULL AS GEOM_TYPE_CODE,
+					NULL AS AREA_WTIN_PERM,
+					NULL AS AREA_WTIN_PERM_UNT_MEAS_CODE,
+					NULL AS PCNT_AREA_PROD_EMIS
+				FROM dbo.VS_RP_VIEW
+		</createCersRelPts>
+
+		<countCersRelPts>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_REL_PT]
+		</countCersRelPts>
+
+
+
+		<removeCersRelPtIdens>
+			DELETE FROM %s.%s.[dbo].[CERS_REL_PT_IDEN] 
+		</removeCersRelPtIdens>
+		
+		<createCersRelPtIdens>
+			INSERT INTO %s.%s.[dbo].[CERS_REL_PT_IDEN]
+				SELECT
+					ROW_NUMBER() OVER (ORDER BY VS_RP_VIEW.REL_PT_ID ASC) AS REL_PT_IDEN_ID,
+					VS_RP_VIEW.REL_PT_ID,
+					IDEN,
+					PROG_SYS_CODE,
+					NULL AS EFFC_DATE,
+					NULL AS END_DATE
+				FROM dbo.VS_RP_VIEW
+		</createCersRelPtIdens>
+		
+		<countCersRelPtIdens>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_REL_PT_IDEN]
+		</countCersRelPtIdens>
+
+
+
+		<removeCersAffls>
+			DELETE FROM %s.%s.[dbo].[CERS_AFFL] 
+		</removeCersAffls>
+		
+		<createCersAffls>
+			INSERT INTO %s.%s.[dbo].[CERS_AFFL]
+				SELECT
+					AFFL_ID,
+					FAC_SITE_ID,
+					AFFL_TYPE_CODE,
+					AFFL_START_DATE,
+					AFFL_END_DATE
+				FROM dbo.VS_AFFILIATION_VIEW
+		</createCersAffls>
+		
+		<countCersAffls>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_AFFL]
+		</countCersAffls>
+
+
+
+		<removeCersAfflOrgs>
+			DELETE FROM %s.%s.[dbo].[CERS_AFFL_ORG] 
+		</removeCersAfflOrgs>
+		
+		<createCersAfflOrgs>
+			INSERT INTO %s.%s.[dbo].[CERS_AFFL_ORG]
+				SELECT 
+					AFFL_ORG_ID,
+					AFFL_ID,
+					ORG_FORMAL_NAME,
+					NULL AS PCNT_OWNER,
+					NULL AS CONS_METH,
+					NULL AS ATCH_FILE_CONT,
+					NULL AS ATCH_FILE_NAME,
+					NULL AS ATCH_FILE_DESC,
+					NULL AS ATCH_FILE_SIZE,
+					NULL AS ATCH_FILE_CONT_TYPE_CODE
+				FROM dbo.VS_AFFL_ORG_VIEW
+		</createCersAfflOrgs>
+		
+		<countCersAfflOrgs>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_AFFL_ORG]
+		</countCersAfflOrgs>
+
+
+
+		<removeCersAfflOrgIdens>
+			DELETE FROM %s.%s.[dbo].[CERS_AFFL_ORG_IDEN] 
+		</removeCersAfflOrgIdens>
+
+		<createCersAfflOrgIdens>
+			INSERT INTO %s.%s.[dbo].[CERS_AFFL_ORG_IDEN]
+				SELECT 	
+					ROW_NUMBER() OVER (ORDER BY VS_AFFL_ORG_VIEW.AFFL_ORG_ID ASC) AS AFFL_ORG_IDEN_ID,
+					AFFL_ORG_ID,
+					IDEN,									/*Currently this column had not been mapped in WY*/
+					PROG_SYS_CODE,
+					NULL AS EFFC_DATE,
+					NULL AS END_DATE
+				FROM dbo.VS_AFFL_ORG_VIEW
+		</createCersAfflOrgIdens>
+		
+		<countCersAfflOrgIdens>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_AFFL_ORG_IDEN]
+		</countCersAfflOrgIdens>
+
+
+
+		<removeCersAfflOrgAddrs>
+			DELETE FROM %s.%s.[dbo].[CERS_AFFL_ORG_ADDR] 
+		</removeCersAfflOrgAddrs>
+		
+		<createCersAfflOrgAddrs>
+			INSERT INTO %s.%s.[dbo].[CERS_AFFL_ORG_ADDR]
+				SELECT 
+					ROW_NUMBER() OVER (ORDER BY VS_AFFL_ORG_VIEW.AFFL_ORG_ID ASC) AS AFFL_ORG_ADDR_ID,
+					AFFL_ORG_ID,
+					NULL AS MAIL_ADDR_TXT,
+					NULL AS SUPP_ADDR_TXT,
+					NULL AS MAIL_ADDR_CITY_NAME,
+					NULL AS MAIL_ADDR_CNTY_TXT,
+					NULL AS MAIL_ADDR_STA_CODE,
+					NULL AS MAIL_ADDR_POST_CODE,
+					NULL AS MAIL_ADDR_CTRY_CODE,
+					LOC_ADDR_TXT,							/*Currently this column had not been mapped in WY*/
+					SUPP_LOC_TXT,							/*Currently this column had not been mapped in WY*/
+					LOCA_NAME,								/*Currently this column had not been mapped in WY*/
+					LOC_ADDR_STA_CODE,						/*Currently this column had not been mapped in WY*/
+					LOC_ADDR_POST_CODE,						/*Currently this column had not been mapped in WY*/
+					LOC_ADDR_CTRY_CODE,						/*Currently this column had not been mapped in WY*/
+					NULL AS ADDR_CMNT
+				FROM dbo.VS_AFFL_ORG_VIEW
+		</createCersAfflOrgAddrs>
+		
+		<countCersAfflOrgAddrs>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_AFFL_ORG_ADDR]
+		</countCersAfflOrgAddrs>
+
+
+
+		<removeCersAfflOrgCommuns>
+			DELETE FROM %s.%s.[dbo].[CERS_AFFL_ORG_COMMUN] 
+		</removeCersAfflOrgCommuns>
+		
+		<createCersAfflOrgCommuns>
+			INSERT INTO %s.%s.[dbo].[CERS_AFFL_ORG_COMMUN]
+				SELECT 
+					ROW_NUMBER() OVER (ORDER BY AFFL_ORG_ID ASC) AS AFFL_ORG_COMMUN_ID,
+					AFFL_ORG_ID,
+					TELE_NUM_TXT,							/*Currently this column had not been mapped in WY*/
+					TELE_NUM_TYPE_NAME,						/*Currently this column had not been mapped in WY*/
+					NULL AS TELE_EXT_NUM_TXT,
+					NULL AS ELEC_ADDR_TXT,
+					NULL AS ELEC_ADDR_TYPE_NAME
+				FROM 
+					(SELECT 
+						AFFL_ORG_ID, 
+						'Office' AS TELE_NUM_TYPE_NAME,
+						PHONE AS TELE_NUM_TXT
+					FROM dbo.VS_AFFL_ORG_VIEW
+					UNION ALL
+					SELECT 
+						AFFL_ORG_ID,
+						'Fax' AS TELE_NUM_TYPE_NAME,
+						FAX AS TELE_NUM_TXT
+					FROM dbo.VS_AFFL_ORG_VIEW
+					) PhoneFax
+		</createCersAfflOrgCommuns>
+		
+		<countCersAfflOrgCommuns>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_AFFL_ORG_COMMUN]
+		</countCersAfflOrgCommuns>
+
+
+
+		<removeCersEmisUnitProcRptPrds>
+			DELETE FROM %s.%s.[dbo].[CERS_EMIS_UNIT_PROC_RPT_PRD] 
+		</removeCersEmisUnitProcRptPrds>
+		
+		<createCersEmisUnitProcRptPrds>
+			INSERT INTO %s.%s.[dbo].[CERS_EMIS_UNIT_PROC_RPT_PRD]
+				SELECT 
+					EMIS_UNIT_PROC_RPT_PRD_ID,
+					EMIS_UNIT_PROC_ID,
+					RPT_PRD_TYPE_CODE, 					/*'A': Annual-The total emissions for a full year; 'W': Winter-The total emissions for the Dec 1 thru Feb 28 CO season*/
+					EMIS_OPER_TYPE_CODE,				/*'R': Routine-The normal or typical emissions for a reporting period*/
+					START_DATE,
+					END_DATE,
+					NULL AS CALC_PARM_TYPE_CODE,
+					NULL AS CALC_PARM_VAL,
+					NULL AS CALC_PARM_UNT_MEAS,
+					NULL AS CALC_MATERIAL_CODE,
+					NULL AS CALC_DATA_YEAR,
+					NULL AS CALC_DATA_SRC,
+					NULL AS RPT_PRD_CMNT,
+					ACTL_HOURS_PER_PRD,
+					NULL AS AVE_DAYS_PER_WEEK,
+					NULL AS AVE_HOURS_PER_DAY,
+					NULL AS AVE_WEEKS_PER_PRD,
+					PCNT_WINTER_ACT,
+					PCNT_SPRING_ACT,
+					PCNT_SUMMER_ACT,
+					PCNT_FALL_ACT
+				FROM dbo.VS_EU_PROC_RPT_PERIOD_VIEW		
+		</createCersEmisUnitProcRptPrds>
+
+		<countCersEmisUnitProcRptPrds>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMIS_UNIT_PROC_RPT_PRD]
+		</countCersEmisUnitProcRptPrds>
+
+
+
+		<removeCersEmsUntPrcRptPrdEms>
+			DELETE FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_RPT_PRD_EMS] 
+		</removeCersEmsUntPrcRptPrdEms>
+		
+		<createCersEmsUntPrcRptPrdEms>
+			INSERT INTO %s.%s.[dbo].[CERS_EMS_UNT_PRC_RPT_PRD_EMS]
+				SELECT 
+					ROW_NUMBER() OVER (ORDER BY VS_EU_PROC_RPT_PERIOD_VIEW.EMIS_UNIT_PROC_RPT_PRD_ID ASC) AS EMIS_UNIT_PROC_RPT_PRD_EMIS_ID,
+					EMIS_UNIT_PROC_RPT_PRD_ID,
+					POLLUTANT_CD AS POLT_CODE,
+					replace(rtrim(replace(replace(rtrim(replace(cast(cast(cast(replace(Stack_Emissions, ',', '') as float) + cast(replace(FUGITIVE_EMISSIONS, ',', '') as float) as decimal(18,10)) as varchar(max)), '0', ' ')), ' ', '0'), '.' , ' ')), ' ', '.') AS TOTAL_EMIS,
+					EMISSION_UNIT_NUMERATOR AS EMIS_UNT_MEAS_CODE,
+					NULL AS EMIS_FAC,
+					NULL AS EMIS_FAC_NUM_UNT_MEAS_CODE,
+					NULL AS EMIS_FAC_DEN_UNT_MEAS_CODE,
+					NULL AS EMIS_FAC_FORM_CODE,
+					NULL AS EMIS_FAC_TXT,
+					EMISSION_CALC_METHOD_CD AS EMIS_CALC_METH_CODE,
+					NULL AS EMIS_FAC_REF_TXT,
+					NULL AS ALGOR_FORM_TXT,
+					NULL AS ALGOR_CMNT,
+					NULL AS CALC_METH_ACC_ASMT_CODE,
+					NULL AS EMIS_DE_MINIMIS_STAT,
+					NULL AS EMIS_CMNT,
+					NULL AS CO_2E,
+					NULL AS CO_2E_UNT_MEAS_CODE,
+					NULL AS CO_2_CONV_FAC,
+					NULL AS CO_2_CONV_FAC_SRC
+				FROM dbo.VS_EU_PROC_RPT_PERIOD_VIEW	
+					LEFT OUTER JOIN dbo.RP_EMISSIONS
+						ON VS_EU_PROC_RPT_PERIOD_VIEW.EMISSION_PERIOD_ID = RP_EMISSIONS.EMISSION_PERIOD_ID
+						AND POLLUTANT_CD NOT IN	('PM-PRI', 'NO', 'NO2', 'VE', '7664939', 'HAPS_TOT', 'FL', '199', '95501', 'CO2E', 'NMOCs', '195', '67641', '74931', '74986', '246', '40', 'PM-FIL' )
+				--No NULL value is allowed as POLT_CODE. Currently there is no such condition in WY
+				WHERE POLLUTANT_CD IS NOT NULL
+		</createCersEmsUntPrcRptPrdEms>
+
+		<countCersEmsUntPrcRptPrdEms>
+			SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[CERS_EMS_UNT_PRC_RPT_PRD_EMS]
+		</countCersEmsUntPrcRptPrdEms>
+		
+		<removeFacIdFacDtlsEntry>
+		DELETE FROM %s.%s.[dbo].[FACID_FAC_DTLS]
+		</removeFacIdFacDtlsEntry>
+		
+		<countFacIdFacDtlsEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_FAC_DTLS]
+		</countFacIdFacDtlsEntry>
+		
+		<createFacIdFacDtlsEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_FAC_DTLS]
+			SELECT
+				FAC_DTLS_ID
+			FROM dbo.VS_FACID_VIEW	
+		</createFacIdFacDtlsEntry>
+		
+		<removeFacIdFacEntry>
+		DELETE FROM %s.%s.[dbo].[FACID_FAC]
+		</removeFacIdFacEntry>
+		
+		<countFacIdFacEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_FAC]
+		</countFacIdFacEntry>		
+		
+		<createFacIdFacEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_FAC]
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY VS_FACID_VIEW.FP_ID ASC) AS FAC_ID,
+				FAC_DTLS_ID,
+				NULL AS CONG_DIST_NUM_CODE,
+				NULL AS LEGI_DIST_NUM_CODE,
+				NULL AS HUC_CODE,
+				NULL AS FAC_URL_TEXT,
+				DELETED_ON_DATE,
+				FAC_ACTIVE_INDI,			
+				FAC_SITE_NAME,
+				NULL AS FED_FAC_INDI,
+				NULL AS FAC_SITE_IDEN_CONT,
+				FAC_SITE_IDEN_VAL,
+				FAC_SITE_TYPE_CODE,
+				FAC_SITE_TYPE_NAME,
+				NULL AS CODE_LIST_VERS_IDEN,
+				NULL AS CODE_LIST_VERS_AGN_IDEN,
+				NULL AS CODE_LST_VER_VAL,
+				LOC_ADDR_TEXT,
+				SUPP_LOC_TEXT,
+				NULL AS LOCA_NAME,
+				NULL AS TRIB_LAND_NAME,
+				NULL AS TRIB_LAND_INDI,
+				NULL AS LOC_DESC_TEXT,
+				STA_CODE,
+				STA_NAME,
+				NULL AS LOC_ADDR_CODE_LST_VER_VAL,
+				NULL AS LOC_ADDR_CODE_LIST_VERS_IDEN,
+				NULL AS LOC_ADDR_CODE_LIST_VER_AGN_IDE,
+				ADDR_POST_CODE_VAL,
+				NULL AS ADDR_POST_CODE_CONT,
+				CTRY_CODE,
+				CTRY_NAME,
+				NULL AS LOC_ADDR_COD_LST_VER_VAL,
+				NULL AS LOC_ADDR_CODE_LIST_VERS_IDE,
+				NULL AS LOC_ADDR_CODE_LIS_VER_AGN_IDE,
+				NULL AS CNTY_CODE,
+				CNTY_NAME,
+				NULL AS LOC_ADDR_CODE_LIST_VER_IDE,
+				NULL AS LOC_ADDR_COD_LIS_VER_AGN_IDE,
+				NULL AS LOC_ADD_COD_LST_VER_VAL,
+				NULL AS MAIL_ADDR_TEXT,
+				NULL AS SUPP_ADDR_TEXT,
+				NULL AS MAIL_ADDR_CITY_NAME,
+				NULL AS MAIL_ADDR_STA_CODE,
+				NULL AS MAIL_ADDR_STA_NAME,
+				NULL AS MAIL_ADDR_CODE_LST_VER_VAL,
+				NULL AS MAIL_ADDR_CODE_LIST_VERS_IDEN,
+				NULL AS MAIL_ADDR_CODE_LIS_VER_AGN_IDE,
+				NULL AS MAIL_ADDR_ADDR_POST_CODE_VAL,
+				NULL AS MAIL_ADDR_ADDR_POST_CODE_CONT,
+				NULL AS MAIL_ADDR_CTRY_CODE,
+				NULL AS MAIL_ADDR_CTRY_NAME,
+				NULL AS MAIL_ADDR_COD_LST_VER_VAL,
+				NULL AS MAIL_ADDR_CODE_LIST_VERS_IDE,
+				NULL AS MAIL_ADDR_COD_LIS_VER_AGN_IDE,
+				'GRIC' AS ORIG_PART_NAME,
+				'IMPACT'  AS INFO_SYS_ACRO_NAME,
+				NULL AS LAST_UPDT_DATE
+			FROM dbo.VS_FACID_VIEW		
+		</createFacIdFacEntry>
+		
+		<removeFacIdEnvrIntrEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_ENVR_INTR]
+		</removeFacIdEnvrIntrEntry>
+		
+		<countFacIdEnvrIntrEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_ENVR_INTR]
+		</countFacIdEnvrIntrEntry>
+		
+		<createFacIdEnvrIntrEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_ENVR_INTR]
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY VS_FACID_VIEW.FP_ID ASC) AS ENVR_INTR_ID,
+				FAC_ID,
+				VS_FACID_VIEW.FP_ID AS ENVR_INTR_IDEN,
+				ENVR_INTR_TYPE_TEXT,
+				NULL AS ENVR_INTR_START_DATE,
+				NULL AS ENVR_INTR_START_DATE_QUAL_TEXT,
+				NULL AS ENVR_INTR_END_DATE,
+				NULL AS ENVR_INTR_END_DATE_QUAL_TEXT,
+				'Y' AS ENVR_INTR_ACTIVE_INDI,
+				NULL AS ENVR_INTR_URL_TEXT,
+				NULL AS LAST_UPDT_DATE,
+				'IMPACT' AS INFO_SYS_ACRO_NAME,
+				'GRIC' AS ORIG_PART_NAME,
+				'TR' AS AGN_TYPE_CODE,
+				'Tribal' AS AGN_TYPE_NAME,
+				NULL AS CODE_LIST_VERS_IDEN,
+				NULL AS CODE_LIST_VERS_AGN_IDEN,
+				NULL AS CODE_LST_VER_VAL
+			FROM %s.%s.[dbo].[FACID_FAC]
+				LEFT OUTER JOIN dbo.VS_FACID_VIEW
+					ON FACID_FAC.FAC_DTLS_ID = VS_FACID_VIEW.FAC_DTLS_ID		
+		</createFacIdEnvrIntrEntry>
+
+		<removeGeoLocdescEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_FAC_PRI_GEO_LOC_DESC]
+		</removeGeoLocdescEntry>
+		
+		<countGeoLocdescEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_FAC_PRI_GEO_LOC_DESC]
+		</countGeoLocdescEntry>
+		
+		<createGeoLocdescEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_FAC_PRI_GEO_LOC_DESC] 
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY FACID_FAC.FAC_ID ASC) AS FAC_PRI_GEO_LOC_DESC_ID,
+				FACID_FAC.FAC_ID,
+				NULL AS SRC_MAP_SCALE_NUM,
+				NULL AS DATA_COLL_DATE,
+				NULL AS LOC_COMM_TEXT,
+				NULL AS SRS_NAME,
+				NULL AS SRS_DIM,
+				NULL AS ELEVATION,
+				VS_FACID_VIEW.LATITUDE, 
+		 		VS_FACID_VIEW.LONGITUDE, 
+				NULL AS MEAS_VAL,
+				NULL AS MEAS_PREC_TEXT,
+				NULL AS MEAS_UNIT_CODE,
+				NULL AS MEAS_UNIT_NAME,
+				NULL AS CODE_LST_VER_VAL,
+				NULL AS CODE_LIST_VERS_IDEN,
+				NULL AS CODE_LIST_VERS_AGN_IDEN,
+				NULL AS RSLT_QUAL_CODE,
+				NULL AS RSLT_QUAL_NAME,
+				NULL AS RSLT_QUAL_CODE_LST_VER_VAL,
+				NULL AS RSLT_QUAL_CODE_LIST_VERS_IDEN,
+				NULL AS RSLT_QUAL_CODE_LIS_VER_AGN_IDE,
+				NULL AS METH_IDEN_CODE,
+				NULL AS METH_NAME,
+				NULL AS METH_DESC_TEXT,
+				NULL AS METH_DEVI_TEXT,
+				NULL AS HORZ_COLL_METH_COD_LST_VER_VAL,
+				NULL AS HORZ_COLL_METH_COD_LIS_VER_IDE,
+				NULL AS HOR_COL_MET_COD_LIS_VER_AGN_ID,
+				NULL AS GEO_REF_PT_CODE,
+				NULL AS GEO_REF_PT_NAME,
+				NULL AS GEO_REF_PT_CODE_LST_VER_VAL,
+				NULL AS GEO_REF_PT_CODE_LIST_VERS_IDEN,
+				NULL AS GEO_REF_PT_COD_LIS_VER_AGN_IDE,
+				NULL AS VERT_COLL_METH_METH_IDEN_CODE,
+				NULL AS VERT_COLL_METH_METH_NAME,
+				NULL AS VERT_COLL_METH_METH_DESC_TEXT,
+				NULL AS VERT_COLL_METH_METH_DEVI_TEXT,
+				NULL AS VERT_COLL_METH_COD_LST_VER_VAL,
+				NULL AS VERT_COLL_METH_COD_LIS_VER_IDE,
+				NULL AS VER_COL_MET_COD_LIS_VER_AGN_ID,
+				NULL AS VERF_METH_METH_IDEN_CODE,
+				NULL AS VERF_METH_METH_NAME,
+				NULL AS VERF_METH_METH_DESC_TEXT,
+				NULL AS VERF_METH_METH_DEVI_TEXT,
+				NULL AS VERF_METH_CODE_LST_VER_VAL,
+				NULL AS VERF_METH_CODE_LIST_VERS_IDEN,
+				NULL AS VERF_METH_CODE_LIS_VER_AGN_IDE,
+				NULL AS CORD_DATA_SRC_CODE,
+				NULL AS CORD_DATA_SRC_NAME,
+				NULL AS CORD_DATA_SRC_CODE_LST_VER_VAL,
+				NULL AS CORD_DATA_SRC_CODE_LIS_VER_IDE,
+				NULL AS COR_DAT_SRC_COD_LIS_VER_AGN_ID
+			FROM %s.%s.[dbo].[FACID_FAC]
+				LEFT OUTER JOIN dbo.VS_FACID_VIEW  
+					ON FACID_FAC.FAC_DTLS_ID = VS_FACID_VIEW.FAC_DTLS_ID		
+		</createGeoLocdescEntry>
+		
+		<removeFacSicEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_FAC_FAC_SIC] 
+		</removeFacSicEntry>
+		
+		<countFacSicEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_FAC_FAC_SIC]
+		</countFacSicEntry>
+		
+		<createFacSicEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_FAC_FAC_SIC]
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY FACID_FAC.FAC_ID ASC, FP_FACILITY_SIC_XREF.SIC_CD ASC) AS FAC_FAC_SIC_ID,
+				FAC_ID,
+				SIC_CD AS SIC_CODE,
+				'Y' AS SIC_PRI_INDI
+		FROM %s.%s.[dbo].[FACID_FAC]
+		INNER JOIN dbo.VS_FACID_VIEW    
+			ON FACID_FAC.FAC_DTLS_ID = VS_FACID_VIEW.FAC_DTLS_ID
+		INNER JOIN dbo.FP_FACILITY_SIC_XREF      
+			ON VS_FACID_VIEW.FP_ID = FP_FACILITY_SIC_XREF.FP_ID		
+		</createFacSicEntry>
+
+		<removeFacNaicsEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_FAC_FAC_NAICS]
+		</removeFacNaicsEntry>
+		
+		<countFacNaicsEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_FAC_FAC_NAICS]
+		</countFacNaicsEntry>
+		
+		<createFacIdFacNaicsEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_FAC_FAC_NAICS]
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY FACID_FAC.FAC_ID ASC, FP_FACILITY_NAICS_XREF.NAICS_CD ASC) AS FAC_FAC_NAICS_ID,
+				FAC_ID,
+				NAICS_CD AS NAICS_CODE,
+				'Unknown' AS NAICS_PRI_INDI
+			FROM %s.%s.[dbo].[FACID_FAC]
+				INNER JOIN dbo.VS_FACID_VIEW     
+					ON FACID_FAC.FAC_DTLS_ID = VS_FACID_VIEW.FAC_DTLS_ID
+				INNER JOIN dbo.FP_FACILITY_NAICS_XREF
+					ON VS_FACID_VIEW.FP_ID = FP_FACILITY_NAICS_XREF.FP_ID
+		</createFacIdFacNaicsEntry>
+
+		<removeFacAfflEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_FAC_FAC_AFFL]
+		</removeFacAfflEntry>
+		
+		<countFacAfflEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_FAC_FAC_AFFL]
+		</countFacAfflEntry>
+		
+		<createFacAfflEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_FAC_FAC_AFFL]
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY FAC_ID, AFFL_IDEN, AFFL_TYPE_TEXT) AS FAC_FAC_AFFL_ID,
+				FAC_ID,
+				AFFL_IDEN,
+				AFFL_TYPE_TEXT,
+				AFFL_START_DATE,
+				AFFL_END_DATE,
+				NULL AS AFFL_STAT_TEXT,
+				NULL AS AFFL_STAT_DETR_DATE
+			FROM dbo.VS_FACID_AFF_VIEW 
+		</createFacAfflEntry>
+
+		<removeFacIdAfflEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_AFFL]
+		</removeFacIdAfflEntry>
+		
+		<countFacIdAfflEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_AFFL]
+		</countFacIdAfflEntry>
+
+		
+		<createFacIdAfflEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_AFFL]
+			SELECT
+				AFFL_ID,
+				FAC_DTLS_ID,
+				AFFL_IDEN,
+				INDV_TITLE_TEXT,
+				NAME_PREFIX_TEXT,
+				INDV_FULL_NAME,
+				FIRST_NAME,
+				MIDDLE_NAME,
+				LAST_NAME,
+				NAME_SUFFIX_TEXT,
+				NULL AS INDV_IDEN_CONT,
+				NULL AS INDV_IDEN_VAL,
+				NULL AS ORG_FORMAL_NAME,
+				NULL AS ORG_IDEN_CONT,
+				NULL AS ORG_IDEN_VAL,
+				NULL AS MAIL_ADDR_TEXT,
+				NULL AS SUPP_ADDR_TEXT,
+				NULL AS MAIL_ADDR_CITY_NAME,
+				NULL AS STA_CODE,
+				NULL AS STA_NAME,
+				NULL AS CODE_LIST_VERS_IDEN,
+				NULL AS CODE_LIST_VERS_AGN_IDEN,
+				NULL AS CODE_LST_VER_VAL,
+				NULL AS ADDR_POST_CODE_CONT,
+				NULL AS ADDR_POST_CODE_VAL,
+				NULL AS CTRY_CODE,
+				NULL AS CTRY_NAME,
+				NULL AS CTRY_IDEN_CODE_LIST_VERS_IDEN,
+				NULL AS CTRY_IDEN_CODE_LIS_VER_AGN_IDE,
+				NULL AS CTRY_IDEN_CODE_LST_VER_VAL
+			FROM dbo.VS_FACID_AFF_VIEW 
+		</createFacIdAfflEntry>
+
+
+		<removeFacIdTelephonicEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_TELEPHONIC]
+		</removeFacIdTelephonicEntry>
+		
+		<countFacIdTelephonicEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_TELEPHONIC]
+		</countFacIdTelephonicEntry>
+
+		
+		<createFacIdTelephonicEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_TELEPHONIC]
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY AFFL_ID, TELE_NUM_TYPE_NAME) AS TELEPHONIC_ID,
+				AFFL_ID,
+				TELE_NUM_TEXT,
+				TELE_NUM_TYPE_NAME,
+				TELE_EXT_NUM_TEXT
+			FROM (
+					SELECT 
+						AFFL_ID,
+						PRIM_TELE_NUM_TEXT AS TELE_NUM_TEXT,
+						'PRIMARY' AS TELE_NUM_TYPE_NAME,
+						PRIM_TELE_EXT_NUM_TEXT AS TELE_EXT_NUM_TEXT
+					FROM dbo.VS_FACID_AFF_VIEW
+		      		UNION ALL
+		     		SELECT 
+						AFFL_ID,
+						SEC_TELE_NUM_TEXT AS TELE_NUM_TEXT,
+						'SECONDARY' AS TELE_NUM_TYPE_NAME,
+						SEC_TELE_EXT_NUM_TEXT AS TELE_EXT_NUM_TEXT
+					FROM dbo.VS_FACID_AFF_VIEW
+					WHERE SEC_TELE_NUM_TEXT IS NOT NULL
+		      		UNION ALL
+		      		SELECT 
+						AFFL_ID,
+						MOB_TELE_NUM_TEXT AS TELE_NUM_TEXT,
+						'MOBILE' AS TELE_NUM_TYPE_NAME,
+						NULL AS TELE_EXT_NUM_TEXT
+					FROM dbo.VS_FACID_AFF_VIEW
+					WHERE MOB_TELE_NUM_TEXT IS NOT NULL
+					UNION ALL
+		      		SELECT 
+						AFFL_ID,
+						FAX_TELE_NUM_TEXT AS TELE_NUM_TEXT,
+						'FAX' AS TELE_NUM_TYPE_NAME,
+						NULL AS TELE_EXT_NUM_TEXT
+					FROM dbo.VS_FACID_AFF_VIEW  
+					WHERE FAX_TELE_NUM_TEXT IS NOT NULL
+		     ) UNION_A
+		</createFacIdTelephonicEntry>
+
+
+		<removeFacIdAfflElecAddrEntry>
+			DELETE FROM %s.%s.[dbo].[FACID_AFFL_ELEC_ADDR]
+		</removeFacIdAfflElecAddrEntry>
+		
+		<countFacIdAfflElecAddrEntry>
+		SELECT COUNT(*) AS ROW_COUNT FROM %s.%s.[dbo].[FACID_AFFL_ELEC_ADDR]
+		</countFacIdAfflElecAddrEntry>
+		
+		<createFacIdAfflElecAddrEntry>
+		INSERT INTO %s.%s.[dbo].[FACID_AFFL_ELEC_ADDR]
+			SELECT 		
+				ROW_NUMBER() OVER (ORDER BY AFFL_ID) AS AFFL_ELEC_ADDR_ID,
+				AFFL_ID,
+				ELEC_ADDR_TEXT,
+				ELEC_ADDR_TYPE_NAME	
+			FROM dbo.VS_FACID_AFF_VIEW 
+		</createFacIdAfflElecAddrEntry>
+		
+	
+		
+	</VirtualExchangeServiceEisSQL>
+</root>

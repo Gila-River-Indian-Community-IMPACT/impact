@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <EnforcementActionSQL>
+  	<EnforcementActionColumns>
+  		ea.enforcement_action_id, ea.enf_id, ea.facility_id, ea.creator_id, ea.other_description,
+  		ea.potential_violation_description, ea.evidence, ea.environmental_impact_description,
+		ea.enforcement_action_type, ea.enforcement_action_hpv_criterion,
+		ea.enforcement_action_frv_type, 
+		ea.docket_number, ea.memo, ea.created_date, ea.potential_violation_start_dt,
+		ea.potential_violation_end_dt,
+		ea.other_sa_requirements,
+		ea.other_sa_requirements_met,
+		ea.evidence_attached, ea.environmental_impact, ea.legacy_flag, ea.last_modified,
+		ea.sep_flag,
+		ea.sep_offset_amt,
+		ea.penalty_amt
+  	</EnforcementActionColumns>
+  	<enfAttachTypeDefColumns>
+  		ENF_ATTACHMENT_TYPE_CD as code, ENF_ATTACHMENT_TYPE_DSC as description, DEPRECATED, ENF_ATTACHMENT_ACP_FLAG, LAST_MODIFIED
+  	</enfAttachTypeDefColumns>
+  	<retrieveEnfAttachmentTypes>
+		SELECT ${EnforcementActionSQL.enfAttachTypeDefColumns}
+		FROM %Schema%ce_enf_attachment_type_def
+	</retrieveEnfAttachmentTypes>
+	<createEnforcementAction>
+		INSERT INTO %Schema%ce_enf_action (enforcement_action_id, facility_id, creator_id, created_date, 
+        other_description, 
+        potential_violation_description, 
+        evidence, 
+        environmental_impact_description,
+        enforcement_action_type, 
+        docket_number, 
+        memo, 
+        potential_violation_start_dt,
+        potential_violation_end_dt,
+        other_sa_requirements_met,
+        evidence_attached,
+        environmental_impact,
+        enforcement_action_hpv_criterion,
+        legacy_flag,
+        enforcement_action_frv_type, 
+        sep_flag,
+        sep_offset_amt,
+        penalty_amt,
+        other_sa_requirements) 
+		VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+	</createEnforcementAction>
+	<deleteEnforcementAction>
+      DELETE FROM %Schema%CE_ENF_ACTION  WHERE enforcement_action_id = ? AND last_modified = ?
+    </deleteEnforcementAction>
+	<modifyEnforcementAction>
+		UPDATE %Schema%ce_enf_action SET 
+		other_description = ?, potential_violation_description = ?, evidence = ?, environmental_impact_description = ?,
+		enforcement_action_type = ?, enforcement_action_hpv_criterion = ?, 
+		enforcement_action_frv_type = ?, 
+		docket_number = ?, memo = ?, created_date = ?,
+		potential_violation_start_dt = ?, potential_violation_end_dt = ?,
+		other_sa_requirements = ?,
+		other_sa_requirements_met = ?,
+		evidence_attached = ?, environmental_impact = ?, legacy_flag = ?,
+		sep_flag = ?,
+		sep_offset_amt = ?,
+		penalty_amt = ?,
+		last_modified = ?
+		WHERE enforcement_action_id = ?
+	</modifyEnforcementAction>
+	<retrieveEnforcementAction>
+		SELECT ${EnforcementActionSQL.EnforcementActionColumns},
+			ff.facility_id, ff.facility_nm, ff.version_id, ff.federal_scsc_id as scsc_id, ff.do_laa_cd as district_cd,
+			ccm.cmp_id, ccm.name as company_nm,
+			ca.county_cd, ccd.county_nm
+			FROM %Schema%ce_enf_action ea
+			    JOIN %Schema%fp_facility ff ON (ea.facility_id = ff.facility_id)
+  		        JOIN %Schema%fp_facility_address_xref faxr ON (ff.fp_id = faxr.fp_id)
+  		        JOIN %Schema%cm_address ca ON (faxr.address_id = ca.address_id AND ca.end_dt is null)
+  		        INNER JOIN %Schema%cm_county_def ccd ON (ca.county_cd = ccd.county_cd)
+  		        LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id = ff.facility_id AND ffcx.end_date IS NULL)
+		        LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id 
+			WHERE ff.version_id=-1 AND ea.enforcement_action_id = ?
+	</retrieveEnforcementAction>
+	<createReferralType>
+		INSERT INTO %Schema%ce_enf_action_referral_type_xref
+		(enforcement_action_referral_type_cd, enforcement_action_id)
+		VALUES (?, ?) 
+	</createReferralType>
+	<deleteReferralTypeById>
+		DELETE FROM %Schema%ce_enf_action_referral_type_xref WHERE enforcement_action_id = ?
+	</deleteReferralTypeById>
+	<retrieveReferralTypeCDs>
+		SELECT enforcement_action_referral_type_cd FROM %Schema%ce_enf_action_referral_type_xref
+			WHERE enforcement_action_id = ?
+	</retrieveReferralTypeCDs>
+	<searchEnforcementActions>
+  		SELECT ${EnforcementActionSQL.EnforcementActionColumns},
+  		eae.enforcement_action_event_cd, eae.event_dt,
+  		eatd.enforcement_action_type_dsc, 
+  		ff.facility_id, ff.facility_nm, ff.version_id, ff.federal_scsc_id as scsc_id, ff.do_laa_cd as district_cd,
+  		ccm.cmp_id, ccm.name as company_nm,
+  		ca.county_cd, ccd.county_nm
+  		FROM %Schema%ce_enf_action ea
+  		JOIN %Schema%fp_facility ff ON (ea.facility_id = ff.facility_id)
+  		JOIN %Schema%fp_facility_address_xref faxr ON (ff.fp_id = faxr.fp_id)
+  		JOIN %Schema%cm_address ca ON (faxr.address_id = ca.address_id AND ca.end_dt is null)
+  		LEFT JOIN %Schema%ce_enforcement_action_event eae ON (eae.enforcement_action_id = ea.enforcement_action_id)
+  		LEFT JOIN %Schema%ce_enforcement_action_type_def eatd ON (eatd.enforcement_action_type_cd = ea.enforcement_action_type)
+  		INNER JOIN %Schema%cm_county_def ccd ON (ca.county_cd = ccd.county_cd)
+  		LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id = ff.facility_id AND ffcx.end_date IS NULL)
+		LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+  		WHERE ff.version_id=-1
+  	</searchEnforcementActions>
+  	<createEnforcementAttachment>
+		INSERT INTO %Schema%ce_enforcement_attachment(DOCUMENT_ID, ENFORCEMENT_ACTION_ID, ENF_ATTACHMENT_TYPE_CD) 
+		VALUES (?,?,?)
+	</createEnforcementAttachment>
+	<modifyEnforcementAttachment>
+		UPDATE %Schema%ce_enforcement_attachment
+		SET 
+		ENF_ATTACHMENT_TYPE_CD = ?,
+		LAST_MODIFIED = ?
+		WHERE DOCUMENT_ID = ? AND ENFORCEMENT_ACTION_ID = ? AND last_modified = ?
+	</modifyEnforcementAttachment>
+	<deleteEnforcementAttachment>
+		DELETE FROM %Schema%ce_enforcement_attachment where ENFORCEMENT_ACTION_ID = ?	and document_id = ?
+	</deleteEnforcementAttachment>
+  	<retrieveEnforcementAttachments>
+  		SELECT ea.ENFORCEMENT_ACTION_ID, ea.enf_attachment_type_cd as attachment_type_cd, 
+  			ea.last_modified AS ref_lm, def.enf_attachment_type_dsc, ${DocumentSQL.documentColumns}
+		FROM %Schema%ce_enforcement_attachment ea, %Schema%dc_document dd, 
+			%Schema%ce_enf_attachment_type_def def
+		WHERE ea.ENFORCEMENT_ACTION_ID = ?
+	      AND ea.document_id = dd.document_id
+		  AND ea.enf_attachment_type_cd = def.enf_attachment_type_cd
+  	</retrieveEnforcementAttachments>
+  	
+  	<retrieveEnforcementNotes>
+  		SELECT ${InfrastructureSQL.noteColumns}, enx.enforcement_action_id
+  		FROM %Schema%ce_enforcement_note_xref enx, %Schema%cm_note cn
+  		WHERE enx.enforcement_action_id = ?
+  		AND enx.note_id = cn.note_id
+  		ORDER BY note_id DESC
+	</retrieveEnforcementNotes>
+		
+	<deleteEnforcementNotes>
+		DELETE FROM %Schema%ce_enforcement_note_xref where enforcement_action_id = ?
+	</deleteEnforcementNotes> 
+	<addEnforcementNote>
+		INSERT INTO %Schema%ce_enforcement_note_xref(enforcement_action_id, note_id) VALUES (?, ?)
+	</addEnforcementNote>
+	<retrieveEnforcementActionAllTypes>
+		SELECT ENFORCEMENT_ACTION_TYPE_CD AS code, ENFORCEMENT_ACTION_TYPE_DSC AS description,
+			HPV_CRITERION_REQ,
+			FRV_TYPE_REQ,
+			deprecated,
+			last_modified 
+		FROM %Schema%CE_ENFORCEMENT_ACTION_TYPE_DEF 
+			ORDER BY ENFORCEMENT_ACTION_TYPE_DSC
+	</retrieveEnforcementActionAllTypes>
+	<retrieveEnforcementActionAllEvents>
+		SELECT ENFORCEMENT_ACTION_EVENT_CD AS code, ENFORCEMENT_ACTION_EVENT_DSC AS description,
+			ALLOW_MULTIPLE,
+			deprecated,
+			last_modified 
+		FROM %Schema%CE_ENFORCEMENT_ACTION_EVENT_DEF 
+			ORDER BY ENFORCEMENT_ACTION_EVENT_DSC
+	</retrieveEnforcementActionAllEvents>
+	<retrieveEnforcementActionAllEventDependencies>
+		SELECT ENFORCEMENT_ACTION_EVENT_DEP_CD AS code, ENFORCEMENT_ACTION_EVENT_CD AS description,
+			ENFORCEMENT_ACTION_EVENT_PRED_CD,
+			deprecated,
+			last_modified 
+		FROM %Schema%CE_ENFORCEMENT_ACTION_EVENT_DEP_DEF 
+			ORDER BY ENFORCEMENT_ACTION_EVENT_DEP_CD
+	</retrieveEnforcementActionAllEventDependencies>
+    
+    <retrieveEnforcementActionEventList>
+      SELECT event_id, enforcement_action_id, eae.enforcement_action_event_cd, event_dt, 
+        added_by, 
+        eae.last_modified as eae_lm,
+        enforcement_action_event_dsc
+        FROM %Schema%CE_ENFORCEMENT_ACTION_EVENT eae
+        JOIN %Schema%CE_ENFORCEMENT_ACTION_EVENT_DEF eaed ON (eaed.enforcement_action_event_cd = eae.enforcement_action_event_cd)
+        WHERE enforcement_action_id = ?
+        ORDER BY event_dt DESC
+    </retrieveEnforcementActionEventList>
+
+    <removeEnforcementActionEventList>
+      DELETE FROM %Schema%CE_ENFORCEMENT_ACTION_EVENT WHERE enforcement_action_id = ?
+    </removeEnforcementActionEventList>
+
+    <createEnforcementActionEvent>
+      INSERT INTO %Schema%CE_ENFORCEMENT_ACTION_EVENT 
+        (event_id, enforcement_action_id, enforcement_action_event_cd, event_dt, 
+        added_by)
+        VALUES (?, ?, ?, ?, ?)
+    </createEnforcementActionEvent>
+
+    <modifyEnforcementActionEvent>
+      UPDATE %Schema%CE_ENFORCEMENT_ACTION_EVENT 
+        SET event_id = ?, enforcement_action_id = ?,  enforcement_action_event_cd = ?, 
+        	event_dt = ?,
+            added_by = ?, 
+            last_modified = ?
+        WHERE event_id = ? AND enforcement_action_id = ? AND last_modified = ?
+    </modifyEnforcementActionEvent>
+
+    <removeEnforcementActionEvent>
+      DELETE FROM %Schema%CE_ENFORCEMENT_ACTION_EVENT  WHERE event_id = ? AND enforcement_action_id = ? AND last_modified = ?
+    </removeEnforcementActionEvent>
+    
+    <retrieveEnforcementActionByFacilityId>
+    	SELECT ${EnforcementActionSQL.EnforcementActionColumns} 
+    		FROM %Schema%ce_enf_action ea
+    		WHERE facility_id = ?
+    </retrieveEnforcementActionByFacilityId>
+  </EnforcementActionSQL>
+</root>

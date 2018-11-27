@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<FacilityInventoryXMLSQL>
+		<generateFacilityInventoryXML>
+						;WITH XMLNAMESPACES (
+				'http://www.exchangenetwork.net/schema/header/2' as hdr,
+				'http://www.exchangenetwork.net/schema/cer/1' as cer
+				)
+			select
+			(
+				select
+					"@id" = ?,
+					'http://www.exchangenetwork.net/schema/header/2 http://www.exchangenetwork.net/schema/header/2/header_v2.0.xsd' as "@xsi:schemaLocation",
+					(
+						select
+							'hdr:AuthorName' = ?,
+							'Wyoming DEQ' as 'hdr:OrganizationName',
+							'EIS' as 'hdr:DocumentTitle',
+							SYSDATETIMEOFFSET() as 'hdr:CreationDateTime',
+							'EIS_v1_0' as 'hdr:DataFlowName',
+							'hdr:SenderContact' = ?,
+							( 
+								select
+									'SubmissionType' as 'hdr:PropertyName',
+									'hdr:PropertyValue' = ?
+									
+									FOR XML PATH ('hdr:Property'), type
+							),
+							( 
+								select
+									'DataCategory' as 'hdr:PropertyName',
+									'FacilityInventory' as 'hdr:PropertyValue'
+									
+									FOR XML PATH ('hdr:Property'), type
+							) 
+					
+						FOR XML PATH ('hdr:Header'), type
+					),
+					(
+						select
+						(
+							select
+							(
+								select
+									'http//www.exchangenetwork.net/schema/cer/1 http://www.exchangenetwork.net/schema/cer/1/index.xsd' as "@xsi:schemaLocation",
+									'cer:UserIdentifier' = ?,
+									'WYDEQ' as 'cer:ProgramSystemCode',
+									'cer:EmissionsYear' = ?,
+									'cer:SubmittalComment' = ?,
+									(
+										select
+										(
+											select 
+												UPPER(cerr.CERR_CLASS_DESC) as "cer:FacilityCategoryCode",
+												f.FACILITY_NM as "cer:FacilitySiteName",
+												f.FACILITY_DESC as "cer:FacilitySiteDescription",
+												CASE f.OPERATING_STATUS_CD 
+													WHEN 'sd' THEN 'ps'
+													ELSE f.OPERATING_STATUS_CD
+												END as "cer:FacilitySiteStatusCode",
+												(
+													select
+														fnx.naics_cd as 'cer:NAICSCode',
+														'Y' as "cer:NAICSPrimaryIndicator"
+														from dbo.fp_facility f1
+														inner join dbo.fp_facility_naics_xref fnx
+														on fnx.fp_id = f1.FP_ID
+														WHERE f1.FP_ID = f.fp_id
+							
+														FOR XML PATH ('cer:FacilityNAICS'), type
+												),
+												
+												( 
+													Select Distinct
+														RIGHT(f.FACILITY_ID, 5) as "cer:FacilitySiteIdentifier",
+														'WYDEQ' as "cer:ProgramSystemCode",
+														county.FIPS_COUNTY_CD as "cer:StateAndCountyFIPSCode"
+						
+														FROM dbo.fp_facility f2	
+														left outer JOIN dbo.FP_FACILITY_Address_XREF fax
+														on f2.FP_ID = fax.FP_ID 
+														left outer JOIN dbo.CM_ADDRESS a
+														on fax.address_ID = a.Address_ID
+														left outer JOIN dbo.CM_COUNTY_DEF county
+														on a.COUNTY_CD = county.COUNTY_CD 
+														where f.FP_ID = f2.FP_ID 
+							
+														FOR XML PATH ('cer:FacilityIdentification'), type
+												), 
+												(
+													select
+														 ISNULL(addr.QUARTER_QUARTER + ',', '')
+															+ ISNULL(addr.quarter + ',', '')
+															+ ISNULL(convert(VARCHAR, addr.SECTION) + ',', '')
+															+ ISNULL(addr.TOWNSHIP + ',', '')
+															+ ISNULL(addr.RANGE, '') as "cer:LocationAddressText",
+														county.COUNTY_NM  as "cer:LocalityName",
+														addr.STATE_CD as "cer:LocationAddressStateCode",
+														addr.ZIP5 as "cer:LocationAddressPostalCode",
+														addr.COUNTRY_CD as "cer:LocationAddressCountryCode"
+														from dbo.fp_facility f3 
+														inner join dbo.FP_FACILITY_ADDRESS_XREF axref on f3.FP_ID = axref.FP_ID
+														inner join dbo.CM_ADDRESS addr on addr.ADDRESS_ID = axref.ADDRESS_ID
+														inner join dbo.CM_COUNTY_DEF county on county.COUNTY_CD = addr.COUNTY_CD
+														where f3.fp_id=f.fp_ID
+	
+														FOR XML PATH ('cer:FacilitySiteAddress'), type
+												),
+												(
+													select
+														CAST(addr.LATITUDE  AS NUMERIC(8,5)) as "cer:LatitudeMeasure",
+														CAST(addr.LONGITUDE  AS NUMERIC(10,5)) as "cer:LongitudeMeasure"
+														from dbo.fp_facility f4 
+														inner join dbo.FP_FACILITY_ADDRESS_XREF axref on f4.FP_ID = axref.FP_ID
+														inner join dbo.CM_ADDRESS addr on addr.ADDRESS_ID = axref.ADDRESS_ID
+														where f4.FP_ID = f.FP_ID
+						
+														FOR XML PATH ('cer:FacilitySiteGeographicCoordinates'), type
+												),
+												(
+													select
+													(
+														select
+															'OW' as "cer:AffiliationTypeCode",
+															(
+																select
+																	comp.NAME as "cer:OrganizationFormalName"
+																	from dbo.fp_facility f5 
+																	inner join dbo.FP_FACILITY_COMPANY_XREF cxref on f5.FACILITY_ID = cxref.FACILITY_ID
+																	inner join dbo.CM_COMPANY comp on comp.COMPANY_ID = cxref.COMPANY_ID
+																	WHERE f5.FP_ID = f.FP_ID AND cxref.END_DATE IS NULL
+	
+																	FOR XML PATH ('cer:AffiliationOrganization'), type
+															)
+														FOR XML PATH ('cer:FacilitySiteAffiliation'), type
+													)
+												), 
+												(
+													select
+														emu.EU_DESC as "cer:UnitDescription", 
+														'cer:UnitTypeCode' = (SELECT TOP 1 scc51.EPA_UNIT_TYPE_CD FROM CM_SCC scc51 
+																INNER JOIN FP_EMISSION_PROCESS ep51 on ep51.SCC_ID = scc51.SCC_ID
+																WHERE ep51.EMU_ID = emu.EMU_ID ORDER BY ep51.PROCESS_ID ASC
+														),
+														emu.OPERATING_STATUS_CD as "cer:UnitStatusCode",
+														CONVERT(VARCHAR(10), emu.INITIAL_STARTUP_DT, 120) as "cer:UnitOperationDate",
+														(
+															select
+																emu.CORR_EPA_EMU_ID as "cer:Identifier",
+																'WYDEQ' as "cer:ProgramSystemCode"
+																
+																FOR XML PATH ('cer:UnitIdentification'), type
+														),
+														(
+															select
+																ep.SCC_ID as "cer:SourceClassificationCode",
+																ep.EMISSION_PROCESS_DSC as "cer:ProcessDescription",
+															(
+																select
+																	CAST(emu.CORR_EPA_EMU_ID AS VARCHAR) + '-' + ep.PROCESS_ID as "cer:Identifier",
+																	'WYDEQ' as "cer:ProgramSystemCode"
+																	
+																	FOR XML PATH ('cer:ProcessIdentification'), type
+															),
+															(  SELECT 
+																	'Emission process controls' as 'cer:ControlApproachDescription',
+																	'Emission process controls' as 'cer:ControlApproachComment',
+																	(
+																		SELECT 
+																			CASE ce1.EQUIPMENT_TYPE_CD
+																				WHEN 'ADS' THEN '48'
+																				WHEN 'BAG' THEN '127'
+																				WHEN 'CAI' THEN '109'
+																				WHEN 'CNC' THEN '139'
+																				WHEN 'CON' THEN '132'
+																				WHEN 'CYC' THEN '75'
+																				WHEN 'DSC' THEN '119'
+																				WHEN 'ESP' THEN '128'
+																				WHEN 'FDS' THEN '217'
+																				WHEN 'FGR' THEN '26'
+																				WHEN 'FLA' THEN '23'
+																				WHEN 'FRT' THEN '99'
+																				WHEN 'LNB' THEN '205'
+																				WHEN 'OFA' THEN '204'
+																				WHEN 'OTH' THEN '311'
+																				WHEN 'OXI' THEN '312'
+																				WHEN 'PAF' THEN '127'
+																				WHEN 'SEC' THEN '201'
+																				WHEN 'TIN' THEN '133'
+																				WHEN 'VRU' THEN '110'
+																				WHEN 'WSC' THEN '141'
+																				ELSE 'Unknown'
+																			END AS 'cer:ControlMeasureCode'
+																		FROM dbo.udf_GetAssociatedControlEquipment(ep.FPNODE_ID) ce1
+																			INNER JOIN dbo.FP_POLLUTANTS_CONTROLLED pc on pc.FPNODE_ID = ce1.FPNODE_ID
+																			 WHERE pc.POLLUTANT_CD not in ('PM-PRI', 'NO', 'NO2', 'VE', '7664939', 'HAPS_TOT', 'FL', '199', '95501', 'CO2E', 'NMOCs', '195', '67641', '74931', '74986', '246', '40', 'PM-FIL')
+																		FOR XML PATH ('cer:ControlMeasure'), type
+																	),
+																	(
+																		select 
+																			poll.PollutantCode as 'cer:PollutantCode',
+																			poll.PercentControlMeasuresReductionEfficiency as 'cer:PercentControlMeasuresReductionEfficiency'
+																		 from
+																			(select distinct 
+																				fpc1.FPNODE_ID,
+																				fpc1.POLLUTANT_CD as 'PollutantCode',
+																				CAST(ISNULL(NULLIF(fpc1.OPERATING_CONTROL_EFF, ''), 0) * (fpc1.CAPTURE_EFF/100.0) as NUMERIC(38,1)) as 'PercentControlMeasuresReductionEfficiency'
+																				FROM dbo.udf_GetAssociatedControlEquipment(ep.FPNODE_ID) ce2
+																				inner join FP_POLLUTANTS_CONTROLLED fpc1 on fpc1.FPNODE_ID = ce2.FPNODE_ID
+																					WHERE fpc1.POLLUTANT_CD not in ('PM-PRI','NO', 'NO2', 'VE', '7664939', 'HAPS_TOT', 'FL', '199', '95501', 'CO2E', 'NMOCs', '195', '67641', '74931', '74986', '246', '40', 'PM-FIL')
+																			) poll
+																		FOR XML PATH ('cer:ControlPollutant'), type
+																	)
+																FROM dbo.FP_CONTROL_EQUIP ceq
+																	WHERE ceq.FPNODE_ID in
+																	( select top 1 ace.fpnode_id FROM dbo.udf_GetAssociatedControlEquipment(ep.FPNODE_ID) ace
+																		inner join FP_POLLUTANTS_CONTROLLED fpc on fpc.FPNODE_ID = ace.FPNODE_ID
+																				WHERE fpc.POLLUTANT_CD not in ('PM-PRI','NO', 'NO2', 'VE', '7664939', 'HAPS_TOT', 'FL', '199', '95501', 'CO2E', 'NMOCs', '195', '67641', '74931', '74986', '246', '40', 'PM-FIL')
+																	)
+																FOR XML PATH ('cer:ProcessControlApproach'), type
+															),
+															(
+																select	
+																	CAST(rpa.RELEASE_POINT_APPORTIONMENT AS NUMERIC(38,1))as 'cer:AveragePercentEmissions',
+																	(
+																		select
+																			ep.PROCESS_ID + '-' + egp.RELEASE_POINT_ID  as "cer:Identifier",
+																			'WYDEQ' as "cer:ProgramSystemCode"
+																			
+																			FOR XML PATH ('cer:ReleasePointApportionmentIdentification'), type
+																	)
+																	FROM dbo.udf_GetReleasePointApportionment(ep.FPNODE_ID) rpa
+																	INNER JOIN dbo.FP_EGRESS_POINT egp ON egp.FPNODE_ID = rpa.TO_FPNODE_ID
+																	INNER JOIN dbo.FP_NODE fn ON fn.FPNODE_ID = egp.FPNODE_ID
+																	INNER JOIN dbo.FP_FACILITY fp8 ON fp8.FP_ID = fn.FP_ID
+																	WHERE fp8.FP_ID = f.FP_ID
+																		
+																	FOR XML PATH ('cer:ReleasePointApportionment'), type
+															)
+													from dbo.FP_EMISSION_PROCESS ep
+													INNER JOIN dbo.FP_EMISSIONS_UNIT emu1 ON emu1.EMU_ID=ep.EMU_ID
+													INNER JOIN dbo.FP_FACILITY fp7 ON fp7.FP_ID = emu1.FP_ID
+													WHERE fp7.FP_ID = f.FP_ID AND emu1.EMU_ID = emu.EMU_ID
+													
+													FOR XML PATH ('cer:UnitEmissionsProcess'), type
+											)
+	
+											from dbo.FP_EMISSIONS_UNIT emu
+											INNER JOIN dbo.FP_FACILITY fp6 ON fp6.FP_ID = emu.FP_ID
+											INNER JOIN dbo.RP_REPORT_EU reu ON emu.CORR_EPA_EMU_ID = reu.CORR_ID
+											WHERE 
+												fp6.FP_ID = f.FP_ID
+												AND reu.EXEMPT_BY_EG71 = 'N'
+												AND reu.ZERO_EMISSIONS = 'N'
+												AND er.EMISSIONS_RPT_ID = reu.EMISSIONS_RPT_ID
+			
+											FOR XML PATH ('cer:EmissionsUnit'), type
+										),
+										(
+											select 
+												eptd.EPA_EGRESS_POINT_TYPE_CD as "cer:ReleasePointTypeCode",
+												ep.DAPC_DSC as "cer:ReleasePointDescription",
+												ISNULL(ep.RELEASE_HEIGHT, 0.00) as "cer:ReleasePointStackHeightMeasure",
+												'FT' as "cer:ReleasePointStackHeightUnitofMeasureCode",
+												ISNULL(ep.DIAMETER, 0.00) as "cer:ReleasePointStackDiameterMeasure",
+												'FT' as "cer:ReleasePointStackDiameterUnitofMeasureCode",
+												ISNULL(ep.EXIT_GAS_VELOCITY, 0.00) as "cer:ReleasePointExitGasVelocityMeasure",
+												'FPS' as "cer:ReleasePointExitGasVelocityUnitofMeasureCode",
+												ISNULL(ep.EXIT_GAS_FLOW_AVG, 0.00) as "cer:ReleasePointExitGasFlowRateMeasure",
+												'ACFM' as "cer:ReleasePointExitGasFlowRateUnitofMeasureCode",
+												ISNULL(ep.EXIT_GAS_TEMP_AVG, 100.00) as "cer:ReleasePointExitGasTemperatureMeasure",
+												ep.OPERATING_STATUS_CD as "cer:ReleasePointStatusCode",
+												(
+													select
+														ep.RELEASE_POINT_ID as "cer:Identifier",
+														'WYDEQ' as "cer:ProgramSystemCode"
+				
+														FOR XML PATH ('cer:ReleasePointIdentification'), type
+												),
+												(
+													select 
+														ISNULL(CAST(ep.LAT_DEG AS NUMERIC(8,5)), faddr.LATITUDE) AS "cer:LatitudeMeasure",
+														ISNULL(CAST(ep.LONG_DEG AS NUMERIC(8,5)), faddr.LONGITUDE) AS "cer:LongitudeMeasure",
+														'025' AS "cer:HorizontalCollectionMethodCode",
+														'106' AS "cer:GeographicReferencePointCode",
+														'056' AS "cer:CoordinateDataSourceCode"
+														FROM 
+														dbo.CM_ADDRESS faddr 
+														inner join dbo.FP_FACILITY_ADDRESS_XREF faxref on faddr.ADDRESS_ID = faxref.address_id
+														where faxref.FP_ID = f.FP_ID
+													
+														FOR XML PATH ('cer:ReleasePointGeographicCoordinates'), type
+												)
+											from dbo.fp_facility f6
+											inner join dbo.FP_NODE fpn on fpn.FP_ID = f6.fp_id
+											inner join dbo.FP_EGRESS_POINT ep on ep.FPNODE_ID = fpn.FPNODE_ID
+											inner join dbo.FP_EGRESS_POINT_TYPE_DEF eptd on ep.EGRESS_POINT_TYPE_CD = eptd.EGRESS_POINT_TYPE_CD
+											where f6.FP_ID = f.FP_ID
+											
+											FOR XML PATH ('cer:ReleasePoint'), type
+										)
+										from  dbo.fp_FACILITY f
+										LEFT OUTER JOIN dbo.FP_CERR_CLASS_DEF cerr ON f.CERR_CLASS_CD = cerr.CERR_CLASS_CD
+										INNER JOIN dbo.RP_EMISSIONS_RPT er ON f.FP_ID = er.FP_ID
+										WHERE er.EMISSIONS_RPT_ID IN
+										( SELECT res.EMISSIONS_RPT_ID FROM
+												(	SELECT ROW_NUMBER() OVER (PARTITION BY fp.FACILITY_ID ORDER BY rp.EMISSIONS_RPT_ID DESC) RN, rp.EMISSIONS_RPT_ID from dbo.RP_EMISSIONS_RPT rp
+														INNER JOIN dbo.FP_FACILITY fp ON fp.FP_ID = rp.FP_ID
+														INNER JOIN dbo.RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF rptscx ON rptscx.EMISSIONS_RPT_ID = rp.EMISSIONS_RPT_ID
+														INNER JOIN dbo.SC_EMISSIONS_REPORT scr ON scr.SC_EMISSIONS_REPORT_ID = rptscx.SC_EMISSIONS_REPORT_ID
+														INNER JOIN dbo.RP_REGULATORY_REQUIREMENT_TYPE_DEF rrdef ON rrdef.REGULATORY_REQUIREMENT_CODE = scr.REGULATORY_REQUIREMENT_CD 
+														WHERE 
+															rp.REPORT_YEAR = ? 
+															AND rp.RPT_RECEIVED_STATUS_CD='10aa'
+															AND rrdef.REPORT_TO_USEPA = 'Y'
+															AND fp.PERMIT_CLASSIFICATION_CD IN (@pos1)
+															AND fp.FACILITY_TYPE_CD NOT IN (@pos2)
+												) res WHERE res.RN = 1
+										)
+										FOR XML PATH ('cer:FacilitySite'),type
+								)
+							) 
+							FOR XML PATH('cer:CERS'), type, ELEMENTS XSINIL
+						)
+					) 
+					FOR XML PATH ('hdr:Payload'), type
+				)
+				FOR XML PATH ('hdr:Document'), type, ELEMENTS XSINIL
+			)
+		</generateFacilityInventoryXML>
+	</FacilityInventoryXMLSQL>
+</root>	

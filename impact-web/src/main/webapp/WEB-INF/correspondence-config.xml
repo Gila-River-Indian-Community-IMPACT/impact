@@ -1,0 +1,267 @@
+<!DOCTYPE faces-config PUBLIC
+    "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+    "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--Correspondence Tab -->
+	<!-- menu items -->
+	<managed-bean>
+		<managed-bean-name>menuItem_correspondence</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_correspondence</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Correspondence</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>correspondence</value>
+		</managed-property>
+		<managed-property>
+			<property-name>children</property-name>
+			<list-entries>
+				<value-class>us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem</value-class>
+				<value>#{menuItem_correspondenceSearch}</value>
+				<value>#{menuItem_correspondenceDetail}</value>
+				<value>#{menuItem_correspondenceCreate}</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.correspondenceSearch.refreshSearch</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_correspondenceDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_correspondenceDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Correspondence Detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>correspondence.detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>disabled</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/correspondence/correspondence.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.correspondenceDetail.refreshCorrespondenceDetail</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_correspondenceSearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_correspondenceSearch</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Correspondence Search</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>correspondence.search</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/correspondence/correspondenceSearch.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>correspondenceSearch</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>menuItem_correspondenceCreate</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_correspondenceCreate</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Create Correspondence</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>correspondence.create</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/correspondence/createCorrespondence.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.createCorrespondence.refreshCreateCorrespondence</value>
+		</managed-property>
+	</managed-bean>	
+
+	<managed-bean>
+		<managed-bean-name>correspondenceSearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.correspondence.CorrespondenceSearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>correspondenceService</property-name>
+			<value>#{correspondenceBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>correspondenceDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.correspondence.CorrespondenceDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>correspondenceService</property-name>
+			<value>#{correspondenceBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>documentService</property-name>
+			<value>#{documentBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>enforcementActionService</property-name>
+			<value>#{enforcementActionBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+		<managed-property>
+            <property-name>workFlowService</property-name>
+            <value>#{readWorkFlowBO}</value>
+        </managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>createCorrespondence</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.correspondence.CreateCorrespondence
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>correspondenceService</property-name>
+			<value>#{correspondenceBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>documentService</property-name>
+			<value>#{documentBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>enforcementActionService</property-name>
+			<value>#{enforcementActionBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+	</managed-bean>	
+
+	<!-- Backing beans -->
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>correspondence.detail</from-outcome>
+			<to-view-id>/correspondence/correspondence.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>correspondence.search</from-outcome>
+			<to-view-id>/correspondence/correspondenceSearch.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>correspondence.create</from-outcome>
+			<to-view-id>/correspondence/createCorrespondence.jsp</to-view-id>
+			<redirect />
+		</navigation-case>		
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/correspondence/correspondenceSearch.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{correspondenceSearch.submitSearch}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/correspondence/correspondenceSearch.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{correspondenceSearch.reset}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/correspondence/correspondenceSearch.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/correspondence/correspondenceSearch.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{correspondenceDetail.submitFromJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/correspondence/correspondence.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:linkToEnforcement</from-outcome>
+			<to-view-id>/correspondence/linkToEnforcement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:deletCorrespondence</from-outcome>
+			<to-view-id>/correspondence/deleteCorrespondence.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+	<navigation-case>
+      <from-outcome>correspondenceSearch</from-outcome>
+      <to-view-id>/correspondence/correspondenceSearch.jsp</to-view-id>
+      <redirect/>
+    </navigation-case>
+    </navigation-rule>
+
+</faces-config>

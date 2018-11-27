@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Facilities Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--Facilities Tab -->
+
+	<!-- menu items -->
+
+
+	<managed-bean>
+		<managed-bean-name>facilitySearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.app.facility.FacilitySearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>facilityReference</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.facility.FacilityReference
+		</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+		<managed-property>
+			<property-name>facilityDAO</property-name>
+			<value>#{readOnlyFacilityDAO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>facilityProfile</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.facility.FacilityProfile
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>facilityReference</property-name>
+			<value>#{facilityReference}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+
+	</managed-bean>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:emissionUnitHelpInfo</from-outcome>
+			<to-view-id>/facilities/emissionUnitHelpInfo.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:addressDetail</from-outcome>
+			<to-view-id>/facilities/addressDetail.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:naicsDetail</from-outcome>
+			<to-view-id>/facilities/naicsDetail.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>facilities.profile.homeEuSummary</from-outcome>
+			<to-view-id>/facilities/homeEuSummary.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>facilities.profile.homeCeSummary</from-outcome>
+			<to-view-id>/facilities/homeCeSummary.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>facilities.profile.homeEgpSummary</from-outcome>
+			<to-view-id>/facilities/homeEgpSummary.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>facilities.profile.history</from-outcome>
+			<to-view-id>/facilities/history.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>facilities.profile.homeContinuousMonitors</from-outcome>
+			<to-view-id>/facilities/homeContinuousMonitors.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>facilities.profile.homeFacilityCemComLimits</from-outcome>
+			<to-view-id>/facilities/homeFacilityCemComLimits.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:facilityProfileReport</from-outcome>
+			<to-view-id>/facilities/printFacProfile.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:engineReplacementDetail</from-outcome>
+			<to-view-id>/facilities/engineReplacementDetail.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:apiDetail</from-outcome>
+			<to-view-id>/facilities/apiDetail.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:emissionUnitReplacementDetail</from-outcome>
+			<to-view-id>/facilities/emissionUnitReplacementDetail.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>facilities.profile.applications</from-outcome>
+			<to-view-id>/facilities/applications.jsp</to-view-id>
+			<redirect />
+	</navigation-case>
+	<navigation-case>
+			<from-outcome>facilities.profile.compReports</from-outcome>
+			<to-view-id>/facilities/compReports.jsp</to-view-id>
+			<redirect />
+	</navigation-case>
+	<navigation-case>
+			<from-outcome>facilities.profile.emissionReports</from-outcome>
+			<to-view-id>/facilities/reports.jsp</to-view-id>
+			<redirect />
+	</navigation-case>
+	<navigation-case>
+			<from-outcome>emissionReport</from-outcome>
+			<to-view-id>/reports/reportDetail.jsp</to-view-id>
+			<redirect />
+	</navigation-case>
+	<navigation-case>
+			<from-outcome>facilities.profile.permits</from-outcome>
+			<to-view-id>/facilities/permits.jsp</to-view-id>
+			<redirect />
+	</navigation-case>
+</navigation-rule>
+</faces-config>

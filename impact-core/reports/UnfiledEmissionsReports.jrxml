@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="UnfiledEmissionsReports"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="552"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="DOLAA" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EmissionRpting" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportingYear" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT dld.do_laa_dsc, facility_id, facility_nm, cma.address1, cma.address2, city, state_cd, zip4, zip5,
+       title_cd, first_nm, middle_nm, last_nm, suffix, email_address_txt, phone_no, phone_extension_val,
+       year, emissions_rpt_dsc
+  FROM Stars2.fp_facility fp
+    INNER JOIN Stars2.cm_do_laa_def dld
+      ON (fp.do_laa_cd = dld.do_laa_cd)
+    INNER JOIN Stars2.fp_facility_address_xref fax 
+      ON (fp.fp_id = fax.fp_id)
+    INNER JOIN Stars2.cm_address cma
+      ON (fax.address_id = cma.address_id and cma.end_dt is null)
+    INNER JOIN Stars2.cm_contact_contact_type_xref ccx
+      ON (fp.facility_id = ccx.facility_id 
+            AND fp.version_id = -1
+            AND ccx.contact_type_cd = 'oper' 
+            AND ccx.end_date IS NULL)
+    INNER JOIN Stars2.cm_contact ct
+      ON (ccx.contact_id = ct.contact_id)
+    INNER JOIN Stars2.fp_yearly_reporting_category yrc
+      ON (fp.facility_id = yrc.facility_id AND (yrc.rpt_received_status_cd = '03rs'
+      OR yrc.rpt_received_status_cd = '05nv'))
+    INNER JOIN Stars2.fp_emission_reporting_def ferd
+      ON (ferd.emissions_rpt_cd = yrc.emissions_rpt_cd)
+  WHERE fp.do_laa_cd LIKE $P{DOLAA}
+    AND yrc.emissions_rpt_cd LIKE $P{EmissionRpting}
+    AND yrc.year LIKE $P{reportingYear}
+  ORDER BY do_laa_dsc, facility_id, year]]></queryString>
+
+	<field name="DO_LAA_DSC" class="java.lang.String"/>
+	<field name="FACILITY_ID" class="java.lang.String"/>
+	<field name="FACILITY_NM" class="java.lang.String"/>
+	<field name="ADDRESS1" class="java.lang.String"/>
+	<field name="ADDRESS2" class="java.lang.String"/>
+	<field name="CITY" class="java.lang.String"/>
+	<field name="STATE_CD" class="java.lang.String"/>
+	<field name="ZIP4" class="java.lang.String"/>
+	<field name="ZIP5" class="java.lang.String"/>
+	<field name="TITLE_CD" class="java.lang.String"/>
+	<field name="FIRST_NM" class="java.lang.String"/>
+	<field name="MIDDLE_NM" class="java.lang.String"/>
+	<field name="LAST_NM" class="java.lang.String"/>
+	<field name="SUFFIX" class="java.lang.String"/>
+	<field name="EMAIL_ADDRESS_TXT" class="java.lang.String"/>
+	<field name="PHONE_NO" class="java.lang.String"/>
+	<field name="PHONE_EXTENSION_VAL" class="java.lang.String"/>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="EMISSIONS_RPT_DSC" class="java.lang.String"/>
+
+
+		<group  name="DO_LAA_DSC" >
+			<groupExpression><![CDATA[$F{DO_LAA_DSC}]]></groupExpression>
+			<groupHeader>
+			<band height="50"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="5"
+						y="8"
+						width="543"
+						height="31"
+						backcolor="#CCCCCC"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DO_LAA_DSC}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="7"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="50"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="112"
+						y="9"
+						width="323"
+						height="32"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="24"/>
+					</textElement>
+				<text><![CDATA[Unfiled Emissions Inventory]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="8"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="7"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="82"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="18"
+						y="6"
+						width="518"
+						height="18"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Facility ID: " + $F{FACILITY_ID} + ", Report Year: " 
++ $F{YEAR}.toString() + " " + $F{EMISSIONS_RPT_DSC} + ", Facility Name: " + $F{FACILITY_NM}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="18"
+						y="42"
+						width="359"
+						height="18"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ADDRESS1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="18"
+						y="60"
+						width="359"
+						height="18"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CITY} + ", " + $F{STATE_CD} + " " + $F{ZIP5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="18"
+						y="24"
+						width="359"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{TITLE_CD} == null ? "" : $F{TITLE_CD}) + " " + $F{FIRST_NM} + " " + $F{LAST_NM} 
++ ", Phone: " + $F{PHONE_NO} + ", email: " + ($F{EMAIL_ADDRESS_TXT} == null ? "" : $F{EMAIL_ADDRESS_TXT})]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="9"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="10"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="10"  isSplitAllowed="true" >
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="8"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,35 @@
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+
+    <weaver>
+
+        <!-- only weave classes in our application-specific packages -->
+        <include within="us.oh.state.epa.stars2..*"/>
+
+        <include within="us.wy.state.deq.impact..*"/>
+
+        <include within="org.gricdeq..*"/>
+        <exclude within="org.gricdeq.scs.schema..*"/>
+        <include within="net.exchangenetwork.wsdl.sharedcromerr.secondfactorauth._1.SharedCromerrException"/>
+        <include within="net.exchangenetwork.wsdl.sharedcromerr.signandcor._1.SharedCromerrException"/>
+        <include within="net.exchangenetwork.wsdl.sharedcromerr.usermgmt._1.SharedCromerrException"/>
+        <include within="net.exchangenetwork.wsdl.sharedcromerr.portal._1.SharedPortalException"/>
+        
+        <include within="oracle.adfinternal.view.faces.share.util.MultipartFormHandler"/>
+
+        <include within="oracle.adf.view.faces.model.UploadedFile"/>
+        <include within="oracle.adfinternal.view.faces.webapp..*"/>
+        
+    </weaver>
+
+    <aspects>
+
+        <!-- weave in just this aspect -->
+        <aspect name="us.wy.state.deq.impact.aspects.RetryAspect"/>
+        <aspect name="us.wy.state.deq.impact.aspects.MultipartFormHandlerAspect"/>
+        <aspect name="us.wy.state.deq.impact.aspects.UploadedFileAspect"/>
+
+    </aspects>
+
+</aspectj>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+  <app>
+<!-- 
+	<app createNew="no" application-code="stars2" tomcat="yes" displayUncertainArea="false">
+		<assert on="yes" />
+
+		<Schemas alwaysUse="true">
+			<ReadOnly name="dbo" />
+		</Schemas>
+
+        <enviteRestServiceURI jndiName="app/enviteRestServiceURI" />
+
+        <enviteApplicationKey jndiName="app/enviteApplicationKey" />
+
+        <defaultEPAPortal jndiName="app/defaultEPAPortal" />
+		
+		<dataMigrated jndiName="app/dataMigrated" />
+
+		<timeZone>America/Detroit</timeZone>
+
+		<authentication component-class="us.oh.state.epa.stars2.userAuthImpls.Stars2UserAuth"
+			is-singleton="true" database="app.database.default"
+			passwordEncryptionAlgorithm="none" />
+
+		<WorkFlow component-class="us.oh.state.epa.stars2.workflow.engine.WorkFlowEngine"
+			is-singleton="true" load-at-startup="true" />
+
+		<Scheduler component-class="us.oh.state.epa.stars2.scheduler.Stars2Scheduler"
+			is-singleton="true" load-at-startup="false" />
+
+		<ManagementReports directory-prefix="C:\Projects\Stars2\reports\" />
+
+		<fileStore>
+			<rootPath jndiName="app/fileStore/rootPath" />
+			<protocol jndiName="app/fileStore/protocol" />
+			<host jndiName="app/fileStore/host" />
+			<port jndiName="app/fileStore/port" />
+			<urlPath jndiName="app/fileStore/urlPath" />
+		</fileStore>
+
+        <database>
+			<j2ee
+				component-class="us.oh.state.epa.stars2.framework.dbConnection.ContainerConnectionManager"
+				is-singleton="true" data-source="jdbc/impactDS" />
+		</database>
+
+		<AdlibInputDir value="N:\\oldtest\Adlib\In" />
+		<AdlibFileInputDir value="N:\\oldtest\Adlib\FileIn" />
+		<AdlibFileOutputDir value="N:\\oldtest\Adlib\FileOut" />
+		<AdlibDTDFileName
+			value="C:\Adlib Express\Job Ticket Samples\AdlibExpress.dtd" />
+		<AdlibFileStoreRoot value="\\cnas\dapc\test\attachments" />
+		<PermitsIssuedDir value="P:\\test\\permits_issued" />
+		
+        <buildVersion>Build ID: ${project.version}</buildVersion>
+-->
+	</app>
+</root>

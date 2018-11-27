@@ -1,0 +1,2719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<FacilitySQL>
+		<pollutantColumns>pol.pollutant_cd, pollutant_dsc,
+			pol.last_modified AS
+			pollutant_lm
+		</pollutantColumns>
+		<facilityListColumns>ff.fp_id, ff.facility_id, ff.version_id,
+			facility_nm, ff.operating_status_cd, ff.permit_status_cd,
+			ca.do_laa_cd,
+			ff.permit_classification_cd, ff.portable,
+			ff.portable_group_cd, ff.last_modified AS facility_lm,
+			ff.facility_type_cd,
+			ccm.name, ccm.cmp_id
+		</facilityListColumns>
+		<facilityRequestListColumns>ff.request_id, 
+			ff.contact_id,
+			ff.facility_nm, facility_desc, 
+			ff.operating_status_cd, 
+			fpft.FACILITY_TYPE_CD,
+			fpft.FACILITY_TYPE_DSC,
+			ff.memo,
+			ff.submit_dt,
+			ff.req_id,
+			ff.cnt_id,
+			ff.request_status_cd,
+			ff.address_id, ff.last_modified AS facility_request_lm,
+			ccm.name, ccm.cmp_id, ccm.company_id, 
+			cc.first_nm, cc.last_nm, cc.envite_username, cc.phone_no, cc.email_address_txt
+		</facilityRequestListColumns>
+		<facilityHistListColumns>ff.fp_id, ff.facility_id, ff.version_id,
+			ff.facility_desc,
+			ff.facility_nm, ff.start_dt, ff.end_dt,
+			ff.operating_status_cd,
+			ff.permit_classification_cd,
+			ff.facility_type_cd
+		</facilityHistListColumns>
+		<contactHistListColumns>ff.fp_id, ff.facility_id, ff.version_id,
+			ff.facility_desc, ff.facility_nm,
+			cc.contact_id, cc.first_nm,
+			cc.last_nm, cc.middle_nm, cc.company_id,
+			cc.phone_no,
+			ccctx.contact_id, ccctx.contact_type_cd, ccctx.start_date AS
+			start_dt,
+			ccctx.end_date AS end_dt
+		</contactHistListColumns>
+		<facilityColumns>ff.fp_id, ff.transitional_status_cd,
+			ff.emissions_rpt_cd, ff.permit_classification_cd,
+			ff.facility_id,
+			ff.do_laa_cd, ff.version_id, ff.facility_nm,
+			ff.facility_desc,
+			ff.start_dt, ff.end_dt, ff.operating_status_cd,
+			ff.portable,
+			ff.portable_group_cd, ff.last_shutdown_date,
+			ff.inactive_date,
+			ff.copy_on_change, ff.mact_ind, ff.neshaps_ind,
+			ff.nsps_ind,
+			ff.psd_ind,
+			ff.nonattainment_nsr_ind, ff.ghg_ind,
+			ff.permit_status_cd,
+			ff.sec112_ind,
+			ff.federal_SCSC_ID,
+			ff.intra_state_voucher_flag,
+			ff.core_place_id,
+			ff.tv_cert_report_due_date,
+			ff.tiv_ind, ff.valid,
+			ff.submitted,
+			ff.portable_group_type_cd, ff.type_a,
+			ff.last_submission_type,
+			ff.last_submission_version, ff.last_modified
+			AS facility_lm,
+			ff.govt_facility_type_cd,
+			ff.cerr_class_cd,
+			ff.facility_type_cd, ff.facility_registry_no AS afs,
+			ff.air_program_cd, ff.air_program_comp_cd, ff.sip_comp_cd,
+			ff.mact_comp_cd, ff.emission_factor_group_cd, ff.administrative_hold
+		</facilityColumns>
+		<emissionProcessColumns>fep.fpnode_id AS emissionProcess_nodeId,
+			fep.emu_id, fep.emission_process_dsc, fep.scc_id, fep.process_id,
+			fep.last_modified AS emissionProcess_lm, fep.process_name
+		</emissionProcessColumns>
+		<emissionUnitListColumns>fp_id, emu_id, epa_emu_id, emission_unit_id,
+			eu_desc,
+			install_dt, startup_dt, feu.last_modified AS emissionUnit_lm
+		</emissionUnitListColumns>
+		<emissionUnitColumns>
+			feu.fp_id, feu.emu_id, feu.epa_emu_id,
+			feu.corr_epa_emu_id,
+			feu.emission_unit_id, feu.eu_desc,
+			feu.install_dt, feu.startup_dt, feu.last_modified AS emissionUnit_lm,
+			feu.operating_status_cd AS emUnit_operating_status_cd,
+			feu.requlated_user_dsc, feu.initial_installation_dt, feu.shutdown_dt,
+			feu.shutdown_notification_dt,
+			feu.permit_allowable_emissions,
+			feu.oris_boiler_id,
+			feu.ptio_regulatory_status_cd,
+			feu.pti_regulatory_status_cd, feu.tv_classification_cd,
+			feu.exempt_status_cd,
+			feu.design_capacity_cd,
+			feu.design_capacity_units_cd, design_capacity_units_val,
+			feu.eu_type_cd, feu.wiseview_id, feu.initial_startup_dt, null as corr_id
+		</emissionUnitColumns>
+		<euEmissionsColumns>
+			feuem.pollutant_cd, feuem.emu_id,
+			feuem.comments, feuem.potential_emissions_val, feuem.allowable_emissions_val,
+			feuem.potential_emissions_unit, feuem.allowable_emissions_unit,
+			feuem.allowable_emissions_lbs_hour, 
+			feuem.allowable_emissions_tons_year, 
+			feuem.potential_emissions_lbs_hour, 
+			feuem.potential_emissions_tons_year, 
+			feuem.last_modified AS euEmissions_lm
+		</euEmissionsColumns>
+		<controlEquipmentColumns>fce.fpnode_id AS controlEquip_nodeId,
+			fce.ce_id, fce.control_equip_id, manufacturer, model,
+			equipment_type_cd,
+			dapc_dsc, regulated_user_dsc,
+			initial_install_dt,
+			company_id,
+			fce.operating_status_cd, fce.last_modified AS
+			controlEquipment_lm, fce.wiseview_id
+		</controlEquipmentColumns>
+		<controlEquipmentDataColumns>
+			fced.fpnode_id, fced.data_detail_id,
+			fced.data_value
+		</controlEquipmentDataColumns>
+		<cePollsControlledColumns>
+			fcepol.pollutant_cd, fcepol.fpnode_id,
+			fcepol.design_control_eff,
+			fcepol.operating_control_eff,
+			fcepol.capture_eff, fcepol.last_modified AS cePollControlled_lm
+		</cePollsControlledColumns>
+		<egressPointColumns>fept.fpnode_id AS egressPoint_nodeId,
+			fept.egress_point_id, fept.egress_point_nm, fept.last_modified AS
+			egressPoint_lm, fept.release_point_id,
+			fept.egress_point_type_cd,
+			fept.egress_point_shape_cd,
+			fept.operating_status_cd,
+			fept.coordinate_data_source_cd,
+			fept.hort_collection_method_cd,
+			fept.hort_reference_datum_cd,
+			fept.reference_point_cd,
+			fept.regulated_user_dsc, fept.dapc_dsc,
+			fept.cross_sectional_area,
+			fept.height, fept.diameter,
+			fept.exit_gas_temp_max,
+			fept.exit_gas_temp_avg,
+			fept.exit_gas_flow_max,
+			fept.exit_gas_flow_avg, fept.base_elevation,
+			fept.release_height,
+			fept.fugitive_dimensions_unit, fept.plume_temp,
+			fept.area_of_emissions,
+			fept.emission_release_point_type,
+			fept.hort_accuracy_meas_cd, fept.stack_fenceline_distance,
+			fept.source_map_scale_number,
+			fept.building_length,
+			fept.building_width, fept.building_height,
+			fept.volume_length,
+			fept.volume_width, fept.volume_height,
+			fept.exit_gas_velocity,
+			fept.aqd_wise_egress_point_id,
+			fept.lat_deg,
+			fept.long_deg
+		</egressPointColumns>
+		<egressPointCemColumns>
+			egcem.cem_id, egcem.fpnode_id, egcem.cem_dsc,
+			egcem.h2s_flag, egcem.so2_flag,
+			egcem.nox_flag,
+			egcem.co_flag,
+			egcem.thc_flag, egcem.hcl_flag, egcem.hfl_flag, egcem.o_flag,
+			egcem.trs_flag,
+			egcem.co2_flag, egcem.flow_flag, egcem.opacity_flag,
+			pm_flag,
+			egcem.last_modified AS egressPointCem_lm
+		</egressPointCemColumns>
+		<facilityIdRefsColumns>
+			fpid.county_cd, fpid.do_laa_cd, fpid.city_nm,
+			fpid.city_cd, fpid.deprecated
+		</facilityIdRefsColumns>
+		<facilityOwnerColumns>
+			fcxr.company_id, fcxr.facility_id,
+			fcxr.start_date, fcxr.end_date, fcxr.last_modified
+		</facilityOwnerColumns>
+		<facilityCemComLimitColumns>
+			fccl.limit_id,
+			fccl.limit_desc,
+			fccl.start_dt,
+			fccl.end_dt,
+			fccl.addl_info,
+			fccl.added_by,
+			fccl.last_modified as fccl_lm,
+			fccl.limit_source,
+			fccl.monitor_id,
+			fccl.corr_limit_id,
+			fccl.lim_id
+		</facilityCemComLimitColumns>
+		<facilityContinuousMonitorColumns>
+			fcm.monitor_id,
+			fcm.fp_id,
+			fcm.monitor_desc,
+			fcm.add_date,
+			fcm.addl_info,
+			fcm.added_by,
+			fcm.last_modified as cm_lm,
+			fcm.corr_monitor_id,
+			fcm.mon_id
+		</facilityContinuousMonitorColumns>
+
+		<facExtendedHydrocarbonAnalysisColumns>
+			fehax.fp_id, fehax.pollutant_cd, fehax.gas, fehax.oil, fehax.produced_water
+		</facExtendedHydrocarbonAnalysisColumns>
+		
+		<facHydrocarbonAnalysisSampleDetailColumns>
+			fhasd.fp_id, 
+			fhasd.sample_facility_name_gas, fhasd.sample_facility_name_oil, fhasd.sample_facility_name_water,
+			fhasd.sample_facility_api_gas, fhasd.sample_facility_api_oil, fhasd.sample_facility_api_water,
+			fhasd.sample_facility_producing_field_gas, 
+			fhasd.sample_facility_producing_field_oil, 
+			fhasd.sample_facility_producing_field_water, 
+			fhasd.sample_facility_producing_formation_gas, 
+			fhasd.sample_facility_producing_formation_oil, 
+			fhasd.sample_facility_producing_formation_water,
+			fhasd.sample_date_gas, fhasd.sample_date_oil, fhasd.sample_date_water,
+			fhasd.sample_point_gas, fhasd.sample_point_oil, fhasd.sample_point_water,
+			fhasd.analysis_company_name_gas, 
+			fhasd.analysis_company_name_oil, 
+			fhasd.analysis_company_name_water,
+			fhasd.analysis_date_gas, fhasd.analysis_date_oil, fhasd.analysis_date_water, 
+			fhasd.sample_pressure_txt_gas, fhasd.sample_pressure_txt_oil, fhasd.sample_pressure_txt_water,
+			fhasd.sample_pressure_gas, fhasd.sample_pressure_oil, fhasd.sample_pressure_water,
+			fhasd.sample_temp_txt_gas, fhasd.sample_temp_txt_oil, fhasd.sample_temp_txt_water,
+			fhasd.sample_temp_gas, fhasd.sample_temp_oil, fhasd.sample_temp_water,
+			fhasd.sample_flow_rate_txt_gas, fhasd.sample_flow_rate_txt_oil, fhasd.sample_flow_rate_txt_water,
+			fhasd.sample_flow_rate_gas, fhasd.sample_flow_rate_oil, fhasd.sample_flow_rate_water, fhasd.last_modified
+		</facHydrocarbonAnalysisSampleDetailColumns>
+		
+		<facHydrocarbonAnyalysisDecanePropertiesColumns>
+			dec.fp_id,
+			dec.avg_molecular_wt_of_oil,
+			dec.avg_molecular_wt_of_produced_water,
+			dec.specific_gravity_of_oil,
+			dec.specific_gravity_of_produced_water,
+			dec.last_modified
+		</facHydrocarbonAnyalysisDecanePropertiesColumns>
+		
+		<facilityPurgeLogColumns>
+			ffpl.purge_log_id, ffpl.facility_id, ffpl.facility_name,
+			ffpl.company_id, ffpl.company_name, ffpl.facility_shutdown_date,
+			ffpl.date_purged, ffpl.user_id
+		</facilityPurgeLogColumns>
+
+	<retrieveGeoPolygonDefs>
+		SELECT 
+			cmgpd.geo_polygon_cd AS code, 
+			cmgpd.label,
+			cmgpd.description, 
+			cmgpd.lat_ne_deg,			
+			cmgpd.lat_nw_deg,			
+			cmgpd.lat_se_deg,			
+			cmgpd.lat_sw_deg,			
+			cmgpd.lon_ne_deg,
+			cmgpd.lon_nw_deg,
+			cmgpd.lon_se_deg,
+			cmgpd.lon_sw_deg,
+			cmgpd.deprecated,
+			cmgpd.last_modified
+		FROM 
+			dbo.cm_geo_polygon_def cmgpd
+		ORDER BY cmgpd.label asc
+	</retrieveGeoPolygonDefs>
+
+		<modelingDataTableVariables>
+			DECLARE @ROOT_NODE TABLE (
+				FROM_FPNODE_ID INT NOT NULL,
+				TO_FPNODE_ID INT NOT NULL,
+				ROOT_FPNODE_ID INT NOT NULL
+			)
+			
+			INSERT INTO @ROOT_NODE
+			SELECT 
+				fpnx.FROM_FPNODE_ID
+				, fpnx.TO_FPNODE_ID
+				, grn.FPNODE_ID
+			FROM FP_NODE_NODE_XREF fpnx
+			CROSS APPLY ufn_GetRootFpNodes(
+				fpnx.FROM_FPNODE_ID,
+				fpnx.TO_FPNODE_ID) grn
+
+
+			DECLARE @EP_GEO_POINT TABLE (
+				FPNODE_ID INT NOT NULL,
+				GEO_POINT geography NOT NULL
+			)
+
+			INSERT INTO @EP_GEO_POINT
+			SELECT
+				fpep.FPNODE_ID
+				, GEOGRAPHY::STGeomFromText('POINT('+ 
+								convert(nvarchar(20),fpep.LONG_DEG)+' '+
+								convert( nvarchar(20),fpep.LAT_DEG)+')', 4326)
+			FROM @ROOT_NODE rn
+			INNER JOIN FP_EGRESS_POINT fpep
+				ON fpep.FPNODE_ID = rn.TO_FPNODE_ID
+			WHERE
+				fpep.LAT_DEG IS NOT NULL
+				and fpep.LONG_DEG IS NOT NULL
+			
+
+			DECLARE @EP_GEO_FACILITY TABLE (
+				FP_ID INT NOT NULL
+			)
+
+			INSERT INTO @EP_GEO_FACILITY
+			SELECT
+ 				fpf.FP_ID
+			FROM
+				FP_EGRESS_POINT fpep
+			INNER JOIN FP_NODE fpn
+				ON fpn.FPNODE_ID = fpep.FPNODE_ID
+			INNER JOIN FP_FACILITY fpf 
+				ON fpf.FP_ID = fpn.FP_ID
+			INNER JOIN @EP_GEO_POINT epg
+				ON epg.FPNODE_ID = fpep.FPNODE_ID
+			WHERE 
+				fpf.END_DT IS NULL
+				and fpep.LAT_DEG IS NOT NULL
+				and fpep.LONG_DEG IS NOT NULL
+		</modelingDataTableVariables>
+
+		
+		<extractModelingDataFromGeoRadial>
+			DECLARE @lat NUMERIC(11,8) = ?
+			DECLARE @lon NUMERIC(11,8) = ?
+			DECLARE @geo geography = GEOGRAPHY::STGeomFromText('POINT('+ 
+							convert(nvarchar(20), @lon)+' '+
+							convert( nvarchar(20), @lat)+')', 4326)
+
+			${FacilitySQL.modelingDataTableVariables}
+				and	1 = @geo.STBuffer(?).STIntersects(epg.GEO_POINT)
+			
+			SELECT DISTINCT
+				cmc.NAME as COMPANY_NAME
+				, fpf.FP_ID
+				, fpf.FACILITY_NM
+				, fpft.FACILITY_TYPE_CD
+				, fpft.FACILITY_TYPE_DSC
+				, cma.LATITUDE as F_LAT
+				, cma.LONGITUDE as F_LON
+				, GEOGRAPHY::STGeomFromText('POINT('+ 
+								convert(nvarchar(20),cma.LONGITUDE)+' '+
+								convert( nvarchar(20),cma.LATITUDE)+')', 4326)
+								.STDistance(@geo) as F_DISTANCE
+				, fpep.LAT_DEG as RP_LAT
+				, fpep.LONG_DEG as RP_LON
+				, fpep.RELEASE_POINT_ID
+				, epg.GEO_POINT.STDistance(@geo) as RP_DISTANCE
+				, fpeu.EMU_ID
+				, fpeu.EMISSION_UNIT_ID
+				, fpeu.EPA_EMU_ID
+				, fpeu.EU_DESC
+				, fpep.BASE_ELEVATION
+				, fpep.RELEASE_HEIGHT
+				, fpep.EXIT_GAS_TEMP_AVG
+				, fpep.EXIT_GAS_VELOCITY
+				, fpep.DIAMETER
+				, fpeue.POLLUTANT_CD
+				, fpeue.POTENTIAL_EMISSIONS_LBS_HOUR
+				, fpeue.POTENTIAL_EMISSIONS_TONS_YEAR
+				, fpeue.ALLOWABLE_EMISSIONS_LBS_HOUR
+				, fpeue.ALLOWABLE_EMISSIONS_TONS_YEAR
+			FROM
+				FP_EGRESS_POINT fpep
+			INNER JOIN @ROOT_NODE rntbl 
+				ON fpep.FPNODE_ID = rntbl.TO_FPNODE_ID
+			INNER JOIN FP_EMISSION_PROCESS fpemp 
+				ON fpemp.FPNODE_ID = rntbl.ROOT_FPNODE_ID
+			INNER JOIN FP_EMISSIONS_UNIT fpeu 
+				ON fpeu.EMU_ID = fpemp.EMU_ID
+			INNER JOIN @EP_GEO_FACILITY epgeof
+				ON epgeof.FP_ID = fpeu.FP_ID
+			INNER JOIN FP_FACILITY fpf 
+				ON fpf.FP_ID = epgeof.FP_ID
+			INNER JOIN FP_FACILITY_TYPE_DEF fpft 
+				ON fpft.FACILITY_TYPE_CD = fpf.FACILITY_TYPE_CD
+			INNER JOIN FP_FACILITY_COMPANY_XREF fpfcx 
+				ON fpfcx.FACILITY_ID = fpf.FACILITY_ID
+			INNER JOIN CM_COMPANY cmc 
+				ON cmc.COMPANY_ID = fpfcx.COMPANY_ID
+			INNER JOIN FP_EU_EMISSIONS fpeue 
+				ON fpeue.EMU_ID = fpeu.EMU_ID
+			INNER JOIN @EP_GEO_POINT epg
+				ON epg.FPNODE_ID = fpep.FPNODE_ID
+			INNER JOIN FP_FACILITY_ADDRESS_XREF fpfax
+				ON fpfax.FP_ID = fpf.FP_ID
+			INNER JOIN CM_ADDRESS cma
+				ON cma.ADDRESS_ID = fpfax.ADDRESS_ID
+			WHERE 
+				fpf.END_DT IS NULL
+				and fpfcx.END_DATE IS NULL
+				and cma.END_DT IS NULL
+				and (fpeu.OPERATING_STATUS_CD = 'op' or fpeu.OPERATING_STATUS_CD = 'ni')
+		</extractModelingDataFromGeoRadial>
+		
+		<extractModelingDataFromGeoPolygon>
+			DECLARE @lat_sw NUMERIC(11,8) = ?
+			DECLARE @lon_sw NUMERIC(11,8) = ?
+			
+			DECLARE @lat_se NUMERIC(11,8) = ?
+			DECLARE @lon_se NUMERIC(11,8) = ?
+			
+			DECLARE @lat_ne NUMERIC(11,8) = ?
+			DECLARE @lon_ne NUMERIC(11,8) = ?
+			
+			DECLARE @lat_nw NUMERIC(11,8) = ?
+			DECLARE @lon_nw NUMERIC(11,8) = ?
+			
+			DECLARE @geo geography = GEOGRAPHY::STGeomFromText('POLYGON(('+ 
+							convert( nvarchar(20), @lon_sw)+' '+
+							convert( nvarchar(20), @lat_sw)+', '+
+
+							convert( nvarchar(20), @lon_se)+' '+
+							convert( nvarchar(20), @lat_se)+', '+
+
+							convert( nvarchar(20), @lon_ne)+' '+
+							convert( nvarchar(20), @lat_ne)+', '+
+
+							convert( nvarchar(20), @lon_nw)+' '+
+							convert( nvarchar(20), @lat_nw)+', '+
+
+							convert( nvarchar(20), @lon_sw)+' '+
+							convert( nvarchar(20), @lat_sw)+'))',4326)
+							
+			DECLARE @geoCenter geography = @geo.EnvelopeCenter()
+			
+			${FacilitySQL.modelingDataTableVariables}
+				and 1 = @geo.STIntersects(epg.GEO_POINT)
+			
+			SELECT DISTINCT
+				cmc.NAME as COMPANY_NAME
+				, fpf.FP_ID
+				, fpf.FACILITY_NM
+				, fpft.FACILITY_TYPE_CD
+				, fpft.FACILITY_TYPE_DSC
+				, cma.LATITUDE as F_LAT
+				, cma.LONGITUDE as F_LON
+				, GEOGRAPHY::STGeomFromText('POINT('+ 
+								convert(nvarchar(20),cma.LONGITUDE)+' '+
+								convert( nvarchar(20),cma.LATITUDE)+')', 4326)
+								.STDistance(@geoCenter) as F_DISTANCE
+				, fpep.LAT_DEG as RP_LAT
+				, fpep.LONG_DEG as RP_LON
+				, fpep.RELEASE_POINT_ID
+				, epg.GEO_POINT.STDistance(@geoCenter) as RP_DISTANCE
+				, fpeu.EMU_ID
+				, fpeu.EMISSION_UNIT_ID
+				, fpeu.EPA_EMU_ID
+				, fpeu.EU_DESC
+				, fpep.BASE_ELEVATION
+				, fpep.RELEASE_HEIGHT
+				, fpep.EXIT_GAS_TEMP_AVG
+				, fpep.EXIT_GAS_VELOCITY
+				, fpep.DIAMETER
+				, fpeue.POLLUTANT_CD
+				, fpeue.POTENTIAL_EMISSIONS_LBS_HOUR
+				, fpeue.POTENTIAL_EMISSIONS_TONS_YEAR
+				, fpeue.ALLOWABLE_EMISSIONS_LBS_HOUR
+				, fpeue.ALLOWABLE_EMISSIONS_TONS_YEAR
+			FROM
+				FP_EGRESS_POINT fpep
+			INNER JOIN @ROOT_NODE rntbl 
+				ON fpep.FPNODE_ID = rntbl.TO_FPNODE_ID
+			INNER JOIN FP_EMISSION_PROCESS fpemp 
+				ON fpemp.FPNODE_ID = rntbl.ROOT_FPNODE_ID
+			INNER JOIN FP_EMISSIONS_UNIT fpeu 
+				ON fpeu.EMU_ID = fpemp.EMU_ID
+			INNER JOIN @EP_GEO_FACILITY epgeof
+				ON epgeof.FP_ID = fpeu.FP_ID
+			INNER JOIN FP_FACILITY fpf 
+				ON fpf.FP_ID = epgeof.FP_ID
+			INNER JOIN FP_FACILITY_TYPE_DEF fpft 
+				ON fpft.FACILITY_TYPE_CD = fpf.FACILITY_TYPE_CD
+			INNER JOIN FP_FACILITY_COMPANY_XREF fpfcx 
+				ON fpfcx.FACILITY_ID = fpf.FACILITY_ID
+			INNER JOIN CM_COMPANY cmc 
+				ON cmc.COMPANY_ID = fpfcx.COMPANY_ID
+			INNER JOIN FP_EU_EMISSIONS fpeue 
+				ON fpeue.EMU_ID = fpeu.EMU_ID
+			INNER JOIN @EP_GEO_POINT epg
+				ON epg.FPNODE_ID = fpep.FPNODE_ID
+			INNER JOIN FP_FACILITY_ADDRESS_XREF fpfax
+				ON fpfax.FP_ID = fpf.FP_ID
+			INNER JOIN CM_ADDRESS cma
+				ON cma.ADDRESS_ID = fpfax.ADDRESS_ID
+			WHERE 
+				fpf.END_DT IS NULL
+				and fpfcx.END_DATE IS NULL
+				and cma.END_DT IS NULL
+				and (fpeu.OPERATING_STATUS_CD = 'op' or fpeu.OPERATING_STATUS_CD = 'ni')
+		</extractModelingDataFromGeoPolygon>
+		
+		<updateFacilityDistrict>
+			  update %Schema%fp_facility
+			  set DO_LAA_CD = ?
+			  where fp_id = ?
+			  and ? = 
+			  (
+				  select top 1 a.address_id 
+				  from  %Schema%FP_FACILITY_ADDRESS_XREF x
+				  inner join  %Schema%CM_ADDRESS a on a.ADDRESS_ID = x.ADDRESS_ID
+				  where x.fp_id = ?
+				  order by a.START_DT asc
+			  )
+		</updateFacilityDistrict>
+
+		<createFacility>INSERT INTO %Schema%fp_facility (tiv_ind, fp_id,
+			permit_status_cd,
+			transitional_status_cd, permit_classification_cd,
+			portable_group_type_cd, operating_status_cd, do_laa_cd, facility_id,
+			version_id, facility_nm, facility_desc,
+			start_dt, end_dt, portable,
+			portable_group_cd, last_shutdown_date,
+			inactive_date,
+			mact_ind,
+			neshaps_ind, nsps_ind, psd_ind, nonattainment_nsr_ind, ghg_ind,
+			sec112_ind,
+			federal_scsc_id, intra_state_voucher_flag, copy_on_change,
+			core_place_id,
+			tv_cert_report_due_date, type_a, last_submission_type,
+			last_submission_version,
+			govt_facility_type_cd,
+			facility_type_cd, cerr_class_cd, facility_registry_no,
+			air_program_cd, emission_factor_group_cd, administrative_hold)
+			VALUES
+			(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createFacility>
+		<removeFacility>
+			delete from %Schema%fp_facility where fp_id=?
+		</removeFacility>
+		<createFacilityAttachment>INSERT INTO %Schema%fp_facility_attachments
+			(document_id, attachment_type_cd)
+			VALUES(?,?)
+		</createFacilityAttachment>
+		<updateFacilityAttachment>UPDATE %Schema%fp_facility_attachments SET
+			document_id = ? , attachment_type_cd = ? , last_modified = ?
+			WHERE
+			document_id = ?
+			AND last_modified = ?
+		</updateFacilityAttachment>
+		<removeFacilityAttachment>DELETE FROM %Schema%fp_facility_attachments
+			WHERE document_id = ?
+		</removeFacilityAttachment>
+		<createFPNode>INSERT INTO %Schema%fp_node (fpnode_id, fp_id, corr_id)
+			VALUES(?,?,?)
+		</createFPNode>
+		<removeFPNode>DELETE FROM %Schema%fp_node
+			WHERE fpnode_id = ?
+		</removeFPNode>
+		<createFPRelationShip>INSERT INTO %Schema%fp_node_node_xref
+			(from_fpnode_id, to_fpnode_id)
+			VALUES(?,?)
+		</createFPRelationShip>
+		<createFPRelationShipWithFlowFactor>INSERT INTO
+			%Schema%fp_node_node_xref
+			(from_fpnode_id, to_fpnode_id, flow_factor)
+			VALUES(?,?,?)
+		</createFPRelationShipWithFlowFactor>
+		<removeFPRelationShip>DELETE FROM %Schema%fp_node_node_xref
+			WHERE
+			from_fpnode_id = ?
+			AND to_fpnode_id = ?
+		</removeFPRelationShip>
+		<modifyFPRelationShip>UPDATE %Schema%fp_node_node_xref
+			SET
+			from_fpnode_id = ?, to_fpnode_id = ?, flow_factor = ?
+			WHERE
+			from_fpnode_id = ?
+			AND to_fpnode_id = ?
+		</modifyFPRelationShip>
+		<createEgressPoint>INSERT INTO %Schema%fp_egress_point (fpnode_id,
+			egress_point_id, egress_point_type_cd, egress_point_shape_cd,
+			operating_status_cd,
+			egress_point_nm, dapc_dsc,
+			fugitive_dimensions_unit, emission_release_point_type,
+			hort_collection_method_cd,
+			hort_reference_datum_cd,
+			reference_point_cd, regulated_user_dsc,
+			cross_sectional_area, height,
+			diameter, exit_gas_temp_max,
+			exit_gas_temp_avg, exit_gas_flow_max,
+			exit_gas_flow_avg, base_elevation, release_height,
+			plume_temp,
+			area_of_emissions, hort_accuracy_meas_cd, stack_fenceline_distance,
+			source_map_scale_number, coordinate_data_source_cd,
+			building_length,
+			building_width, building_height,
+			volume_length, volume_width,
+			volume_height, aqd_wise_egress_point_id,exit_gas_velocity,
+			release_point_id,lat_deg,long_deg)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createEgressPoint>
+		<modifyEgressPoint>UPDATE %Schema%fp_egress_point SET
+			coordinate_data_source_cd = ?,
+			egress_point_id = ?,
+			egress_point_type_cd = ?, egress_point_shape_cd = ?,
+			operating_status_cd = ?,
+			egress_point_nm = ?, dapc_dsc = ?,
+			fugitive_dimensions_unit = ?,
+			emission_release_point_type = ?,
+			hort_collection_method_cd = ?, hort_reference_datum_cd = ?,
+			reference_point_cd = ?,
+			regulated_user_dsc = ?,
+			cross_sectional_area =
+			?, height = ?, diameter = ?, exit_gas_temp_max = ?,
+			exit_gas_temp_avg
+			= ?, exit_gas_flow_max = ?, exit_gas_flow_avg = ?,
+			base_elevation = ?,
+			release_height = ?, plume_temp = ?, area_of_emissions = ?,
+			hort_accuracy_meas_cd = ?,
+			stack_fenceline_distance = ?,
+			source_map_scale_number = ?,
+			last_modified = ?,
+			building_length = ?,
+			building_width = ?, building_height = ?,
+			volume_length = ?,
+			volume_width = ?, volume_height = ?,
+			aqd_wise_egress_point_id = ?,
+			exit_gas_velocity = ?,
+			release_point_id = ?,
+			lat_deg = ?,
+			long_deg = ?
+			WHERE fpnode_id = ? AND last_modified = ?
+		</modifyEgressPoint>
+		<removeEgressPoint>DELETE FROM %Schema%fp_egress_point
+			WHERE fpnode_id
+			= ?
+		</removeEgressPoint>
+		<retrieveNextEmissionUnitId>
+			SELECT ISNULL(MAX(RIGHT(epa_emu_id,3)), 0)
+			+ 1
+			FROM %Schema%fp_emissions_unit
+			WHERE eu_type_cd = ? and fp_id = ?
+		</retrieveNextEmissionUnitId>
+		<retrieveNextReleasePointId>
+			SELECT
+			ISNULL(MAX(RIGHT(release_point_id,3)), 0) + 1
+			FROM
+			%Schema%fp_egress_point
+			WHERE egress_point_type_cd = ? and fpnode_id
+			in
+			(SELECT FPNODE_ID
+			FROM %Schema%fp_node
+			WHERE fp_id = ?)
+		</retrieveNextReleasePointId>
+		<retrieveNextEquipmentId>
+			SELECT
+			ISNULL(MAX(RIGHT(control_equip_id,3)),0) + 1
+			FROM
+			%Schema%fp_control_equip
+			WHERE equipment_type_cd = ? and fpnode_id in
+			(SELECT FPNODE_ID
+			FROM %Schema%fp_node
+			WHERE fp_id = ?)
+		</retrieveNextEquipmentId>
+		<retrieveNextEmissonProcessId>
+			SELECT ISNULL(MAX(RIGHT(process_id,3)),
+			0) + 1
+			FROM %Schema%fp_emission_process
+			WHERE fpnode_id in
+			(SELECT
+			FPNODE_ID
+			FROM %Schema%fp_node
+			WHERE fp_id = ?)
+		</retrieveNextEmissonProcessId>
+		<createControlEquipment>INSERT INTO %Schema%fp_control_equip
+			(fpnode_id, control_equip_id, dapc_dsc, manufacturer, model,
+			initial_install_dt, equipment_type_cd, regulated_user_dsc,
+			operating_status_cd, company_id, ce_id, wiseview_id)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
+		</createControlEquipment>
+		<modifyControlEquipment>UPDATE %Schema%fp_control_equip SET
+			control_equip_id = ?,
+			last_modified = ?, dapc_dsc = ?, manufacturer =
+			?, model = ?,
+			initial_install_dt = ?, equipment_type_cd = ?,
+			regulated_user_dsc = ?,
+			operating_status_cd = ?,
+			company_id = ?,
+			ce_id =
+			?,
+			wiseview_id = ?
+			WHERE fpnode_id = ? AND
+			last_modified = ?
+		</modifyControlEquipment>
+		<retrieveControlEquipmentTypeCd>
+			SELECT ISNULL(equipment_type_cd, '')
+			as
+			equipment_type_cd FROM %Schema%fp_control_equip WHERE fpnode_id = ?
+		</retrieveControlEquipmentTypeCd>
+		<retrieveControlEquipmentId>
+			SELECT ISNULL(control_equip_id, '') as
+			control_equip_id FROM %Schema%fp_control_equip WHERE fpnode_id = ?
+		</retrieveControlEquipmentId>
+		<removeControlEquipment>DELETE FROM %Schema%fp_control_equip
+			WHERE
+			fpnode_id = ?
+		</removeControlEquipment>
+		<createCePollsControlled>INSERT INTO %Schema%fp_pollutants_controlled
+			(pollutant_cd, fpnode_id, design_control_eff, operating_control_eff,
+			capture_eff)
+			VALUES(?,?,?,?,?)
+		</createCePollsControlled>
+		<addControlEquipmentData>
+			INSERT INTO %Schema%fp_control_equip_data
+			(fpnode_id, data_detail_id, data_value)
+			VALUES(?,?,?)
+		</addControlEquipmentData>
+		<removeControlEquipmentData>
+			DELETE FROM %Schema%fp_control_equip_data
+			WHERE fpnode_id = ?
+		</removeControlEquipmentData>
+		<retrieveCePollsControlled>
+			SELECT
+			${FacilitySQL.cePollsControlledColumns}
+			FROM
+			%Schema%fp_pollutants_controlled fcepol
+			WHERE fcepol.fpnode_id = ?
+		</retrieveCePollsControlled>
+		<removeCePollsControlled>
+			DELETE FROM %Schema%fp_pollutants_controlled
+			WHERE fpnode_id = ?
+		</removeCePollsControlled>
+		<createEmissionsProcess>INSERT INTO %Schema%fp_emission_process
+			(fpnode_id, emu_id, process_id, emission_process_dsc, scc_id,
+			process_name, wiseview_id)
+			VALUES(?,?,?,?,?,?,?)
+		</createEmissionsProcess>
+		<removeEmissionsProcess>DELETE FROM %Schema%fp_emission_process
+			WHERE
+			fpnode_id = ?
+		</removeEmissionsProcess>
+		<modifyEmissionsProcess>UPDATE %Schema%fp_emission_process
+			SET
+			emission_process_dsc = ?, last_modified = ?, process_id = ?,
+			scc_id = ?, process_name = ?
+			WHERE fpnode_id = ?
+			AND last_modified = ?
+		</modifyEmissionsProcess>
+		<createEmissionsUnit>INSERT INTO %Schema%fp_emissions_unit
+			(emu_id,
+			fp_id, eu_desc, operating_status_cd, epa_emu_id, requlated_user_dsc,
+			startup_dt,
+			install_dt, emission_unit_id, ptio_regulatory_status_cd,
+			pti_regulatory_status_cd,
+			tv_classification_cd, exempt_status_cd,
+			initial_installation_dt, shutdown_notification_dt,
+			oris_boiler_id,
+			shutdown_dt, design_capacity_cd,
+			design_capacity_units_cd,
+			corr_epa_emu_id, design_capacity_units_val, eu_type_cd, wiseview_id,
+			initial_startup_dt)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createEmissionsUnit>
+		<createEuEmission>INSERT INTO %Schema%fp_eu_emissions
+			(pollutant_cd,
+			emu_id, comments, potential_emissions_val, 
+			allowable_emissions_val, potential_emissions_unit, allowable_emissions_unit,
+			feuem.allowable_emissions_lbs_hour, 
+			feuem.allowable_emissions_tons_year, 
+			feuem.potential_emissions_lbs_hour, 
+			feuem.potential_emissions_tons_year
+			)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?)
+		</createEuEmission>
+		<modifyEmissionsUnit>UPDATE %Schema%fp_emissions_unit
+			SET eu_desc = ?,
+			last_modified = ?, operating_status_cd = ?, epa_emu_id
+			= ?,
+			requlated_user_dsc = ?,
+			install_dt = ?, startup_dt = ?, shutdown_dt =
+			?, emission_unit_id = ?,
+			ptio_regulatory_status_cd = ?,
+			pti_regulatory_status_cd = ?,
+			tv_classification_cd = ?,
+			exempt_status_cd = ?, initial_installation_dt = ?,
+			shutdown_notification_dt = ?,
+			oris_boiler_id = ?, design_capacity_cd =
+			?, design_capacity_units_cd
+			= ?, design_capacity_units_val = ?,
+			eu_type_cd = ?, wiseview_id = ?, initial_startup_dt = ?
+			WHERE
+			emu_id =
+			?
+			AND last_modified = ?
+		</modifyEmissionsUnit>
+		<modifyFacility>UPDATE %Schema%fp_facility
+			SET facility_desc = ?,
+			facility_nm = ?, operating_status_cd = ?,
+			portable = ?,
+			portable_group_cd = ?, last_shutdown_date = ?,
+			inactive_date = ?,
+			last_modified = ?, portable_group_type_cd = ?,
+			permit_classification_cd = ?,
+			transitional_status_cd = ?, tiv_ind = ?,
+			start_dt = ?, end_dt = ?, version_id = ?,
+			permit_status_cd = ?,
+			copy_on_change = ?, mact_ind = ?, neshaps_ind =
+			?,
+			nsps_ind = ?,
+			psd_ind = ?, nonattainment_nsr_ind = ?, ghg_ind = ?, sec112_ind = ?,
+			federal_SCSC_ID = ?,
+			intra_state_voucher_flag = ?, core_place_id = ?,
+			tv_cert_report_due_date = ?,
+			valid = ?, submitted = ?, type_a = ?,
+			last_submission_type = ?,
+			do_laa_cd = ?, last_submission_version = ?,
+			cerr_class_cd = ?, govt_facility_type_cd = ?,
+			facility_type_cd = ?, facility_registry_no = ?,
+			air_program_cd = ?,
+			sip_comp_cd = ?, mact_comp_cd = ?, emission_factor_group_cd = ?, administrative_hold = ?
+			WHERE fp_id
+			= ?
+			AND last_modified = ?
+		</modifyFacility>
+		<modifyFacilityExt>UPDATE %Schema%fp_facility
+			SET facility_desc = ?,
+			facility_nm = ?, operating_status_cd = ?, long_deg
+			= ?, long_min = ?,
+			long_sec = ?,
+			lat_deg = ?, lat_min = ?, lat_sec = ?, portable = ?,
+			portable_group_cd = ?,
+			last_shutdown_date = ?,
+			inactive_date = ?,
+			last_modified = ?, portable_group_type_cd = ?,
+			permit_classification_cd = ?,
+			transitional_status_cd = ?, tiv_ind = ?,
+			start_dt = ?, end_dt = ?, version_id = ?,
+			permit_status_cd = ?,
+			copy_on_change = ?, mact_ind = ?, neshaps_ind =
+			?,
+			nsps_ind = ?,
+			psd_ind = ?, nonattainment_nsr_ind = ?, ghg_ind = ?, sec112_ind
+			= ?,
+			federal_SCSC_ID = ?,
+			intra_state_voucher_flag = ?,
+			tv_cert_report_due_date = ?,
+			valid = ?, submitted = ?, type_a = ?,
+			last_submission_type = ?,
+			do_laa_cd = ?, last_submission_version = ?,
+			govt_facility_type_cd = ?,
+			air_program_cd = ?,
+			air_program_comp_cd = ?, sip_comp_cd = ?, mact_comp_cd = ?
+			WHERE fp_id
+			= ?
+			AND last_modified = ?
+		</modifyFacilityExt>
+		<retrieveFacility>
+			SELECT ${FacilitySQL.facilityColumns},
+			${FacilitySQL.emissionUnitColumns},
+			(SELECT MAX(ff1.version_id)
+			FROM
+			%Schema%fp_facility ff1
+			WHERE ff.facility_id = ff1.facility_id) AS
+			max_version,
+			feu.last_modified AS emissionUnit_lm,
+			${EmissionUnitTypeSQL.EmissionUnitColumns}
+			FROM
+			%Schema%fp_facility ff
+			LEFT OUTER JOIN %Schema%fp_emissions_unit feu
+			ON (ff.fp_id = feu.fp_id)
+			LEFT OUTER JOIN %Schema%fp_emissions_unit_type feut
+			ON (feu.emu_id = feut.emu_id)
+			WHERE ff.fp_id = ?
+			ORDER BY feu.epa_emu_id
+		</retrieveFacility>
+		<retrieveFacilityByFacId>
+			SELECT ${FacilitySQL.facilityColumns},
+			${FacilitySQL.emissionUnitColumns},
+			feu.last_modified AS
+			emissionUnit_lm
+			FROM %Schema%fp_facility ff
+			LEFT OUTER JOIN
+			%Schema%fp_emissions_unit feu ON (ff.fp_id = feu.fp_id)
+			WHERE
+			ff.facility_id = ?
+			AND ff.version_id = ?
+		</retrieveFacilityByFacId>
+		<retrieveFacilityTableByFacId>
+			SELECT ${FacilitySQL.facilityColumns}
+			FROM %Schema%fp_facility ff
+			WHERE ff.facility_id = ?
+			AND ff.version_id
+			= ?
+		</retrieveFacilityTableByFacId>
+		<retrieveFacilityApis>
+			SELECT api_cd, fp_id, api_no
+			FROM
+			%Schema%FP_API_GROUP_XREF
+			WHERE fp_id = ?
+			ORDER BY CONVERT(int, api_no)
+		</retrieveFacilityApis>
+		<createFacilityApi>
+			INSERT INTO %Schema%fp_api_group_xref
+			(fp_id,
+			api_no)
+			VALUES (?,?)
+		</createFacilityApi>
+		<updateFacilityApi>
+			UPDATE %Schema%fp_api_group_xref
+			SET fp_id = ?,
+			api_no = ?
+			WHERE api_cd = ?
+		</updateFacilityApi>
+		<deleteFacilityApi>
+			DELETE %Schema%fp_api_group_xref
+			WHERE api_cd = ?
+		</deleteFacilityApi>
+		<deleteFacilityAllApis>
+			DELETE %Schema%fp_api_group_xref
+			WHERE fp_id = ?
+		</deleteFacilityAllApis>
+		<retrieveFacDataByCoreId>
+			SELECT ${FacilitySQL.facilityColumns}
+			FROM
+			%Schema%fp_facility ff
+			WHERE ff.core_place_id = ?
+			AND ff.version_id =
+			-1
+		</retrieveFacDataByCoreId>
+		<retrieveFacDataByFacId>
+			SELECT ${FacilitySQL.facilityColumns}
+			FROM
+			%Schema%fp_facility ff
+			WHERE ff.facility_id = ?
+			AND ff.version_id =
+			-1
+		</retrieveFacDataByFacId>
+		<retrieveFacilityData>
+			SELECT ${FacilitySQL.facilityColumns}
+			FROM
+			%Schema%fp_facility ff
+			WHERE ff.facility_id = ?
+			AND ff.version_id = ?
+		</retrieveFacilityData>
+		<retrieveOnlyFacilityData>
+			SELECT ${FacilitySQL.facilityColumns}, -1 AS
+			max_version
+			FROM
+			%Schema%fp_facility ff
+			WHERE ff.fp_id = ?
+		</retrieveOnlyFacilityData>
+		<findNewestFacilityAddress>
+			(SELECT MAX(cma.address_id) AS address_id
+			FROM %Schema%cm_address cma, %Schema%fp_facility_address_xref ffax
+			WHERE
+			cma.address_id = ffax.address_id AND
+			ffax.fp_id = ff.fp_id AND
+			cma.end_dt is null AND
+			START_DT=
+			(SELECT MAX(START_DT)
+			FROM
+			%Schema%cm_address subcma,
+			%Schema%fp_facility_address_xref subffax
+			WHERE subcma.address_id =
+			subffax.address_id AND
+			subffax.fp_id =
+			ff.fp_id))
+		</findNewestFacilityAddress>
+		<findFacilities>
+			SELECT ${FacilitySQL.facilityListColumns},
+			${InfrastructureSQL.addressColumns}
+			,ccd.county_nm
+			FROM %Schema%fp_facility ff
+			LEFT
+			JOIN dbo.fp_facility_company_xref fc on ff.facility_id=fc.facility_id
+			LEFT JOIN dbo.cm_company ccm on fc.company_id = ccm.company_id
+			LEFT
+			JOIN %Schema%fp_facility_address_xref faxr ON ff.fp_id = faxr.fp_id
+			LEFT JOIN %Schema%cm_address ca ON faxr.address_id = ca.address_id
+			INNER JOIN %Schema%cm_county_def ccd ON ca.county_cd = ccd.county_cd
+			WHERE ff.version_id = ?
+			AND fc.end_date is null
+			AND ca.end_dt is null
+		</findFacilities>
+		<findFacilitiesNaics>
+			SELECT ${FacilitySQL.facilityListColumns},
+			${InfrastructureSQL.addressColumns}
+			FROM %Schema%fp_facility ff LEFT
+			OUTER JOIN
+			%Schema%fp_facility_naics_xref fnxref ON (ff.fp_id =
+			fnxref.fp_id)
+			LEFT JOIN dbo.fp_facility_company_xref fc on
+			ff.facility_id=fc.facility_id
+			LEFT JOIN dbo.cm_company ccm on
+			fc.company_id = ccm.company_id,
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref
+			faxr
+			WHERE ff.version_id = ?
+			AND
+			ff.fp_id = faxr.fp_id
+			AND fc.end_date is null
+			AND
+			faxr.address_id =
+			ca.address_id
+			AND ca.end_dt
+			is null
+		</findFacilitiesNaics>
+		<findFacilityEmissionUnits>
+			SELECT ff.fp_id, ff.facility_id,
+			ff.version_id,
+			facility_nm facility_name, ff.operating_status_cd
+			facility_operating_status_cd,
+			ff.permit_status_cd, ff.do_laa_cd,
+			ff.permit_classification_cd,
+			feu.operating_status_cd
+			eu_operating_status_cd, epa_emu_id
+			FROM %Schema%fp_facility ff,
+			%Schema%fp_emissions_unit feu
+			WHERE ff.version_id = ?
+			AND ff.fp_id =
+			feu.fp_id
+		</findFacilityEmissionUnits>
+		<findTvPermitNoticeFacilities>
+			SELECT
+			${FacilitySQL.facilityListColumns},
+			${InfrastructureSQL.countyColumns},
+			fpdo.do_laa_cd AS code,
+			fpdo.do_laa_dsc AS description, fpdo.deprecated,
+			fpdo.last_modified
+			FROM %Schema%fp_facility ff, %Schema%cm_address ca,
+			%Schema%cm_do_laa_def
+			fpdo, %Schema%cm_county_def ccd,
+			%Schema%cm_state_def csd,%Schema% pt_permit pt
+			WHERE ff.version_id = ?
+			AND pt.facility_id = ff.facility_id
+			AND ca.end_dt is null
+			AND
+			ca.county_cd = ccd.county_cd
+			AND ccd.state_cd = csd.state_cd
+			AND
+			ff.do_laa_cd = fpdo.do_laa_cd
+			AND permit_classification_cd = 'tv'
+			AND
+			pt.effective_date &gt;= ? and pt.effective_date &lt; ?
+		</findTvPermitNoticeFacilities>
+		<findTvExpFacilities>
+			SELECT ${FacilitySQL.facilityListColumns},
+			${InfrastructureSQL.addressColumns},
+			${InfrastructureSQL.countyColumns},
+			fpdo.do_laa_cd AS code,
+			fpdo.do_laa_dsc AS description, fpdo.deprecated,
+			fpdo.last_modified
+			FROM %Schema%fp_facility ff, %Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%cm_county_def ccd,
+			%Schema%cm_state_def csd,
+			%Schema%cm_do_laa_def fpdo
+			WHERE
+			ff.version_id = ?
+			AND ff.fp_id = faxr.fp_id
+			AND faxr.address_id =
+			ca.address_id
+			AND ca.end_dt is null
+			AND ca.county_cd = ccd.county_cd
+			AND ccd.state_cd = csd.state_cd
+			AND ff.do_laa_cd = fpdo.do_laa_cd
+			AND
+			permit_classification_cd = 'tv'
+		</findTvExpFacilities>
+		<findFacilitiesHist>
+			SELECT ${FacilitySQL.facilityHistListColumns},
+			${InfrastructureSQL.addressColumns},
+			ccm.name as company_name,
+			ccm.cmp_id
+			FROM %Schema%fp_facility ff
+			LEFT JOIN
+			dbo.fp_facility_company_xref fc on
+			ff.facility_id=fc.facility_id
+			LEFT
+			JOIN dbo.cm_company ccm on
+			fc.company_id = ccm.company_id,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%cm_address ca
+			WHERE
+			ff.version_id >= -1
+			AND ff.fp_id =
+			faxr.fp_id
+			AND faxr.address_id =
+			ca.address_id
+			AND ca.end_dt is null
+			AND fc.end_date is null
+		</findFacilitiesHist>
+		<retrieveAllFacilityVersions>
+			SELECT ff.facility_id, ff.fp_id,
+			ff.version_id, ff.start_dt, ff.end_dt,
+			cn.note_txt, ff.copy_on_change
+			FROM
+			%Schema%fp_facility ff left outer join
+			(%Schema%fp_note_facility_xref
+			fnfx LEFT OUTER JOIN %Schema%cm_note
+			cn
+			ON (cn.note_type_cd = 'hist'
+			AND fnfx.note_id = cn.note_id)) ON
+			(fnfx.fp_id = ff.fp_id)
+			WHERE
+			ff.facility_id = ?
+			ORDER BY ff.version_id
+			desc
+		</retrieveAllFacilityVersions>
+		<retrieveAllMigFacilityVersions>
+			SELECT ff.facility_id, ff.fp_id,
+			ff.version_id, ff.start_dt, ff.end_dt
+			FROM %Schema%fp_facility ff
+			WHERE ff.facility_id = ?
+			ORDER BY ff.start_dt desc
+		</retrieveAllMigFacilityVersions>
+		<retrieveEmissionUnits>SELECT ${FacilitySQL.emissionUnitColumns}
+			FROM
+			%Schema%fp_emissions_unit feu
+			WHERE feu.fp_id = ?
+		</retrieveEmissionUnits>
+		<retrieveEmissionProcesses>
+			SELECT fep.fpnode_id AS
+			emissionProcess_nodeId, fep.emu_id,
+			fep.emission_process_dsc,
+			fep.scc_id, fep.process_id, fep.last_modified AS emissionProcess_lm,
+			fn.fp_id, fn.corr_id, fnnx.from_fpnode_id, fnnx.to_fpnode_id,
+			fnnx.flow_factor, fep.process_name
+			FROM %Schema%fp_node fn
+			JOIN
+			%Schema%fp_emission_process fep ON (fep.fpnode_id = fn.fpnode_id)
+			LEFT OUTER JOIN %Schema%fp_node_node_xref fnnx ON (fep.fpnode_id =
+			fnnx.from_fpnode_id)
+			WHERE fn.fp_id = ?
+			ORDER BY fep.process_id
+		</retrieveEmissionProcesses>
+		<retrieveEmissionUnitTypeDefs>
+			SELECT * FROM
+			%Schema%FP_EMISSION_TYPE_DEF WHERE deprecated = 'N' ORDER BY
+			eu_type_cd
+		</retrieveEmissionUnitTypeDefs>
+		<retrieveEmissionUnitTypeCd>
+			SELECT ISNULL(eu_type_cd, '') as
+			eu_type_cd FROM %Schema%FP_EMISSIONS_UNIT WHERE emu_id = ?
+		</retrieveEmissionUnitTypeCd>
+		<retrieveEmissionUnitDisplayId>
+			SELECT ISNULL(epa_emu_id, '') as
+			epa_emu_id FROM %Schema%FP_EMISSIONS_UNIT WHERE emu_id = ?
+		</retrieveEmissionUnitDisplayId>
+		<retrieveRelatedEmuIds>
+			SELECT emu_id FROM %Schema%FP_EMISSIONS_UNIT
+			WHERE fp_id = ? AND
+			eu_type_cd IS NOT NULL AND
+			eu_type_cd = ?
+		</retrieveRelatedEmuIds>
+		<updateEmissionUnitId>
+			UPDATE %Schema%FP_EMISSIONS_UNIT
+			SET epa_emu_id =
+			?, eu_desc = ?
+			WHERE emu_id =?
+		</updateEmissionUnitId>
+		<updateControlEquipmentId>
+			UPDATE %Schema%FP_CONTROL_EQUIP SET
+			CONTROL_EQUIP_ID = ?, dapc_dsc = ?
+			WHERE fpnode_id =?
+		</updateControlEquipmentId>
+		<retrieveControlEquips>
+			SELECT ${FacilitySQL.controlEquipmentColumns},
+			fn.fp_id, fn.corr_id,
+			fnnx.from_fpnode_id,
+			fnnx.to_fpnode_id ,
+			fnnx.flow_factor
+			FROM %Schema%fp_node fn, %Schema%fp_control_equip fce
+			LEFT OUTER JOIN %Schema%fp_node_node_xref fnnx
+			ON (fce.fpnode_id =
+			fnnx.from_fpnode_id)
+			WHERE fn.fp_id = ?
+			AND fce.fpnode_id =
+			fn.fpnode_id
+			ORDER BY fce.control_equip_id
+		</retrieveControlEquips>
+		<retrieveEgressPoints>
+			SELECT ${FacilitySQL.egressPointColumns},
+			fn.fp_id, fn.corr_id,
+			fnnx.from_fpnode_id,
+			fnnx.to_fpnode_id,
+			fnnx.flow_factor
+			FROM %Schema%fp_node fn, %Schema%fp_egress_point fept
+			LEFT OUTER JOIN %Schema%fp_node_node_xref fnnx
+			ON (fept.fpnode_id =
+			fnnx.to_fpnode_id)
+			WHERE fn.fp_id = ?
+			AND fept.fpnode_id = fn.fpnode_id
+			ORDER BY fept.egress_point_id
+		</retrieveEgressPoints>
+		<retrieveReleasePointTypeCd>
+			SELECT ISNULL(egress_point_type_cd, '') AS
+			egress_point_type_cd
+			FROM %Schema%FP_EGRESS_POINT
+			WHERE fpnode_id = ?
+		</retrieveReleasePointTypeCd>
+		<updateReleasePointId>
+			UPDATE %Schema%FP_EGRESS_POINT
+			SET
+			release_point_id = ?, dapc_dsc = ?
+			WHERE fpnode_id =?
+		</updateReleasePointId>
+		<retrieveReleasePointId>
+			SELECT ISNULL(release_point_id, '') as
+			release_point_id FROM %Schema%FP_EGRESS_POINT WHERE fpnode_id = ?
+		</retrieveReleasePointId>
+		<retrieveEuEmissions>
+			SELECT ${FacilitySQL.euEmissionsColumns}
+			FROM
+			%Schema%fp_eu_emissions feuem
+			WHERE feuem.emu_id = ?
+		</retrieveEuEmissions>
+		<removeEuEmissions>
+			DELETE FROM %Schema%fp_eu_emissions WHERE emu_id =
+			?
+		</removeEuEmissions>
+		<retrieveEmissionUnit>
+			SELECT ${FacilitySQL.emissionUnitColumns}
+			FROM
+			%Schema%fp_emissions_unit feu
+			WHERE feu.emu_id = ?
+		</retrieveEmissionUnit>
+		<retrieveEmissionUnitByEpa>
+			SELECT ${FacilitySQL.emissionUnitColumns}
+			FROM %Schema%fp_emissions_unit feu
+			WHERE feu.fp_id = ?
+			AND
+			feu.epa_emu_id = ?
+		</retrieveEmissionUnitByEpa>
+		<retrieveControlEquipment>
+			SELECT
+			${FacilitySQL.controlEquipmentColumns}
+			FROM %Schema%fp_control_equip
+			fce
+			WHERE fce.fpnode_id = ?
+		</retrieveControlEquipment>
+		<retrieveControlEquipmentById>
+			SELECT
+			${FacilitySQL.controlEquipmentColumns}, fn.fp_id, fn.corr_id
+			FROM
+			%Schema%fp_control_equip fce, %Schema%fp_node fn
+			WHERE fn.fp_id = ?
+			AND fce.control_equip_id = ?
+			AND fn.fpnode_id = fce.fpnode_id
+		</retrieveControlEquipmentById>
+		<retrieveControlEquipmentData>
+			SELECT
+			${FacilitySQL.controlEquipmentDataColumns}
+			FROM
+			%Schema%fp_control_equip_data fced
+			WHERE fced.fpnode_id = ?
+		</retrieveControlEquipmentData>
+		<retrieveEgressPoint>
+			SELECT ${FacilitySQL.egressPointColumns},
+			FROM
+			%Schema%fp_egress_point fept,
+			WHERE fept.fpnode_id = ?
+		</retrieveEgressPoint>
+		<retrieveEgressPointById>
+			SELECT ${FacilitySQL.egressPointColumns},
+			fn.fp_id, fn.corr_id
+			FROM %Schema%fp_egress_point fept,
+			%Schema%fp_node fn
+			WHERE fn.fp_id = ?
+			AND fept.egress_point_id = ?
+			AND
+			fn.fpnode_id = fept.fpnode_id
+		</retrieveEgressPointById>
+		<retrieveEmissionProcess>
+			SELECT ${FacilitySQL.emissionProcessColumns}
+			FROM %Schema%fp_emission_process fep
+			WHERE fep.fpnode_id = ?
+		</retrieveEmissionProcess>
+		<retrieveEmissionProcessByProcId>
+			SELECT
+			${FacilitySQL.emissionProcessColumns}, fn.fp_id, fn.corr_id
+			FROM
+			%Schema%fp_emission_process fep, %Schema%fp_node fn
+			WHERE fn.fp_id = ?
+			AND fep.process_id = ?
+			AND fn.fpnode_id = fep.fpnode_id
+		</retrieveEmissionProcessByProcId>
+		<retrieveEmissionProcessBySccId>
+			SELECT
+			${FacilitySQL.emissionProcessColumns}, fn.fp_id
+			FROM
+			%Schema%fp_emission_process fep, %Schema%fp_node fn
+			WHERE fn.fp_id = ?
+			AND fep.emu_id = ?
+			AND fep.scc_id = ?
+			AND fn.fpnode_id = fep.fpnode_id
+		</retrieveEmissionProcessBySccId>
+		
+		<createFacilityRole>INSERT INTO %Schema%fp_facility_role_xref
+			(facility_id,
+			facility_role_cd, user_id)
+			VALUES (?,?,?)
+		</createFacilityRole>
+		
+		<removeFacilityRoles>DELETE FROM %Schema%fp_facility_role_xref WHERE
+			facility_id = ?
+		</removeFacilityRoles>
+
+		<removeFacilityRolesByFacilityByRole>
+			DELETE FROM %Schema%fp_facility_role_xref 
+				WHERE facility_id 
+				  IN (SELECT ffid.facility_id 
+				        FROM %Schema%fp_facility_id ffid
+				        WHERE ffid.user_id = ?)
+				AND facility_role_cd = ?
+		</removeFacilityRolesByFacilityByRole>
+		
+		<retrieveFacilityRoles>
+			SELECT ffrd.facility_role_dsc, ffrd.facility_role_cd
+				, ffrx.facility_id, ffrx.user_id, ffrx.last_modified AS ffrx_lm
+				, count(a.ACTIVITY_TEMPLATE_NM) as ACTIVITY_COUNT
+			FROM %Schema%fp_facility_role_def ffrd
+				INNER JOIN %Schema%fp_facility_role_xref ffrx  ON (ffrd.facility_role_cd = ffrx.facility_role_cd)
+				LEFT JOIN %Schema%WF_ACTIVITY_TEMPLATE a on a.FACILITY_ROLE_CD = ffrd.FACILITY_ROLE_CD  or a.FACILITY_ROLE_CD = ffrd.PARENT
+				LEFT JOIN %Schema%WF_PROCESS_TEMPLATE p on p.PROCESS_TEMPLATE_ID = a.PROCESS_TEMPLATE_ID
+			WHERE ffrx.facility_id = ?
+			GROUP BY ffrd.facility_role_dsc, ffrd.facility_role_cd
+				, ffrx.facility_id, ffrx.user_id, ffrx.last_modified
+		</retrieveFacilityRoles>
+
+		<insertFacilityIdsByUser>
+			insert into %Schema%fp_facility_id (facility_id,user_id) values (?,?)
+		</insertFacilityIdsByUser>
+
+		<deleteFacilityIdsByUser>
+			delete from %Schema%fp_facility_id where user_id = ?
+		</deleteFacilityIdsByUser>
+		
+		<retrieveFacilityRolesByFacilities>
+			SELECT ffrd.facility_role_dsc,
+				ffrd.facility_role_cd,
+				ffrx.facility_id, ffrx.user_id,
+				ffrx.last_modified AS ffrx_lm
+			FROM %Schema%fp_facility_role_def ffrd
+			INNER JOIN %Schema%fp_facility_role_xref ffrx
+			  ON (ffrd.facility_role_cd = ffrx.facility_role_cd)
+			INNER JOIN fp_facility_id fid
+			  ON (ffrx.facility_id = fid.facility_id and fid.user_id = ffrx.user_id)
+			WHERE fid.user_id = ?
+		</retrieveFacilityRolesByFacilities>
+
+		<retrieveFacilityRolesByFacilitiesByRole>
+			SELECT ffrd.facility_role_dsc,
+				ffrd.facility_role_cd,
+				ffrx.facility_id, ffrx.user_id,
+				ffrx.last_modified AS ffrx_lm
+			FROM %Schema%fp_facility_role_def ffrd
+			INNER JOIN %Schema%fp_facility_role_xref ffrx
+			  ON (ffrd.facility_role_cd = ffrx.facility_role_cd)
+			INNER JOIN fp_facility_id fid
+			  ON (ffrx.facility_id = fid.facility_id AND fid.user_id = ?)
+			WHERE ffrd.facility_role_cd = ?			  
+		</retrieveFacilityRolesByFacilitiesByRole>
+
+		<retrieveFacilityRolesByUserId>
+			SELECT ffrd.facility_role_dsc,
+			ffrd.facility_role_cd,
+			ffrx.facility_id, ffrx.user_id,
+			ffrx.last_modified AS ffrx_lm
+			FROM %Schema%fp_facility_role_def ffrd
+			INNER JOIN
+			%Schema%fp_facility_role_xref ffrx
+			ON (ffrd.facility_role_cd
+			= ffrx.facility_role_cd)
+			WHERE ffrx.user_id = ?
+		</retrieveFacilityRolesByUserId>
+
+		<retrieveFacilityOnlyRoleDefs>
+			SELECT facility_role_cd AS code,
+			facility_role_dsc AS description,
+			deprecated, last_modified
+			FROM
+			%Schema%fp_facility_role_def frd where type ='F'
+		</retrieveFacilityOnlyRoleDefs>
+
+		<retrieveFacilityOwners>SELECT ${CompanySQL.companyColumns},
+			${FacilitySQL.facilityOwnerColumns}
+			FROM
+			%Schema%cm_company ccm LEFT
+			OUTER JOIN %Schema%fp_facility_company_xref fcxr
+			ON
+			(ccm.company_id =
+			fcxr.company_id)
+			WHERE fcxr.facility_id = ?
+			AND
+			fcxr.company_id =
+			ccm.company_id
+			order by fcxr.start_date DESC, fcxr.end_date DESC
+		</retrieveFacilityOwners>
+
+		<retrieveFacilityOwner>SELECT ${CompanySQL.companyColumns},
+			${FacilitySQL.facilityOwnerColumns}
+			FROM
+			%Schema%cm_company ccm LEFT
+			OUTER JOIN %Schema%fp_facility_company_xref fcxr
+			ON
+			(ccm.company_id =
+			fcxr.company_id)
+			WHERE fcxr.facility_id = ?
+			AND
+			fcxr.company_id =
+			ccm.company_id
+			AND fcxr.end_date is null
+		</retrieveFacilityOwner>
+
+		<retrieveFacilityContacts>
+		    SELECT ${ContactSQL.contactColumns},
+			${InfrastructureSQL.contactTypeColumns},
+			${InfrastructureSQL.addressColumns},
+			${ContactSQL.contactReleventCompanyColumns},
+            ff.fp_id, ff.facility_id, ff.facility_nm            
+            , ccd.county_nm
+			FROM %Schema%fp_facility ff, (%Schema%cm_address ca
+			left join dbo.cm_county_def ccd on ccd.county_cd = ca.county_cd),
+			(%Schema%cm_contact cc LEFT OUTER JOIN
+			%Schema%cm_contact_contact_type_xref ccctx
+			ON (cc.contact_id =
+			ccctx.contact_id)) LEFT
+			JOIN %Schema%cm_company com on
+			cc.company_id =
+			com.COMPANY_ID
+			WHERE ccctx.facility_id = ?
+			AND ca.address_id = cc.address_id
+            AND ccctx.facility_id = ff.facility_id
+            AND ff.END_DT is null
+            ORDER BY
+            isnull(ccctx.end_date,' ') ASC, cc.last_nm ASC, cc.first_nm ASC
+		</retrieveFacilityContacts>
+
+		<retrieveStagingFacilityContacts>
+		    SELECT ${ContactSQL.contactColumns},
+			${InfrastructureSQL.contactTypeColumns},
+			${InfrastructureSQL.addressColumns}
+			FROM %Schema%cm_address ca,
+			%Schema%cm_contact cc LEFT OUTER JOIN
+			%Schema%cm_contact_contact_type_xref ccctx
+			ON (cc.contact_id =
+			ccctx.contact_id)
+			WHERE ccctx.facility_id = ?
+			AND ccctx.contact_id =
+			cc.contact_id
+			AND ca.address_id = cc.address_id
+			AND cc.facility_id =
+			ccctx.facility_id
+			ORDER BY
+			isnull(ccctx.end_date,' ') ASC
+		</retrieveStagingFacilityContacts>
+
+
+		<retrieveActiveFacilityContacts>
+            SELECT ${ContactSQL.contactColumns},
+            ${InfrastructureSQL.contactTypeColumns},
+            ${InfrastructureSQL.addressColumns},
+            ${ContactSQL.contactReleventCompanyColumns},
+            ff.fp_id, ff.facility_id, ff.facility_nm      
+            FROM %Schema%cm_address ca, %Schema%fp_facility ff, 
+            %Schema%cm_contact cc LEFT OUTER JOIN
+            %Schema%cm_contact_contact_type_xref ccctx
+            ON (cc.contact_id =
+            ccctx.contact_id)
+            LEFT OUTER JOIN 
+			%Schema%cm_company com 
+			ON cc.company_id = com.COMPANY_ID
+            WHERE ccctx.facility_id = ?
+            AND ca.address_id = cc.address_id
+            AND ccctx.end_date is null
+            AND ccctx.facility_id = ff.facility_id
+            AND ff.END_DT is null
+            ORDER BY cc.last_nm ASC, cc.first_nm ASC
+		</retrieveActiveFacilityContacts>
+
+		<retrieveFacilityContact>SELECT ${ContactSQL.contactColumns}
+			FROM
+			%Schema%cm_contact_contact_type_xref ccctx, %Schema%cm_contact
+			cc
+			WHERE ccctx.facility_id = ?
+			AND ccctx.contact_id = cc.contact_id
+		</retrieveFacilityContact>
+		<addCountyNotification>INSERT INTO %Schema%fp_county_notification
+			(fp_id, county_cd)
+			VALUES (?,?)
+		</addCountyNotification>
+		<addFacilityRole>INSERT INTO %Schema%fp_facility_role_xref
+			(facility_id, facility_role_cd, user_id)
+			VALUES (?,?,?)
+		</addFacilityRole>
+		<addFacilityNote>INSERT INTO %Schema%fp_note_facility_xref (fp_id,
+			note_id, facility_id)
+			VALUES (?,?,?)
+		</addFacilityNote>
+		<addFacilityNAICS>INSERT INTO %Schema%fp_facility_naics_xref (fp_id,
+			naics_cd)
+			VALUES (?,?)
+		</addFacilityNAICS>
+		<deleteFacilityNAICS>
+			DELETE %Schema%fp_facility_naics_xref
+			WHERE fp_id
+			= ? AND naics_cd = ?
+		</deleteFacilityNAICS>
+		<addFacilitySIC>INSERT INTO %Schema%fp_facility_sic_xref (fp_id,
+			sic_cd)
+			VALUES (?,?)
+		</addFacilitySIC>
+		<addFacilityMACTSubpart>INSERT INTO %Schema%fp_facility_mact_xref
+			(fp_id, mact_subpart_cd)
+			VALUES (?,?)
+		</addFacilityMACTSubpart>
+		<addFacilityNSPSSubpart>INSERT INTO %Schema%fp_facility_nsps_xref
+			(fp_id, nsps_subpart_cd)
+			VALUES (?,?)
+		</addFacilityNSPSSubpart>
+		<addFacilityNeshapsSubpart>INSERT INTO
+			%Schema%fp_facility_neshaps_xref (fp_id, neshaps_subpart_cd,
+			subpart_comp_cd)
+			VALUES (?,?,?)
+		</addFacilityNeshapsSubpart>
+		<retrieveFacilitySICCodes>SELECT sic_cd FROM
+			%Schema%fp_facility_sic_xref WHERE fp_id = ?
+		</retrieveFacilitySICCodes>
+		<retrieveFacilityNAICSCodes>SELECT naics_cd FROM
+			%Schema%fp_facility_naics_xref WHERE fp_id = ?
+		</retrieveFacilityNAICSCodes>
+		<retrieveFacilityNESHAPSCodes>SELECT fp_id, neshaps_subpart_cd as
+			pollutant_cd, subpart_comp_cd as pollutant_comp_cd
+			FROM
+			%Schema%fp_facility_neshaps_xref
+			WHERE fp_id = ?
+		</retrieveFacilityNESHAPSCodes>
+		<retrieveFacilityNSPSCodes>SELECT nsps_subpart_cd
+			FROM
+			%Schema%fp_facility_nsps_xref
+			WHERE fp_id = ?
+		</retrieveFacilityNSPSCodes>
+		<retrieveFacilityMACTCodes>SELECT mact_subpart_cd
+			FROM
+			%Schema%fp_facility_mact_xref
+			WHERE fp_id = ?
+		</retrieveFacilityMACTCodes>
+		<retrieveFacilityNotificationCounties>SELECT county_cd
+			FROM
+			%Schema%fp_county_notification
+			WHERE fp_id = ?
+		</retrieveFacilityNotificationCounties>
+		<retrieveFacilityNotes>SELECT ${InfrastructureSQL.noteColumns},
+			fnfx.fp_id, fnfx.facility_id
+			FROM %Schema%fp_note_facility_xref fnfx,
+			%Schema%cm_note cn
+			WHERE fnfx.facility_id = ?
+			AND fnfx.note_id =
+			cn.note_id
+			AND cn.note_type_cd != 'hist'
+			ORDER BY note_id DESC
+		</retrieveFacilityNotes>
+		<retrieveFacilityAttachments>SELECT
+			fa.attachment_type_cd,
+			fa.last_modified AS ref_lm, def.attachment_type_dsc,
+			${DocumentSQL.documentColumns}
+			FROM %Schema%fp_facility_attachments
+			fa, %Schema%dc_document dd,
+			%Schema%fp_attachment_type_def def
+			WHERE
+			dd.facility_id = ?
+			AND fa.document_id = dd.document_id
+			AND
+			fa.attachment_type_cd = def.attachment_type_cd
+		</retrieveFacilityAttachments>
+		<createEventLog>
+			INSERT INTO %Schema%FP_EVENT_LOG
+			(EVENT_LOG_ID,EVENT_TYPE_CD,FP_ID,
+			FACILITY_ID, EVENT_DATE,USER_ID,
+			EVENT_NOTE)
+			VALUES (?,?,?,?,?,?,?)
+		</createEventLog>
+		<retrieveEventLogs>
+			SELECT
+			el.EVENT_LOG_ID,el.EVENT_TYPE_CD,el.FP_ID,el.EVENT_DATE,
+			el.USER_ID,el.EVENT_NOTE,el.LAST_MODIFIED, f.FACILITY_ID,
+			f.FACILITY_NM
+			FROM %Schema%FP_EVENT_LOG el, %Schema%FP_FACILITY f
+			WHERE el.User_ID IS NOT NULL AND f.FP_ID = el.FP_ID
+		</retrieveEventLogs>
+		<removeCountyNotifications>DELETE FROM %Schema%fp_county_notification
+			WHERE fp_id = ?
+		</removeCountyNotifications>
+		<removeFacilityNAICSs>DELETE FROM %Schema%fp_facility_naics_xref WHERE
+			fp_id = ?
+		</removeFacilityNAICSs>
+		<removeFacilitySICs>DELETE FROM %Schema%fp_facility_sic_xref WHERE
+			fp_id = ?
+		</removeFacilitySICs>
+		<removeFacilityMACTSubparts>DELETE FROM %Schema%fp_facility_mact_xref
+			WHERE fp_id = ?
+		</removeFacilityMACTSubparts>
+		<removeFacilityNeshapsSubparts>DELETE FROM
+			%Schema%fp_facility_neshaps_xref WHERE fp_id = ?
+		</removeFacilityNeshapsSubparts>
+		<removeFacilityNSPSSubparts>DELETE FROM %Schema%fp_facility_nsps_xref
+			WHERE fp_id = ?
+		</removeFacilityNSPSSubparts>
+		<retrieveCEDataDetails>
+			SELECT fp_dd.data_detail_id, fp_dd.equipment_type_cd
+			FROM
+			%Schema%fp_equipment_data_xref fp_dd
+		</retrieveCEDataDetails>
+		<retrieveContEquipDataDetail>
+			SELECT fp_dd.data_detail_id
+			FROM
+			%Schema%fp_equipment_data_xref fp_dd
+			WHERE fp_dd.equipment_type_cd = ?
+			order by fp_dd.data_detail_id
+		</retrieveContEquipDataDetail>
+		<increaseVersionIds>
+			UPDATE %Schema%fp_facility SET version_id =
+			version_id + 1,
+			last_modified = last_modified + 1
+			Where last_modified =
+			last_modified and
+			facility_id = ?
+			AND version_id > ?
+		</increaseVersionIds>
+		<retrieveMutliEstabFacilities>
+			SELECT ff.fp_id, ff.facility_id,
+			ff.facility_nm, ff.federal_SCSC_ID,
+			ff.version_id
+			FROM
+			%Schema%fp_facility ff
+			WHERE ff.version_id = ?
+			AND ff.federal_SCSC_ID =
+			?
+			ORDER BY ff.facility_id
+		</retrieveMutliEstabFacilities>
+		<addFacilityAddress>
+			INSERT INTO %Schema%fp_facility_address_xref
+			(fp_id, address_id)
+			VALUES (?,?)
+		</addFacilityAddress>
+
+		<addFacilityToCompany>
+			INSERT INTO %Schema%fp_facility_company_xref
+			(facility_id, start_date, company_id, last_modified)
+			VALUES (?,?,?,?)
+		</addFacilityToCompany>
+		<retrieveFacilityAddresses>
+			SELECT ${InfrastructureSQL.addressColumns}, cc.county_nm
+			FROM %Schema%fp_facility_address_xref faxr, %Schema%cm_address ca
+			left join dbo.cm_county_def cc on cc.county_cd = ca.county_cd
+			WHERE faxr.fp_id = ?
+			AND faxr.address_id = ca.address_id
+			ORDER by
+			ca.start_dt DESC, ca.address_id DESC
+		</retrieveFacilityAddresses>
+		<rumColumns>fr.rum_id,fr.contact_id,fr.user_id,fr.facility_id,
+			fr.orig_mail_dt,fr.correspondance_type,fr.disposition,fr.dapc_note
+			fr.last_modified
+		</rumColumns>
+		<createRUM>INSERT INTO %Schema%FP_RUM
+			(RUM_ID,UNDELIVERED_REASON_CD,UNDELIVERABLE_ADDRESS,USER_ID,
+			FACILITY_ID,ORIG_MAIL_DT,CREATED_DT,CORRESPONDENCE_CATEGORY_CD,DISPOSITION,
+			DAPC_NOTE,LAST_MODIFIED)
+			VALUES (?,?,?,?,?,?,?,?,?,?,? )
+		</createRUM>
+		<modifyRUM>UPDATE %Schema%fp_rum SET undelivered_reason_cd =
+			?,undeliverable_address = ?,
+			orig_mail_dt = ?,created_dt =
+			?,correspondence_category_cd = ? ,disposition = ?
+			,dapc_note =
+			?,last_modified = ?
+			WHERE rum_id = ? AND last_modified = ?
+		</modifyRUM>
+		<retrieveRUM>SELECT ${FacilitySQL.rumColumns}
+			FROM %Schema%fp_rum WHERE
+			rum_id = ?
+		</retrieveRUM>
+		<retrieveFacilityRUM>SELECT rum.*,corr.CORRESPONDENCE_CATEGORY_CD as
+			categoryCd,corr.CORRESPONDENCE_CATEGORY_DSC as
+			category,contacts.FIRST_NM as firstName,
+			contacts.LAST_NM as
+			lastName,reason.UNDELIVERED_REASON_CD as
+			reasonCd,reason.undelivered_reason_dSC as reason
+			FROM %Schema%fp_rum
+			rum, %Schema%dc_undelivered_reason_def reason,
+			%Schema%dc_correspondence_category_def corr,
+			%Schema%cm_contact
+			contacts, %Schema%cm_user_def users
+			WHERE
+			rum.CORRESPONDENCE_CATEGORY_CD = corr.CORRESPONDENCE_CATEGORY_CD
+			AND
+			rum.UNDELIVERED_REASON_CD = reason.UNDELIVERED_REASON_CD
+			AND
+			contacts.contact_id = users.contact_id
+			AND users.user_id = rum.USER_ID
+			and
+			rum.rum_id = ?
+		</retrieveFacilityRUM>
+		<retrieveFacilityRUMs>SELECT distinct rum.*,corr.CORRESPONDENCE_CATEGORY_CD as
+			categoryCd,corr.CORRESPONDENCE_CATEGORY_DSC as
+			category,reason.UNDELIVERED_REASON_CD as
+			reasonCd,reason.undelivered_reason_dSC as reason
+			FROM %Schema%fp_rum
+			rum, %Schema%dc_undelivered_reason_def reason,
+			%Schema%dc_correspondence_category_def corr,
+			%Schema%cm_contact
+			contacts, %Schema%cm_user_def users
+			WHERE
+			rum.CORRESPONDENCE_CATEGORY_CD = corr.CORRESPONDENCE_CATEGORY_CD
+			AND
+			rum.UNDELIVERED_REASON_CD = reason.UNDELIVERED_REASON_CD
+			AND users.user_id = rum.USER_ID
+			and
+			rum.facility_id = ? ORDER BY rum.last_modified
+		</retrieveFacilityRUMs>
+		<removeRUM>
+			DELETE FROM %Schema%fp_rum WHERE rum_id = ?
+		</removeRUM>
+
+		<!-- <tvCertReminder> SELECT ${FacilitySQL.facilityColumns} FROM %Schema%fp_facility 
+			ff INNER JOIN %Schema%pt_permit pt ON (ff.facility_id = pt.facility_id AND 
+			pt.permit_type_cd = 'TVPTO' AND pt.permit_global_status_cd = 'F' AND pt.effective_date 
+			&lt; ? AND pt.expiration_date &gt;= ?) WHERE ff.version_id = -1 AND ff.tv_cert_report_due_date 
+			= ? AND (ff.operating_status_cd = 'op' OR ff.operating_status_cd = 'ia') 
+			AND (ff.last_shutdown_date IS NULL OR ff.last_shutdown_date &gt;= ?) </tvCertReminder> -->
+		<tvCertReminder>
+			SELECT ${FacilitySQL.facilityColumns}
+			FROM
+			%Schema%fp_facility ff
+			WHERE ff.version_id = -1
+			AND
+			ff.permit_classification_cd = 'tv'
+			AND (ff.last_shutdown_date IS NULL
+			OR ff.last_shutdown_date &gt;= ?)
+			AND permit_status_cd in ('A', 'EX',
+			'E')
+		</tvCertReminder>
+
+		<tvCert>
+			SELECT distinct ${FacilitySQL.facilityColumns}, 0 as
+			max_version
+			FROM %Schema%fp_facility ff
+			INNER JOIN %Schema%pt_permit pt
+			ON (ff.facility_id = pt.facility_id
+			AND pt.permit_type_cd = 'TVPTO'
+			AND ((pt.permit_global_status_cd = 'F'
+			AND pt.effective_date &lt; ?
+			AND pt.expiration_date &gt;= ?)
+			OR (pt.primary_reason_cd = 'R'
+			AND (
+			SELECT paa.SUBMITTED_DATE
+			FROM %Schema%PA_APPLICATION paa
+			WHERE
+			(paa.APPLICATION_ID =
+			(SELECT mpax.application_id
+			FROM (SELECT
+			mpa.application_id, mpa.PERMIT_ID,
+			mrpa.SUBMITTED_DATE,
+			ROW_NUMBER()
+			OVER(PARTITION BY mpa.PERMIT_ID
+			ORDER BY mrpa.SUBMITTED_DATE) AS rn
+			FROM %Schema%pt_permit_application_xref mpa
+			INNER JOIN
+			%Schema%PA_APPLICATION mrpa
+			ON (mpa.APPLICATION_ID =
+			mrpa.APPLICATION_ID)
+			) mpax
+			WHERE mpax.permit_id = pt.permit_id and
+			mpax.rn = 1
+			)
+			)
+			) &lt;= ?
+			AND (pt.expiration_date IS NULL OR
+			pt.expiration_date &gt;= ?)
+			)
+			)
+			)
+			LEFT OUTER JOIN
+			%Schema%cr_compliance_report ccr
+			ON (ff.facility_id = ccr.facility_id
+			AND ccr.report_type_cd = 'tvcc'
+			AND ccr.report_status = 'sbmt'
+			AND
+			ccr.tvcc_reporting_year = ?)
+			WHERE ff.version_id = -1
+			AND
+			ff.permit_classification_cd = 'tv'
+			AND ccr.report_id IS NULL
+			AND
+			(ff.operating_status_cd != 'sd'
+			OR (ff.last_shutdown_date &gt;= ? AND
+			ff.last_shutdown_date &lt;= ?))
+		</tvCert>
+
+		<tvCertLate>
+			${FacilitySQL.tvCert}
+			AND ff.tv_cert_report_due_date = ?
+		</tvCertLate>
+
+		<tvCertOverdue>
+			${FacilitySQL.tvCert}
+			AND (ff.TV_CERT_REPORT_DUE_DATE =
+			? OR ff.TV_CERT_REPORT_DUE_DATE = ?)
+		</tvCertOverdue>
+
+		<retrieveFERNoticeViolation>
+			SELECT
+			${EmissionsReportSQL.EmissionsRptInfoColumns}
+			FROM
+			%Schema%FP_YEARLY_REPORTING_CATEGORY fyrc
+			WHERE
+			fyrc.RPT_RECEIVED_STATUS_CD = '03rs'
+			AND fyrc.YEAR = ?
+			AND
+			fyrc.EMISSIONS_RPT_CD != 'ntv'
+			ORDER BY fyrc.FACILITY_ID
+		</retrieveFERNoticeViolation>
+
+		<facilityExport>SELECT DISTINCT ff.facility_id, ff.facility_nm,
+			ca.address1, ca.address2, ca.city, ca.zip5, ca.zip4, ccd.county_nm,
+			cc.first_nm, cc.last_nm, cc.phone_no, fosd.operating_status_dsc,
+			fpcd.permit_classification_dsc, fnd.naics_dsc,
+			feu.epa_emu_id,
+			feu.eu_desc, fosdeu.operating_status_dsc AS eu_operating_status,
+			feu.initial_installation_dt,
+			fep.process_id, fep.scc_id
+			FROM fp_facility ff
+			LEFT OUTER JOIN fp_permit_classification_def fpcd 
+			  ON (ff.permit_classification_cd = fpcd.permit_classification_cd)
+			LEFT OUTER JOIN fp_facility_naics_xref ffnx 
+			  ON (ff.fp_id = ffnx.fp_id)
+			LEFT OUTER JOIN fp_naics_def fnd 
+			  ON (ffnx.naics_cd = fnd.naics_cd)
+			INNER JOIN fp_operating_status_def fosd 
+			  ON (ff.operating_status_cd = fosd.operating_status_cd)
+			LEFT OUTER JOIN fp_emissions_unit feu 
+			  ON (ff.fp_id = feu.fp_id)
+			LEFT OUTER JOIN fp_operating_status_def fosdeu
+			  ON (feu.operating_status_cd = fosdeu.operating_status_cd)
+			LEFT OUTER JOIN fp_emission_process fep 
+			  ON (feu.emu_id = fep.emu_id)
+			INNER JOIN fp_facility_address_xref ffax 
+			  ON (ff.fp_id = ffax.fp_id AND ff.version_id = -1)
+			INNER JOIN cm_address ca 
+			  ON (ffax.address_id = ca.address_id AND ca.end_dt IS NULL)
+			INNER JOIN cm_county_def ccd 
+			  ON (ca.county_cd = ccd.county_cd)
+			INNER JOIN cm_contact_contact_type_xref ccctx 
+			  ON (ff.facility_id = ccctx.facility_id
+			        AND ccctx.contact_type_cd = 'oper'
+			        AND ccctx.end_date IS NULL)
+			INNER JOIN cm_contact cc 
+			  ON (ccctx.contact_id = cc.contact_id)
+		</facilityExport>
+
+		<createSubmissionLog>INSERT INTO %Schema%fp_submission_log
+			(facility_id, submission_type, submission_dt, gateway_user_nm,
+			gateway_submission_id,
+			non_ro_submission, document_id)
+			VALUES(?,?,?,?,?,?,?)
+		</createSubmissionLog>
+
+		<retrieveSubmissionLogs>SELECT DISTINCT fsub.facility_id,
+			fsub.submission_type,
+			fsub.submission_dt, fsub.gateway_user_nm,
+			fsub.gateway_submission_id,
+			fsub.non_ro_submission, fsub.document_id,
+			fsub.last_modified,
+			ff.facility_nm
+			FROM %Schema%fp_submission_log fsub,
+			%Schema%fp_facility ff
+			WHERE fsub.facility_id = ff.facility_id
+			AND
+			ff.version_id = -1
+		</retrieveSubmissionLogs>
+
+		<removeEmissionUnit>
+			DELETE FROM %Schema%fp_emissions_unit
+			WHERE emu_id
+			= ?
+		</removeEmissionUnit>
+
+		<retrieveEmissionUnitsFromPastProfiles>
+			SELECT
+			${FacilitySQL.emissionUnitColumns}
+			FROM %Schema%fp_emissions_unit feu
+			JOIN %Schema%fp_facility ff on (feu.fp_id = ff.fp_id AND
+			ff.version_id !=
+			-1)
+			WHERE feu.corr_epa_emu_id = ?
+			AND ff.facility_id =
+			?
+		</retrieveEmissionUnitsFromPastProfiles>
+
+		<retrieveEmissionUnitFromCurrentProfile>
+			SELECT
+			${FacilitySQL.emissionUnitColumns}
+			FROM %Schema%fp_emissions_unit feu
+			JOIN %Schema%fp_facility ff on (feu.fp_id = ff.fp_id AND
+			ff.version_id = -1)
+			WHERE feu.corr_epa_emu_id = ?
+			AND ff.facility_id =
+			?
+		</retrieveEmissionUnitFromCurrentProfile>
+
+		<removeFacilityOwner>
+			DELETE FROM %Schema%fp_facility_company_xref
+			WHERE
+			company_id
+			= ? AND facility_id = ? AND start_date = ?
+			AND
+			end_date
+			= ?
+		</removeFacilityOwner>
+
+		<removeCurrentFacilityOwner>
+			DELETE FROM
+			%Schema%fp_facility_company_xref
+			WHERE
+			company_id
+			= ? AND facility_id =
+			? AND start_date = ?
+			AND
+			end_date
+			is null
+		</removeCurrentFacilityOwner>
+
+		<addFacilityOwner>
+			INSERT INTO %Schema%fp_facility_company_xref
+			(company_id, facility_id,
+			start_date, end_date, last_modified)
+			VALUES
+			(?,?,?,?,?)
+		</addFacilityOwner>
+
+		<removeFacilitySubObject>
+			DECLARE @FP_ID numeric(38,0) = ?
+			DECLARE @FPNODES TABLE(FPNODE_ID numeric(38,0))
+			INSERT INTO @FPNODES (FPNODE_ID)(SELECT [FPNODE_ID] FROM %Schema%[FP_NODE]
+			where FP_ID = @FP_ID)
+			--delete release point
+			DELETE FROM %Schema%FP_EGRESS_POINT WHERE FPNODE_ID IN(SELECT FPNODE_ID
+			FROM @FPNODES)
+			--delete control Equipment
+			DELETE FROM %Schema%FP_CONTROL_EQUIP_DATA WHERE FPNODE_ID IN(SELECT
+			FPNODE_ID FROM @FPNODES)
+			DELETE FROM %Schema%FP_POLLUTANTS_CONTROLLED WHERE FPNODE_ID IN(SELECT
+			FPNODE_ID FROM @FPNODES)
+			DELETE FROM %Schema%FP_CONTROL_EQUIP WHERE FPNODE_ID IN(SELECT FPNODE_ID
+			FROM @FPNODES)
+			--delete emission process
+			DELETE FROM %Schema%FP_EMISSION_PROCESS WHERE FPNODE_ID IN(SELECT FPNODE_ID
+			FROM @FPNODES)
+			DELETE FROM %Schema%FP_EMISSION_PROCESS WHERE FPNODE_ID IN(SELECT FPNODE_ID
+			FROM @FPNODES)
+			--delete relationship
+			DELETE FROM %Schema%FP_NODE_NODE_XREF WHERE FROM_FPNODE_ID IN (SELECT
+			FPNODE_ID FROM @FPNODES) OR TO_FPNODE_ID IN(SELECT FPNODE_ID FROM
+			@FPNODES)
+			--delete facility node
+			DELETE FROM %Schema%FP_NODE WHERE FPNODE_ID IN (SELECT FPNODE_ID FROM
+			@FPNODES)
+			--delete emission unit
+			DELETE FROM %Schema%FP_EMISSIONS_UNIT_TYPE WHERE EMU_ID IN (SELECT EMU_ID
+			FROM %Schema%FP_EMISSIONS_UNIT WHERE FP_ID=@FP_ID)
+			DELETE FROM %Schema%FP_EU_EMISSIONS WHERE EMU_ID IN (SELECT EMU_ID FROM
+			%Schema%FP_EMISSIONS_UNIT WHERE FP_ID=@FP_ID)
+			DELETE FROM %Schema%FP_EU_FUG_COMPONENT_XREF WHERE EMU_ID IN (SELECT EMU_ID FROM
+			%Schema%FP_EMISSIONS_UNIT WHERE FP_ID=@FP_ID)
+			DELETE FROM %Schema%FP_EMISSIONS_UNIT WHERE FP_ID=@FP_ID
+		</removeFacilitySubObject>
+		<retrieveReleatedEmissionUnitByWiseId>
+			SELECT TOP 1 emu_id FROM
+			%Schema%fp_emissions_unit
+			WHERE wiseview_id = ?
+			ORDER BY emu_id desc
+		</retrieveReleatedEmissionUnitByWiseId>
+		<retrieveProcessIdByWiseId>
+			SELECT TOP 1 fpnode_id FROM
+			%Schema%fp_emission_process
+			WHERE wiseview_id = ?
+			ORDER BY fpnode_id
+			desc
+		</retrieveProcessIdByWiseId>
+		<retrieveFpIdByFacilityId>
+			SELECT fp_id
+			FROM %Schema%fp_facility
+			WHERE facility_id = ? AND version_id = -1
+		</retrieveFpIdByFacilityId>
+		<retrieveControlEquipIdsByProcessWiseId>
+			SELECT node.TO_FPNODE_ID as controlEquipID 
+			FROM FP_NODE_NODE_XREF node JOIN FP_CONTROL_EQUIP ce 
+				ON node.to_fpnode_id = ce.fpnode_id
+			WHERE FROM_FPNODE_ID = 
+				(SELECT FPNODE_ID FROM FP_EMISSION_PROCESS 
+				 WHERE WISEVIEW_ID = ?)
+		</retrieveControlEquipIdsByProcessWiseId>
+		
+		<retrieveEmissionUnitReplacement>
+			SELECT replacement_id, emu_id, manufacture_name, serial_number, serial_number_effective_date,
+			install_date, operation_startup_date, order_date, manufacture_date, shutdown_date, removal_date
+	 		FROM %Schema%fp_emissions_unit_replacement
+	 		WHERE emu_id = ?
+	 		ORDER BY serial_number_effective_date DESC
+		</retrieveEmissionUnitReplacement>
+		<createEmissionUnitReplacement>
+			INSERT INTO %Schema%fp_emissions_unit_replacement
+			(replacement_id, emu_id, manufacture_name, serial_number, serial_number_effective_date,
+			install_date, operation_startup_date, order_date, manufacture_date, shutdown_date, removal_date)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?)
+		</createEmissionUnitReplacement>
+		<removeEmissionUnitReplacements>
+			DELETE FROM %Schema%fp_emissions_unit_replacement WHERE emu_id = ?
+		</removeEmissionUnitReplacements>
+
+
+		<retrieveFixmeCompanies>
+			SELECT OLD.FACILITY_ID,
+			FAC.FP_ID,
+			OLD.COMPANY_ID AS OLD_COMPANY,
+			OLD_COMPANY.NAME AS OLD_COMPANY_NAME,
+			OLD.START_DATE AS OLD_STARTDATE,
+			OLD.END_DATE AS OLD_ENDDATE,
+			NEW.COMPANY_ID AS NEW_COMPANY,
+			NEW_COMPANY.NAME AS NEW_COMPANY_NAME,
+			NEW.START_DATE AS NEW_STARTDATE,
+			NEW.END_DATE AS NEW_NEDDATE
+			FROM
+			%Schema%[FP_FACILITY_COMPANY_XREF] OLD
+			LEFT JOIN %Schema%[CM_COMPANY]
+			OLD_COMPANY ON (OLD.COMPANY_ID =
+			OLD_COMPANY.COMPANY_ID)
+			LEFT JOIN
+			%Schema%[FP_FACILITY_COMPANY_XREF] NEW ON (OLD.FACILITY_ID =
+			NEW.FACILITY_ID AND OLD.END_DATE = NEW.START_DATE)
+			LEFT JOIN
+			%Schema%[CM_COMPANY] NEW_COMPANY ON (NEW.COMPANY_ID =
+			NEW_COMPANY.COMPANY_ID)
+			LEFT JOIN %Schema%[FP_FACILITY] FAC ON
+			(FAC.FACILITY_ID = OLD.FACILITY_ID
+			AND FAC.VERSION_ID = '-1')
+			WHERE
+			OLD_COMPANY.NAME LIKE 'ZZFIXME%' AND NEW.FACILITY_ID IS NOT NULL
+			ORDER BY OLD.START_DATE, OLD.FACILITY_ID
+		</retrieveFixmeCompanies>
+		<removeFixmeCompanies>
+		  --Setup todolist
+		  DECLARE @TODOLIST TABLE(FACILITY_ID VARCHAR(20),OLD_COMPANY INT, OLD_STARTDATE DATETIME2(6), OLD_ENDDATE DATETIME2(6), NEW_COMPANY INT, DONE VARCHAR(1))
+		  
+		  INSERT INTO @TODOLIST (FACILITY_ID, OLD_COMPANY, OLD_STARTDATE, OLD_ENDDATE, NEW_COMPANY, DONE)
+			  SELECT OLD.FACILITY_ID, 
+				   OLD.COMPANY_ID AS OLD_COMPANY,
+				   OLD.START_DATE AS OLD_STARTDATE,
+				   OLD.END_DATE AS OLD_ENDDATE,
+				   NEW.COMPANY_ID AS NEW_COMPANY,
+				   'N'
+			  FROM %Schema%[FP_FACILITY_COMPANY_XREF] OLD
+			  LEFT JOIN %Schema%[CM_COMPANY] COMPANY ON (OLD.COMPANY_ID = COMPANY.COMPANY_ID)
+			  LEFT JOIN %Schema%[FP_FACILITY_COMPANY_XREF] NEW
+			  ON (OLD.FACILITY_ID = NEW.FACILITY_ID AND OLD.END_DATE = NEW.START_DATE)
+			  WHERE COMPANY.NAME LIKE 'ZZFIXME%' AND NEW.FACILITY_ID IS NOT NULL
+			  ORDER BY OLD.START_DATE, OLD.FACILITY_ID
+		  
+		  --Initial
+		  DECLARE @FACILITY_ID VARCHAR(20) = (SELECT TOP 1 FACILITY_ID FROM @TODOLIST WHERE DONE = 'N')
+		  DECLARE @OLD_COMPANY INT = (SELECT TOP 1 OLD_COMPANY FROM @TODOLIST WHERE DONE = 'N')
+		  DECLARE @OLD_STARTDATE DATETIME2(6)= (SELECT TOP 1 OLD_STARTDATE FROM @TODOLIST WHERE DONE = 'N')
+		  DECLARE @OLD_ENDDATE DATETIME2(6)= (SELECT TOP 1 OLD_ENDDATE FROM @TODOLIST WHERE DONE = 'N')
+		  DECLARE @NEW_COMPANY INT= (SELECT TOP 1 NEW_COMPANY FROM @TODOLIST WHERE DONE = 'N')
+		  
+		  WHILE @FACILITY_ID is not null
+		  BEGIN
+			  
+			  --Update start date for new owner
+			  UPDATE %Schema%[FP_FACILITY_COMPANY_XREF] 
+			  SET START_DATE = @OLD_STARTDATE 
+			  WHERE FACILITY_ID = @FACILITY_ID AND 
+					COMPANY_ID = @NEW_COMPANY AND 
+					START_DATE = @OLD_ENDDATE
+			  
+			  --Delete old owner(ZZFIXME)
+			  DELETE FROM %Schema%[FP_FACILITY_COMPANY_XREF] 
+			  WHERE FACILITY_ID = @FACILITY_ID AND 
+					COMPANY_ID = @OLD_COMPANY AND 
+					START_DATE = @OLD_STARTDATE AND 
+					END_DATE = @OLD_ENDDATE
+			
+			  --delete duplicate contact on [CM_CONTACT_CONTACT_TYPE_XREF]
+			  DELETE FROM %Schema%[CM_CONTACT_CONTACT_TYPE_XREF] 
+		     	  WHERE EXISTS
+				  (select *
+					from %Schema%[CM_CONTACT_CONTACT_TYPE_XREF] c2
+					where %Schema%[CM_CONTACT_CONTACT_TYPE_XREF].CONTACT_TYPE_CD = c2.CONTACT_TYPE_CD and 
+						  %Schema%[CM_CONTACT_CONTACT_TYPE_XREF].CONTACT_ID = c2.CONTACT_ID and 
+						  %Schema%[CM_CONTACT_CONTACT_TYPE_XREF].FACILITY_ID = c2.FACILITY_ID and
+						  %Schema%[CM_CONTACT_CONTACT_TYPE_XREF].START_DATE != c2.START_DATE and
+						  %Schema%[CM_CONTACT_CONTACT_TYPE_XREF].FACILITY_ID = @FACILITY_ID and 
+						  %Schema%[CM_CONTACT_CONTACT_TYPE_XREF].START_DATE = @OLD_STARTDATE)
+				  
+			  --Update start date for contact
+			  UPDATE %Schema%[CM_CONTACT_CONTACT_TYPE_XREF] 
+			  SET START_DATE = @OLD_STARTDATE 
+			  WHERE FACILITY_ID = @FACILITY_ID AND 
+					START_DATE = @OLD_ENDDATE
+			     		
+			  --Updata Todo list done = 'Y'
+			  UPDATE @TODOLIST SET DONE='Y' 
+			  WHERE FACILITY_ID = @FACILITY_ID AND 
+					OLD_COMPANY = @OLD_COMPANY AND 
+					OLD_STARTDATE = @OLD_STARTDATE AND 
+					OLD_ENDDATE = @OLD_ENDDATE AND
+					NEW_COMPANY = @NEW_COMPANY
+			  -- Get New Runing data
+			  SET @FACILITY_ID = (SELECT TOP 1 FACILITY_ID FROM @TODOLIST WHERE DONE = 'N')
+			  SET @OLD_COMPANY  = (SELECT TOP 1 OLD_COMPANY FROM @TODOLIST WHERE DONE = 'N')
+			  SET @OLD_STARTDATE = (SELECT TOP 1 OLD_STARTDATE FROM @TODOLIST WHERE DONE = 'N')
+			  SET @OLD_ENDDATE = (SELECT TOP 1 OLD_ENDDATE FROM @TODOLIST WHERE DONE = 'N')
+			  SET @NEW_COMPANY = (SELECT TOP 1 NEW_COMPANY FROM @TODOLIST WHERE DONE = 'N')
+		  END
+  
+		</removeFixmeCompanies>
+		<retrieveFacilityIdRefs>
+		SELECT ${FacilitySQL.facilityIdRefsColumns}, fpdo.do_laa_id 
+		FROM %Schema%fp_facility_id_ref fpid, %Schema%cm_do_laa_def fpdo
+		WHERE fpid.county_cd = ?
+		AND fpid.do_laa_cd = fpdo.do_laa_cd
+		</retrieveFacilityIdRefs>
+		<retrieveEmissionUnitByCorrEpaEmuId>
+			SELECT ${FacilitySQL.emissionUnitColumns}
+			FROM
+			%Schema%fp_emissions_unit feu
+			WHERE feu.fp_id = ? AND feu.corr_epa_emu_id = ? 
+		</retrieveEmissionUnitByCorrEpaEmuId>
+		
+		<createFacilityRequest>INSERT INTO %Schema%fp_facility_request (
+			request_id
+			, contact_id
+			, company_id
+			, facility_nm
+			, facility_desc
+			, facility_type_cd
+			, operating_status_cd
+			, memo
+			, submit_dt
+			, address_id
+			)
+			VALUES
+			(?,?,?,?,?,?,?,?,?,?)
+		</createFacilityRequest>
+		
+		<findFacilityRequests>
+			SELECT ${FacilitySQL.facilityRequestListColumns},
+			${InfrastructureSQL.addressColumns}
+			FROM %Schema%fp_facility_request ff
+			LEFT JOIN %Schema%cm_company ccm on ff.company_id = ccm.COMPANY_ID
+			LEFT JOIN %Schema%cm_contact cc on ff.contact_id = cc.contact_id
+			LEFT JOIN %Schema%cm_address ca ON ff.address_id = ca.address_id
+			INNER JOIN %Schema%FP_FACILITY_TYPE_DEF fpft 
+				ON fpft.FACILITY_TYPE_CD = ff.FACILITY_TYPE_CD
+			WHERE 1=1 
+		</findFacilityRequests>
+		
+		<retrieveFacilityRequest>
+			SELECT ${FacilitySQL.facilityRequestListColumns},
+			${InfrastructureSQL.addressColumns}
+			FROM %Schema%fp_facility_request ff
+			LEFT JOIN %Schema%cm_company ccm on ff.company_id = ccm.company_id 
+			LEFT JOIN %Schema%cm_contact cc on ff.contact_id = cc.contact_id
+			LEFT JOIN %Schema%cm_address ca ON ff.address_id = ca.address_id
+			INNER JOIN %Schema%FP_FACILITY_TYPE_DEF fpft 
+				ON fpft.FACILITY_TYPE_CD = ff.FACILITY_TYPE_CD
+			WHERE ff.request_id = ?
+		</retrieveFacilityRequest>
+		
+		<modifyFacilityRequest>UPDATE %Schema%fp_facility_request
+			SET 
+			facility_nm = ?, 
+			facility_desc = ?, 
+			operating_status_cd = ?, 
+			facility_type_cd = ?,
+			memo = ?,
+			submit_dt = ?,
+			request_status_cd = ?,
+			last_modified = ?
+			WHERE request_id = ?
+			AND
+			last_modified = ?
+		</modifyFacilityRequest>
+		
+		<removeFacilityRequest>
+			DELETE FROM %Schema%fp_facility_request WHERE request_id = ?
+		</removeFacilityRequest>
+		
+		<retrieveFacilityRequestCount>
+			SELECT COUNT(*) as request_cnt
+			FROM dbo.fp_facility_request ff
+			WHERE ff.company_id = ?
+			AND ff.REQUEST_STATUS_CD = 'PND'
+		</retrieveFacilityRequestCount>
+		
+		<tvPermitSearch>
+			SELECT distinct
+				p.[PERMIT_ID] id
+			      ,p.[PERMIT_NBR] as number
+			      ,p.[DESCRIPTION] as description
+				  ,f.FACILITY_NM as facility_name
+				  ,c.NAME as company_name
+				  ,f.FACILITY_ID
+				  ,p.PERMIT_TYPE_CD as app_permit_type_cd
+			  FROM [dbo].[PT_PERMIT] p
+			  inner join [dbo].fp_facility f on f.FACILITY_ID = p.FACILITY_ID
+			  inner join [dbo].FP_FACILITY_COMPANY_XREF fcx on fcx.FACILITY_ID = f.FACILITY_ID 
+			    and fcx.END_DATE is null
+			  inner join [dbo].CM_COMPANY c on c.COMPANY_ID = fcx.COMPANY_ID
+			  where
+			  f.END_DT is null
+			  and p.permit_type_cd = 'TVPTO'
+		</tvPermitSearch>
+		  <tvAppSearch>
+		    SELECT distinct
+  				pa.[APPLICATION_ID] as id
+			      ,pa.[APPLICATION_NBR] as number
+			      ,pa.[APPLICATION_DESC] as description
+				  ,f.FACILITY_NM as facility_name
+				  ,c.NAME as company_name
+				  ,f.FACILITY_ID
+				  ,pa.APPLICATION_TYPE_CD as app_permit_type_cd
+			  FROM [dbo].[PA_APPLICATION] pa
+				  inner join [dbo].fp_facility f on f.FP_ID = pa.FP_ID
+				  inner join [dbo].FP_FACILITY_COMPANY_XREF fcx on fcx.FACILITY_ID = f.FACILITY_ID 
+				    and fcx.END_DATE is null
+				  inner join [dbo].CM_COMPANY c on c.COMPANY_ID = fcx.COMPANY_ID
+				  left join [dbo].[PT_PERMIT_APPLICATION_XREF] pax on pax.APPLICATION_ID = pa.APPLICATION_ID
+				  left join [dbo].[PT_PERMIT] p on p.PERMIT_ID = pax.PERMIT_ID
+				  where
+				  pa.application_type_cd = 'TV'
+		  </tvAppSearch>
+		
+		<nsrPermitSearch>
+			SELECT distinct
+				p.[PERMIT_ID] id
+			      ,p.[PERMIT_NBR] as number
+			      ,p.[DESCRIPTION] as description
+				  ,f.FACILITY_NM as facility_name
+				  ,c.NAME as company_name
+				  ,f.FACILITY_ID
+				  ,p.PERMIT_TYPE_CD as app_permit_type_cd
+			  FROM [dbo].[PT_PERMIT] p
+			  inner join [dbo].fp_facility f on f.FACILITY_ID = p.FACILITY_ID
+			  inner join [dbo].FP_FACILITY_COMPANY_XREF fcx on fcx.FACILITY_ID = f.FACILITY_ID 
+			    and fcx.END_DATE is null
+			  inner join [dbo].CM_COMPANY c on c.COMPANY_ID = fcx.COMPANY_ID
+			  left join [dbo].[PT_PTIO_PERMIT] ptio on ptio.PERMIT_ID = p.PERMIT_ID
+			  where
+			  f.END_DT is null
+			  and p.permit_type_cd = 'NSR'
+			  and p.LEGACY_FLAG = 'N'
+			  and ptio.BILLABLE = 'Y'
+		</nsrPermitSearch>
+		<nsrPermitSearch2>
+			EXCEPT
+			SELECT
+				p.[PERMIT_ID] id
+		        ,p.[PERMIT_NBR] as number
+			    ,p.[DESCRIPTION] as description
+				,f.FACILITY_NM as facility_name
+				,c.NAME as company_name
+			    ,f.FACILITY_ID
+			    ,p.PERMIT_TYPE_CD as app_permit_type_cd
+			  FROM [dbo].[PT_PERMIT] p
+			  inner join [dbo].fp_facility f on f.FACILITY_ID = p.FACILITY_ID
+			  inner join [dbo].FP_FACILITY_COMPANY_XREF fcx on fcx.FACILITY_ID = f.FACILITY_ID 
+			    and fcx.END_DATE is null
+			  inner join [dbo].CM_COMPANY c on c.COMPANY_ID = fcx.COMPANY_ID
+			  inner join [dbo].[PT_PERMIT_CHARGE_PAYMENT] pcp on pcp.PERMIT_ID = p.PERMIT_ID
+  			    and pcp.TRANSACTION_TYPE = 'FI'
+	   </nsrPermitSearch2>
+		  
+		  <nsrAppSearch>
+		    SELECT distinct
+  				pa.[APPLICATION_ID] as id
+			      ,pa.[APPLICATION_NBR] as number
+			      ,pa.[APPLICATION_DESC] as description
+				  ,f.FACILITY_NM as facility_name
+				  ,c.NAME as company_name
+				  ,f.FACILITY_ID
+				  ,pa.APPLICATION_TYPE_CD as app_permit_type_cd
+			  FROM [dbo].[PA_APPLICATION] pa
+				  inner join [dbo].fp_facility f on f.FP_ID = pa.FP_ID
+				  inner join [dbo].FP_FACILITY_COMPANY_XREF fcx on fcx.FACILITY_ID = f.FACILITY_ID 
+				    and fcx.END_DATE is null
+				  inner join [dbo].CM_COMPANY c on c.COMPANY_ID = fcx.COMPANY_ID
+				  left join [dbo].[PT_PERMIT_APPLICATION_XREF] pax on pax.APPLICATION_ID = pa.APPLICATION_ID
+				  left join [dbo].[PT_PERMIT] p on p.PERMIT_ID = pax.PERMIT_ID
+				  left join [dbo].[PT_PERMIT_CHARGE_PAYMENT] pcp on pcp.PERMIT_ID = p.PERMIT_ID
+				  left join [dbo].[PT_PTIO_PERMIT] ptio on ptio.PERMIT_ID = p.PERMIT_ID
+				  where
+				  pa.application_type_cd = 'PTIO'
+				  and pa.LEGACY_FLAG = 'N'
+				  and ptio.BILLABLE = 'Y'
+		  </nsrAppSearch>
+		  <nsrAppSearch2>
+				EXCEPT
+				SELECT
+  				  pa.[APPLICATION_ID] as id
+			      ,pa.[APPLICATION_NBR] as number
+			      ,pa.[APPLICATION_DESC] as description
+				  ,f.FACILITY_NM as facility_name
+				  ,c.NAME as company_name
+				  ,f.FACILITY_ID
+				  ,pa.APPLICATION_TYPE_CD as app_permit_type_cd
+			    FROM [dbo].[PA_APPLICATION] pa
+				  inner join [dbo].fp_facility f on f.FP_ID = pa.FP_ID
+				  inner join [dbo].FP_FACILITY_COMPANY_XREF fcx on fcx.FACILITY_ID = f.FACILITY_ID 
+				    and fcx.END_DATE is null
+				  inner join [dbo].CM_COMPANY c on c.COMPANY_ID = fcx.COMPANY_ID
+				  inner join [dbo].[PT_PERMIT_APPLICATION_XREF] pax on pax.APPLICATION_ID = pa.APPLICATION_ID
+				  inner join [dbo].[PT_PERMIT] p on p.PERMIT_ID = pax.PERMIT_ID
+				  inner join [dbo].[PT_PERMIT_CHARGE_PAYMENT] pcp on pcp.PERMIT_ID = p.PERMIT_ID
+					and pcp.TRANSACTION_TYPE = 'FI'
+		  </nsrAppSearch2>
+			
+			<retrieveFacilityCemComLimitListByFpId>
+				SELECT limit_id, 
+					fccl.monitor_id,
+					limit_desc, 
+					limit_source,
+					start_dt, 
+					end_dt, 
+					fccl.addl_info,
+					fccl.added_by,
+					lim_id,
+					mon_id,
+					monitor_desc as mon_desc,
+					fccl.last_modified as fccl_lm,
+					fccl.corr_limit_id
+				FROM %Schema%FP_CEM_COM_LIMIT fccl
+				JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = fccl.monitor_id)
+				WHERE fp_id = ?
+				ORDER BY start_dt DESC
+			</retrieveFacilityCemComLimitListByFpId>
+			
+			<retrieveFacilityCemComLimitListByMonitorId>
+				SELECT limit_id, 
+					fccl.monitor_id,
+					limit_desc, 
+					limit_source,
+					start_dt, 
+					end_dt, 
+					fccl.addl_info,
+					fccl.added_by,
+					lim_id,
+					mon_id,
+					monitor_desc as mon_desc,
+					fccl.last_modified as fccl_lm,
+					fccl.corr_limit_id
+				FROM %Schema%FP_CEM_COM_LIMIT fccl
+				JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = fccl.monitor_id)
+				WHERE fccl.monitor_id = ?
+				ORDER BY start_dt DESC
+			</retrieveFacilityCemComLimitListByMonitorId>
+
+			<removeFacilityCemComLimitList>
+				DELETE FROM %Schema%FP_CEM_COM_LIMIT WHERE monitor_id = ?
+			</removeFacilityCemComLimitList>
+
+			<createFacilityCemComLimit>
+				INSERT INTO %Schema%FP_CEM_COM_LIMIT
+					(limit_id, monitor_id, limit_desc, limit_source, start_dt, end_dt, addl_info, added_by,
+					lim_id, corr_limit_id)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			</createFacilityCemComLimit>
+
+			<modifyFacilityCemComLimit>
+				UPDATE %Schema%FP_CEM_COM_LIMIT
+					SET limit_id = ?, monitor_id = ?, limit_desc = ?,
+					limit_source = ?,
+					start_dt = ?,
+					end_dt = ?,
+					addl_info = ?,
+					added_by = ?,
+					lim_id = ?,
+					corr_limit_id = ?,
+					last_modified = ?
+				WHERE limit_id = ? AND last_modified = ?
+			</modifyFacilityCemComLimit>
+
+			<removeFacilityCemComLimit>
+				DELETE FROM %Schema%FP_CEM_COM_LIMIT WHERE limit_id = ?
+			</removeFacilityCemComLimit>
+
+		<retrieveNextLimId>
+			SELECT ISNULL(MAX(RIGHT(lim_id,3)), 0) + 1
+				FROM %Schema%fp_cem_com_limit
+				WHERE monitor_id = ?
+		</retrieveNextLimId>
+		
+		<retrieveFacilityCemComLimitByMonitorIdAndCorrId>
+  			SELECT limit_id, 
+					fccl.monitor_id,
+					limit_desc, 
+					limit_source,
+					start_dt, 
+					end_dt, 
+					fccl.addl_info,
+					fccl.added_by,
+					lim_id,
+					mon_id,
+					monitor_desc as mon_desc,
+					fccl.last_modified as fccl_lm,
+					fccl.corr_limit_id
+				FROM %Schema%FP_CEM_COM_LIMIT fccl
+				JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = fccl.monitor_id)
+				WHERE fccl.monitor_id = ? and fccl.corr_limit_id = ?
+  	</retrieveFacilityCemComLimitByMonitorIdAndCorrId>
+  	
+  	<retrieveCemsComplianceReportCountWithMonitor>
+		SELECT 
+			COUNT(*) as report_cnt
+			FROM
+			%Schema%FP_FACILITY fp
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT cr on cr.FP_ID = fp.FP_ID
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT_MONITOR crm ON crm.REPORT_ID = cr.REPORT_ID
+			INNER JOIN %Schema%FP_CONTINUOUS_MONITOR cm ON CM.MONITOR_ID = crm.MONITOR_ID
+			WHERE
+				cr.REPORT_TYPE_CD = 'cems'	
+	</retrieveCemsComplianceReportCountWithMonitor>
+	
+	<retrieveCemsComplianceReportCountWithLimit>
+		SELECT 
+			COUNT(*) as report_cnt
+			FROM
+			%Schema%FP_FACILITY fp
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT cr on cr.FP_ID = fp.FP_ID
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT_MONITOR crm ON crm.REPORT_ID = cr.REPORT_ID
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT_LIMIT crl ON crl.CR_MONITOR_ID = crm.CR_MONITOR_ID
+			INNER JOIN %Schema%FP_CONTINUOUS_MONITOR cm ON CM.MONITOR_ID = crm.MONITOR_ID
+			INNER JOIN %Schema%FP_CEM_COM_LIMIT lim ON lim.LIMIT_ID = crl.LIMIT_ID
+			WHERE
+				cr.REPORT_TYPE_CD = 'cems'	
+	</retrieveCemsComplianceReportCountWithLimit>
+	<retrieveFacilitiesWithMatchingApiNumber>
+		SELECT DISTINCT f.FACILITY_ID FROM %Schema%FP_API_GROUP_XREF a 
+			INNER JOIN %Schema%FP_FACILITY f on f.FP_ID = a.FP_ID 
+			WHERE a.API_NO = ?
+			AND f.FACILITY_ID != ?
+			AND f.VERSION_ID = -1
+	</retrieveFacilitiesWithMatchingApiNumber>
+	
+	<retrieveAllControlEquipIdsByEmuId>
+	WITH ControlDevice AS
+	(
+		SELECT ancr.FROM_FPNODE_ID, ancr.TO_FPNODE_ID
+			FROM %Schema%FP_NODE_NODE_XREF ancr 
+			WHERE ancr.FROM_FPNODE_ID IN (SELECT fpnode_id FROM %Schema%FP_EMISSION_PROCESS WHERE EMU_ID = ?)
+
+		UNION ALL
+
+		SELECT rec.FROM_FPNODE_ID, rec.TO_FPNODE_ID
+			FROM %Schema%FP_NODE_NODE_XREF rec
+			INNER JOIN ControlDevice cd ON rec.FROM_FPNODE_ID = cd.TO_FPNODE_ID
+	)
+	SELECT
+		fce.FPNODE_ID
+		FROM ControlDevice
+		INNER JOIN %Schema%FP_CONTROL_EQUIP fce ON ControlDevice.TO_FPNODE_ID = fce.FPNODE_ID
+		WHERE fce.OPERATING_STATUS_CD='op'
+	</retrieveAllControlEquipIdsByEmuId>
+	
+	<retrieveAddressIdForFacilityOnLastDOP>
+		SELECT TOP 1 address_id FROM dbo.fp_facility_address_xref ffax
+			JOIN dbo.fp_facility ff ON ff.fp_id = ffax.fp_id
+			WHERE facility_id = ? AND
+			NOT((ff.START_DT &lt; ? AND (ff.END_DT &lt; ? AND ff.END_DT IS NOT NULL)) OR ff.START_DT &gt; ?)
+			ORDER BY ff.fp_id DESC
+	</retrieveAddressIdForFacilityOnLastDOP>
+    
+    <retrieveEiDataImportFacilityInformation>
+	    SELECT
+		fp.facility_id
+		, fp.fp_id
+		, fp.facility_nm
+		, feu.epa_emu_id
+		, feu.emu_id
+		, feu.corr_epa_emu_id
+		, fep.process_id
+		, feu.operating_status_cd as eu_operating_status_cd
+		, feu.initial_installation_dt as eu_initial_installation_dt
+		, feu.initial_startup_dt as eu_initial_startup_dt
+		, feu.shutdown_dt as eu_shutdown_dt
+		, fep.scc_id
+		FROM %Schema%FP_FACILITY fp
+		INNER JOIN %Schema%fp_emissions_unit feu on feu.fp_id = fp.fp_id
+		INNER JOIN %Schema%fp_emission_process fep on fep.emu_id = feu.emu_id
+		WHERE fp.version_id = -1
+		ORDER BY fp.facility_id, feu.epa_emu_id, fep.process_id
+    </retrieveEiDataImportFacilityInformation>
+
+	<searchFacilityCemComLimitsByDate>
+		SELECT  fccl.lim_id, fccl.limit_id,
+		fcm.mon_id, fccl.monitor_id,
+		fcm.monitor_desc, eqt.install_date, eqt.removal_date,
+		crm.last_audit_dt, fccl.limit_desc, 
+		limit_source, fccl.addl_info,
+		fccl.start_dt, fccl.end_dt, fccl.corr_limit_id
+		FROM %Schema%FP_CEM_COM_LIMIT fccl
+		JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = fccl.monitor_id)
+		INNER JOIN %Schema%FP_FACILITY fp on (fp.fp_id = fcm.fp_id and fp.version_id = -1)
+		CROSS APPLY (select TOP 1 eqt.install_date as install_date, eqt.removal_date as removal_date from %Schema%FP_CONTINUOUS_MONITOR_EQT eqt 
+						where eqt.monitor_id = fccl.monitor_id order by eqt.install_date desc) eqt
+		CROSS APPLY (
+		SELECT MAX (crm.test_dt) as last_audit_dt
+			FROM %Schema%FP_FACILITY fp
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT cr on cr.fp_id = fp.fp_id
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT_MONITOR crm ON crm.report_id = cr.report_id
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT_LIMIT crl ON crl.cr_monitor_id = crm.cr_monitor_id
+			INNER JOIN %Schema%FP_CONTINUOUS_MONITOR cm ON CM.monitor_id = crm.monitor_id
+			INNER JOIN %Schema%FP_CEM_COM_LIMIT lim ON lim.LIMIT_ID = crl.LIMIT_ID
+			LEFT OUTER JOIN %Schema%FP_ACTIVE_CONTINUOUS_MONITOR_EQT eqp ON eqp.monitor_id = crm.monitor_id
+			WHERE crl.included_flag = 'Y' AND cr.report_type_cd = 'cems'
+				AND cr.report_status = 'sbmt' AND cr.dapc_accepted = 'yes'
+				AND lim.corr_limit_id = fccl.corr_limit_id) crm
+		WHERE fp.facility_id = ? and eqt.install_date &lt;= ?
+			AND (eqt.removal_date is null OR eqt.removal_date &gt;= ?)
+			AND fccl.start_dt &lt;= ?
+			AND (fccl.end_dt is null OR fccl.end_dt &gt;= ?)
+	</searchFacilityCemComLimitsByDate>
+	
+	<retrieveFacExtendedHydrocarbonAnalysisPollutant>
+		SELECT ${FacilitySQL.facExtendedHydrocarbonAnalysisColumns}, cpd.hc_analysis_sort_order FROM
+		%Schema%fp_extended_hydrocarbon_analysis_xref fehax 
+		INNER JOIN cm_pollutant_def cpd ON fehax.pollutant_cd = cpd.pollutant_cd
+		WHERE fehax.fp_id = ? ORDER BY cpd.hc_analysis_sort_order
+	</retrieveFacExtendedHydrocarbonAnalysisPollutant>
+	
+	<addFacExtendedHCAnalysisPollutant>
+		INSERT INTO %Schema%fp_extended_hydrocarbon_analysis_xref 
+		(fp_id, pollutant_cd, gas, oil, produced_water) VALUES (?, ?, ?, ?, ?)
+	</addFacExtendedHCAnalysisPollutant>
+	
+	<deleteFacExtendedHCAnalysisPollutant>
+		DELETE FROM %Schema%fp_extended_hydrocarbon_analysis_xref WHERE fp_id = ?
+	</deleteFacExtendedHCAnalysisPollutant>
+	
+	<retrieveFacHydrocarbonAnalysisSampleDetail>
+		SELECT ${FacilitySQL.facHydrocarbonAnalysisSampleDetailColumns} FROM
+		%Schema%fp_hydrocarbon_analysis_sample_detail fhasd 
+		WHERE fhasd.fp_id = ?
+	</retrieveFacHydrocarbonAnalysisSampleDetail>
+	
+	<addFacHydrocarbonAnalysisSampleDetail>
+		INSERT INTO %Schema%fp_hydrocarbon_analysis_sample_detail 
+			(fp_id, sample_facility_name_gas, sample_facility_name_oil, sample_facility_name_water,
+				sample_facility_api_gas, sample_facility_api_oil, sample_facility_api_water,
+				sample_facility_producing_field_gas, sample_facility_producing_field_oil, sample_facility_producing_field_water, 
+				sample_facility_producing_formation_gas, sample_facility_producing_formation_oil, sample_facility_producing_formation_water, 
+				sample_date_gas, sample_date_oil, sample_date_water, 
+				sample_point_gas, sample_point_oil, sample_point_water,
+				analysis_company_name_gas, analysis_company_name_oil, analysis_company_name_water,
+				analysis_date_gas, analysis_date_oil, analysis_date_water, 
+				sample_pressure_txt_gas, sample_pressure_txt_oil, sample_pressure_txt_water, 
+				sample_pressure_gas, sample_pressure_oil, sample_pressure_water, 
+				sample_temp_txt_gas, sample_temp_txt_oil, sample_temp_txt_water,
+				sample_temp_gas, sample_temp_oil, sample_temp_water, 
+				sample_flow_rate_txt_gas, sample_flow_rate_txt_oil, sample_flow_rate_txt_water,
+				sample_flow_rate_gas, sample_flow_rate_oil, sample_flow_rate_water)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	</addFacHydrocarbonAnalysisSampleDetail>
+	
+	<deleteFacHydrocarbonAnalysisSampleDetail>
+		DELETE FROM %Schema%fp_hydrocarbon_analysis_sample_detail where fp_id = ?
+	</deleteFacHydrocarbonAnalysisSampleDetail>
+	
+	<modifyFacHydrocarbonAnalysisSampleDetail>
+		UPDATE %Schema%fp_hydrocarbon_analysis_sample_detail SET
+			fp_id = ?,
+			sample_facility_name_gas = ?, sample_facility_name_oil = ?, sample_facility_name_water = ?, 
+			sample_facility_api_gas = ?, sample_facility_api_oil = ?, sample_facility_api_water = ?,
+			sample_facility_producing_field_gas = ?, sample_facility_producing_field_oil = ?, sample_facility_producing_field_water = ?, 
+			sample_facility_producing_formation_gas = ?, sample_facility_producing_formation_oil = ?, sample_facility_producing_formation_water = ?, 
+			sample_date_gas = ?, sample_date_oil = ?, sample_date_water = ?, 
+			sample_point_gas = ?, sample_point_oil = ?, sample_point_water = ?,
+			analysis_company_name_gas = ?, analysis_company_name_oil = ?, analysis_company_name_water = ?,
+			analysis_date_gas = ?, analysis_date_oil = ?, analysis_date_water = ?, 
+			sample_pressure_txt_gas = ?, sample_pressure_txt_oil = ?, sample_pressure_txt_water = ?, 
+			sample_pressure_gas = ?, sample_pressure_oil = ?, sample_pressure_water = ?, 
+			sample_temp_txt_gas = ?, sample_temp_txt_oil = ?, sample_temp_txt_water = ?,
+			sample_temp_gas = ?, sample_temp_oil = ?, sample_temp_water = ?, 
+			sample_flow_rate_txt_gas = ?, sample_flow_rate_txt_oil = ?, sample_flow_rate_txt_water = ?,
+			sample_flow_rate_gas = ?, sample_flow_rate_oil = ?, sample_flow_rate_water = ?,
+			last_modified = ?
+			WHERE fp_id = ? AND last_modified = ?
+	</modifyFacHydrocarbonAnalysisSampleDetail>
+	
+	<createDecaneProperties>
+		INSERT INTO %Schema%fp_hydrocarbon_analysis_decane_properties (
+			fp_id, 
+			avg_molecular_wt_of_oil, 
+			avg_molecular_wt_of_produced_water,
+			specific_gravity_of_oil, 
+			specific_gravity_of_produced_water 
+		) VALUES (?, ?, ?, ?, ?)
+	</createDecaneProperties>
+	<retrieveDecaneProperties>
+		SELECT ${FacilitySQL.facHydrocarbonAnyalysisDecanePropertiesColumns} 
+		FROM %Schema%fp_hydrocarbon_analysis_decane_properties dec
+		WHERE dec.fp_id = ? 
+	</retrieveDecaneProperties>
+	<modifyDecaneProperties>
+		UPDATE %Schema%fp_hydrocarbon_analysis_decane_properties SET
+			fp_id = ?,
+			avg_molecular_wt_of_oil = ?, 
+			avg_molecular_wt_of_produced_water = ?,
+			specific_gravity_of_oil = ?, 
+			specific_gravity_of_produced_water = ?, 
+			last_modified = ?
+			WHERE
+			fp_id = ?
+			AND last_modified = ?
+	</modifyDecaneProperties>
+	<deleteDecaneProperties>
+		DELETE FROM %Schema%fp_hydrocarbon_analysis_decane_properties WHERE fp_id = ?
+	</deleteDecaneProperties>
+	
+	<retrieveFacilityUserRoleActivities>
+		SELECT frd.FACILITY_ROLE_CD, frd.FACILITY_ROLE_DSC, pd.PROCESS_DSC
+			, p.PROCESS_TEMPLATE_DSC,  a.ACTIVITY_TEMPLATE_NM
+		FROM %Schema%fp_facility_role_def frd
+			LEFT JOIN %Schema%WF_ACTIVITY_TEMPLATE a on a.FACILITY_ROLE_CD = frd.FACILITY_ROLE_CD  or a.FACILITY_ROLE_CD = frd.PARENT
+			LEFT JOIN %Schema%WF_PROCESS_TEMPLATE p on p.PROCESS_TEMPLATE_ID = a.PROCESS_TEMPLATE_ID
+			LEFT JOIN %Schema%WF_PROCESS_DEF pd on pd.PROCESS_CD = p.PROCESS_CD
+		WHERE frd.facility_role_cd = ?
+		AND p.PROCESS_TEMPLATE_NM is not null
+		AND  a.ACTIVITY_TEMPLATE_NM is not null
+		ORDER BY pd.PROCESS_DSC, p.PROCESS_TEMPLATE_DSC,  a.ACTIVITY_TEMPLATE_NM
+	</retrieveFacilityUserRoleActivities>
+	
+	<retrieveFacilityListForPurging>
+		SELECT ${FacilitySQL.facilityListColumns}, ff.last_shutdown_date, 
+		${InfrastructureSQL.addressColumns} FROM %Schema%fp_facility ff
+		INNER JOIN %Schema%fp_facility_Address_xref ffax ON ff.fp_id = ffax.fp_id
+		INNER JOIN %Schema%cm_address ca ON ffax.address_id = ca.address_id 
+		LEFT JOIN %Schema%fp_facility_company_xref fc ON ff.facility_id = fc.facility_id
+		LEFT JOIN %Schema%cm_company ccm ON fc.company_id = ccm.company_id
+		where version_id = -1 AND fc.end_date is null AND ca.end_dt is null
+		AND operating_status_cd = ?
+		AND administrative_hold != 'Y'
+		AND last_shutdown_date &lt; ?
+	</retrieveFacilityListForPurging>
+	
+	<retrieveFacilityPurgeLogs>
+		SELECT ${FacilitySQL.facilityPurgeLogColumns} 
+		FROM %Schema%fp_facility_purge_log ffpl
+		ORDER BY ffpl.date_purged desc
+	</retrieveFacilityPurgeLogs>
+
+	<createFacilityPurgeLog>
+		INSERT INTO %Schema%fp_facility_purge_log 
+		(purge_log_id, facility_id, facility_name, company_id, company_name, facility_shutdown_date, date_purged, user_id)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?)	
+	</createFacilityPurgeLog>
+	<deleteSiteVisitsByFpid>
+			DELETE from %Schema%CE_SITE_VISIT WHERE fp_id=?
+	</deleteSiteVisitsByFpid>
+	
+	<deleteSiteVisitsXrefByFpid>
+		DELETE FROM %Schema%CE_VISIT_EVAL_XREF where VISIT_ID in (Select VISIT_ID from %Schema%CE_SITE_VISIT WHERE fp_id= ?)
+	</deleteSiteVisitsXrefByFpid>
+	
+	<deleteSiteVisitsNotesXrefByFpid>
+		DELETE FROM %Schema%CE_SITE_VISIT_NOTE_XREF where visit_id in (Select visit_id from %Schema%CE_SITE_VISIT WHERE fp_id= ?)
+	</deleteSiteVisitsNotesXrefByFpid>
+	
+	<deleteSVAttachments>
+		DELETE FROM %Schema%CE_SV_ATTACHMENT where VISIT_ID in (Select visit_id from %Schema%CE_SITE_VISIT where fp_id=?)
+	</deleteSVAttachments>
+	
+	<deleteCEEnforcementAttachments>
+		DELETE FROM %Schema%CE_SV_ATTACHMENT  where ENFORCEMENT_ACTION_ID in (select enforcement_action_id from %Schema%CE_ENF_ACTION  WHERE facility_id = ?)
+	</deleteCEEnforcementAttachments>
+	
+	
+	<deleteFacilityAttachments>
+		UPDATE %Schema%DC_DOCUMENT SET TEMP_FLAG='Y' where facility_id = ?
+	</deleteFacilityAttachments>
+	
+	<deleteFacilityContactRelationship>
+			DELETE FROM %Schema%CM_CONTACT_CONTACT_TYPE_XREF where facility_id= ?
+	</deleteFacilityContactRelationship>
+
+	<deleteFacilityNotes>
+			DELETE FROM %Schema%fp_note_facility_xref where facility_id= ?
+	</deleteFacilityNotes>
+
+	<deleteEventLogs>				
+			DELETE FROM %Schema%FP_EVENT_LOG WHERE FP_ID = ?
+	</deleteEventLogs>
+		
+	<deleteSubmissionLogs>
+			DELETE from %Schema%FP_SUBMISSION_LOG where facility_id= ?
+	</deleteSubmissionLogs>
+
+	<deleteFacilityCompanyRelationship>
+			DELETE FROM %Schema%fp_facility_company_xref
+			WHERE facility_id = ? 
+	</deleteFacilityCompanyRelationship>			
+	<deleteFacilityRUM>
+		DELETE FROM %Schema%fp_rum WHERE facility_id = ?
+	</deleteFacilityRUM>
+	</FacilitySQL>
+</root>

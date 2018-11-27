@@ -1,0 +1,7 @@
+<Context>
+  <Valve className="org.apache.catalina.authenticator.FormAuthenticator" changeSessionIdOnAuthentication="false" />
+  <Realm className="org.apache.catalina.realm.JAASRealm" 
+    appName="ScsLogin"
+    userClassNames="org.gricdeq.impact.UserPrincipal"
+    roleClassNames="org.gricdeq.impact.RolePrincipal" />
+</Context>

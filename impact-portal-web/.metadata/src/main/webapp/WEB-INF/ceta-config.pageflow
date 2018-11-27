@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14225680520660" configfile="/impact-portal-web/src/main/webapp/WEB-INF/ceta-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2290" id="pf14225680755493" outlinks="pf14225680755494 pf14225680755495 pf14225680755496 pf14225680755497 pf14225680755498 pf14225680755499 pf142256807554910 pf142256807554911 pf142256807554912 pf142256807554913 pf142256807554914 pf142256807554915" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/stackTestSearch" x="338" y="178" id="pf142256807554916" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14225680755494" path="/ceta/stackTestSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/stackTestDetail" x="338" y="562" id="pf142256807554917" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14225680755495" path="/ceta/stackTestDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/homeStackTestDetail" x="338" y="946" id="pf142256807554918" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14225680755496" path="/ceta/homeStackTestDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/newStackTest" x="338" y="1330" id="pf142256807554919" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf14225680755497" path="/ceta/newStackTest.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/stackTestSynchProfileDetail" x="338" y="1714" id="pf142256807554920" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf14225680755498" path="/ceta/stackTestSynchProfileDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/prtEmissionsTest" x="338" y="2098" id="pf142256807554921" referenceLink="//@navigationRule.1/@navigationCase.4/@toViewId|" inlinks="pf14225680755499" path="/ceta/prtEmissionsTest.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/euDetails" x="338" y="2482" id="pf142256807555022" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf142256807554910" path="/ceta/euDetails.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/stackTests" x="338" y="2866" id="pf142256807555023" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf142256807554911" path="/facilities/stackTests.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home" x="338" y="3250" id="pf142256807555024" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf142256807554912" path="/home.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/popupStackTests" x="338" y="3634" id="pf142256807555025" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf142256807554913" path="/ceta/popupStackTests.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/stackTestSubmitPopup" x="338" y="4018" id="pf142256807555026" referenceLink="//@navigationRule.5/@navigationCase.1/@toViewId|" inlinks="pf142256807554914" path="/ceta/stackTestSubmitPopup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="ceta/stackTestNoteDetail" x="338" y="4402" id="pf142256807555027" referenceLink="//@navigationRule.5/@navigationCase.2/@toViewId|" inlinks="pf142256807554915" path="/ceta/stackTestNoteDetail.jsp"/>
+  <links id="pf14225680755494" target="pf142256807554916" source="pf14225680755493" outcome="stackTest.search"/>
+  <links id="pf14225680755495" target="pf142256807554917" source="pf14225680755493" outcome="ceta.stackTestDetail" redirect="true"/>
+  <links id="pf14225680755496" target="pf142256807554918" source="pf14225680755493" outcome="home.ceta.stackTestReportDetail" redirect="true"/>
+  <links id="pf14225680755497" target="pf142256807554919" source="pf14225680755493" outcome="dialog:newStackTest"/>
+  <links id="pf14225680755498" target="pf142256807554920" source="pf14225680755493" outcome="dialog:stackTestSynchProfileDetail"/>
+  <links id="pf14225680755499" target="pf142256807554921" source="pf14225680755493" outcome="dialog:prtEmissionsTest"/>
+  <links id="pf142256807554910" target="pf142256807555022" source="pf14225680755493" outcome="dialog:selectEuScc"/>
+  <links id="pf142256807554911" target="pf142256807555023" source="pf14225680755493" outcome="facilities.profile.stackTest" redirect="true"/>
+  <links id="pf142256807554912" target="pf142256807555024" source="pf14225680755493" outcome="home"/>
+  <links id="pf142256807554913" target="pf142256807555025" source="pf14225680755493" outcome="dialog:stackTestsForVisit"/>
+  <links id="pf142256807554914" target="pf142256807555026" source="pf14225680755493" outcome="dialog:toStackTestSubmitPopup"/>
+  <links id="pf142256807554915" target="pf142256807555027" source="pf14225680755493" outcome="dialog:stackTestNoteDetail"/>
+</pageflow:Pageflow>

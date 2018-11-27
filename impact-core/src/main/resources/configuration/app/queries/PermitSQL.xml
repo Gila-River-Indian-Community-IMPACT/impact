@@ -1,0 +1,1885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <PermitSQL>
+
+    <tvPermitColumns>
+      ptp.PERMIT_ID, ptp.USEPA_EXPEDITED_FLAG,
+      ptp.USEPA_OUTCOME_CD, ptp.USEPA_COMPLETE_DATE, ptp.RECISSION_DATE, ptp.ACID_RAIN_FLAG,
+      ptp.ACID_DESC, ptp.CAM_FLAG, ptp.CAM_DESC, ptp.SEC_112_FLAG,
+      ptp.SEC_112_DESC, ptp.USEPA_RECEIVED_PERMIT_DATE, ptp.USEPA_PERMIT_SENT_DATE,
+      ptp.PERMIT_BASIS_DATE,
+      ptp.LAST_MODIFIED AS ptp_lm
+    </tvPermitColumns>
+
+    <regPermitColumns>
+      prp.permit_id, prp.received_date, prp.tc, prp.eap_status,
+      prp.process_date, prp.withdrawal_code, prp.withdrawal_date,
+      prp.adjud_code, prp.ren_proc_date, prp.appendix_code,
+      prp.renewal_status, prp.renewal_type_cd, prp.state_terms_cond,
+      prp.facility_major_polluter_code, prp.sic_cd, prp.last_modified AS
+      prp_lm
+    </regPermitColumns>
+    
+    <emissionsOffsetColumns>
+    	eo.emissions_offset_id
+    	, eo.permit_id
+    	, eo.area_cd
+    	, eo.attainment_standard_cd
+    	, eo.pollutant_cd
+    	, eo.current_offset
+    	, eo.base_offset
+    	, eo.delta
+    	, eo.emissions_reduction_multiple
+    	, eo.offset_multiple
+    	, eo.offset_amount
+    	, eo.comments
+    	, eo.last_modified
+    </emissionsOffsetColumns>
+    
+    <permitConditionColumns>
+    	pc.permit_condition_id
+    	, pc.pcond_id
+    	, pc.permit_id
+    	, pc.permit_condition_number
+    	, pc.condition_status_cd
+    	, pc.last_updated_by_id
+    	, pc.last_updated_dt
+    	, pc.facility_wide
+    	, pc.condition_text_html
+    	, pc.condition_text_plain
+    	, pc.last_modified as pc_lm
+    </permitConditionColumns>
+    
+    <permitConditionSupersessionColumns>
+    	pcs.superseded_permit_condition_id,
+    	pcs.superseding_permit_condition_id,
+    	pcs.superseding_option,
+    	pcs.comments,
+    	pcs.last_modified
+    </permitConditionSupersessionColumns>
+    
+    <complianceStatusEventColumns>
+    	cse.compliance_status_id
+    	, cse.cstatus_id
+		, cse.permit_condition_id
+		, cse.event_dt
+		, cse.event_type_cd
+		, cse.status
+		, cse.inspection_reference
+		, cse.stack_test_reference
+		, cse.compliance_report_reference
+		, cse.last_updated_by_id
+		, cse.last_updated_dt
+		, cse.last_modified
+    </complianceStatusEventColumns>
+
+	<retrievePermitWorkflowActivityBenchmarkDefs>
+		SELECT 
+			ptpabd.activity_benchmark_cd AS code, 
+			ptpabd.activity_benchmark_cd AS description, 
+			ptpabd.predicate_cd AS predicate_cd, 
+			ptpabd.days, 
+			ptpabd.activity_template_id,
+			ptpabd.deprecated,
+			ptpabd.display_order,
+			ptpabd.last_modified,
+			cmpd.predicate_dsc AS predicate_dsc
+		FROM 
+			dbo.pt_permit_activity_benchmark_def ptpabd, 
+			dbo.cm_predicate_def cmpd
+		WHERE 
+			ptpabd.predicate_cd = cmpd.predicate_cd
+		ORDER BY display_order
+	</retrievePermitWorkflowActivityBenchmarkDefs>
+
+	<searchPermitWorkflows>
+		select
+			wfp.PROCESS_ID,
+			wfpt.PROCESS_TEMPLATE_NM,
+			cmc.NAME as COMPANY_NM,
+			fpf.FACILITY_ID,
+			fpf.FP_ID,
+			fpf.FACILITY_NM,
+			wfpa.ACTIVITY_TEMPLATE_ID,
+			wfat.ACTIVITY_TEMPLATE_NM,
+			wfpa.ACTIVITY_STATUS_CD,
+			wfpa.LOOP_CNT,
+			wfartd.EXTEND_PROCESS_END_DATE,
+			cmud.NETWORK_LOGIN_NM,
+			cmud.LAST_NM,
+			cmud.FIRST_NM,
+			wfpa.START_DT,
+			wfpa.END_DT,
+			wfpa.DUE_DT,
+			ptp.PERMIT_TYPE_CD,
+			ptp.PERMIT_NBR,
+			paa.APPLICATION_NBR,
+			paa.RECEIVED_DATE
+		from 
+			dbo.WF_PROCESS wfp, 
+			dbo.WF_PROCESS_TEMPLATE wfpt, 
+			dbo.WF_ACTIVITY_TEMPLATE wfat, 
+			dbo.cm_user_def cmud, 
+			dbo.pt_permit ptp, 
+			dbo.pa_application paa, 
+			dbo.pt_permit_application_xref ptpax, 
+			dbo.fp_facility fpf, 
+			dbo.FP_FACILITY_COMPANY_XREF fpfcx, 
+			dbo.CM_COMPANY cmc,
+			dbo.WF_ACTIVITY_TEMPLATE_DEF wfatd,
+			dbo.WF_PROCESS_ACTIVITY wfpa
+		left outer join 
+			dbo.WF_ACTIVITY_REFERRAL_TYPE_DEF wfartd 
+		on wfpa.ACTIVITY_REFERRAL_TYPE_ID = wfartd.ACTIVITY_REFERRAL_TYPE_ID
+		where 
+		(
+			wfp.PROCESS_TEMPLATE_ID = wfpt.PROCESS_TEMPLATE_ID
+			and
+			wfp.PROCESS_ID = wfpa.PROCESS_ID
+			and
+			wfpa.ACTIVITY_TEMPLATE_ID = wfat.ACTIVITY_TEMPLATE_ID
+			and
+			wfat.ACTIVITY_TEMPLATE_DEF_ID = wfatd.ACTIVITY_TEMPLATE_DEF_ID
+			and
+			wfpa.USER_ID = cmud.USER_ID
+			and
+			wfp.EXTERNAL_ID = ptp.PERMIT_ID
+			and
+			ptp.FACILITY_ID = fpf.FACILITY_ID
+			and
+			fpf.FACILITY_ID = fpfcx.facility_id
+			and
+			fpfcx.COMPANY_ID = cmc.company_id
+			and
+			ptp.PERMIT_ID = ptpax.PERMIT_ID
+			and
+			ptpax.APPLICATION_ID = paa.APPLICATION_ID
+			and
+			wfp.PROCESS_TEMPLATE_ID = 236
+			and
+			fpf.END_DT is null
+			and
+			fpfcx.END_DATE is null
+			and
+			wfatd.PERFORMER_TYPE_CD = 'M'
+		)
+	</searchPermitWorkflows>
+
+    <!--
+    <searchPermits>
+      SELECT DISTINCT p.permit_id, p.permit_nbr, p.permit_global_status_cd, p.permit_type_cd,
+             p.effective_date, p.expiration_date, ff.facility_id, ff.fp_id, ff.facility_nm,
+             p.last_modified AS pp_lm, pid.issuance_date AS draft_issuance_date, 
+             pif.issuance_date AS final_issuance_date
+      FROM %Schema%pt_permit p
+        INNER JOIN %Schema%fp_facility ff 
+          ON (p.facility_id = ff.facility_id 
+              AND ff.VERSION_ID = -1)
+        INNER JOIN %Schema%pt_permit_reason_xref prx
+          ON (p.permit_id = prx.permit_id)
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+          ON (p.PERMIT_ID = pid.PERMIT_ID
+              AND pid.ISSUANCE_TYPE_CD = 'D'
+              AND pid.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+          ON (p.PERMIT_ID = pif.PERMIT_ID
+              AND pif.ISSUANCE_TYPE_CD = 'F'
+              AND pif.ISSUANCE_STATUS_CD = 'I')
+    </searchPermits>
+    -->
+
+    <!--
+    <searchPermits>
+      SELECT p.permit_id, p.permit_nbr, p.permit_global_status_cd, p.permit_type_cd,
+             p.effective_date, p.expiration_date, ff.facility_id, ff.fp_id, ff.facility_nm,
+             p.last_modified AS pp_lm, pid.issuance_date AS draft_issuance_date, 
+             pif.issuance_date AS final_issuance_date, app_data.all_apps, reason_data.all_reasons
+        FROM %Schema%pt_permit p
+          INNER JOIN %Schema%fp_facility ff 
+            ON (p.facility_id = ff.facility_id 
+                AND ff.VERSION_ID = -1)
+          INNER JOIN (SELECT reasons.permit_id, ltrim(sys_connect_by_path(reasons.reason_cd, ' ')) all_reasons
+                        FROM (SELECT ptrx.permit_id, ptrx.reason_cd, 
+                                     count(*) OVER (PARTITION BY ptrx.permit_id) reason_cnt,
+                                     row_number() OVER (PARTITION BY ptrx.permit_id 
+                                                          ORDER BY ptrx.reason_cd) rnn
+                                 FROM %Schema%pt_permit_reason_xref ptrx) reasons
+                                   WHERE reasons.rnn = reasons.reason_cnt
+                                   START WITH reasons.rnn = 1
+                                   CONNECT BY PRIOR reasons.permit_id = reasons.permit_id
+                                     AND PRIOR reasons.rnn = reasons.rnn - 1) reason_data
+            ON (p.permit_id = reason_data.permit_id)
+          LEFT OUTER JOIN (SELECT apps.permit_id, ltrim(sys_connect_by_path(apps.application_nbr, ' ')) all_apps
+                             FROM (SELECT pax.permit_id, pa.application_nbr, 
+                                          count(*) OVER (PARTITION BY pax.permit_id) app_cnt,
+                                          row_number() OVER (PARTITION BY pax.permit_id 
+                                                               ORDER BY pa.application_nbr) rn
+                                     FROM %Schema%pt_permit_application_xref pax 
+                                       INNER JOIN %Schema%pa_application pa 
+                                         ON (pax.application_id = pa.application_id)) apps
+                                     WHERE apps.rn = apps.app_cnt
+                                     START WITH apps.rn = 1
+                                     CONNECT BY PRIOR apps.permit_id = apps.permit_id
+                                       AND PRIOR apps.rn = apps.rn - 1) app_data
+            ON (p.permit_id = app_data.permit_id)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            ON (p.PERMIT_ID = pid.PERMIT_ID
+                AND pid.ISSUANCE_TYPE_CD = 'D'
+                AND pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+            ON (p.PERMIT_ID = pif.PERMIT_ID
+                AND pif.ISSUANCE_TYPE_CD = 'F'
+                AND pif.ISSUANCE_STATUS_CD = 'I')
+    </searchPermits>
+    -->
+
+    <!-- This version uses Moshe's function for rolling up the reason codes. It seems
+         to perform better for smaller result sets and worse for larger result sets.
+         mantis 3298: RECEIVE_DATE is the same as submitted date by air services. and must be used
+         when internally received by may be submitted later.
+          -->
+    <searchPermits>
+      SELECT p.permit_id, p.legacy_permit_nbr, p.permit_nbr, p.permit_global_status_cd, p.permit_level_status_cd, p.permit_type_cd, 
+             p.effective_date, p.expiration_date, p.primary_reason_cd, ff.facility_id, ff.fp_id, ff.facility_nm,
+             p.last_modified AS pp_lm, p.description, p.legacy_flag,
+             pid.issuance_date AS draft_issuance_date,
+             pid.public_notice_publish_date, 
+             pnsr.permit_sent_out_date, pnsr.recission_date as pnsr_recission_date, pnsr.last_invoice_ref_date,
+             ptv.recission_date as ptv_recission_date,
+             pif.issuance_date AS final_issuance_date, 
+             pipp.issuance_date AS pp_issuance_date, 
+             pippp.issuance_date AS ppp_issuance_date,
+             %Schema%f_all_reasons(p.permit_id) AS all_reasons,
+             %Schema%f_all_apps(p.permit_id) AS all_apps, 
+            ccm.cmp_id, ccm.name as company_nm, pnsr.action_type, pnsr.billable,
+            nsrbi.INITIAL_INVOICE_AMT, nsrbi.FINAL_INVOICE_AMT, nsrbi.TOTAL_CHARGES, nsrbi.TOTAL_PAYMENTS, nsrbi.CURRENT_BALANCE, ptv.permit_basis_date
+          FROM %Schema%pt_permit p
+          INNER JOIN %Schema%fp_facility ff 
+            ON (p.facility_id = ff.facility_id AND ff.VERSION_ID = -1)
+          LEFT OUTER JOIN %Schema%pt_ptio_permit pnsr
+            ON (p.permit_id = pnsr.permit_id)
+          LEFT OUTER JOIN %Schema%pt_tv_permit ptv
+            ON (p.permit_id = ptv.permit_id)
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            ON ('D' = pid.ISSUANCE_TYPE_CD AND p.PERMIT_ID = pid.PERMIT_ID AND pid.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+            ON ('F' = pif.ISSUANCE_TYPE_CD AND p.PERMIT_ID = pif.PERMIT_ID AND pif.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pipp 
+            ON ('PP' = pipp.ISSUANCE_TYPE_CD AND p.PERMIT_ID = pipp.PERMIT_ID AND pipp.ISSUANCE_STATUS_CD = 'I')
+          LEFT OUTER JOIN %Schema%pt_permit_issuance pippp 
+            ON ('PPP' = pippp.ISSUANCE_TYPE_CD AND p.PERMIT_ID = pippp.PERMIT_ID AND pippp.ISSUANCE_STATUS_CD = 'I')
+          INNER JOIN (  
+          	SELECT pt.PERMIT_ID, cpii.INITIAL_INVOICE_AMT, cpfi.FINAL_INVOICE_AMT, cptc.TOTAL_CHARGES, cptp.TOTAL_PAYMENTS, 
+				ISNULL(cptc.TOTAL_CHARGES, 0) - ISNULL(cptp.TOTAL_PAYMENTS, 0) AS CURRENT_BALANCE FROM %Schema%PT_PERMIT pt
+			LEFT OUTER JOIN (
+				SELECT PERMIT_ID, TRANSACTION_AMT AS INITIAL_INVOICE_AMT FROM %Schema%PT_PERMIT_CHARGE_PAYMENT WHERE TRANSACTION_TYPE = 'II') cpii
+		  		  ON pt.PERMIT_ID = cpii.permit_id
+			LEFT OUTER JOIN (
+				SELECT PERMIT_ID, TRANSACTION_AMT AS FINAL_INVOICE_AMT FROM %Schema%PT_PERMIT_CHARGE_PAYMENT WHERE TRANSACTION_TYPE = 'FI') cpfi
+		  		  ON pt.permit_id = cpfi.permit_id
+			LEFT OUTER JOIN (
+				SELECT PERMIT_ID, SUM(TRANSACTION_AMT) AS TOTAL_CHARGES FROM (
+					SELECT pcp.PERMIT_ID, pcp.TRANSACTION_AMT, nbcptd.TYPE FROM %Schema%PT_PERMIT_CHARGE_PAYMENT pcp 
+					INNER JOIN %Schema%NSR_BILLING_CHARGE_PAYMENT_TYPE_DEF nbcptd
+				  	  ON pcp.TRANSACTION_TYPE = nbcptd.CODE	WHERE nbcptd.TYPE='Dr')	pc GROUP BY PERMIT_ID) cptc
+	  			  ON pt.PERMIT_ID = cptc.PERMIT_ID
+			LEFT OUTER JOIN (
+				SELECT PERMIT_ID, SUM(TRANSACTION_AMT) AS TOTAL_PAYMENTS FROM (
+					SELECT pcp.PERMIT_ID, pcp.TRANSACTION_AMT, nbcptd.TYPE FROM %Schema%PT_PERMIT_CHARGE_PAYMENT pcp 
+					INNER JOIN %Schema%NSR_BILLING_CHARGE_PAYMENT_TYPE_DEF nbcptd
+				  	  ON pcp.TRANSACTION_TYPE = nbcptd.CODE	WHERE nbcptd.TYPE='Cr')	pc GROUP BY PERMIT_ID) cptp
+	  			  ON pt.PERMIT_ID = cptp.PERMIT_ID) nsrbi
+	  		  ON p.permit_id = nsrbi.permit_id  
+          	LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff.facility_id AND ffcx.end_date IS NULL)
+		  LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+    </searchPermits>
+    
+    <markInactiveNSRPermitsToExpired>
+    	UPDATE %Schema%pt_permit
+   		SET permit_level_status_cd = 'E'
+ 		WHERE permit_id IN (
+			SELECT p.permit_id
+			FROM %Schema%pt_permit p
+			WHERE p.permit_type_cd = 'NSR'
+			AND p.permit_level_status_cd = 'A'
+			AND p.expiration_date &lt; CONVERT (date, GETDATE())
+ 		)
+    </markInactiveNSRPermitsToExpired>
+    
+    <searchPermitsForFinalInvoice>
+      SELECT p.permit_id, p.permit_nbr, ff.facility_id, ff.fp_id, ff.facility_nm,
+			p.permit_type_cd,
+			p.effective_date, p.expiration_date,
+			p.primary_reason_cd,
+			pnsr.action_type, pnsr.billable, p.permit_global_status_cd,
+			p.permit_type_cd,
+			pid.issuance_date AS draft_issuance_date,
+			pif.issuance_date AS final_issuance_date,
+			ccm.cmp_id, ccm.name as company_nm,
+			%Schema%F_ALL_REASONS(p.permit_id) AS all_reasons,
+			%Schema%f_all_apps(p.permit_id) AS all_apps
+			FROM %Schema%pt_permit p
+			INNER JOIN %Schema%fp_facility ff 
+            ON (p.facility_id = ff.facility_id AND ff.VERSION_ID = -1)
+			LEFT OUTER JOIN %Schema%pt_ptio_permit pnsr
+            	ON (p.permit_id = pnsr.permit_id)
+			LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            	ON ('D' = pid.ISSUANCE_TYPE_CD AND p.PERMIT_ID = pid.PERMIT_ID AND pid.ISSUANCE_STATUS_CD = 'I')
+			LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+            	ON ('F' = pif.ISSUANCE_TYPE_CD AND p.PERMIT_ID = pif.PERMIT_ID AND pif.ISSUANCE_STATUS_CD = 'I')
+			LEFT JOIN %Schema%fp_facility_company_xref ffcx 
+				ON (ffcx.facility_id = ff.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN cm_company ccm 
+				ON ccm.company_id = ffcx.company_id
+			WHERE 
+			(p.permit_id not in (select permit_id from %Schema%pt_permit_charge_payment where permit_id = p.permit_id)
+			OR
+			p.permit_id in 
+			(SELECT permit_id
+			FROM %Schema%pt_permit_charge_payment   
+			WHERE transaction_type is not null 
+			EXCEPT 
+			(select permit_id
+			FROM %Schema%pt_permit_charge_payment  
+			WHERE transaction_type is not null 
+			AND (transaction_type = 'FI'))))  
+			AND pnsr.billable = 'Y'
+			AND p.permit_global_status_cd IN ('F','ID')
+			AND p.permit_type_cd = 'NSR'
+    </searchPermitsForFinalInvoice>
+    
+    <searchPermitsByEuId>
+    p.PERMIT_ID in (SELECT distinct peg.PERMIT_ID 
+                      FROM %Schema%PT_EU_GROUP peg 
+                     INNER JOIN %Schema%PT_EU pe 
+                        ON (peg.PERMIT_EU_GROUP_ID = pe.PERMIT_EU_GROUP_ID)
+                     INNER JOIN %Schema%FP_EMISSIONS_UNIT feu 
+                        ON (feu.EMU_ID = pe.FACILITY_EU_ID)
+                     WHERE %PermitSearchEUWhere%)
+    </searchPermitsByEuId>
+
+    <searchPermitsWithSubPermits>
+      SELECT p.permit_id, p.permit_nbr, p.PERMIT_GLOBAL_STATUS_CD,
+             pa.APPLICATION_NBR, p1.tv_flag, ff.facility_id, p.PERMIT_TYPE_CD,
+             ff.facility_nm, prx.REASON_CD, p.EFFECTIVE_DATE,
+             p.EXPIRATION_DATE, ff.FP_ID, ppid.ISSUANCE_DATE as
+             Draft_Issuance_date, ppif.ISSUANCE_DATE as Final_Issuance_date
+        FROM (pt_permit p 
+        LEFT OUTER JOIN %Schema%pt_ptio_permit p1 
+          ON (p.permit_id=p1.permit_id) 
+        LEFT OUTER JOIN %Schema%pt_tv_permit p2 
+          ON (p.permit_id=p2.permit_id) 
+        LEFT OUTER JOIN %Schema%pt_legacy_registries p3 
+          ON (p.permit_id=p3.permit_id)) 
+        LEFT OUTER JOIN %Schema%PT_PERMIT_REASON_XREF prx 
+          ON (p.PERMIT_ID=prx.PERMIT_ID) 
+        LEFT OUTER JOIN %Schema%FP_FACILITY ff 
+          ON (p.FACILITY_ID=ff.FACILITY_ID AND ff.VERSION_ID=-1) 
+        LEFT OUTER JOIN %Schema%PT_PERMIT_ISSUANCE ppid 
+          ON (p.PERMIT_ID=ppid.PERMIT_ID AND ppid.ISSUANCE_ID=
+                ( SELECT MAX(pid.ISSUANCE_ID) 
+                    FROM %Schema%PT_PERMIT_ISSUANCE pid 
+                   where pid.ISSUANCE_TYPE_CD='D'
+                )
+             ) 
+        LEFT OUTER JOIN %Schema%PT_PERMIT_ISSUANCE ppif
+          ON (p.PERMIT_ID=ppif.PERMIT_ID and ppif.ISSUANCE_ID=
+                ( SELECT MAX(pif.ISSUANCE_ID) 
+                    FROM %Schema%PT_PERMIT_ISSUANCE pif 
+                   where pif.ISSUANCE_TYPE_CD='F'
+                 )
+             )
+        LEFT OUTER JOIN %Schema%pt_permit_application_xref ppax
+          ON (p.PERMIT_ID=ppax.PERMIT_ID)
+        LEFT OUTER JOIN %Schema%PA_APPLICATION pa 
+          ON (pa.APPLICATION_ID=ppax.APPLICATION_ID)
+      WHERE 
+        1=1
+    </searchPermitsWithSubPermits>
+
+    <retrievePermits>
+      SELECT ${PermitSQL.permitColumns}, ${PermitSQL.ptioPermitColumns},
+        ${PermitSQL.tvPermitColumns} 
+      FROM %Schema%pt_permit pp 
+        LEFT OUTER JOIN %Schema%pt_ptio_permit ppp ON (pp.permit_id = ppp.permit_id) 
+        LEFT OUTER JOIN %Schema%pt_tv_permit ptp ON (pp.permit_id = ptp.permit_id)
+    </retrievePermits>
+
+    <retrievePermitApplicationIds>
+      SELECT application_id 
+      FROM %Schema%pt_permit_application_xref 
+      WHERE permit_id=?
+    </retrievePermitApplicationIds>
+
+    <retrievePermitApplicationNumbers>
+      SELECT a.application_nbr 
+        FROM %Schema%pa_application a, %Schema%pt_permit_application_xref x 
+        WHERE x.permit_id = ? 
+          AND x.application_id = a.application_id
+    </retrievePermitApplicationNumbers>
+
+    <removeEUGroup>
+      DELETE FROM %Schema%pt_eu_group WHERE permit_eu_group_id=?
+    </removeEUGroup>
+
+    <removePermitEU>
+      DELETE FROM %Schema%pt_eu WHERE permit_eu_id=?
+    </removePermitEU>
+
+    <removePermitEUFee>
+      DELETE FROM %Schema%pt_eu_fee WHERE eu_fee_id=?
+    </removePermitEUFee>
+
+    <removePermitEUs>
+      DELETE FROM %Schema%pt_eu WHERE permit_eu_group_id=?
+    </removePermitEUs>
+
+    <removeTVPermit>
+      DELETE FROM %Schema%pt_tv_permit WHERE permit_id=?
+    </removeTVPermit>
+
+    <modifyTVPermit>
+      UPDATE %Schema%pt_tv_permit 
+      SET USEPA_EXPEDITED_FLAG=?, USEPA_OUTCOME_CD=?, USEPA_COMPLETE_DATE=?, RECISSION_DATE=?,
+      ACID_RAIN_FLAG=?, ACID_DESC=?, CAM_FLAG=?, CAM_DESC=?,
+      SEC_112_FLAG=?, SEC_112_DESC=?, USEPA_RECEIVED_PERMIT_DATE=?, USEPA_PERMIT_SENT_DATE=?,
+      PERMIT_BASIS_DATE=?,
+      LAST_MODIFIED=? 
+      WHERE permit_id=?
+      AND last_modified=?
+    </modifyTVPermit>
+
+    <createTVPermit>
+      INSERT INTO %Schema%pt_tv_permit ( PERMIT_ID,
+      USEPA_EXPEDITED_FLAG, USEPA_OUTCOME_CD, USEPA_COMPLETE_DATE, RECISSION_DATE,
+      ACID_RAIN_FLAG, ACID_DESC, CAM_FLAG, CAM_DESC, SEC_112_FLAG,
+      SEC_112_DESC, USEPA_RECEIVED_PERMIT_DATE, USEPA_PERMIT_SENT_DATE, PERMIT_BASIS_DATE)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createTVPermit>
+
+    <createRegPermit>
+      INSERT INTO %Schema%pt_legacy_registries ( permit_id, received_date, tc,
+      eap_status, process_date, withdrawal_code, withdrawal_date,
+      adjud_code, ren_proc_date, appendix_code, renewal_status,
+      renewal_type_cd, state_terms_cond, facility_major_polluter_code,
+      sic_cd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createRegPermit>
+
+    <createPermitApplication>
+      INSERT INTO %Schema%pt_permit_application_xref (permit_id, application_id)
+      VALUES (?, ?)
+    </createPermitApplication>
+
+    <removePermitApplications>
+      DELETE FROM %Schema%pt_permit_application_xref WHERE permit_id=?
+    </removePermitApplications>
+
+    <markTempPermitBaseDocuments>
+      UPDATE %Schema%dc_document 
+        SET temp_flag = 'Y' 
+        WHERE document_id IN (SELECT document_id FROM %Schema%pt_permit_document 
+                                WHERE permit_id = ?)
+    </markTempPermitBaseDocuments>
+
+    <unMarkTempPermitBaseDocuments>
+      UPDATE %Schema%dc_document SET temp_flag='N' WHERE document_id = ?
+    </unMarkTempPermitBaseDocuments>
+
+    <retrievePermitReasonCDs>
+      SELECT prx.reason_cd 
+        FROM %Schema%PT_PERMIT_REASON_XREF prx, %Schema%PT_REASON_DEF prd 
+        WHERE prx.reason_cd = prd.reason_cd
+          AND prx.permit_id = ? 
+        ORDER BY prd.line_order
+    </retrievePermitReasonCDs>
+
+    <retrievePermitReasons>
+      SELECT prd.reason_cd AS code, prd.reason_dsc AS description,
+      prd.deprecated, prd.last_modified 
+      FROM %Schema%pt_reason_def prd,
+      %Schema%pt_reason_permit_type_xref prptx 
+      WHERE prd.reason_cd = prptx.reason_cd 
+      AND prptx.permit_type_cd = ? 
+      ORDER BY prd.line_order
+    </retrievePermitReasons>
+
+    <retrieveAllPermitReasons>
+      SELECT prd.reason_cd AS code, prd.reason_dsc AS description,
+      prd.line_order, prd.deprecated, prd.last_modified 
+      FROM %Schema%pt_reason_def prd 
+      ORDER BY prd.line_order
+    </retrieveAllPermitReasons>
+
+    <createPermitReason>
+      INSERT INTO %Schema%pt_permit_reason_xref 
+      (permit_id, reason_cd) 
+      VALUES (?, ?)
+    </createPermitReason>
+
+    <removePermitReasons>
+      DELETE FROM %Schema%pt_permit_reason_xref WHERE permit_id = ?
+    </removePermitReasons>
+
+    <retrieveAllPermitTypes>
+      SELECT pptd.PERMIT_TYPE_CD AS code, pptd.PERMIT_TYPE_DSC AS
+      description, pptd.last_modified 
+      FROM %Schema%PT_PERMIT_TYPE_DEF pptd
+    </retrieveAllPermitTypes>
+
+    <searchEuPermits>
+      SELECT ${PermitSQL.permitColumns}, peu.permit_status_cd 
+        FROM %Schema%pt_permit pp, %Schema%pt_eu peu, %Schema%pt_eu_group peug 
+        WHERE peu.corr_epa_emu_id = ?
+          AND peu.permit_eu_group_id = peug.permit_eu_group_id
+          AND peug.permit_id = pp.permit_id
+          AND (peu.permit_status_cd = 'A')
+    </searchEuPermits>
+    
+    <searchAllEuPermits>
+      SELECT ${PermitSQL.permitColumns}, peu.permit_status_cd 
+        FROM %Schema%pt_permit pp, %Schema%pt_eu peu, %Schema%pt_eu_group peug 
+        WHERE peu.corr_epa_emu_id = ?
+          AND peu.permit_eu_group_id = peug.permit_eu_group_id
+          AND peug.permit_id = pp.permit_id
+    </searchAllEuPermits>
+
+    <searchActivePermitsForFacility>
+      SELECT DISTINCT ${PermitSQL.permitColumns}, peu.permit_status_cd
+        FROM %Schema%pt_permit pp 
+          INNER JOIN %Schema%pt_eu_group peug ON (pp.permit_id = peug.permit_id)
+          INNER JOIN %Schema%pt_eu peu ON (peug.permit_eu_group_id = peu.permit_eu_group_id 
+                                             AND (peu.permit_status_cd = 'A' 
+                                                    OR peu.permit_status_cd = 'EX'))
+        WHERE pp.facility_id = ?
+    </searchActivePermitsForFacility>
+
+    <searchPermitEUsAcrossPermits>
+      SELECT ${PermitSQL.permitEUColumns}, NULL AS permit_nbr
+        FROM %Schema%pt_eu pe,
+             %Schema%pt_eu_group peug, %Schema%pt_permit pp 
+        WHERE pe.corr_epa_emu_id = ?
+          AND pe.permit_eu_group_id = peug.permit_eu_group_id
+          AND peug.permit_id = pp.permit_id 
+          AND pe.permit_status_cd &lt;&gt; 'R' 
+          AND pe.permit_status_cd &lt;&gt; 'T' 
+          AND pe.permit_status_cd &lt;&gt; 'S' 
+          AND pp.permit_global_status_cd = 'F'
+    </searchPermitEUsAcrossPermits>
+
+    <createPermitNote>
+      INSERT INTO %Schema%PT_PERMIT_NOTE_XREF (PERMIT_ID, NOTE_ID) VALUES (?, ?)
+    </createPermitNote>
+
+    <retrieveDapcComments>
+      SELECT ${InfrastructureSQL.noteColumns}, ppnx.PERMIT_ID 
+      FROM %Schema%PT_PERMIT_NOTE_XREF ppnx, %Schema%cm_note cn 
+      WHERE ppnx.PERMIT_ID = ? 
+      AND ppnx.note_id = cn.note_id 
+      ORDER BY note_id DESC
+    </retrieveDapcComments>
+
+    <retrievePermitContacts>
+      SELECT ${ContactSQL.contact}, %Schema%pt_permit_contact_xref pc
+      WHERE pc.CONTACT_ID = cc.CONTACT_ID 
+      AND pc.PERMIT_ID=?
+    </retrievePermitContacts>
+
+    <removePermitContacts>
+      DELETE FROM %Schema%PT_PERMIT_CONTACT_XREF WHERE permit_id=?
+    </removePermitContacts>
+
+    <createPermitContact>
+      INSERT INTO %Schema%PT_PERMIT_CONTACT_XREF (permit_id, CONTACT_ID,
+      LAST_MODIFIED) VALUES (?, ?, 1)
+    </createPermitContact>
+
+    <removePermitContact>
+      DELETE FROM %Schema%PT_PERMIT_CONTACT_XREF WHERE permit_id=? AND
+      CONTACT_ID=?
+    </removePermitContact>
+
+    <permitColumns>
+      pp.permit_id, pp.permit_type_cd, pp.permit_global_status_cd,
+      pp.legacy_permit_nbr, pp.permit_nbr, pp.description, pp.effective_date,
+      pp.mod_effective_date, pp.erac_case_nbr, pp.expiration_date,
+      pp.facility_id, pp.variance, pp.mact_flag, pp.neshaps_flag,
+      pp.nsps_flag, pp.major_ghg_flag, pp.issue_draft_flag, pp.dapc_hearing_reqd_flag,
+      pp.legacy_flag, pp.public_notice_type,
+      pp.public_notice_text, pp.issue_date_chg, pp.public_notice_newspaper_cd,
+      pp.update_facility_detail_pte_table_comments_flag, pp.receipt_letter_sent, pp.received_comments,
+      pp.part61NESHAP_flag, pp.part63NESHAP_flag, pp.primary_reason_cd, pp.last_modified AS pp_lm, 
+      pp.permit_level_status_cd
+    </permitColumns>
+
+    <createPermit>
+      INSERT INTO %Schema%pt_permit (permit_id, permit_type_cd,
+        permit_global_status_cd, legacy_permit_nbr, permit_nbr, description, effective_date,
+        mod_effective_date, erac_case_nbr, expiration_date, facility_id,
+        variance, mact_flag, neshaps_flag, nsps_flag, major_ghg_flag, issue_draft_flag,
+        dapc_hearing_reqd_flag, legacy_flag, primary_reason_cd, 
+        public_notice_type, public_notice_text, issue_date_chg, public_notice_newspaper_cd,
+        update_facility_detail_pte_table_comments_flag, receipt_letter_sent, received_comments,
+        part61NESHAP_flag, part63NESHAP_flag, permit_level_status_cd)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)
+    </createPermit>
+
+    <modifyPermit>
+      UPDATE %Schema%pt_permit 
+        SET permit_type_cd = ?, permit_global_status_cd = ?,
+          legacy_permit_nbr = ?, permit_nbr = ?, description = ?, effective_date = ?,
+          mod_effective_date = ?, erac_case_nbr = ?, expiration_date = ?,
+          facility_id = ?, variance = ?, mact_flag = ?, neshaps_flag = ?,
+          nsps_flag = ?, major_ghg_flag = ?, issue_draft_flag = ?, dapc_hearing_reqd_flag = ?,
+          legacy_flag = ?, primary_reason_cd = ?,
+          public_notice_type = ?, public_notice_text = ?, issue_date_chg = ?, public_notice_newspaper_cd = ?,
+          update_facility_detail_pte_table_comments_flag = ?, receipt_letter_sent = ?, received_comments = ?,
+          part61NESHAP_flag = ?, part63NESHAP_flag = ?, permit_level_status_cd = ?, last_modified = ?
+        WHERE permit_id = ? AND last_modified = ?
+    </modifyPermit>
+    
+    <modifyMakePermitUndead>
+      UPDATE %Schema%pt_permit 
+        SET permit_global_status_cd = ?
+        WHERE permit_global_status_cd = 'E' AND permit_id = ? AND last_modified = ?
+    </modifyMakePermitUndead>
+
+    <removePermit>
+      DELETE FROM %Schema%pt_permit WHERE permit_id = ?
+    </removePermit>
+
+    <ptioPermitColumns>
+      ppp.permit_id, ppp.per_due_date_cd, ppp.tv_flag, ppp.converted_to_pti,
+      ppp.converted_to_pti_date, ppp.netting_flag, ppp.emissions_offsets_flag,
+      ppp.smtv_flag, ppp.cem_flag, ppp.modeling_submitted_flag, ppp.psd_flag,
+      ppp.toxic_review_flag, ppp.fe_ptio_flag, ppp.non_feptio_5yr_renewal_flag,
+      ppp.avoid_major_ghg_sm_flag, ppp.fe_ptio_tv_avoid_flag, ppp.full_cost_recovery_flag,
+      ppp.express_flag, ppp.other_adjustment, ppp.initial_invoice, ppp.final_invoice, ppp.general_permit_flag,
+      ppp.major_non_attainment_flag, ppp.modeling_required_flag, modeling_complete_date,
+      ppp.action_type, ppp.subject_to_psd_flag, 
+      ppp.subject_to_nansr_flag, ppp.other_type_demonstration_required_flag, ppp.permit_sent_out_date, ppp.invoice_paid_cd, ppp.comment_transmittal_letters_sent_flag, ppp.last_modified AS ppp_lm,
+      ppp.recission_date, ppp.billable, ppp.last_invoice_ref_date, ppp.offset_information_verified
+    </ptioPermitColumns>
+
+    <createPTIOPermit>
+      INSERT INTO %Schema%pt_ptio_permit 
+        (permit_id, per_due_date_cd, tv_flag, converted_to_pti,
+          converted_to_pti_date, netting_flag,
+          emissions_offsets_flag, smtv_flag, cem_flag,
+          modeling_submitted_flag, psd_flag, toxic_review_flag,
+          fe_ptio_flag, non_feptio_5yr_renewal_flag, avoid_major_ghg_sm_flag, 
+          fe_ptio_tv_avoid_flag, full_cost_recovery_flag,
+          express_flag, other_adjustment, initial_invoice, final_invoice, general_permit_flag,
+          major_non_attainment_flag, permit_sent_out_date, invoice_paid_cd, comment_transmittal_letters_sent_flag,
+          recission_date, billable)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createPTIOPermit>
+
+    <modifyPTIOPermit>
+      UPDATE %Schema%pt_ptio_permit
+        SET per_due_date_cd = ?, tv_flag = ?, converted_to_pti = ?,
+          converted_to_pti_date = ?, netting_flag = ?,
+          emissions_offsets_flag = ?, smtv_flag = ?, cem_flag = ?,
+          modeling_submitted_flag = ?, psd_flag = ?, toxic_review_flag = ?,
+          fe_ptio_flag = ?, non_feptio_5yr_renewal_flag = ?, avoid_major_ghg_sm_flag = ?,
+          fe_ptio_tv_avoid_flag = ?, full_cost_recovery_flag = ?, express_flag = ?, other_adjustment=?, initial_invoice = ?, final_invoice = ?,
+          general_permit_flag = ?, major_non_attainment_flag = ?,
+          modeling_required_flag = ?, modeling_complete_date = ?,  
+          action_type = ?, subject_to_psd_flag = ?, subject_to_nansr_flag = ?, other_type_demonstration_required_flag = ?, permit_sent_out_date = ?, invoice_paid_cd = ?, comment_transmittal_letters_sent_flag=?,
+          recission_date=?, billable = ?, last_invoice_ref_date = ?,
+          last_modified = ?, offset_information_verified = ?
+        WHERE permit_id = ? AND last_modified = ?
+    </modifyPTIOPermit>
+
+    <removePTIOPermit>
+      DELETE FROM %Schema%pt_ptio_permit WHERE permit_id = ?
+    </removePTIOPermit>
+
+    <permitJoin>
+      %Schema%pt_permit pp 
+        LEFT OUTER JOIN %Schema%pt_ptio_permit ppp ON (pp.permit_id = ppp.permit_id) 
+        LEFT OUTER JOIN %Schema%pt_legacy_registries prp ON (pp.permit_id = prp.permit_id) 
+        LEFT OUTER JOIN %Schema%pt_tv_permit ptp ON (pp.permit_id = ptp.permit_id)
+    </permitJoin>
+
+    <retrievePermit>
+      SELECT ${PermitSQL.permitColumns}, ${PermitSQL.ptioPermitColumns},
+             ${PermitSQL.tvPermitColumns}, ${PermitSQL.regPermitColumns},
+             ff.fp_id, ff.facility_nm, ccm.name as company_nm,
+             ccm.paykey as company_paykey, ccm.vendor_number as company_vendor_number
+        FROM ${PermitSQL.permitJoin}
+          INNER JOIN %Schema%fp_facility ff 
+            ON (pp.facility_id = ff.facility_id AND ff.version_id = -1)
+          LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff.facility_id AND ffcx.end_date IS NULL)
+		  LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+    </retrievePermit>
+
+    <permitEUGroupColumns>
+      peg.permit_eu_group_id, peg.permit_id, peg.name, peg.last_modified
+      AS peg_lm
+    </permitEUGroupColumns>
+
+    <retrieveAllEUGroups>
+      SELECT ${PermitSQL.permitEUGroupColumns} 
+      FROM %Schema%pt_eu_group peg
+      WHERE peg.permit_id=? ORDER BY peg.name
+    </retrieveAllEUGroups>
+
+    <removeAllEUGroups>
+      DELETE FROM %Schema%pt_eu_group WHERE permit_id = ?
+    </removeAllEUGroups>
+
+    <removeEUGroupEUs>
+      DELETE FROM %Schema%pt_eu WHERE permit_eu_group_id = ?
+    </removeEUGroupEUs>
+
+    <retrievePermitEUGroup>
+      SELECT ${PermitSQL.permitEUGroupColumns}, ${PermitSQL.permitEUColumns},
+             ${FacilitySQL.emissionUnitColumns}, ${PermitSQL.permitEUFeeColumns}, 
+             ${ServiceCatalogSQL.feeColumns},
+             pt.permit_nbr
+        FROM %Schema%pt_eu_group peg
+          LEFT OUTER JOIN %Schema%pt_eu pe ON (peg.permit_eu_group_id = pe.permit_eu_group_id)
+          LEFT OUTER JOIN %Schema%pt_eu_fee ef ON (pe.eu_fee_id = ef.eu_fee_id) 
+          LEFT OUTER JOIN %Schema%sc_fee sf ON (ef.fee_id = sf.fee_id)
+          LEFT OUTER JOIN %Schema%pt_permit pt ON (pe.superseded_permit_id = pt.permit_id)
+          LEFT OUTER JOIN %Schema%fp_emissions_unit feu ON (pe.facility_eu_id = feu.emu_id)
+        WHERE peg.permit_eu_group_id = ? 
+    </retrievePermitEUGroup>
+
+    <createEUGroup>
+      INSERT INTO %Schema%pt_eu_group (permit_eu_group_id, permit_id, name)
+      VALUES (?, ?, ?)
+    </createEUGroup>
+
+    <modifyEUGroup>
+      UPDATE %Schema%pt_eu_group SET name = ?, last_modified = ? WHERE
+      permit_eu_group_id = ? AND last_modified = ?
+    </modifyEUGroup>
+
+    <permitEUColumns>
+      pe.permit_eu_id, pe.permit_eu_group_id, pe.facility_eu_id,
+      pe.corr_epa_emu_id, pe.bat_id, pe.eu_fee_id, pe.permit_status_cd,
+      pe.general_permit_type_cd, pe.model_general_permit_cd,
+      pe.eu_dapc_dsc, pe.eu_company_id, pe.revocation_application_id,
+      pe.revocation_dt, pe.extension_application_id, pe.extension_dt,
+      pe.terminated_dt, pe.superseded_permit_id, pe.superseded_dt,
+      pe.last_modified AS pe_lm
+    </permitEUColumns>
+
+    <permitEUFeeColumns>
+      ef.EU_FEE_ID, ef.EU_CATEGORY_ID, ef.ADJUSTMENT_CD,
+      ef.ADJUSTED_AMOUNT, ef.LAST_MODIFIED as eu_fee_lm
+    </permitEUFeeColumns>
+
+    <retrievePermitEUs>
+      SELECT ${PermitSQL.permitEUColumns}, ${FacilitySQL.emissionUnitColumns},
+             ${PermitSQL.permitEUFeeColumns}, ${ServiceCatalogSQL.feeColumns},
+             pt.permit_nbr
+        FROM %Schema%pt_eu pe
+           LEFT OUTER JOIN %Schema%pt_eu_fee ef ON (pe.eu_fee_id = ef.eu_fee_id) 
+           LEFT OUTER JOIN %Schema%sc_fee sf ON (ef.fee_id = sf.fee_id)
+           LEFT OUTER JOIN %Schema%pt_permit pt ON (pe.superseded_permit_id = pt.permit_id),
+           %Schema%fp_emissions_unit feu
+        WHERE pe.permit_eu_group_id = ? 
+          AND pe.facility_eu_id = feu.emu_id
+        ORDER BY feu.epa_emu_id
+    </retrievePermitEUs>
+
+    <retrievePermitEU>
+      SELECT ${PermitSQL.permitEUColumns}, ${FacilitySQL.emissionUnitColumns},
+             ${PermitSQL.permitEUFeeColumns}, ${ServiceCatalogSQL.feeColumns},
+             pt.permit_nbr
+        FROM %Schema%pt_eu pe
+           LEFT OUTER JOIN %Schema%pt_eu_fee ef ON (pe.eu_fee_id = ef.eu_fee_id) 
+           LEFT OUTER JOIN %Schema%sc_fee sf ON (ef.fee_id = sf.fee_id)
+           LEFT OUTER JOIN %Schema%pt_permit pt ON (pe.superseded_permit_id = pt.permit_id),
+           %Schema%fp_emissions_unit feu
+        WHERE pe.permit_eu_id = ?
+          AND pe.facility_eu_id = feu.emu_id
+    </retrievePermitEU>
+
+    <createPermitEU>
+      INSERT INTO %Schema%pt_eu (permit_eu_id, permit_eu_group_id,
+      facility_eu_id, corr_epa_emu_id, bat_id, eu_fee_id, permit_status_cd,
+      general_permit_type_cd, model_general_permit_cd, eu_dapc_dsc,
+      eu_company_id, revocation_application_id, revocation_dt,
+      extension_application_id, extension_dt, terminated_dt,
+      superseded_permit_id, superseded_dt) VALUES (?, ?, ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    </createPermitEU>
+
+    <modifyPermitEU>
+      UPDATE %Schema%pt_eu SET permit_eu_group_id = ?, facility_eu_id = ?,
+      corr_epa_emu_id = ?, bat_id = ?, eu_fee_id = ?, permit_status_cd = ?,
+      general_permit_type_cd = ?, model_general_permit_cd = ?,
+      eu_dapc_dsc = ?, eu_company_id = ?, revocation_application_id = ?,
+      revocation_dt = ?, extension_application_id = ?, extension_dt = ?,
+      terminated_dt = ?, superseded_permit_id = ?, superseded_dt = ?,
+      last_modified = ? WHERE permit_eu_id = ? AND last_modified = ?
+    </modifyPermitEU>
+
+    <permitDocumentColumns>
+      ppd.document_id, ppd.permit_id, ppd.permit_doc_type_cd,
+      ppd.issuance_stage_flag, ppd.last_modified AS ppd_lm, ppd.is_required_doc AS is_required_doc
+    </permitDocumentColumns>
+
+    <retrievePermitDocuments>
+      SELECT ${PermitSQL.permitDocumentColumns},
+      ${DocumentSQL.documentColumns} 
+      FROM %Schema%pt_permit_document ppd,
+      %Schema%dc_document dd 
+      WHERE ppd.permit_id = ? 
+      AND ppd.document_id = dd.document_id 
+      ORDER BY dd.last_modified_ts DESC
+    </retrievePermitDocuments>
+
+    <createPermitDocument>
+      INSERT INTO %Schema%pt_permit_document (permit_id, document_id,
+      permit_doc_type_cd, issuance_stage_flag, last_modified, is_required_doc) VALUES (?,
+      ?, ?, ?, ?, ?)
+    </createPermitDocument>
+
+    <modifyPermitDocument>
+      UPDATE %Schema%pt_permit_document SET permit_doc_type_cd = ?,
+      issuance_stage_flag = ?, last_modified = ? WHERE document_id = ?
+      AND last_modified = ?
+    </modifyPermitDocument>
+
+    <removePermitDocument>
+      DELETE FROM %Schema%pt_permit_document WHERE document_id = ?
+    </removePermitDocument>
+
+    <removePermitDocuments>
+      DELETE FROM %Schema%pt_permit_document WHERE permit_id = ?
+    </removePermitDocuments>
+
+    <permitIssuanceColumns>
+      pi.issuance_id, pi.issuance_type_cd, pi.permit_id,
+      pi.issuance_status_cd, pi.issuance_date,
+      pi.public_notice_request_date, pi.public_notice_publish_date,
+      pi.public_comment_end_date, pi.hearing_requested_flag,
+      pi.hearing_requested_date, pi.hearing_notice_request_date,
+      pi.hearing_notice_publish_date, pi.hearing_date, pi.newspaper_affidavit_date, pi.wrapn_wr_flag,
+      pi.wrapn_pn_flag, pi.last_modified
+    </permitIssuanceColumns>
+
+    <retrievePermitIssuancesByPermitID>
+      SELECT ${PermitSQL.permitIssuanceColumns} 
+      FROM %Schema%pt_permit_issuance pi 
+      WHERE pi.permit_id = ? AND (pi.issuance_id = (SELECT
+      MAX(issuance_id) 
+      FROM %Schema%pt_permit_issuance pid 
+      WHERE pid.permit_id = pi.permit_id 
+      AND pid.issuance_type_cd = 'D') 
+      OR pi.issuance_id = (SELECT MAX(issuance_id) FROM %Schema%pt_permit_issuance pif WHERE
+      pif.permit_id = pi.permit_id AND pif.issuance_type_cd ='F') OR
+      pi.issuance_id = (SELECT MAX(issuance_id) FROM %Schema%pt_permit_issuance
+      pipp WHERE pipp.permit_id = pi.permit_id AND pipp.issuance_type_cd
+      = 'PP') OR pi.issuance_id = (SELECT MAX(issuance_id) FROM
+      %Schema%pt_permit_issuance pippp WHERE pippp.permit_id = pi.permit_id AND
+      pippp.issuance_type_cd ='PPP'))
+    </retrievePermitIssuancesByPermitID>
+    
+    <retrieveLatestPermitIssuanceFinal>
+    SELECT ${PermitSQL.permitIssuanceColumns} FROM %Schema%pt_permit_issuance pi
+	WHERE pi.permit_id = ? 
+	AND pi.issuance_status_cd = 'I'
+	ORDER BY pi.issuance_date DESC
+	</retrieveLatestPermitIssuanceFinal>
+
+    <createPermitIssuance>
+      INSERT INTO %Schema%pt_permit_issuance (issuance_id, issuance_type_cd,
+      permit_id, issuance_status_cd, issuance_date,
+      public_notice_request_date, public_notice_publish_date,
+      public_comment_end_date, hearing_requested_flag,
+      hearing_requested_date, hearing_notice_request_date,
+      hearing_notice_publish_date, hearing_date, newspaper_affidavit_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+      ?, ?)
+    </createPermitIssuance>
+
+    <modifyPermitIssuance>
+      UPDATE %Schema%pt_permit_issuance SET issuance_type_cd = ?, permit_id = ?,
+      issuance_status_cd = ?, issuance_date = ?,
+      public_notice_request_date = ?, public_notice_publish_date = ?,
+      public_comment_end_date = ?, hearing_requested_flag = ?,
+      hearing_requested_date = ?, hearing_notice_request_date = ?,
+      hearing_notice_publish_date = ?, hearing_date = ?, newspaper_affidavit_date = ?, last_modified = ? WHERE issuance_id = ? AND
+      last_modified = ?
+    </modifyPermitIssuance>
+
+    <removePermitIssuance>
+      DELETE FROM %Schema%pt_permit_issuance WHERE issuance_id = ?
+    </removePermitIssuance>
+
+    <retrieveMactSubpartCD>
+      SELECT mact_subpart_cd FROM %Schema%pt_permit_mact_xref WHERE permit_id =
+      ?
+    </retrieveMactSubpartCD>
+
+    <retrieveNeshapsSubpartCD>
+      SELECT neshaps_subpart_cd FROM %Schema%pt_permit_neshaps_xref WHERE
+      permit_id = ?
+    </retrieveNeshapsSubpartCD>
+
+    <retrieveNspsSubpartCD>
+      SELECT nsps_subpart_cd FROM %Schema%pt_permit_nsps_xref WHERE permit_id =
+      ?
+    </retrieveNspsSubpartCD>
+    
+    <createMactSubpartCD>
+      INSERT INTO %Schema%pt_permit_mact_xref (permit_id, mact_subpart_cd,
+      last_modified) VALUES (?, ?, 1)
+    </createMactSubpartCD>
+
+    <createNeshapsSubpartCD>
+      INSERT INTO %Schema%pt_permit_neshaps_xref (permit_id, neshaps_subpart_cd,
+      last_modified) VALUES (?, ?, 1)
+    </createNeshapsSubpartCD>
+
+    <createNspsSubpartCD>
+      INSERT INTO %Schema%pt_permit_nsps_xref (permit_id, nsps_subpart_cd,
+      last_modified) VALUES (?, ?, 1)
+    </createNspsSubpartCD>
+
+    <removeMactSubpartCD>
+      DELETE FROM %Schema%pt_permit_mact_xref WHERE permit_id = ?
+    </removeMactSubpartCD>
+
+    <removeNeshapsSubpartCD>
+      DELETE FROM %Schema%pt_permit_neshaps_xref WHERE permit_id = ?
+    </removeNeshapsSubpartCD>
+
+    <removeNspsSubpartCD>
+      DELETE FROM %Schema%pt_permit_nsps_xref WHERE permit_id = ?
+    </removeNspsSubpartCD>
+
+    <modifyPermitEUFee>
+      UPDATE %Schema%PT_EU_FEE SET EU_CATEGORY_ID = ?, ADJUSTMENT_CD = ?,
+      ADJUSTED_AMOUNT = ?, FEE_ID = ?, LAST_MODIFIED = ? WHERE EU_FEE_ID
+      = ? AND last_modified = ?
+    </modifyPermitEUFee>
+
+    <createPermitEUFee>
+      INSERT INTO %Schema%PT_EU_FEE
+      (EU_FEE_ID,EU_CATEGORY_ID,ADJUSTMENT_CD,FEE_ID,
+      ADJUSTED_AMOUNT,LAST_MODIFIED) VALUES (?, ?,?,?,? ,1)
+    </createPermitEUFee>
+
+    <retrievePermitCCList>
+      SELECT permit_cc_id, permit_id, name, address1, address2, city, state, zip, 
+        last_modified as pcc_lm
+        FROM %Schema%pt_permit_cc WHERE permit_id = ?
+    </retrievePermitCCList>
+
+    <removePermitCCList>
+      DELETE FROM %Schema%pt_permit_cc WHERE permit_id = ?
+    </removePermitCCList>
+
+    <createPermitCC>
+      INSERT INTO %Schema%pt_permit_cc 
+        (permit_cc_id, permit_id, name, address1, address2, city, state, zip, last_modified)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)
+    </createPermitCC>
+
+    <modifyPermitCC>
+      UPDATE %Schema%pt_permit_cc 
+        SET permit_cc_id = ?, permit_id = ?, name = ?, address1 = ?, address2 = ?,
+            city = ?, state = ?, zip = ?, last_modified = ?
+        WHERE permit_cc_id = ? AND permit_id = ? AND last_modified = ?
+    </modifyPermitCC>
+
+    <removePermitCC>
+      DELETE FROM %Schema%pt_permit_cc WHERE permit_cc_id = ? AND permit_id = ? AND last_modified = ?
+    </removePermitCC>
+    
+    <retrievePermitChargePaymentList>
+      SELECT permit_cp_id, permit_id, transaction_dt, transaction_type, 
+        comment, transmittal_num, check_num, transaction_amt, 
+        last_modified as pcp_lm
+        FROM %Schema%pt_permit_charge_payment WHERE permit_id = ?
+        ORDER BY transaction_dt DESC
+    </retrievePermitChargePaymentList>
+    
+    <retrievePermitChargePaymentDebitTotal>
+		SELECT DISTINCT
+		SUM(transaction_amt) OVER () AS SumTotal
+		FROM [dbo].[pt_permit_charge_payment] pcp
+		JOIN [dbo].[NSR_BILLING_CHARGE_PAYMENT_TYPE_DEF] nbcptd on nbcptd.code =
+		pcp.transaction_type
+		WHERE permit_id = ?
+		AND nbcptd.type='Dr'
+	</retrievePermitChargePaymentDebitTotal>
+	
+	<retrievePermitChargePaymentTotal>
+	select (ISNULL(dr.total_debit_amt,0) - ISNULL(cr.total_credit_amt,0)) AS total_amount_due from 
+	( SELECT 
+		SUM(transaction_amt) AS total_debit_amt
+		FROM [dbo].[pt_permit_charge_payment] pcp
+		JOIN [dbo].[NSR_BILLING_CHARGE_PAYMENT_TYPE_DEF] nbcptd on nbcptd.code =
+		pcp.transaction_type
+		WHERE permit_id = ?
+		AND nbcptd.type='Dr'
+	)dr,
+	( SELECT 
+		SUM(transaction_amt) AS total_credit_amt 
+		FROM [dbo].[pt_permit_charge_payment] pcp
+		JOIN [dbo].[NSR_BILLING_CHARGE_PAYMENT_TYPE_DEF] nbcptd on nbcptd.code =
+		pcp.transaction_type
+		WHERE permit_id = ?
+		AND nbcptd.type='Cr'
+	)cr
+	</retrievePermitChargePaymentTotal>
+	
+	<retrievePermitChargePaymentCreditTotal>
+		SELECT DISTINCT
+		SUM(transaction_amt) OVER () AS SumTotal
+		FROM [dbo].[pt_permit_charge_payment] pcp
+		JOIN [dbo].[NSR_BILLING_CHARGE_PAYMENT_TYPE_DEF] nbcptd on nbcptd.code =
+		pcp.transaction_type
+		WHERE permit_id = ?
+		AND nbcptd.type='Cr'
+	</retrievePermitChargePaymentCreditTotal>
+
+    <removePermitChargePaymentList>
+      DELETE FROM %Schema%pt_permit_charge_payment WHERE permit_id = ?
+    </removePermitChargePaymentList>
+
+    <createPermitChargePayment>
+      INSERT INTO %Schema%pt_permit_charge_payment 
+        (permit_cp_id, permit_id, transaction_dt, transaction_type, 
+        comment, transmittal_num, check_num, transaction_amt, last_modified)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)
+    </createPermitChargePayment>
+
+    <modifyPermitChargePayment>
+      UPDATE %Schema%pt_permit_charge_payment 
+        SET permit_cp_id = ?, permit_id = ?, transaction_dt = ?, transaction_type = ?, 
+            comment = ?, transmittal_num = ?, check_num = ?, transaction_amt = ?, 
+            last_modified = ?
+        WHERE permit_cp_id = ? AND permit_id = ? AND last_modified = ?
+    </modifyPermitChargePayment>
+
+    <removePermitChargePayment>
+      DELETE FROM %Schema%pt_permit_charge_payment WHERE permit_cp_id = ? AND permit_id = ? AND last_modified = ?
+    </removePermitChargePayment>
+    
+    <retrieveNSRFixedChargeList>
+      SELECT permit_fc_id, permit_id, created_dt,
+        comment, amount, description, invoiced,
+        last_modified as pcp_lm
+        FROM %Schema%pt_permit_fixed_charge WHERE permit_id = ?
+        ORDER BY created_dt DESC
+    </retrieveNSRFixedChargeList>
+
+    <removeNSRFixedChargeList>
+      DELETE FROM %Schema%pt_permit_fixed_charge WHERE permit_id = ?
+    </removeNSRFixedChargeList>
+
+    <createNSRFixedCharge>
+      INSERT INTO %Schema%pt_permit_fixed_charge 
+        (permit_fc_id, permit_id, created_dt, 
+        comment, amount, description, invoiced, last_modified)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1)
+    </createNSRFixedCharge>
+
+    <modifyNSRFixedCharge>
+      UPDATE %Schema%pt_permit_fixed_charge 
+        SET permit_fc_id = ?, permit_id = ?, created_dt = ?,
+            comment = ?, amount = ?, description = ?, invoiced = ?, 
+            last_modified = ?
+        WHERE permit_fc_id = ? AND permit_id = ? AND last_modified = ?
+    </modifyNSRFixedCharge>
+
+    <removeNSRFixedCharge>
+      DELETE FROM %Schema%pt_permit_fixed_charge WHERE permit_fc_id = ? AND permit_id = ? AND last_modified = ?
+    </removeNSRFixedCharge>
+
+    <retrieveModelGeneralPermitDefs>
+      SELECT MODEL_GENERAL_PERMIT_CD AS code, MODEL_GENERAL_PERMIT_DSC
+      AS description, DEPRECATED, LAST_MODIFIED FROM
+      %Schema%PA_MODEL_GENERAL_PERMIT_DEF 
+      WHERE GENERAL_PERMIT_TYPE_CD = ?
+    </retrieveModelGeneralPermitDefs>
+        
+    <retrieveSupersedablePermits>
+      SELECT pp.permit_id AS id, pp.permit_nbr + ' ' + pp.permit_type_cd AS description, 
+             1 AS last_modified, 'N' AS deprecated
+        FROM %Schema%PT_PERMIT pp 
+          INNER JOIN %Schema%PT_EU_GROUP peg ON (pp.permit_id = peg.permit_id)
+          INNER JOIN %Schema%PT_EU peu ON (peg.permit_eu_group_id = peu.permit_eu_group_id)
+          INNER JOIN %Schema%PT_PERMIT_ISSUANCE pi ON (pp.permit_id = pi.permit_id)
+        WHERE peu.permit_status_cd &lt;&gt; 'S'
+          AND peu.permit_status_cd &lt;&gt; 'R'
+          AND peu.permit_status_cd &lt;&gt; 'T'
+          AND pi.issuance_type_cd = 'F'
+          AND pp.PERMIT_GLOBAL_STATUS_CD = 'F'
+          AND peu.CORR_EPA_EMU_ID = ?
+        ORDER BY pi.issuance_date DESC
+    </retrieveSupersedablePermits>
+        
+    <retrieveTVSupersedablePermits>
+     SELECT DISTINCT pp.permit_id AS id, pp.permit_nbr + ' ' + pp.permit_type_cd AS description, 
+             1 AS last_modified, 'N' AS deprecated
+        FROM %Schema%PT_PERMIT pp 
+          INNER JOIN %Schema%PT_EU_GROUP peg ON (pp.permit_id = peg.permit_id)
+          INNER JOIN %Schema%PT_EU peu ON (peg.permit_eu_group_id = peu.permit_eu_group_id)
+          INNER JOIN %Schema%PT_PERMIT_ISSUANCE pi ON (pp.permit_id = pi.permit_id)
+        WHERE pp.facility_id = ?
+          AND pp.permit_type_cd = 'TVPTO'
+          AND pi.issuance_type_cd = 'F'
+          AND pp.PERMIT_GLOBAL_STATUS_CD = 'F'
+          AND (peu.permit_status_cd = 'A'
+             OR peu.permit_status_cd = 'EX'
+             OR peu.permit_status_cd = 'E')
+        ORDER BY description
+    </retrieveTVSupersedablePermits>
+
+    <updatePermitEUsStatus>
+      UPDATE %Schema%pt_eu SET permit_status_cd = ?
+      WHERE permit_eu_group_id IN (SELECT peg.permit_eu_group_id 
+                                      FROM %Schema%pt_eu_group peg WHERE peg.permit_id = ?)
+    </updatePermitEUsStatus>
+    
+    <retrieveExpiredPTIOPermits>
+      SELECT DISTINCT pp.permit_id, pp.PERMIT_NBR, ffrx.user_id,
+        pp.expiration_date, ppi.issuance_date, pp.facility_id, 
+        pe.CORR_EPA_EMU_ID, ppp.FE_PTIO_FLAG, ppp.non_feptio_5yr_renewal_flag,
+        ppp.avoid_major_ghg_sm_flag
+      FROM %Schema%pt_ptio_permit ppp 
+        INNER JOIN %Schema%pt_permit pp ON (ppp.permit_id = pp.permit_id)
+        INNER JOIN %Schema%pt_eu_group peg ON (pp.permit_id = peg.permit_id) 
+        INNER JOIN %Schema%pt_eu pe ON (peg.permit_eu_group_id = pe.permit_eu_group_id) 
+        INNER JOIN %Schema%pt_permit_issuance ppi ON (pp.permit_id = ppi.permit_id) 
+        INNER JOIN %Schema%fp_facility_role_xref ffrx ON (pp.facility_id = ffrx.facility_id)
+      WHERE ppi.issuance_type_cd = 'F' 
+        AND ppi.issuance_status_cd = 'I' 
+        AND pe.permit_status_cd = 'A' 
+        AND ffrx.facility_role_cd = ?
+        AND pp.expiration_date &lt; ?
+    </retrieveExpiredPTIOPermits>
+	<!--
+    <retrieveExpiredTVPermits>
+      SELECT DISTINCT pp.permit_id, pp.PERMIT_NBR, ffrx.user_id, 
+        pp.expiration_date, ppi.issuance_date, pp.facility_id, 
+        pe.CORR_EPA_EMU_ID, 'N' as FE_PTIO_FLAG 
+      FROM %Schema%PT_TV_PERMIT ptp 
+        INNER JOIN %Schema%pt_permit pp ON (ptp.permit_id = pp.permit_id) 
+        INNER JOIN %Schema%pt_permit_issuance ppi ON (pp.permit_id = ppi.permit_id) 
+        INNER JOIN %Schema%fp_facility_role_xref ffrx ON (pp.facility_id = ffrx.facility_id)
+        INNER JOIN %Schema%fp_facility ff ON (pp.facility_id = ff.facility_id AND ff.version_id = -1) 
+      WHERE ppi.issuance_type_cd = 'F' 
+        AND ppi.issuance_status_cd = 'I' 
+        AND pe.permit_status_cd = 'A' 
+        AND ffrx.facility_role_cd = ?
+        AND pp.expiration_date &lt; ?
+    </retrieveExpiredTVPermits>
+    -->
+    <retrieveExpiredTVPermits>
+      SELECT pt.permit_id FROM 
+		( SELECT ROW_NUMBER() OVER(PARTITION BY facility_id ORDER BY expiration_date desc) as rn, 
+			permit_id, expiration_date, facility_id from %Schema%pt_permit
+				WHERE permit_type_cd ='tvpto') pt
+			INNER JOIN %Schema%pt_permit_issuance pi ON (pt.permit_id = pi.permit_id)
+			INNER JOIN %Schema%fp_facility fp ON (pt.facility_id = fp.facility_id)
+				WHERE pi.issuance_type_cd='F' AND pi.issuance_status_cd='I'
+					AND fp.version_id = -1 AND fp.permit_classification_cd = 'tv' 
+					AND	pt.rn=1 and pt.expiration_date &lt; ? 
+    </retrieveExpiredTVPermits>
+    
+    
+    
+    <retrieveRPRPermitList>
+      SELECT DISTINCT pp.PERMIT_ID AS id, 
+      	pp.PERMIT_NBR + ' ' + CONVERT(VARCHAR(10), ppi.issuance_date, 101)AS description, 
+        1 AS last_modified, 'N' AS deprecated
+      FROM %Schema%PT_PERMIT pp
+          INNER JOIN %Schema%pt_permit_issuance ppi ON (pp.permit_id = ppi.permit_id)
+          LEFT JOIN %Schema%PT_EU_GROUP peg ON (pp.PERMIT_ID = peg.PERMIT_ID)
+          LEFT JOIN %Schema%PT_EU pe ON (peg.PERMIT_EU_GROUP_ID = pe.PERMIT_EU_GROUP_ID 
+                                  AND pe.PERMIT_STATUS_CD = 'A'
+                                  OR pe.PERMIT_STATUS_CD = 'EX')
+          LEFT JOIN %Schema%FP_EMISSIONS_UNIT feu ON (pe.CORR_EPA_EMU_ID = feu.CORR_EPA_EMU_ID
+                                  AND feu.OPERATING_STATUS_CD != 'sd')
+          LEFT JOIN %Schema%FP_FACILITY ff  ON (feu.FP_ID = ff.FP_ID AND ff.VERSION_ID = -1)
+      WHERE pe.PERMIT_EU_ID IS NOT null
+        AND ppi.issuance_type_cd = 'F' 
+        AND ppi.issuance_status_cd = 'I'
+        AND pp.PERMIT_GLOBAL_STATUS_CD = 'F'
+        AND pp.FACILITY_ID = ?
+    </retrieveRPRPermitList>
+    
+    <retrieveGoodMigratedPermitDocuments>
+    SELECT MAX(ppd.document_id) AS document_id, ppd.permit_id, ppd.permit_doc_type_cd, ppd.issuance_stage_flag,
+          null AS document_id, dd.facility_id, null AS last_checkout_by, null AS last_modified_by,
+          null AS last_modified_ts, null AS path, null AS upload_dt, null AS description, 
+          'N' as temp_flag, null AS dd_lm, null AS ppd_lm
+    FROM %Schema%PT_PERMIT_DOCUMENT ppd, %Schema%DC_DOCUMENT dd
+    WHERE permit_id IN
+        (SELECT permit_id FROM %Schema%PT_PERMIT
+         WHERE permit_type_cd = ? AND legacy_flag = 'Y')
+      AND permit_doc_type_cd = 'T'
+      AND issuance_stage_flag in ('2','P','D','F')
+      AND dd.document_id = ppd.document_id
+    GROUP BY ppd.permit_id, ppd.permit_doc_type_cd, ppd.issuance_stage_flag, 
+             dd.facility_id
+    ORDER BY ppd.permit_id, ppd.permit_doc_type_cd, ppd.issuance_stage_flag, 
+             dd.facility_id
+    </retrieveGoodMigratedPermitDocuments>
+    
+    <retrieveBadMigratedPermitDocuments>
+    SELECT ppd.document_id, ppd.permit_id, ppd.permit_doc_type_cd, ppd.issuance_stage_flag,
+          dd.facility_id, dd.last_checkout_by, dd.last_modified_by,
+          dd.last_modified_ts, dd.path, dd.upload_dt, dd.description, 
+          dd.temp_flag, dd.last_modified AS dd_lm, dd.last_modified AS ppd_lm
+    FROM %Schema%PT_PERMIT_DOCUMENT ppd, %Schema%DC_DOCUMENT dd
+    WHERE permit_id IN
+        (SELECT permit_id FROM %Schema%PT_PERMIT
+         WHERE permit_type_cd = ? AND legacy_flag = 'Y')
+      AND permit_doc_type_cd = 'D'
+      AND issuance_stage_flag in ('2','P','D','F')
+      AND dd.document_id = ppd.document_id
+    ORDER BY ppd.permit_id, ppd.permit_doc_type_cd, ppd.issuance_stage_flag, 
+             dd.facility_id
+    </retrieveBadMigratedPermitDocuments>
+    
+    <searchPermitActivity>
+    SELECT 
+      PA.Activity_Template_Id, PA.Process_Id, PA.User_Id, PA.loop_cnt, 
+      PA.ACTIVITY_STATUS_CD, PA.start_dt as A_start_dt, PA.END_DT as A_END_DT, 
+      PA.Due_Dt as A_Due_Dt, p.RUSH_FLAG, PT.PROCESS_TEMPLATE_NM, 
+      ATD.ACTIVITY_TEMPLATE_NM, pd.DATA_VAL, PA.viewed, AT.AGGREGATE,
+      PA.LAST_MODIFIED, A.FACILITY_ID, A.facility_Nm, PT.PROCESS_CD,wp.fp_id,
+      wp.Start_Dt as P_Start_Dt, wp.Due_Dt as P_Due_Dt, wp.JEOPARDY_DT as P_Jeopardy_Dt,
+      wp.END_DT as P_End_Dt, p.permit_id, p.PERMIT_NBR, p.PERMIT_TYPE_CD, 
+      %Schema%f_all_reasons(p.permit_id) all_reasons, p.description,
+      p.permit_global_status_cd, p.effective_date, p.expiration_date, 
+      pid.issuance_date AS draft_issuance_date, 
+      pif.issuance_date AS final_issuance_date,
+      pipp.issuance_date AS pp_issuance_date, 
+      pippp.issuance_date AS ppp_issuance_date,
+      pipn.public_notice_publish_date AS public_notice_publish_date,
+      pnsr.permit_sent_out_date AS permit_sent_out_date,
+      %Schema%f_all_apps(p.permit_id) AS all_apps,
+      %Schema%F_LIST_NAICS_CODES(A.fp_id) AS naics_cd,
+      cmp.CMP_ID, cmp.NAME as CMP_NAME
+    FROM %Schema%WF_Process_Activity PA
+        INNER JOIN %Schema%WF_Process wp ON (wp.Process_Id = PA.Process_Id ) 
+        INNER JOIN %Schema%FP_facility A ON (wp.fp_id=A.fp_id)
+        INNER JOIN %Schema%WF_Activity_Template AT 
+            ON (PA.Activity_Template_Id = AT.Activity_Template_Id)
+        INNER JOIN %Schema%WF_Process_Template PT 
+            ON (PT.Process_Template_Id=wp.Process_Template_Id)
+        LEFT OUTER JOIN %Schema%PT_PERMIT p 
+            ON (PT.PROCESS_CD = 'perm' AND wp.EXTERNAL_ID = p.PERMIT_ID)
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            ON (p.PERMIT_ID = pid.PERMIT_ID AND pid.ISSUANCE_TYPE_CD = 'D' AND pid.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+            ON (p.PERMIT_ID = pif.PERMIT_ID AND pif.ISSUANCE_TYPE_CD = 'F' AND pif.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pipp 
+            ON (p.PERMIT_ID = pipp.PERMIT_ID AND pipp.ISSUANCE_TYPE_CD = 'PP' AND pipp.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pippp 
+            ON (p.PERMIT_ID = pippp.PERMIT_ID AND pippp.ISSUANCE_TYPE_CD = 'PPP' AND pippp.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pipn 
+            ON (p.PERMIT_ID = pipn.PERMIT_ID AND pipn.ISSUANCE_TYPE_CD = 'D' AND pipn.ISSUANCE_STATUS_CD = 'I')  
+        LEFT OUTER JOIN %Schema%pt_ptio_permit pnsr
+            ON (p.permit_id = pnsr.permit_id)      
+        INNER JOIN %Schema%WF_Activity_Template_Def ATD 
+            ON (ATD.Activity_Template_Def_Id = AT.Activity_Template_Def_Id AND ATD.Process_Template_Id IS NULL)
+        LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd 
+            ON (pd.DATA_DETAIL_ID = 1 AND wp.PROCESS_ID = pd.PROCESS_ID)
+        LEFT OUTER JOIN %Schema%fp_facility_company_xref fcx
+        	ON (A.facility_id=fcx.facility_id and fcx.END_DATE is NULL)
+		LEFT OUTER JOIN %Schema%cm_company cmp
+			ON fcx.company_id = cmp.company_id    
+    WHERE PA.PERFORMER_TYPE_CD = 'M'
+    
+  </searchPermitActivity>
+  
+  
+    <searchPermitActivityNaics>
+    SELECT DISTINCT
+      PA.Activity_Template_Id, PA.Process_Id, PA.User_Id, PA.loop_cnt, 
+      PA.ACTIVITY_STATUS_CD, PA.start_dt as A_start_dt, PA.END_DT as A_END_DT, 
+      PA.Due_Dt as A_Due_Dt, PT.PROCESS_TEMPLATE_NM, 
+      ATD.ACTIVITY_TEMPLATE_NM, pd.DATA_VAL, PA.viewed, AT.AGGREGATE,
+      PA.LAST_MODIFIED, A.FACILITY_ID, A.facility_Nm, PT.PROCESS_CD,wp.fp_id,
+      wp.Start_Dt as P_Start_Dt, wp.Due_Dt as P_Due_Dt, wp.JEOPARDY_DT as P_Jeopardy_Dt,
+      wp.END_DT as P_End_Dt, p.permit_id, p.PERMIT_NBR, p.PERMIT_TYPE_CD, 
+      %Schema%f_all_reasons(p.permit_id) all_reasons, p.description,
+      p.permit_global_status_cd, p.effective_date, p.expiration_date, 
+      pid.issuance_date AS draft_issuance_date, 
+      pif.issuance_date AS final_issuance_date,
+      pipp.issuance_date AS pp_issuance_date, 
+      pippp.issuance_date AS ppp_issuance_date,
+      pipn.public_notice_publish_date AS public_notice_publish_date,
+      pnsr.permit_sent_out_date AS permit_sent_out_date,
+      %Schema%f_all_apps(p.permit_id) AS all_apps,
+      %Schema%F_LIST_NAICS_CODES(A.fp_id) AS naics_cd,
+      cmp.CMP_ID, cmp.NAME as CMP_NAME
+    FROM %Schema%WF_Process_Activity PA
+        INNER JOIN %Schema%WF_Process wp ON (wp.Process_Id = PA.Process_Id ) 
+        INNER JOIN %Schema%FP_facility A ON (wp.fp_id=A.fp_id)
+        LEFT OUTER JOIN %Schema%fp_facility_naics_xref fnxref ON (A.fp_id = fnxref.fp_id)
+        INNER JOIN %Schema%WF_Activity_Template AT 
+            ON (PA.Activity_Template_Id = AT.Activity_Template_Id)
+        INNER JOIN %Schema%WF_Process_Template PT 
+            ON (PT.Process_Template_Id=wp.Process_Template_Id)
+        LEFT OUTER JOIN %Schema%PT_PERMIT p 
+            ON (PT.PROCESS_CD = 'perm' AND wp.EXTERNAL_ID = p.PERMIT_ID)
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pid 
+            ON (p.PERMIT_ID = pid.PERMIT_ID AND pid.ISSUANCE_TYPE_CD = 'D' AND pid.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pif
+            ON (p.PERMIT_ID = pif.PERMIT_ID AND pif.ISSUANCE_TYPE_CD = 'F' AND pif.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pipp 
+            ON (p.PERMIT_ID = pipp.PERMIT_ID AND pipp.ISSUANCE_TYPE_CD = 'PP' AND pipp.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pippp 
+            ON (p.PERMIT_ID = pippp.PERMIT_ID AND pippp.ISSUANCE_TYPE_CD = 'PPP' AND pippp.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_permit_issuance pipn 
+            ON (p.PERMIT_ID = pipn.PERMIT_ID AND pipn.ISSUANCE_TYPE_CD = 'D' AND pipn.ISSUANCE_STATUS_CD = 'I')
+        LEFT OUTER JOIN %Schema%pt_ptio_permit pnsr
+            ON (p.permit_id = pnsr.permit_id)        
+        INNER JOIN %Schema%WF_Activity_Template_Def ATD 
+            ON (ATD.Activity_Template_Def_Id = AT.Activity_Template_Def_Id AND ATD.Process_Template_Id IS NULL)
+        LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd 
+            ON (pd.DATA_DETAIL_ID = 1 AND wp.PROCESS_ID = pd.PROCESS_ID)
+        LEFT OUTER JOIN %Schema%fp_facility_company_xref fcx
+        	ON (A.facility_id=fcx.facility_id and fcx.END_DATE is NULL)
+		LEFT OUTER JOIN %Schema%cm_company cmp
+			ON fcx.company_id = cmp.company_id    
+    WHERE PA.PERFORMER_TYPE_CD = 'M'
+    
+  </searchPermitActivityNaics>
+  
+  <retrievePermitIssuanceDocuments>
+        SELECT dd.document_id, dd.facility_id, dd.last_checkout_by, dd.last_modified_by,
+      	dd.path, dd.upload_dt, dd.description, dd.temp_flag,
+      	dd.last_modified, pi.issuance_date as LastModifiedTS
+        FROM %Schema%pt_permit pt
+                 INNER JOIN %Schema%pt_permit_issuance pi
+                            ON (pt.permit_id = pi.permit_id 
+                                  AND pi.issuance_type_cd = 'F'
+                                  AND pi.issuance_status_cd = 'I') 
+                 INNER JOIN %Schema%PT_PERMIT_DOCUMENT ppd
+                            ON (ppd.PERMIT_ID = pt.PERMIT_ID
+                                AND ppd.PERMIT_DOC_TYPE_CD = 'D'
+                                AND (PPD.ISSUANCE_STAGE_FLAG = 'F'))
+                 INNER JOIN %Schema%DC_DOCUMENT dd
+                            ON (dd.DOCUMENT_ID = ppd.DOCUMENT_ID)
+        ORDER BY dd.last_modified_ts DESC
+  </retrievePermitIssuanceDocuments>
+  <retrieveReceivedCommentsTypes>
+  		SELECT type_cd as code , type_dsc as description,deprecated ,last_modified
+  		FROM %Schema% PT_PERMIT_RECEIVED_COMMENTS_DEF
+  		ORDER BY SORT_ORDER
+  </retrieveReceivedCommentsTypes>
+  <retrieveDocumentTypes>
+ 		SELECT permit_doc_type_cd  AS code
+      		,permit_doc_type_dsc AS description
+      		,fixed
+      		,nsr
+      		,title_v
+      		,permit_detail
+      		,draft_publication
+      		,pp_publication
+      		,final_issuance
+      		,withdrawal_issuance
+      		,fee_summary
+      		,document_id
+      		,deprecated
+      		,last_modified
+      		,sort_order     		      		
+		FROM %Schema%pt_permit_doc_type_def
+		ORDER BY sort_order ASC,permit_doc_type_dsc ASC
+  </retrieveDocumentTypes>
+  <removePermitApplication>
+      DELETE FROM %Schema%pt_permit_application_xref WHERE application_id=?
+  </removePermitApplication>
+  <isDuplicatePermitNumber>
+	  SELECT count(1) as count
+	  FROM	%Schema%PT_PERMIT
+	  WHERE UPPER(PERMIT_NBR) = UPPER(?)
+  </isDuplicatePermitNumber>
+  <isDuplicateLegacyPermitNumber>
+	  SELECT count(1) as count
+	  FROM	%Schema%PT_PERMIT
+	  WHERE UPPER(LEGACY_PERMIT_NBR) = UPPER(?) and UPPER(PERMIT_NBR) != UPPER(?)
+  </isDuplicateLegacyPermitNumber>
+  <retrieveLastInvoiceReferenceDate>
+    SELECT
+		p.[PERMIT_ID] as id
+		,ptio.LAST_INVOICE_REF_DATE
+	  FROM [dbo].[PA_APPLICATION] pa
+		  inner join [dbo].[PT_PERMIT_APPLICATION_XREF] pax on pax.APPLICATION_ID = pa.APPLICATION_ID
+		  inner join [dbo].[PT_PERMIT] p on p.PERMIT_ID = pax.PERMIT_ID
+		  left join [dbo].[PT_PTIO_PERMIT] ptio on ptio.PERMIT_ID = p.PERMIT_ID
+		  where
+		  upper(pa.APPLICATION_NBR) = upper(?)
+  </retrieveLastInvoiceReferenceDate>
+  <createPermitEmissionsOffset>
+  	insert into %Schema%ot_emissions_offset
+  		(	emissions_offset_id
+	    	, permit_id
+	    	, area_cd
+	    	, attainment_standard_cd
+	    	, pollutant_cd
+	    	, current_offset
+	    	, base_offset
+	    	, offset_multiple
+	    	, comments
+	    ) values (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  </createPermitEmissionsOffset>
+  <retrievePermitEmissionsOffset>
+  	select ${PermitSQL.emissionsOffsetColumns}
+  		from %Schema%ot_emissions_offset eo
+  		where eo.emissions_offset_id = ?
+  </retrievePermitEmissionsOffset>
+  <retrievePermitEmissionsOffsetsByPermitId>
+  	select ${PermitSQL.emissionsOffsetColumns}
+  		from %Schema%ot_emissions_offset eo
+  		where eo.permit_id = ?
+  </retrievePermitEmissionsOffsetsByPermitId>
+  <modifyPermitEmissionsOffset>
+  	update %Schema%ot_emissions_offset
+  		set
+	    	permit_id = ?
+	    	, area_cd = ?
+	    	, attainment_standard_cd = ?
+	    	, pollutant_cd = ?
+	    	, current_offset = ?
+	    	, base_offset = ?
+	    	, emissions_reduction_multiple = ?
+	    	, offset_multiple = ?
+	    	, comments = ?
+	    	, last_modified = ?
+	    	where
+	    		emissions_offset_id = ?
+	    		and last_modified = ?
+  </modifyPermitEmissionsOffset>
+  <deletePermitEmissionsOffset>
+  	delete from %Schema%ot_emissions_offset
+  		where emissions_offset_id = ?
+  </deletePermitEmissionsOffset>
+  
+  <removePermitIssuances>
+  	delete from %Schema%pt_permit_issuance
+  		where permit_id = ?
+  </removePermitIssuances>
+  <removePermitNotes>
+	delete from %Schema%pt_permit_note_xref
+  		where permit_id = ?  	
+  </removePermitNotes>
+  
+	<retrievePermitConditionList>
+		SELECT ${PermitSQL.permitConditionColumns}
+		FROM
+		%Schema%pt_permit_condition pc WHERE pc.permit_id = ?
+		ORDER BY pc.pcond_id
+	</retrievePermitConditionList>
+
+	<removePermitConditionList>
+		DELETE FROM %Schema%pt_permit_condition
+		WHERE permit_id = ?
+	</removePermitConditionList>
+
+	<createPermitCondition>
+		INSERT INTO %Schema%pt_permit_condition
+		(permit_condition_id,
+		permit_id,
+		permit_condition_number,
+		condition_status_cd,
+		last_updated_by_id,
+		last_updated_dt,
+		facility_wide,
+		condition_text_html,
+		condition_text_plain,
+		last_modified)
+		VALUES
+		(?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
+	</createPermitCondition>
+
+	<modifyPermitCondition>
+		UPDATE %Schema%pt_permit_condition
+		SET
+		permit_condition_number = ?,
+		condition_status_cd = ?,
+		last_updated_by_id = ?,
+		last_updated_dt = ?,
+		facility_wide = ?,
+		condition_text_html=?,
+		condition_text_plain=?,
+		last_modified = ?
+		WHERE
+		permit_condition_id = ? AND permit_id = ? AND last_modified = ?
+	</modifyPermitCondition>
+
+	<removePermitCondition>
+		DELETE FROM %Schema%pt_permit_condition WHERE
+		permit_condition_id = ? AND
+		permit_id = ? AND last_modified = ?
+	</removePermitCondition>
+
+	<createAssociatedCorrEuIdRef>
+		INSERT into %Schema%pt_permit_condition_eu_xref
+		(permit_condition_id, corr_epa_emu_id) values (?, ?)
+	</createAssociatedCorrEuIdRef>
+	<retrieveAssociatedCorrEuIdsByPermitConditionId>
+		SELECT ppcex.corr_epa_emu_id
+		FROM %Schema%pt_permit_condition_eu_xref ppcex
+		INNER JOIN %Schema%fp_emissions_unit feu ON 
+			feu.CORR_EPA_EMU_ID = ppcex.CORR_EPA_EMU_ID
+		INNER JOIN %Schema%fp_facility ff ON 
+			ff.fp_id = feu.fp_id
+		WHERE permit_condition_id = ? AND ff.version_id=-1
+		ORDER BY EPA_EMU_ID
+	</retrieveAssociatedCorrEuIdsByPermitConditionId>
+	<retrieveAssociatedFpEuEpaEmuIdsByPermitConditionId>
+		SELECT DISTINCT feu.epa_emu_id
+		FROM %Schema%fp_emissions_unit feu
+		INNER JOIN %Schema%pt_permit_condition_eu_xref ppcex ON
+		   ppcex.corr_epa_emu_id = feu.corr_epa_emu_id
+		INNER JOIN %Schema%fp_facility ff ON
+		   ff.fp_id = feu.fp_id
+		WHERE ppcex.permit_condition_id = ? AND ff.version_id=-1
+		ORDER BY feu.epa_emu_id
+	</retrieveAssociatedFpEuEpaEmuIdsByPermitConditionId>
+	<deleteAssociatedCorrEuIdRef>
+		DELETE from %Schema%pt_permit_condition_eu_xref
+		where permit_condition_id = ? and corr_epa_emu_id = ?
+	</deleteAssociatedCorrEuIdRef>
+	<deleteAssociatedCorrEuIdsByPermitConditionId>
+		DELETE from %Schema%pt_permit_condition_eu_xref
+		where permit_condition_id = ?
+	</deleteAssociatedCorrEuIdsByPermitConditionId>
+	
+	<isDuplicatePermitConditionNumber>
+			SELECT count(1) as count
+			FROM
+			%Schema%pt_permit_condition
+			WHERE UPPER(permit_condition_number) = UPPER(?) AND
+			permit_id = ? AND
+			(permit_condition_id != ? OR ? IS NULL)
+	</isDuplicatePermitConditionNumber>
+	
+	<searchPermitConditions>
+       SELECT
+              ROW_NUMBER() OVER (PARTITION BY pc.PERMIT_CONDITION_ID ORDER BY pccx.CATEGORY_CODE) AS RN
+              , pc.PERMIT_CONDITION_ID
+              , pc.PCOND_ID
+              , pt.PERMIT_ID
+              , pt.PERMIT_NBR
+              , pt.LEGACY_PERMIT_NBR
+              , pt.PERMIT_TYPE_CD
+              , pif.ISSUANCE_DATE
+              , pc.PERMIT_CONDITION_NUMBER
+              , ptv.PERMIT_BASIS_DATE
+              , pc.CONDITION_TEXT_PLAIN
+              , pc.FACILITY_WIDE
+              , pccx.CATEGORY_CODE
+              , pc.CONDITION_STATUS_CD
+              , pt.PERMIT_LEVEL_STATUS_CD
+              , pc.LAST_UPDATED_BY_ID
+              , pc.LAST_UPDATED_DT
+       FROM %Schema%PT_PERMIT pt
+       LEFT OUTER JOIN %Schema%PT_TV_PERMIT ptv ON (ptv.PERMIT_ID = pt.PERMIT_ID)
+       LEFT OUTER JOIN %Schema%PT_PERMIT_ISSUANCE pif ON (pif.PERMIT_ID = pt.PERMIT_ID AND pif.ISSUANCE_TYPE_CD = 'F' AND pif.ISSUANCE_STATUS_CD = 'I')
+       INNER JOIN %Schema%PT_PERMIT_CONDITION pc ON (pc.PERMIT_ID = pt.PERMIT_ID)
+       LEFT OUTER JOIN %Schema%PT_PERMIT_CONDITION_CATEGORY_XREF pccx ON (pccx.PERMIT_CONDITION_ID = pc.PERMIT_CONDITION_ID)
+       WHERE 1 = 1
+	</searchPermitConditions>
+	
+	<searchPermitConditionsByEuId>
+		pc.PERMIT_CONDITION_ID IN (
+			SELECT DISTINCT pceux.PERMIT_CONDITION_ID
+				FROM %Schema%PT_PERMIT_CONDITION_EU_XREF pceux
+				INNER JOIN %Schema%FP_EMISSIONS_UNIT feu ON feu.CORR_EPA_EMU_ID = pceux.CORR_EPA_EMU_ID
+				INNER JOIN %Schema%FP_FACILITY fp ON fp.FP_ID = feu.FP_ID AND fp.VERSION_ID = -1
+				%whereClause% )
+	</searchPermitConditionsByEuId>
+	
+	<createPermitConditionCategory>
+		INSERT INTO %Schema%pt_permit_condition_category_xref
+			(permit_condition_id
+			, category_code
+		) VALUES (?, ?)
+	</createPermitConditionCategory>
+	
+	<deletePermitConditionCategoriesByConditionId>
+		DELETE FROM %Schema%pt_permit_condition_category_xref
+		WHERE permit_condition_id = ?
+	</deletePermitConditionCategoriesByConditionId>
+	
+	<retrievePermitConditionCategoriesByConditionId>
+		SELECT category_code 
+		FROM %Schema%pt_permit_condition_category_xref
+		WHERE permit_condition_id = ?
+	</retrievePermitConditionCategoriesByConditionId>
+
+  	<createComplianceStatusEvent>
+		INSERT INTO %Schema%pt_permit_condition_compliance_status_event
+		(compliance_status_id,
+		permit_condition_id,
+		event_dt,
+		event_type_cd,
+		status,
+		inspection_reference,
+		stack_test_reference,
+		compliance_report_reference,
+		last_updated_by_id,
+		last_updated_dt)
+		VALUES
+		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	</createComplianceStatusEvent>
+	
+	<modifyComplianceStatusEvent>
+		UPDATE %Schema%pt_permit_condition_compliance_status_event
+		SET
+		event_dt = ?,
+		event_type_cd = ?,
+		status=?,
+		inspection_reference=?,
+		stack_test_reference=?,
+		compliance_report_reference=?,
+		last_updated_by_id = ?,
+		last_updated_dt = ?,
+		last_modified = ?
+		WHERE
+		compliance_status_id = ? AND last_modified = ?
+	</modifyComplianceStatusEvent>
+
+	<removeComplianceStatusEvent>
+		DELETE FROM %Schema%pt_permit_condition_compliance_status_event WHERE
+		compliance_status_id = ?
+	</removeComplianceStatusEvent>
+	
+	<retrieveComplianceStatusEvent>
+		SELECT ${PermitSQL.complianceStatusEventColumns}
+		FROM
+		%Schema%pt_permit_condition_compliance_status_event cse WHERE cse.compliance_status_id = ?
+	</retrieveComplianceStatusEvent>
+	
+	<retrieveComplianceStatusEventList>
+		SELECT ${PermitSQL.complianceStatusEventColumns}
+		FROM
+		%Schema%pt_permit_condition_compliance_status_event cse WHERE cse.permit_condition_id = ?
+		ORDER BY cse.cstatus_id
+	</retrieveComplianceStatusEventList>
+
+	<removeComplianceStatusEventList>
+		DELETE FROM %Schema%pt_permit_condition_compliance_status_event
+		WHERE permit_condition_id = ?
+	</removeComplianceStatusEventList>
+	
+	<retrievePermitConditionsSupersededByThis>
+		SELECT ${PermitSQL.permitConditionSupersessionColumns},
+		  pcc.pcond_id AS superseded_pcond_id, 
+		  pcc.permit_condition_number AS superseded_pcond_nbr,
+		  pcc.permit_id As superseded_permit_id,
+		  pc.permit_nbr AS superseded_permit_nbr,
+		  pcp.pcond_id AS superseding_pcond_id, 
+		  pcp.permit_id AS superseding_permit_id,
+		  pp.permit_nbr AS superseding_permit_nbr,
+		  pp.permit_type_cd, pi.issuance_date,
+		  pcp.permit_condition_number AS superseding_pcond_nbr
+		FROM %Schema%pt_permit_condition_supersession pcs 
+		  INNER JOIN %Schema%pt_permit_condition pcc
+		    ON (pcc.permit_condition_id = pcs.superseded_permit_condition_id)
+		  INNER JOIN %Schema%pt_permit pc
+		    ON (pc.permit_id = pcc.permit_id)
+		  INNER JOIN %Schema%pt_permit_condition pcp
+		    ON (pcp.permit_condition_id = pcs.superseding_permit_condition_id)
+		  INNER JOIN %Schema%pt_permit pp
+		    ON (pp.permit_id = pcp.permit_id)
+		  LEFT OUTER JOIN %Schema%pt_permit_issuance pi
+		    ON (pi.permit_id = pp.permit_id AND pi.ISSUANCE_TYPE_CD = 'F')
+		WHERE pcs.superseding_permit_condition_id = ?
+		ORDER BY pcs.superseded_permit_condition_id	
+	</retrievePermitConditionsSupersededByThis>
+	
+	<retrieveThisPermitConditionSupersededByList>
+		SELECT ${PermitSQL.permitConditionSupersessionColumns},
+		  pcc.pcond_id AS superseded_pcond_id, 
+		  pcc.permit_condition_number AS superseded_pcond_nbr,
+		  pcc.permit_id As superseded_permit_id,
+		  pc.permit_nbr AS superseded_permit_nbr,
+		  pcp.pcond_id AS superseding_pcond_id, 
+		  pcp.permit_id AS superseding_permit_id,
+		  pp.permit_nbr AS superseding_permit_nbr,
+		  pp.permit_type_cd, pi.issuance_date,
+		  pcp.permit_condition_number AS superseding_pcond_nbr
+		FROM %Schema%pt_permit_condition_supersession pcs 
+		  INNER JOIN %Schema%pt_permit_condition pcc
+		    ON (pcc.permit_condition_id = pcs.superseded_permit_condition_id)
+		  INNER JOIN %Schema%pt_permit pc
+		    ON (pc.permit_id = pcc.permit_id)
+		  INNER JOIN %Schema%pt_permit_condition pcp
+		    ON (pcp.permit_condition_id = pcs.superseding_permit_condition_id)
+		  INNER JOIN %Schema%pt_permit pp
+		    ON (pp.permit_id = pcp.permit_id)
+		  LEFT OUTER JOIN %Schema%pt_permit_issuance pi
+		    ON (pi.permit_id = pp.permit_id AND pi.ISSUANCE_TYPE_CD = 'F')
+		WHERE pcs.superseded_permit_condition_id = ?
+		ORDER BY pcs.superseding_permit_condition_id
+	</retrieveThisPermitConditionSupersededByList>
+	
+	
+	<retrievePermitConditionById>
+		SELECT ${PermitSQL.permitConditionColumns}
+			FROM %Schema%pt_permit_condition pc 
+			WHERE pc.permit_condition_id = ?
+	</retrievePermitConditionById>
+	
+	<createPermitConditionSupersession>
+		INSERT INTO %Schema%pt_permit_condition_supersession
+		  (superseded_permit_condition_id,
+           superseding_permit_condition_id,
+           superseding_option,
+           comments)
+		VALUES
+		  (?, ?, ?, ?)
+	</createPermitConditionSupersession>
+	
+	<modifyPermitConditionSupersession>
+		UPDATE %Schema%pt_permit_condition_supersession
+		SET superseding_option = ?, comments = ?,
+			last_modified = ?
+		WHERE superseded_permit_condition_id = ?
+		  AND superseding_permit_condition_id = ?
+		  AND last_modified = ?
+	</modifyPermitConditionSupersession>
+
+	<removePermitConditionSupersession>
+		DELETE FROM %Schema%pt_permit_condition_supersession
+		WHERE superseded_permit_condition_id = ?
+		  AND superseding_permit_condition_id = ?
+	</removePermitConditionSupersession>
+	
+	<deletePermitConditionSupersession>
+		DELETE FROM %Schema%pt_permit_condition_supersession
+		WHERE superseded_permit_condition_id = ?
+	</deletePermitConditionSupersession>
+	
+	<retrievePermitConditionSupersession>
+		SELECT ${PermitSQL.permitConditionSupersessionColumns},
+		  pcc.pcond_id AS superseded_pcond_id, 
+		  pcc.permit_condition_number AS superseded_pcond_nbr,
+		  pcc.permit_id AS superseded_permit_id,
+		  pc.permit_nbr AS superseded_permit_nbr,
+		  pcp.pcond_id AS superseding_pcond_id, 
+		  pcp.permit_id AS superseding_permit_id,
+		  pp.permit_nbr AS superseding_permit_nbr,
+		  pp.permit_type_cd, pi.issuance_date,
+		  pcp.permit_condition_number AS superseding_pcond_nbr
+		FROM %Schema%pt_permit_condition_supersession pcs
+		  INNER JOIN %Schema%pt_permit_condition pcc
+		    ON (pcc.permit_condition_id = pcs.superseded_permit_condition_id)
+		  INNER JOIN %Schema%pt_permit pc
+		    ON (pc.permit_id = pcc.permit_id)
+		  INNER JOIN %Schema%pt_permit_condition pcp
+		    ON (pcp.permit_condition_id = pcs.superseding_permit_condition_id)
+		  INNER JOIN %Schema%pt_permit pp
+		    ON (pp.permit_id = pcp.permit_id)		
+		  LEFT OUTER JOIN %Schema%pt_permit_issuance pi
+		    ON (pi.permit_id = pp.permit_id AND pi.ISSUANCE_TYPE_CD = 'F')
+		WHERE pcs.superseded_permit_condition_id = ?
+		  AND pcs.superseding_permit_condition_id = ?
+	</retrievePermitConditionSupersession>
+
+	<retrieveComplianceStatusEventListByReferencedInspection>
+		SELECT ${PermitSQL.complianceStatusEventColumns}, pcc.PCOND_ID as p_cond_id
+		FROM
+		%Schema%pt_permit_condition_compliance_status_event cse
+		INNER JOIN %Schema%pt_permit_condition pcc ON (pcc.permit_condition_id = cse.permit_condition_id)
+		WHERE cse.inspection_reference = ?
+		ORDER BY cse.cstatus_id
+	</retrieveComplianceStatusEventListByReferencedInspection>
+	
+	<retrieveComplianceStatusEventListByReferencedComplianceReport>
+		SELECT ${PermitSQL.complianceStatusEventColumns}, pcc.PCOND_ID as p_cond_id
+		FROM
+		%Schema%pt_permit_condition_compliance_status_event cse 
+		INNER JOIN %Schema%pt_permit_condition pcc ON (pcc.permit_condition_id = cse.permit_condition_id)
+		WHERE cse.compliance_report_reference = ?
+		ORDER BY cse.cstatus_id
+	</retrieveComplianceStatusEventListByReferencedComplianceReport>
+	
+	<retrieveComplianceStatusEventListByReferencedStackTest>
+		SELECT ${PermitSQL.complianceStatusEventColumns}, pcc.PCOND_ID as p_cond_id
+		FROM
+		%Schema%pt_permit_condition_compliance_status_event cse 
+		INNER JOIN %Schema%pt_permit_condition pcc ON (pcc.permit_condition_id = cse.permit_condition_id)
+		WHERE cse.stack_test_reference = ?
+		ORDER BY cse.cstatus_id
+	</retrieveComplianceStatusEventListByReferencedStackTest>
+
+	<retrieveComplianceStatusEventsCount>
+		SELECT count(cse.compliance_status_id)
+		FROM
+		%Schema%pt_permit_condition_compliance_status_event cse
+		WHERE cse.permit_condition_id = ?
+	</retrieveComplianceStatusEventsCount>
+	
+	<retrievePermitDocumentById>
+      SELECT ${PermitSQL.permitDocumentColumns},
+      ${DocumentSQL.documentColumns} 
+      FROM %Schema%pt_permit_document ppd,
+      %Schema%dc_document dd 
+      WHERE ppd.document_id = ? 
+      AND ppd.document_id = dd.document_id 
+    </retrievePermitDocumentById>
+    
+    <retrievePermitWorkflowProcessId>
+	SELECT TOP 1
+		wfp.PROCESS_ID
+	FROM
+		dbo.WF_PROCESS wfp,
+		dbo.pt_permit ptp
+	WHERE
+		wfp.EXTERNAL_ID = ptp.PERMIT_ID
+	AND
+		wfp.PROCESS_TEMPLATE_ID = 236
+	AND permit_nbr = ?
+	ORDER BY START_DT DESC
+	</retrievePermitWorkflowProcessId>
+
+	<retrievePermitConditionsCountByPermitIds>
+		SELECT COUNT(pc.permit_condition_id) FROM %Schema%pt_permit_condition pc
+		WHERE
+		1=1
+	</retrievePermitConditionsCountByPermitIds>
+	
+	<retrieveNSRPermitReasons>
+      SELECT prd.reason_cd AS code, prd.reason_dsc AS description,
+      prd.deprecated, prd.last_modified 
+      FROM %Schema%pt_reason_permit_type_xref prptx
+      INNER JOIN %Schema%pt_reason_def prd ON prptx.reason_cd = prd.reason_cd
+      WHERE prptx.permit_type_cd = 'NSR'
+      ORDER BY prd.line_order
+    </retrieveNSRPermitReasons>
+    
+    <retrieveTVPTOPermitReasons>
+      SELECT prd.reason_cd AS code, prd.reason_dsc AS description,
+      prd.deprecated, prd.last_modified 
+      FROM %Schema%pt_reason_permit_type_xref prptx
+      INNER JOIN %Schema%pt_reason_def prd ON prptx.reason_cd = prd.reason_cd
+      WHERE prptx.permit_type_cd = 'TVPTO'
+      ORDER BY prd.line_order
+    </retrieveTVPTOPermitReasons>
+    	
+	<removePermitConditionCategoryXref>
+		DELETE FROM %Schema%PT_PERMIT_CONDITION_CATEGORY_XREF where 
+		permit_condition_id =(Select permit_condition_id from %Schema%pt_permit where permit_id=?)
+	</removePermitConditionCategoryXref>
+	
+	<removePermitConditionEUXref>
+		DELETE FROM %Schema%PT_PERMIT_CONDITION_EU_XREF where permit_condition_id=(Select permit_condition_id from %Schema%pt_permit where permit_id=?)
+	</removePermitConditionEUXref>
+    
+    <retrieveGeneralPermitTypeDef>
+   	 	SELECT type_cd, type_dsc, issuance_renewal_date, expiration_date, template_path, deprecated, last_modified
+  		FROM %Schema%PT_PERMIT_GENERAL_PERMIT_TYPE_DEF
+    </retrieveGeneralPermitTypeDef>
+    
+  </PermitSQL>
+</root>

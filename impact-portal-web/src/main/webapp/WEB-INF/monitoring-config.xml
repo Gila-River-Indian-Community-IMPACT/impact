@@ -1,0 +1,431 @@
+<!DOCTYPE faces-config PUBLIC
+    "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+    "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--Monitoring Tab -->
+	
+	
+	<!-- menu items -->
+	<managed-bean>
+		<managed-bean-name>menuItem_monitorGroupDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_monitorGroupDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Task - Upload Monitor Report</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>monitoring</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>		
+					<value>/monitoring/monitorGroup.jsp</value>
+					<value>/monitoring/monitorSite.jsp</value>
+					<value>/monitoring/monitor.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>children</property-name>
+			<list-entries>
+				<value-class>
+					us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+				</value-class>
+				<value>#{menuItem_uploadMonitorReport}</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>rendered</property-name>
+			<value>false</value>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.myTasks.goUploadMonitorReport</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_uploadMonitorReport</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_uploadMonitorReport</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Upload Monitor Report</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>monitoring.monitorGroupDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+			<value-class>java.lang.String</value-class>
+				<value>/monitoring/MonitorGroup.jsp</value>
+				<value>/monitoring/monitorSite.jsp</value>
+				<value>/monitoring/monitor.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>rendered</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.myTasks.goUploadMonitorReport</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>monitorGroupDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorGroupDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilitySearch</property-name>
+			<value>#{monitoringFacilitySearch}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>myTasks</property-name>
+			<value>#{myTasks}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>staging</property-name>
+			<value>true</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>homeMonitorGroupDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorGroupDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilitySearch</property-name>
+			<value>#{monitoringFacilitySearch}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>myTasks</property-name>
+			<value>#{myTasks}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>monitorSiteDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorSiteDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>monitorGroupDetail</property-name>
+			<value>#{monitorGroupDetail}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>homeMonitorSiteDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorSiteDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>monitorGroupDetail</property-name>
+			<value>#{homeMonitorGroupDetail}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>monitorDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>monitorSiteDetail</property-name>
+			<value>#{monitorSiteDetail}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>homeMonitorDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>monitorSiteDetail</property-name>
+			<value>#{homeMonitorSiteDetail}</value>
+		</managed-property>
+	</managed-bean>
+			
+	<managed-bean>
+		<managed-bean-name>monitoringFacilitySearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.app.facility.FacilitySearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>companySearch</property-name>
+			<value>#{companySearch}</value>
+		</managed-property>
+	</managed-bean>
+	
+
+	<managed-bean>
+		<managed-bean-name>monitorGroupSearch</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorGroupSearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>monitoring.monitorGroupDetail</from-outcome>
+			<to-view-id>/monitoring/monitorGroup.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>monitoring.monitorSiteDetail</from-outcome>
+			<to-view-id>/monitoring/monitorSite.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/monitoring/monitorGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorSiteDetail.submitFromJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitorSite.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/monitoring/homeMonitorGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{homeMonitorSiteDetail.submitFromAmbientJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/homeMonitorSite.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+   <!--   Return to group -->	
+	<navigation-rule>
+		<from-view-id>/monitoring/monitorSite.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorSiteDetail.showAssociatedGroup}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitorGroup.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/monitoring/homeMonitorSite.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{homeMonitorSiteDetail.showAssociatedGroup}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/homeMonitorGroup.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!--   Return to group -->
+	
+	<navigation-rule>
+		<from-view-id>/monitoring/monitorSite.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorDetail.submitFromJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitor.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/monitoring/homeMonitorSite.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{homeMonitorDetail.submitFromAmbientJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/homeMonitor.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!--   Return to site -->	
+	<navigation-rule>
+		<from-view-id>/monitoring/monitor.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorDetail.showAssociatedSite}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitorSite.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/monitoring/homeMonitor.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{homeMonitorDetail.showAssociatedSite}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/homeMonitorSite.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!--   Return to site -->
+	
+
+	
+	<managed-bean>
+		<managed-bean-name>monitorSiteSearch</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorSiteSearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>infraDefs</property-name>
+			<value>#{infraDefs}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>monitorReportDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorReportDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>monitorGroupDetail</property-name>
+			<value>#{monitorGroupDetail}</value>
+		</managed-property>
+		<managed-property>
+            <property-name>documentService</property-name>
+            <value>#{documentBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>workFlowService</property-name>
+            <value>#{readWorkFlowBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>facilityService</property-name>
+            <value>#{facilityBO}</value>
+        </managed-property>
+		<managed-property>
+			<property-name>staging</property-name>
+			<value>true</value>
+		</managed-property>
+	</managed-bean>	
+	
+	<managed-bean>
+		<managed-bean-name>homeMonitorReportDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.monitoring.MonitorReportDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>monitoringService</property-name>
+			<value>#{monitoringBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>monitorGroupDetail</property-name>
+			<value>#{homeMonitorGroupDetail}</value>
+		</managed-property>
+		<managed-property>
+            <property-name>documentService</property-name>
+            <value>#{documentBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>workFlowService</property-name>
+            <value>#{readWorkFlowBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>facilityService</property-name>
+            <value>#{facilityBO}</value>
+        </managed-property>
+	</managed-bean>	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:reportDetail</from-outcome>
+			<to-view-id>/monitoring/monitorReport.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:homeReportDetail</from-outcome>
+			<to-view-id>/monitoring/homeMonitorReport.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:editReportAttachment</from-outcome>
+			<to-view-id>/monitoring/editReportAttachment.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+      <navigation-case>
+      <from-outcome>uploadMonitorReport</from-outcome>
+      <to-view-id>/monitoring/monitorReport.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+	
+	
+</faces-config>

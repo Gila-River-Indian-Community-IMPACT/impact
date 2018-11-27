@@ -1,0 +1,241 @@
+/*                                blafdoc.css                                 */
+/*                                Release 1.1.0                               */
+/*           Copyright © 2002, 2004 Oracle. All rights reserved.              */
+/* ========================================================================== */
+
+
+
+
+/* ==================================
+	Project-specific styles
+
+	Properties for the styles specified as Project-specific in 'delivered'
+	blafdoc.css now defined in stars2.css 						         
+===================================== */
+
+
+/* Standard BlafDoc styles */
+
+BODY {
+    font-family : Arial, Helvetica, Geneva, sans-serif;
+    background-color : #FFFFFF;
+    color : #000000;
+    }
+
+BODY, P, TABLE, TD, TH, OL, UL, A, DL, DT, DD, BLOCKQUOTE, CAPTION {
+    font-family : Arial, Helvetica, Geneva, sans-serif;
+    font-size : small;
+    }
+
+A:link {
+	  color : #663300;
+    background-color : #FFFFFF;
+    }
+
+A:active {
+    color:#ff6600;
+    background-color : #FFFFFF;
+    }
+
+A:visited {
+    color:#996633;
+    background-color : #FFFFFF;
+    }
+
+A.glossary-link {
+    border-bottom : 1px dotted;
+    text-decoration : none;
+	}
+
+
+H1, H2, H3, H4 {
+    font-family: Arial, Helvetica, Geneva, sans-serif;
+    color: #336699;
+    background-color : #FFFFFF;
+    }
+
+H1 {
+    font-size : large;
+    font-weight: bold;
+    border : solid #CCCC99;
+    border-width : 0px 0px 1px 0px;
+    width : 100%;
+    }
+
+H2 {
+    font-size:1.3em;
+    font-weight: bold;
+    }
+
+H3 {
+    font-size:1.1em; 
+    font-weight: bold;
+    }
+
+H4 {
+    font-size:1em; 
+    font-weight: normal;
+    }
+
+H1 A, H2 A, H3 A, H4 A {
+    font-size: 100%;
+    }
+
+PRE, CODE {
+    font-family: Courier, "Courier New", monospace;
+    font-size:1em; 
+    }
+
+CODE {
+    color: #336699;
+    }
+
+CODE .code-comment {
+    color: #000000;
+    }
+    
+H1 A CODE, H2 A CODE, H3 A CODE, H4 A CODE {
+    color: #336699;
+    font-weight: bold;
+}
+
+
+A:link CODE {
+    color: #663300;
+    }
+
+A:active CODE {
+    color: #ff6600;
+    }
+
+A:visited CODE {
+    color: #996633;
+    }
+
+TABLE {
+    font-size: small;
+    } 
+
+CAPTION {
+    text-align : center;
+    font-weight : bold;
+    width: auto;
+    }
+
+TD {
+    vertical-align : top;
+    }
+
+TH {
+    font-weight: bold; 
+    text-align: left;
+    vertical-align : bottom;
+    color: #336699;
+    background-color: #FFFFFF;
+    }
+    
+TABLE.table-border  {
+    border : 1px solid #CCCC99; 
+    }
+
+TABLE.table-border TD, TABLE.table-border TH {
+    padding : 2px 4px 2px 4px;
+    background-color: #FFFFFF;
+    border : 1px solid #CCCC99; 
+    }
+
+TABLE.table-border TH.table-header-border-left, TABLE.table-border TH.table-header-border-middle, TABLE.table-border TH.table-header-border-right  {
+    background-color: #cccc99;
+    color: #336699;
+    }
+
+TABLE.table-border TH.table-header-border-left {
+    border-left : 1px solid #CCCC99;
+    border-right : 1px solid #FFFFFF;
+    background-color: #cccc99;
+    }
+
+TABLE.table-border TH.table-header-border-middle {
+    border-left : 1px solid #FFFFFF;
+    border-right : 1px solid #FFFFFF;
+    background-color: #cccc99;
+    }
+
+TABLE.table-border TH.table-header-border-right {
+    border-left : 1px solid #FFFFFF;
+    border-right : 1px solid #CCCC99;
+    background-color: #cccc99;
+    }
+
+SPAN.gui-object {
+    font-weight: bold;
+    }
+
+P.horizontal-rule {
+    width : 100%;
+    border : solid #CCCC99;
+    border-width : 0px 0px 1px 0px;
+    margin-bottom : 2em;
+    }
+
+div.zz-skip-header {
+  	margin-bottom : 0px;
+  	margin-top : -2px;
+    padding : 0px;
+    text-align:center;
+    line-height : 1px;  
+    }
+
+div.zz-skip-header a:link, div.zz-skip-header a:visited, div.zz-skip-header a:active  {
+    color:white;
+    background-color:white;
+    text-decoration:none;
+    font-size:.1em;
+    line-height : 1px;  
+}
+
+TD.zz-nav-header-cell {
+	text-align : left;
+	font-size : small;
+    width : 99%;
+	color:#000000;
+	background-color : #FFFFFF;
+	font-weight : normal;
+	vertical-align : top;
+    margin-top : 0px;
+	padding-top : 0px;
+   }
+  
+A.zz-nav-header-link {
+	font-size : small;
+   }
+
+TD.zz-nav-button-cell {
+    text-align : center;
+    width : 1%;
+	vertical-align : top;
+    padding-left : 4px;
+    padding-right : 4px;
+    margin-top : 0px;
+	padding-top : 0px;
+    }
+
+A.zz-nav-button-link {
+    font-size : x-small;
+    }
+
+DIV.zz-nav-footer-menu {
+    width : 100%;
+    text-align : center;
+    margin-top : 1em;
+    margin-bottom : 2em;
+    }
+
+P.zz-legal-notice, A.zz-legal-notice-link {
+    font-size : xx-small;
+    display : none ;       /* Uncomment this to hide the legal notice */
+}	
+
+
+	
+

@@ -1,0 +1,2881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file defines definition tables and is used to render a graphical -->
+<!-- front-end GUI database editor for Stars2 administrators. -->
+<!-- -->
+<!-- While the tool is flexible please note the following limitation(s): -->
+<!-- 1. It does not support robust foreign-key (FK) support for picklist -->
+<!-- columns and assumes just one column between the primary table and -->
+<!-- each secondary table to drive the outer join. Therefore be careful -->
+<!-- to use PK/FK columns for this join. Note: this caveat applies only -->
+<!-- in cases where a definition set includes one or more picklists, -->
+<!-- which enable a user-friendly display value for code and id columns -->
+<!-- 2. Columns which are part of the primary key are not editable. The -->
+<!-- software will override any columns which are specified to be -->
+<!-- editable but which are part of the primary key. -->
+
+<root>
+	<definitions>
+		<category label="Ambient Monitoring" description="">
+			<definition-set table="MO_DURATION_CODE_DEF"
+				contentType="CD" label="Duration Code" columnPrefix="MO_DURATION_CODE"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_DURATION_CODE_CD"
+				description="Ambient monitor duration code."
+				importClass="us.oh.state.epa.stars2.def.MonitoringDurationCodeDef">
+			</definition-set>
+			<definition-set table="MO_COLL_FREQ_DEF"
+				contentType="CD" label="Collection Frequency" columnPrefix="MO_COLL_FREQ"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_COLL_FREQ_CD"
+				description="Ambient monitor collection frequency."
+				importClass="us.oh.state.epa.stars2.def.MonitoringCollFreqCodeDef">
+			</definition-set>
+			<definition-set table="MO_MONITOR_RPT_TYPE_DEF"
+				contentType="CD" label="Monitor Report Type" columnPrefix="MO_MONITOR_RPT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_MONITOR_RPT_TYPE_CD"
+				description="Ambient monitor report type."
+				importClass="us.oh.state.epa.stars2.def.MonitorReportTypeDef">
+			</definition-set>
+			<definition-set table="MO_MONITOR_TYPE_DEF"
+				contentType="CD" label="Monitor Type" columnPrefix="MO_MONITOR_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_MONITOR_TYPE_CD"
+				description="Ambient monitor type."
+				importClass="us.oh.state.epa.stars2.def.MonitorTypeDef">
+			</definition-set>
+			<definition-set table="MO_MONITOR_PARAM_DEF"
+				contentType="CD" label="Ambient Monitor Parameter" columnPrefix="MO_MONITOR_PARAM"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_MONITOR_PARAM_CD"
+				description="Ambient monitor parameters."
+				importClass="us.oh.state.epa.stars2.def.MonitorParamTypeDef">
+			</definition-set>
+			<definition-set table="MO_MONITOR_STATUS_DEF"
+				contentType="CD" label="Monitor Status" columnPrefix="MO_MONITOR_STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_MONITOR_STATUS_CD"
+				description="Ambient monitor status."
+				importClass="us.oh.state.epa.stars2.def.MonitorStatusDef">
+			</definition-set>
+			<definition-set table="MO_WX_PARAM_DEF"
+				contentType="CD" label="Met Monitor Parameter" columnPrefix="MO_WX_PARAM"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_WX_PARAM_CD"
+				description="Meteorological monitor parameters."
+				importClass="us.oh.state.epa.stars2.def.WxParamDef">
+			</definition-set>
+			<definition-set table="MO_CONTRACTOR_DEF"
+				contentType="CD" label="Contractor" columnPrefix="MO_CONTRACTOR"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_CONTRACTOR_CD"
+				description="Ambient monitoring contractors."
+				importClass="us.oh.state.epa.stars2.def.MonitoringContractorDef">
+			</definition-set>
+			<definition-set table="MO_ADDL_RPT_ATTACHMNT_TYPE_DEF"
+				contentType="CD" label="Additional Report Attachment Type" columnPrefix="MO_ADDL_RPT_ATTACHMNT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_ADDL_RPT_ATTACHMNT_TYPE_CD"
+				description="Ambient monitoring additional report attachment type."
+				importClass="us.oh.state.epa.stars2.def.AdditionalReportAttachmentTypeDef">
+			</definition-set>
+			<definition-set table="MO_RPT_ACCEPTED_STATUS_DEF"
+				contentType="CD" label="Report Accepted Status" columnPrefix="MO_RPT_ACCEPTED_STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_RPT_ACCEPTED_STATUS_CD"
+				description="Ambient monitor report accepted status."
+				importClass="us.oh.state.epa.stars2.def.ReportAcceptedStatusDef">
+			</definition-set>
+			<definition-set table="MO_COMPLIANCE_STATUS_DEF"
+				contentType="CD" label="Compliance Status" columnPrefix="MO_COMPLIANCE_STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_COMPLIANCE_STATUS_CD"
+				description="Ambient monitoring compliance status."
+				importClass="us.oh.state.epa.stars2.def.MonitoringComplianceStatusDef">
+			</definition-set>
+			<definition-set table="MO_MONITOR_GROUP_ATTACHMNT_TYPE_DEF"
+				contentType="CD" label="Monitor Group Attachment Type" columnPrefix="MO_MONITOR_GROUP_ATTACHMNT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_MONITOR_GROUP_ATTACHMNT_TYPE_CD"
+				description="Ambient monitor group attachment type."
+				importClass="us.oh.state.epa.stars2.def.MonitorGroupAttachmentTypeDef">
+			</definition-set>
+			<definition-set table="MO_MONITOR_RPT_REVIEW_STATUS_DEF"
+				contentType="CD" label="Report Review Status" columnPrefix="MO_MONITOR_RPT_REVIEW_STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="MO_MONITOR_RPT_REVIEW_STATUS_CD"
+				description="Ambient monitor report review status."
+				importClass="us.oh.state.epa.stars2.def.ReportReviewStatusDef">
+			</definition-set>
+		</category>
+		<category label="Applications" description="">
+			<category label="Emission Unit Types" description="">
+				<definition-set table="PA_EU_BTU_UNITS_DEF"
+					contentType="custom" label="Btu Units - Engine" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Types of Btu Units for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUBtuUnitsDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_FUEL_SULFUR_DEF"
+					contentType="custom" label="Fuel Sulfurs" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Fuel Sulfurs for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUFuelSulfurDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_NEG_SERVICE_TYPE_DEF"
+					contentType="custom" label="Service Type - Engine" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Engine Type of Service for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUNEGServiceTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_ENG_TIER_RATING_DEF"
+					contentType="custom" label="EPA Tier Rating - Engine" columnPrefix="eng"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Engine Tier Rating for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUENGTierRatingDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_BOILER_TYPE_DEF"
+					contentType="custom" label="Boiler Type" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Boiler Type for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUBoilerTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_BOL_SERVICE_TYPE_DEF"
+					contentType="custom" label="Service Type - Boiler" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Type of services for a Boiler EU in an NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUBOLServiceTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_FUEL_CONSUMPTION_DEF"
+					contentType="custom" label="Fuel Consumption Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Fuel Consumption Units for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUFuelConsumptionDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_FUEL_GAS_HEATING_DEF"
+					contentType="custom" label="Fuel Gas Heating Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Fuel Gas Heating Units of Service for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUFuelGasHeatingDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_PRODUCTION_RATE_DEF"
+					contentType="custom" label="Production Rate Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Production Rate Units of Service for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUProductionRateDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_FUG_EMISSION_TYPE_DEF"
+					contentType="custom" label="Type of Fugitive Emission"
+					columnPrefix="neg" deprecateModel="flag" create="T" update="T"
+					orderBy="TYPE_CD" description="Type of Fugitive Emission for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUFUGEmissionTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_STOCKPILE_TYPE_DEF"
+					contentType="custom" label="Type of Stockpile " columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Type of Stockpile for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUStockpileTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_STOCKPILE_SIZE_DEF"
+					contentType="custom" label="Stockpile Size Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Stockpile Size Units of Service for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUStockpileSizeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_MATERIAL_TYPE_DEF"
+					contentType="custom" label="Type of Material Blasted" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Type of Material Blasted for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUMaterialTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_EQUIP_SERVICE_TYPE_DEF"
+					contentType="custom" label="Equipment and Service Type "
+					columnPrefix="neg" deprecateModel="flag" create="T" update="T"
+					orderBy="TYPE_CD" description="Equipment and Service Type for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUEquipServiceTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_LUD_THROUGHPUT_UNITS_DEF"
+					contentType="custom" label="Throughput Units - LUD" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Loading/Unloading/Dump Throughput Units for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEULUDThroughputUnitsDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_TNK_THROUGHPUT_UNITS_DEF"
+					contentType="custom" label="Throughput Units - TNK" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Storage Tank and Silo Throughput Units for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUTNKThroughputUnitsDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_CRUSHER_TYPE_DEF"
+					contentType="custom" label="Type of Crusher" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Type of Crusher for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUCrusherTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_POWER_SOURCE_DEF"
+					contentType="custom" label="Power Source" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Power Source for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUPowerSourceDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_SCREEN_DEF" contentType="custom"
+					label="Screen Type" columnPrefix="neg" deprecateModel="flag"
+					create="T" update="T" orderBy="TYPE_CD"
+					description="Type of screens for an NSR application" importClass="us.oh.state.epa.stars2.def.AppEUScreenDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+
+
+
+				<definition-set table="PA_EU_IGNITION_DEVICE_TYPE_DEF"
+					contentType="custom" label="Ignition Device Type" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Ignition Device Type for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUIgnitionDeviceTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_WASTE_GAS_VOL_UNITS_DEF"
+					contentType="custom" label="Waste Gas Volume Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Waste Gas Volume Units for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUWasteGasVolUnitsDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_INC_PRI_FUEL_TYPE_DEF"
+					contentType="custom" label="Primary Fuel Type - INC" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Primary Fuel Type for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUINCPriFuelTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_CIRCULATION_PUMP_TYPE_DEF"
+					contentType="custom" label="Type of Amine Circulation Pump"
+					columnPrefix="neg" deprecateModel="flag" create="T" update="T"
+					orderBy="TYPE_CD" description="Type of Amine Circulation Pump for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUCirculationPumpTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_STRIPPING_GAS_SOURCE_DEF"
+					contentType="custom" label="Source of Stripping Gas" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Source of Stripping Gas for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUStrippingGasSourceDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_MOTIVE_FORCE_DEF"
+					contentType="custom" label="Motive Force" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Motive Force for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUMotiveForceDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_CCU_EQUIP_TYPE_DEF"
+					contentType="custom" label="Type of Equipment" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Type of Equipment for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUCCUEquipTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_CIRCULATION_RATE_DEF"
+					contentType="custom" label="Circulation Rate Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Circulation Rate Units for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUCirculationRateDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_AMINE_TYPE_DEF"
+					contentType="custom" label="Type of Amine" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Type of Amine for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUAmineTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_FLOW_RATE_UNITS_DEF"
+					contentType="custom" label="Flow Rate Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Flow Rate Units for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUFlowRateUnitsDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_MATE_PROCESSED_TYPE_DEF"
+					contentType="custom" label="Type of Material Processed"
+					columnPrefix="neg" deprecateModel="flag" create="T" update="T"
+					orderBy="TYPE_CD" description="Type of Material Processed for NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUMateProcessedTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_APT_UNIT_TYPE_DEF"
+					contentType="custom" label="Unit Type - Acid Plant/Prill Tower"
+					columnPrefix="neg" deprecateModel="flag" create="T" update="T"
+					orderBy="TYPE_CD"
+					description="Type of Unit for a Acid Plant/Prill Tower EU in an NSR application"
+					importClass="us.oh.state.epa.stars2.def.AppEUAPTUnitTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_TURBINE_CYCLE_TYPE_DEF"
+					contentType="custom" label="Turbine Cycle Type" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Turbine Cycle Type for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUTurbineCycleTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_COAL_USAGE_TYPE_DEF"
+					contentType="custom" label="Coal Usage Type" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Coal Usage Type for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUCoalUsageTypeDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+
+				<definition-set table="PA_EU_MATE_USAGE_DEF"
+					contentType="custom" label="Material Usage Units" columnPrefix="neg"
+					deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+					description="Material Usage Units for NSR application" importClass="us.oh.state.epa.stars2.def.AppEUMateUsageDef">
+					<field column="TYPE_CD" label="ID" update="F" />
+					<field column="TYPE_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			</category>
+
+			<definition-set table="PA_APPLICATION_TYPE_DEF"
+				contentType="CD" label="Application types" columnPrefix="APPLICATION_TYPE"
+				deprecateModel="flag" create="F" update="F" orderBy="APPLICATION_TYPE_CD"
+				description="Types of permit applications" importClass="us.oh.state.epa.stars2.def.ApplicationTypeDef">
+			</definition-set>
+
+			<definition-set table="PA_APPLICATION_DOC_TYPE_DEF"
+				contentType="custom" label="NSR Attachment types" columnPrefix="APPLICATION_DOC_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="APPLICATION_DOC_TYPE_CD"
+				description="Types of attachments for permit applications"
+				importClass="us.oh.state.epa.stars2.def.ApplicationDocumentTypeDef">
+				<field column="APPLICATION_DOC_TYPE_CD" label="ID" update="F" />
+				<field column="APPLICATION_DOC_TYPE_DSC" label="Description"
+					update="T" />
+				<field column="APPLICATION_DOC_TYPE_EXP" label="Explanation"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="TRADE_SECRET_ALLOWED" label="Trade Secret Allowed"
+					update="T" pickListTable="CM_TRADE_SECRET_DEF" pickListColumn="TRADE_SECRET_CD"
+					pickListDisplay="TRADE_SECRET_DSC" />
+			</definition-set>
+
+			<definition-set table="PA_TV_APPLICATION_DOC_TYPE_DEF"
+				contentType="custom" label="Title V Attachment types" columnPrefix="APPLICATION_DOC_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="APPLICATION_DOC_TYPE_CD"
+				description="Types of attachments for permit applications"
+				importClass="us.oh.state.epa.stars2.def.TVApplicationDocumentTypeDef">
+				<field column="APPLICATION_DOC_TYPE_CD" label="ID" update="F" />
+				<field column="APPLICATION_DOC_TYPE_DSC" label="Description"
+					update="T" />
+				<field column="APPLICATION_DOC_TYPE_EXP" label="Explanation"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="TRADE_SECRET_ALLOWED" label="Trade Secret Allowed"
+					update="T" pickListTable="CM_TRADE_SECRET_DEF" pickListColumn="TRADE_SECRET_CD"
+					pickListDisplay="TRADE_SECRET_DSC" />
+			</definition-set>
+
+			<definition-set table="PA_ITR_TYPE_DEF" contentType="CD"
+				label="ITR Attachment types" columnPrefix="ITR_ATTACHMENT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="ITR_ATTACHMENT_TYPE_CD"
+				description="Types of attachments for ITR applications" importClass="us.oh.state.epa.stars2.def.RelocationAttachmentTypeDef">
+			</definition-set>
+
+			<!-- General Permit and Per Due Date not valid for WY <definition-set 
+				table="PA_GENERAL_PERMIT_TYPE_DEF" contentType="CD" label="General permit 
+				categories" columnPrefix="GENERAL_PERMIT_TYPE" deprecateModel="flag" create="T" 
+				update="T" orderBy="GENERAL_PERMIT_TYPE_CD" description="General Permit categories" 
+				importClass="us.oh.state.epa.stars2.def.PTIOGeneralPermitTypeDef"> </definition-set> 
+				<definition-set table="PA_MODEL_GENERAL_PERMIT_DEF" contentType="custom" 
+				label="General permit types" columnPrefix="xx" deprecateModel="flag" create="T" 
+				update="T" orderBy="GENERAL_PERMIT_TYPE_CD, MODEL_GENERAL_PERMIT_CD" description="List 
+				of Model General Permits" importClass="us.oh.state.epa.stars2.def.PTIOModelGeneralPermitDef"> 
+				<field column="MODEL_GENERAL_PERMIT_CD" label="ID" update="F" /> <field column="MODEL_GENERAL_PERMIT_DSC" 
+				label="Description" update="T" /> <field column="GENERAL_PERMIT_TYPE_CD" 
+				label="General Permit Category" update="T" pickListTable="PA_GENERAL_PERMIT_TYPE_DEF" 
+				pickListColumn="GENERAL_PERMIT_TYPE_CD" pickListDisplay="GENERAL_PERMIT_TYPE_DSC" 
+				/> </definition-set> <definition-set table="PA_PER_DUE_DATE_DEF" contentType="custom" 
+				label="PER due dates" columnPrefix="xx" deprecateModel="flag" create="F" 
+				update="T" orderBy="PER_DUE_DATE_CD" description="Set of allowable PER due 
+				dates" importClass="us.oh.state.epa.stars2.def.PTIOPERDueDateDef"> <field 
+				column="PER_DUE_DATE_CD" label="ID" update="F" /> <field column="PER_DUE_DATE_DSC" 
+				label="Description" update="T" /> <field column="REPORTING_START_DT" label="Reporting 
+				period start day in MMDD form" update="T" /> <field column="REPORTING_END_DT" 
+				label="Reporting period end day in MMDD form" update="T" /> <field column="DEPRECATED" 
+				label="Inactive" update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD" 
+				pickListDisplay="DEPRECATED_DSC" /> </definition-set> -->
+
+			<definition-set table="PA_PTIO_APP_PURPOSE_DEF"
+				contentType="CD" label="NSR purpose" columnPrefix="PTIO_APP_PURPOSE"
+				deprecateModel="flag" create="F" update="T" orderBy="PTIO_APP_PURPOSE_CD"
+				description="NSR application purposes" importClass="us.oh.state.epa.stars2.def.PTIOApplicationPurposeDef">
+			</definition-set>
+			<definition-set table="PA_PTIO_APP_FACILITY_TYPE_DEF"
+				contentType="CD" label="NSR Facility Types" columnPrefix="PTIO_APP_FACILITY_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="PTIO_APP_FACILITY_TYPE_CD"
+				description="NSR application facility types" importClass="us.oh.state.epa.stars2.def.PTIOApplicationFacilityTypeDef">
+			</definition-set>
+			<definition-set table="PA_TV_COMPRPT_FREQ_DEF"
+				contentType="CD" label="TV Compliance Rpt Frequency" columnPrefix="TV_COMPRPT_FREQ"
+				deprecateModel="flag" create="T" update="T" orderBy="TV_COMPRPT_FREQ_CD"
+				description="Compliance reporting frequency choices in Title V permit application."
+				importClass="us.oh.state.epa.stars2.def.TVCompRptFreqDef">
+			</definition-set>
+			<definition-set table="PA_TV_IEU_REASON_DEF"
+				contentType="custom" label="TV Insignificant EU Reasons"
+				columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+				orderBy="SORT_ORDER"
+				description="Reasons for an Emissions Unit Title V insignificant status. Used in the Title V permit application."
+				importClass="us.oh.state.epa.stars2.def.TVIeuReasonDef">
+				<field column="TV_IEU_REASON_CD" label="Code" update="T" />
+				<field column="TV_IEU_REASON_DSC" label="Description" update="T" />
+				<field column="SORT_ORDER" label="Sort Order" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="PA_TV_COMPRPT_FREQ_DEF"
+				contentType="CD" label="TV Compliance Rpt Frequency" columnPrefix="TV_COMPRPT_FREQ"
+				deprecateModel="flag" create="T" update="T" orderBy="TV_COMPRPT_FREQ_CD"
+				description="Compliance reporting frequency choices in Title V permit application."
+				importClass="us.oh.state.epa.stars2.def.TVCompRptFreqDef">
+			</definition-set>
+			<definition-set table="PA_TV_REQUIREMENT_BASIS_DEF"
+				contentType="CD" label="TV Requirement Basis" columnPrefix="REQ_BASIS"
+				deprecateModel="flag" create="T" update="T" orderBy="REQ_BASIS_CD"
+				description="Requirement basis choices in Title V permit applications."
+				importClass="us.oh.state.epa.stars2.def.TvReqBasisDef">
+			</definition-set>
+			<definition-set table="PA_TV_RESTRICTION_TYPE_DEF"
+				contentType="CD" label="TV Restriction Types" columnPrefix="REST_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="REST_TYPE_CD"
+				description="Restriction type choices in Title V permit applications."
+				importClass="us.oh.state.epa.stars2.def.TvRestrictionTypeDef">
+			</definition-set>
+			<definition-set table="PA_EMISSION_UNITS_DEF"
+				contentType="CD" label="Unit values for emissions" columnPrefix="EMISSION_UNITS"
+				deprecateModel="flag" create="T" update="T" orderBy="EMISSION_UNITS_CD"
+				description="Unit values for emissions" importClass="us.oh.state.epa.stars2.def.EmissionUnitsDef">
+			</definition-set>
+			<definition-set table="PA_TV_EU_PTE_DETERMINATION_BASIS_DEF"
+				contentType="CD" label="TV Basis for Determination" columnPrefix="PTE_DETERMINATION_BASIS"
+				deprecateModel="flag" create="T" update="T" orderBy="PTE_DETERMINATION_BASIS_CD"
+				description="Basis for Determination choices in Title V permit applications."
+				importClass="us.oh.state.epa.stars2.def.PATvEuPteDeterminationBasisDef">
+			</definition-set>
+			<definition-set table="PA_EU_PTE_DETERMINATION_BASIS_DEF"
+				contentType="CD" label="NSR Basis for Determination" columnPrefix="PTE_DETERMINATION_BASIS"
+				deprecateModel="flag" create="T" update="T" orderBy="PTE_DETERMINATION_BASIS_CD"
+				description="Basis for Determination choices in NSR permit applications."
+				importClass="us.oh.state.epa.stars2.def.PAEuPteDeterminationBasisDef">
+			</definition-set>
+		</category>
+
+		<category label="Common" description="">
+			<definition-set table="CM_CONTACT_TYPE_DEF"
+				contentType="CD" label="Contact types" columnPrefix="CONTACT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="CONTACT_TYPE_CD"
+				description="Types of facility contacts" importClass="us.oh.state.epa.stars2.def.ContactTypeDef">
+			</definition-set>
+			<definition-set table="CM_COUNTY_DEF" contentType="custom"
+				label="County" columnPrefix="xx" deprecateModel="none" create="T"
+				update="T" orderBy="COUNTY_NM ASC"
+				description="County information including District, and County Seat ZIP Code"
+				importClass="us.oh.state.epa.stars2.def.County">
+				<field column="COUNTY_CD" label="County Code" update="F" />
+				<field column="COUNTY_NM" label="County Name" update="T" />
+				<field column="STATE_CD" label="State Code" update="T"
+					pickListTable="CM_STATE_DEF" pickListColumn="STATE_CD"
+					pickListDisplay="STATE_NM" />
+				<field column="DO_LAA_CD" label="District" update="T"
+					pickListTable="CM_DO_LAA_DEF" pickListColumn="DO_LAA_CD"
+					pickListDisplay="DO_LAA_DSC" />
+				<field column="FIPS_COUNTY_CD" label="FIPS County Code"
+					update="T" />
+				<field column="ZIP5" label="County Seat ZIP" update="T" />
+				<field column="COUNTY_SEAT" label="County Seat" update="T" />
+			</definition-set>
+			<definition-set table="CM_COUNTY_COMPLIANCE"
+				contentType="custom" label="County Ozone Attainment Status"
+				columnPrefix="xx" deprecateModel="none" create="T" update="T"
+				importClass="us.oh.state.epa.stars2.def.CountyOzoneAttainmentTypeDef"
+				orderBy="COUNTY_CD, YEAR" description="Ozone compliance status by county and year">
+				<field column="YEAR" label="Year (YYYY format)" update="F" />
+				<field column="COUNTY_CD" label="County" update="F"
+					pickListTable="CM_COUNTY_DEF" pickListColumn="COUNTY_CD"
+					pickListDisplay="COUNTY_NM" />
+				<field column="IN_COMPLIANCE" label="In Compliance (Y/N)?"
+					update="T" />
+			</definition-set>
+			<!-- <definition-set table="CM_COUNTY_NEWSPAPER" -->
+			<!-- contentType="custom" label="County Newspaper" columnPrefix="xx" -->
+			<!-- deprecateModel="none" create="T" update="T" orderBy="COUNTY_CD" -->
+			<!-- description="Newspaper to be notified of pending actions (by county)"> -->
+			<!-- <field column="NEWSPAPER_NM" label="Newspaper Name" update="T" /> -->
+			<!-- <field column="COUNTY_CD" label="County Code" update="F" -->
+			<!-- pickListTable="CM_COUNTY_DEF" pickListColumn="COUNTY_CD" -->
+			<!-- pickListDisplay="COUNTY_NM" /> -->
+			<!-- <field column="FAX_NUMBER" label="Fax number" update="T" /> -->
+			<!-- <field column="PHONE_NUMBER" label="Phone number" update="T" /> -->
+			<!-- <field column="CONTACT_PERSON" label="Contact Person" update="T" 
+				/> -->
+			<!-- <field column="EMAIL_ADDRESS" label="Email Address" update="T" /> -->
+			<!-- </definition-set> -->
+			<definition-set table="CM_NEWSPAPER_DEF" contentType="CD"
+				label="Newspapers" columnPrefix="NEWSPAPER" deprecateModel="flag"
+				create="T" update="T" orderBy="NEWSPAPER_DSC" description="List of Arizona newspapers"
+				importClass="us.wy.state.deq.impact.def.NewspaperDef">
+			</definition-set>
+			<definition-set table="CM_WRAPN_DEF" update="T"
+				create="F" label="Public Notice Standard Wording" description="List of Public Notice Standard Wordings "
+				columnPrefix="xx" deprecateModel="flag" contentType="custom"
+				importClass="us.oh.state.epa.stars2.def.WrapnDef">
+				<field column="WRAPN_CD" label="Code" update="F" />
+				<field column="WRAPN_DSC" label="Description" update="F" />
+				<field column="DEFAULT_PUBLIC_NOTICE_TEXT" label="Default PN text"
+					update="T" />
+				<field column="DEFAULT_PSD_PUBLIC_NOTICE_TEXT" label="Default PSD PN text"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="CM_DO_LAA_DEF" contentType="custom"
+				label="District Office" columnPrefix="xx" deprecateModel="flag"
+				create="F" update="T" orderBy="DO_LAA_CD" description="District Offices"
+				importClass="us.oh.state.epa.stars2.def.DOLAA">
+				<field column="DO_LAA_CD" label="Code" update="F" />
+				<field column="DO_LAA_DSC" label="Description" update="T" />
+				<field column="DO_LAA_SHORT_DSC" label="Acronym" update="T" />
+				<field column="DO_LAA_ID" label="ID" update="T" />
+				<field column="ADDRESS1" label="Address1" update="T" />
+				<field column="ADDRESS2" label="Address2" update="T" />
+				<field column="ADDRESS3" label="Address3" update="T" />
+				<field column="PHONE" label="Phone" update="T" />
+				<field column="DEPRECATED" label="Deprecated" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="DC_TEMPLATE_DOC_TYPE_DEF"
+				contentType="custom" label="Document templates" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="TEMPLATE_DOC_TYPE_DSC"
+				description="MS Word document templates" importClass="us.oh.state.epa.stars2.def.TemplateDocTypeDef">
+				<field column="TEMPLATE_DOC_TYPE_CD" label="Code" update="F" />
+				<field column="TEMPLATE_DOC_TYPE_DSC" label="Description"
+					update="T" />			
+				<field column="DEPRECATED" label="Inactive" update="F"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />				
+				<field column="TEMPLATE_PATH" label="Template Path"
+					update="T"/>						
+			</definition-set>
+			<definition-set table="CM_TITLE_DEF" contentType="CD"
+				label="Contact person titles" columnPrefix="TITLE" deprecateModel="flag"
+				create="T" update="T" orderBy="TITLE_CD"
+				description="List of titles used when defining contact persons"
+				importClass="us.oh.state.epa.stars2.def.ContactTitle">
+			</definition-set>
+			<definition-set table="CM_POLLUTANT_DEF" contentType="custom"
+				label="Pollutants" columnPrefix="xx" deprecateModel="flag" create="T"
+				update="T" orderBy="SORT_CATEGORY, POLLUTANT_DSC"
+				description="Master List of Pollutants - Note: Sort Category should be set to 0 for CAPs and 1 for any other category, also a pollutant cannot be both TV app CAP Pollutants and TV app HAP Pollutants together."
+				importClass="us.oh.state.epa.stars2.def.PollutantDef">
+				<field column="POLLUTANT_CD" label="Code" update="F" />
+				<field column="POLLUTANT_DSC" label="Name" update="T" />
+				<field column="CATEGORY" label="Category" update="T" 
+					pickListTable="CM_POLLUTANT_CATEGORY_DEF" pickListColumn="CATEGORY"
+					pickListDisplay="CATEGORY_DSC"/>
+				<field column="SORT_CATEGORY" label="Sort Category" update="T" />
+				<field column="PTIO_APP_1" label="Not Used" update="T" />
+				<field column="TVPTO_APP_SEC12" label="TV app CAP Pollutants"
+					update="T" />
+				<field column="TVPTO_APP_SEC13" label="TV app HAP Pollutants"
+					update="T" />
+				<field column="TV_POLLUTANT_LIMIT" label="TV app Pollutant Limits Pollutants"
+					update="T" />
+				<field column="NSR_APP_BACT" label="NSR app BACT Pollutants"
+					update="T" />
+				<field column="NSR_APP_LAER" label="NSR app LAER Pollutants"
+					update="T" />
+				<field column="TVPTO_APP_SEC3" label="TV app Applicable Requirements"
+					update="T" />
+				<field column="EMISSIONS_TABLE" label="Facility Detail EU Potential Emissions Table"
+					update="T" />
+				<field column="NSPS" label="NSPS" update="T" />
+				<field column="NON_ATTAIN_NSR" label="Non attain NSR" update="T" />
+				<field column="PSD" label="PSD" update="T" />
+				<field column="NEI_CODE" label="NEI code" update="T" />
+				<field column="HAP_CATEGORY" label="HAP Category" update="T" />
+				<field column="CAS_NO" label="CAS Number" update="T" />
+				<field column="FORMULA" label="Formula" update="T" />
+				<field column="GLOBAL_WARMING_POTENTIAL" label="Global Warming Potential"
+					update="T" />
+				<field column="GHG" label="Greenhouse Gas" update="T" />
+				<field column="AFS_EQUIV_POLLUTANT_CD" label="Map AFS To Stars2 Code"
+					update="T" />
+				<field column="INCLUDE_IN_HC_ANALYSIS" label="Include in HC Analysis" update="T" />
+				<field column="HC_ANALYSIS_SORT_ORDER" label="HC Analysis Sort Order" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="CM_POLLUTANT_CATEGORY_DEF" contentType="custom"
+				label="Pollutant Categories" columnPrefix="xx" deprecateModel="flag"
+				create="T" update="T" orderBy="CATEGORY" description="List of Pollutant Categories"
+				importClass="us.oh.state.epa.stars2.def.PollutantCategoryDef">
+				<field column="CATEGORY" label="Category Code" update="F" />
+				<field column="CATEGORY_DSC" label="Category Description" update="T" />
+			</definition-set>
+			<definition-set table="CM_RULE_CITATION_DEF"
+				contentType="CD" label="Rule Citations" columnPrefix="RULE_CITATION"
+				deprecateModel="flag" create="T" update="T" orderBy="RULE_CITATION_DSC"
+				description="List of Ohio Rules" importClass="us.oh.state.epa.stars2.def.RuleCitationDef">
+			</definition-set>
+			<definition-set table="CM_STATE_DEF" contentType="custom"
+				label="States and Provinces" columnPrefix="xx" deprecateModel="flag"
+				create="T" update="T" orderBy="STATE_CD" description="List of States and Provinces"
+				importClass="us.oh.state.epa.stars2.def.State">
+				<field column="STATE_CD" label="State Code" update="F" />
+				<field column="STATE_NM" label="State Name" update="T" />
+				<field column="COUNTRY_CD" label="Country Code" update="F" />
+				<field column="ADJACENT_TO_WYOMING" label="Adjacent to Wyoming" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />									
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />								
+			</definition-set>
+			<definition-set table="CM_COUNTRY_DEF" contentType="custom"
+				label="Countries" columnPrefix="xx" deprecateModel="flag" create="T"
+				update="T" orderBy="COUNTRY_CD" description="List of Countries"
+				importClass="us.oh.state.epa.stars2.def.Country">
+				<field column="COUNTRY_CD" label="Country Code" update="F" />
+				<field column="COUNTRY_DSC" label="Country Name" update="T" />
+			</definition-set>
+			<definition-set table="DC_UNDELIVERED_REASON_DEF"
+				contentType="CD" label="Undeliverable mail reasons" columnPrefix="UNDELIVERED_REASON"
+				deprecateModel="flag" create="T" update="T" orderBy="UNDELIVERED_REASON_CD"
+				description="Reasons for undeliverable mail" importClass="us.oh.state.epa.stars2.def.RUMReasonDef">
+			</definition-set>
+			<definition-set table="DC_CORRESPONDENCE_CATEGORY_DEF"
+				contentType="CD" label="Undeliverable mail categories" columnPrefix="CORRESPONDENCE_CATEGORY"
+				deprecateModel="flag" create="T" update="T" orderBy="CORRESPONDENCE_CATEGORY_CD"
+				description="Categories of undeliverable mail" importClass="us.oh.state.epa.stars2.def.RUMCategoryDef">
+			</definition-set>
+			<definition-set table="CM_CITY_DEF" contentType="custom"
+				label="City" columnPrefix="City" deprecateModel="flag" create="T"
+				update="T" orderBy="CITY_NM"
+				description="City, town, village, township information including County"
+				importClass="us.oh.state.epa.stars2.def.CityDef">
+				<field column="CITY_CD" label="City Code" update="F" />
+				<field column="CITY_NM" label="City Name" update="T" />
+				<field column="COUNTY_CD" label="County" update="T"
+					pickListTable="CM_COUNTY_DEF" pickListColumn="COUNTY_CD"
+					pickListDisplay="COUNTY_NM" orderBy="COUNTY_NM"/>
+			</definition-set>
+			<definition-set table="CM_TRANSACTION_TYPE_DEF"
+				contentType="CD" label="Transaction Types" columnPrefix="TRANSACTION _TYPE"
+				deprecateModel="flag" create="F" update="T" orderBy="TRANSACTION_TYPE_CODE"
+				description="Transaction Types" importClass="us.oh.state.epa.stars2.def.TransactionTypeDef">
+				<field column="TRANSACTION_TYPE_CODE" label="Code" update="F" />
+				<field column="TRANSACTION_TYPE_DESCRIPTION" label="Transaction Type" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="CM_WIND_DIRECTION_DEF" contentType="CD"
+				label="Wind Direction" columnPrefix="WIND_DIRECTION" deprecateModel="flag"
+				create="T" update="T" orderBy="WIND_DIRECTION_CD"
+				description="List of Wind Directions for Inspection"
+				importClass="us.wy.state.deq.impact.def.WindDirectionDef">
+			</definition-set>
+			<definition-set table="CM_SKY_CONDITIONS_DEF" contentType="CD"
+				label="Sky Conditions" columnPrefix="SKY_CONDITIONS" deprecateModel="flag"
+				create="T" update="T" orderBy="SKY_CONDITIONS_CD"
+				description="List of Sky Conditions for Inspection"
+				importClass="us.wy.state.deq.impact.def.SkyConditionsDef">
+			</definition-set>
+			<definition-set table="CM_MAP_PROPERTY_CONFIG_DEF" contentType="custom"
+				label="Map Options" columnPrefix="xx" deprecateModel="flag"
+				create="T" update="T" orderBy="ID" description="List of Map Options Configuration for Spatial Data page"
+				importClass="us.wy.state.deq.impact.def.MapOptionsConfigDef">
+				<field column="ID" label="ID" update="F" />
+				<field column="DSC" label="Description" update="T" />
+				<field column="CENTER_LAT" label="Center Latitude" update="T" />
+				<field column="CENTER_LNG" label="Center Longtitude" update="T" />
+				<field column="ZOOM_LEVEL" label="Zoom Level" update="T" />			
+			</definition-set>
+			
+			<definition-set table="CM_FILE_EXTENSION_DEF" contentType="custom"
+				label="Valid File Extensions" columnPrefix="xx" deprecateModel="flag"
+				create="T" update="T" orderBy="EXTENSION" description="List of Valid File Extensions for Uploaded Attachment"
+				importClass="us.wy.state.deq.impact.def.FileExtensionDef">	
+				<field column="ID" label="ID" update="T" />
+				<field column="EXTENSION" label="File Extension" update="T" />
+				<field column="DEPRECATED" label="DEPRECATED" update="T" />
+			</definition-set>		
+		</category>
+
+		<category label="System" description="System Properties">
+			<definition-set table="CM_SYS_PROP_DEF"
+				contentType="custom" label="System Properties" columnPrefix="xx"
+				deprecateModel="flag" create="F" update="T" orderBy="SYS_PROP_CD"
+				description="System Property Types:&lt;br&gt;
+				&#160;&#160;(String) - Value may be up to 6000 characters in length.&lt;br&gt;
+				&#160;&#160;(Boolean) - Value may be one of 'Y', 'YES', 'T', 'TRUE', 'N', 'NO', 'F', or 'FALSE.' Values are not case sensitive.&lt;br&gt;
+				&#160;&#160;(Date) - Value must be formatted as MM/DD/YYYY.&lt;br&gt;
+				&#160;&#160;(Float) - Value must be numeric and include a decimal point and at least one numeral to the right of the decimal point, for example 123.0.&lt;br&gt;
+				&#160;&#160;(Integer) - Value must be numeric and cannot include a decimal point.&lt;br&gt;
+				&#160;&#160;Properties marked (Type - Internal Use Only) should not be changed."
+				importClass="us.oh.state.epa.stars2.def.SystemPropertyDef">
+				<field column="SYS_PROP_CD" label="Code" update="F" />
+				<field column="SYS_PROP_VAL" label="Value" update="T" />
+				<field column="SYS_PROP_DESC" label="Description" update="T" />	
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />			
+			</definition-set>
+			<definition-set table="CM_EXT_LINK_SECTION_DEF"
+				contentType="custom" label="Reference Sections" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="EXT_LINK_SECTION_CD"
+				description="Sections for the External References Screen"  
+				importClass="us.oh.state.epa.stars2.def.ExternalLinksSectionTypDef">
+				<field column="EXT_LINK_SECTION_CD" label="Code" update="F" />
+				<filed column="EXT_LINK_SECTION_DESC" label="Description" update="T" />
+				<!-- <field column="FUNCTION_LONG_DESC" label="Long Description" update="T" />
+				<field column="FUNCTION_REQUIRES_SECTION_VALUE" label="Requires Section Value" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" /> -->
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="CM_EXT_LINK_DEF"
+				contentType="custom" label="External Links" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="EXT_LINK_CD"
+				description="Links for External References"
+				importClass="us.oh.state.epa.stars2.def.ExternalLinksDef">
+				<field column="EXT_LINK_CD" label="Code" update="F" />
+				<filed column="EXT_LINK_URL" label="Description" update="T" />
+				<field column="EXT_LINK_SECTION_CD" label="Section" update="T"
+					pickListTable="CM_EXT_LINK_SECTION_DEF" pickListColumn="EXT_LINK_SECTION_CD"
+					pickListDisplay="EXT_LINK_SECTION_DESC" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+		</category>
+		<category label="Companies" description="">
+		</category>
+		<category label="Compliance" description="">
+			<category label="Compliance Report" description="">
+				<definition-set table="CR_REPORT_TYPE_DEF"
+					contentType="CD" label="Compliance Report Types" columnPrefix="REPORT_TYPE"
+					deprecateModel="flag" create="T" update="T" orderBy="REPORT_TYPE_CD"
+					description="Compliance Report Types" importClass="us.oh.state.epa.stars2.def.ComplianceReportTypeDef">
+				</definition-set>
+				<definition-set table="CR_COMPLIANCE_STATUS_DEF"
+					contentType="CD" label="Compliance Status" columnPrefix="COMPLIANCE_STATUS"
+					deprecateModel="flag" create="T" update="T" orderBy="COMPLIANCE_STATUS_CD"
+					description="Compliance Status" importClass="us.oh.state.epa.stars2.def.ReportComplianceStatusDef">
+				</definition-set>
+				<!-- 
+				<category label="PER" description="">
+					<definition-set table="CR_PER_ATTACHMENT_TYPE_DEF"
+						contentType="CD" label="Attachment types" columnPrefix="PER_ATTACHMENT_TYPE"
+						deprecateModel="flag" create="T" update="T" orderBy="PER_ATTACHMENT_TYPE_CD"
+						description="PER File Attachment Types"
+						importClass="us.oh.state.epa.stars2.def.ComplianceAttachmentPerTypeDef">
+					</definition-set>
+				</category>
+				-->
+				<definition-set table="CR_OTHER_TYPE_DEF"
+					contentType="custom" label="Compliance Report Categories" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="LEN(OTHER_TYPE_CD), OTHER_TYPE_CD"
+					description="Compliance Report Categories" importClass="us.oh.state.epa.stars2.def.ComplianceReportCategoriesTypeDef">
+					<field column="OTHER_TYPE_CD" label="Code"
+						update="F" />
+					<field column="OTHER_TYPE_DSC" label="Description" update="T" />
+					<field column="REPORT_TYPE_CD" label="Belongs To Report"
+						update="T" pickListTable="CR_REPORT_TYPE_DEF" pickListColumn="REPORT_TYPE_CD"
+						pickListDisplay="REPORT_TYPE_DSC" />
+					<field column="TV_ATTESTATION_REQ" label="Attestation Required"
+						update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="EXPLANATION" label="Explanation"
+						update="T"/>	
+					<field column="BULK_ENABLED" label="Enable Bulk Submission" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CR_OTHER_ATTACHMENT_TYPE_DEF"
+					contentType="custom" label="Compliance Report Attachment Types" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="LEN(OTHER_ATTACHMENT_TYPE_CD), OTHER_ATTACHMENT_TYPE_CD"
+					description="Compliance Report Attachment Types."
+					importClass="us.oh.state.epa.stars2.def.ComplianceReportAllSubAttachmentTypesDef">
+					<field column="OTHER_ATTACHMENT_TYPE_CD" label="Attachment Type Code"
+						update="F" />
+					<field column="OTHER_ATTACHMENT_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="REPORT_TYPE_CD" label="Belongs To Report"
+						update="T" pickListTable="CR_REPORT_TYPE_DEF" pickListColumn="REPORT_TYPE_CD"
+						pickListDisplay="REPORT_TYPE_DSC" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="TRADE_SECRET_ALLOWED" label="Trade Secret Allowed"
+						update="T" pickListTable="CM_TRADE_SECRET_DEF" pickListColumn="TRADE_SECRET_CD"
+						pickListDisplay="TRADE_SECRET_DSC" />							
+				</definition-set>
+				<!-- 
+				<category label="Title V Compliance Certification"
+					description="">
+					<definition-set table="CR_TVCC_ATTACHMENT_TYPE_DEF"
+						contentType="CD" label="Attachment types" columnPrefix="TVCC_ATTACHMENT_TYPE"
+						deprecateModel="flag" create="T" update="T" orderBy="TVCC_ATTACHMENT_TYPE_CD"
+						description="TVCC File Attachment Types"
+						importClass="us.oh.state.epa.stars2.def.ComplianceAttachmentTvccTypeDef">
+					</definition-set>
+					<definition-set table="CR_TVCC_COMPLIANCE_STATUS_DEF"
+						contentType="CD" label="TVCC Compliance Status" columnPrefix="COMPLIANCE_STATUS"
+						deprecateModel="flag" create="F" update="T" orderBy="COMPLIANCE_STATUS_CD"
+						description="TVCC Compliance Status values" importClass="us.oh.state.epa.stars2.def.TVCCComplianceStatusDef">
+					</definition-set>
+				</category>
+				-->
+				<definition-set table="CR_MONITOR_AND_LIMIT_AUDIT_STATUS_DEF"
+					contentType="CD" label="Compliance Report Monitor Audit Result and Limit RATA Result" columnPrefix="STATUS"
+					deprecateModel="flag" create="T" update="T" orderBy="STATUS_CD"
+					description="Compliance Report Monitor Audit Result and Limit RATA Result"
+					importClass="us.oh.state.epa.stars2.def.ComplianceReportMonitorAndLimitAuditStatusDef" >
+				</definition-set>
+			</category>
+			<category label="Enforcement Action" description="">
+				<definition-set table="CE_ENF_ATTACHMENT_TYPE_DEF"
+					contentType="custom" label="Enforcement Action Attachment Types"
+					columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+					orderBy="ENF_ATTACHMENT_TYPE_CD" description="Enforcement Action Attachment Types"
+					importClass="us.oh.state.epa.stars2.def.EnforcementAttachmentTypeDef">
+					<field column="ENF_ATTACHMENT_TYPE_CD" label="Attachment Type Code"
+						update="T" />
+					<field column="ENF_ATTACHMENT_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CE_ENFORCEMENT_ACTION_FRV_TYPE_DEF"
+					contentType="CD" deprecateModel="flag" label="Enforcement Action FRV Types" columnPrefix="ENFORCEMENT_ACTION_FRV_TYPE"
+					create="T" update="T" orderBy="ENFORCEMENT_ACTION_FRV_TYPE_CD" description="Enforcement Action FRV Types"
+					importClass="us.oh.state.epa.stars2.def.EnforcementActionFRVTypeDef">
+				</definition-set>
+				<definition-set table="CE_ENFORCEMENT_ACTION_HPV_CRITERION_DEF"
+					contentType="CD" deprecateModel="flag" label="Enforcement Action HPV Criterion" columnPrefix="ENFORCEMENT_ACTION_HPV_CRITERION"
+					create="T" update="T" orderBy="ENFORCEMENT_ACTION_HPV_CRITERION_CD" description="Enforcement Action HPV Criterion"
+					importClass="us.oh.state.epa.stars2.def.EnforcementActionHPVCriterionDef">
+				</definition-set>
+				<definition-set table="CE_ENFORCEMENT_ACTION_REFERRAL_TYPE_DEF"
+					contentType="CD" deprecateModel="flag" label="Enforcement Action Referral Types" columnPrefix="ENFORCEMENT_ACTION_REFERRAL_TYPE"
+					create="T" update="T" orderBy="ENFORCEMENT_ACTION_REFERRAL_TYPE_CD" description="Enforcement Action Referral Types"
+					importClass="us.oh.state.epa.stars2.def.EnforcementActionReferralTypeDef">
+				</definition-set>
+				<definition-set table="CE_ENFORCEMENT_ACTION_EVENT_DEF"
+					contentType="custom" label="Enforcement Action Tracking Events" columnPrefix="ENFORCEMENT_ACTION_EVENT"
+					deprecateModel="flag" create="T" update="T" orderBy="ENFORCEMENT_ACTION_EVENT_CD"
+					description="Enforcement Action Tracking Events - Note: IMPACT relies on the existence of the following codes to support the date columns in the Enforcement Action List search results datagrid: 003 (NOV issued), 004 (Day Zero), 027 (Referred to AG), 020 (Final Settlement Agreement/Consent Decree signed), 023 (Check Received), 025 (NOV Closed). These events should not be set to inactive and the associated description should not be substantially changed without consulting with IMPACT developers."
+					importClass="us.oh.state.epa.stars2.def.EnforcementActionEventDef">
+					<field column="ENFORCEMENT_ACTION_EVENT_CD" label="Code"
+						update="F" />
+					<field column="ENFORCEMENT_ACTION_EVENT_DSC" label="Description" update="T" />
+					<field column="ALLOW_MULTIPLE" label="Allow Multiple"
+						update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CE_ENFORCEMENT_ACTION_EVENT_DEP_DEF"
+					contentType="custom" label="Enforcement Action Tracking Event Dependencies " columnPrefix="ENFORCEMENT_ACTION_EVENT_DEP"
+					deprecateModel="flag" create="T" update="T" orderBy="ENFORCEMENT_ACTION_EVENT_DEP_CD"
+					description="Enforcement Action Tracking Events - Note: Care should be taken when selecting the Event and Predecessor Event. The system does not prevent the following: 1) an inactive Event Type can be selected for both the Event and Predecessor Event; 2) the same Event Type can be selected for Event and Predecessor Event; 3) circular dependencies could inadvertently be created." importClass="us.oh.state.epa.stars2.def.EnforcementActionEventDependencyDef">
+					<field column="ENFORCEMENT_ACTION_EVENT_DEP_CD" label="Code"
+						update="F" />
+					<field column="ENFORCEMENT_ACTION_EVENT_CD" label="Event" 
+						update="T" pickListTable="CE_ENFORCEMENT_ACTION_EVENT_DEF" pickListColumn="ENFORCEMENT_ACTION_EVENT_CD"
+						pickListDisplay="ENFORCEMENT_ACTION_EVENT_DSC"/>
+					<field column="ENFORCEMENT_ACTION_EVENT_PRED_CD" label="Predecessor Event"
+						update="T" pickListTable="CE_ENFORCEMENT_ACTION_EVENT_DEF" pickListColumn="ENFORCEMENT_ACTION_EVENT_CD"
+						pickListDisplay="ENFORCEMENT_ACTION_EVENT_DSC" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CE_ENFORCEMENT_ACTION_TYPE_DEF"
+					contentType="custom" label="Enforcement Action Types" columnPrefix="ENFORCEMENT_ACTION_TYPE"
+					deprecateModel="flag" create="T" update="T" orderBy="ENFORCEMENT_ACTION_TYPE_CD"
+					description="Enforcement Action Types" importClass="us.oh.state.epa.stars2.def.EnforcementActionTypeDef">
+					<field column="ENFORCEMENT_ACTION_TYPE_CD" label="Code"
+						update="F" />
+					<field column="ENFORCEMENT_ACTION_TYPE_DSC" label="Description" update="T" />
+					<field column="HPV_CRITERION_REQ" label="Requires HPV Criterion"
+						update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="FRV_TYPE_REQ" label="Requires FRV Type"
+						update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			</category>
+			<category label="Site Visit" description="">
+				<definition-set table="CE_SITE_VISIT_TYPE_DEF"
+					contentType="custom" label="Site Visit Types" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="SITE_VISIT_TYPE_CD"
+					description="Site Visit Types" importClass="us.oh.state.epa.stars2.def.SiteVisitTypeDef">
+					<field column="SITE_VISIT_TYPE_CD" label="Attachment Type Code"
+						update="T" />
+					<field column="SITE_VISIT_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CE_SV_ATTACHMENT_TYPE_DEF"
+					contentType="custom" label="Site Visit Attachment Types"
+					columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+					orderBy="SV_ATTACHMENT_TYPE_CD" description="Site Visit Attachment Types"
+					importClass="us.oh.state.epa.stars2.def.SiteVisitAttachmentTypeDef">
+					<field column="SV_ATTACHMENT_TYPE_CD" label="Attachment Type Code"
+						update="T" />
+					<field column="SV_ATTACHMENT_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CE_SITE_VISIT_VE_DEF"
+					contentType="custom" label="Site Visit Visual Emissions Information"
+					columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+					orderBy="SITE_VISIT_VE_CD" description="Visual Emissions Information"
+					importClass="us.oh.state.epa.stars2.def.SiteVisitVisibleEmissionsDef">
+					<field column="SITE_VISIT_VE_CD" label="Visual Emissions Code"
+						update="T" />
+					<field column="SITE_VISIT_VE_DSC" label="Visual Emissions Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			</category>
+			<category label="Inspection" description="">
+				<definition-set table="CE_FCE_ATTACHMENT_TYPE_DEF"
+					contentType="custom" label="Inspection Attachment Types" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="FCE_ATTACHMENT_TYPE_CD"
+					description="FCE Attachment Types" importClass="us.oh.state.epa.stars2.def.FceAttachmentTypeDef">
+					<field column="FCE_ATTACHMENT_TYPE_CD" label="Attachment Type Code"
+						update="T" />
+					<field column="FCE_ATTACHMENT_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="DOCUMENT_ID" label="Document Template Code" update="T"
+						pickListTable="DC_TEMPLATE_DOC_TYPE_DEF" pickListColumn="TEMPLATE_DOC_TYPE_CD" orderBy="LEN(TEMPLATE_DOC_TYPE_CD),TEMPLATE_DOC_TYPE_CD"
+						pickListDisplay="TEMPLATE_DOC_TYPE_CD+'-'+TEMPLATE_DOC_TYPE_DSC" />
+				</definition-set>
+				<definition-set table="CE_FCE_INSPECTION_TYPE_DEF"
+					contentType="custom" label="Inspection Types" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="FCE_INSPECTION_TYPE_CD"
+					description="Inspection Types" importClass="us.oh.state.epa.stars2.def.FceInspectionTypeDef">
+					<field column="FCE_INSPECTION_TYPE_CD" label="Inspection Type Code"
+						update="T" />
+					<field column="FCE_INSPECTION_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CE_FCE_INSPECTION_REPORT_STATE_DEF" contentType="CD"
+					label="Inspection Report States" columnPrefix="INSPECTION_REPORT_STATE" deprecateModel="flag"
+					create="T" update="T" orderBy="INSPECTION_REPORT_STATE_CD"
+					description="List of Inspection Report States"
+					importClass="us.wy.state.deq.impact.def.FCEInspectionReportStateDef">
+				</definition-set>
+				<definition-set table="CM_IMAGE_TYPES_DEF" contentType="custom"
+					label="Image Types" columnPrefix="IMAGE_TYPES" deprecateModel="flag"
+					create="T" update="T" orderBy="IMAGE_TYPES_CD"
+					description="List of Image Types for Inspection"
+					importClass="us.wy.state.deq.impact.def.ImageTypesDef">
+					<field column="IMAGE_TYPES_CD" label="Code" update="T" />
+					<field column="FILE_EXTENSION" label="File Extension" update="T" 
+						pickListTable="CM_IMAGE_TYPES_DEF" pickListColumn="FILE_EXTENSION" 
+						pickListDisplay="FILE_EXTENSION" />
+					<field column="DEPRECATED" label="Inactive" update="T" 
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="PT_PERMIT_CONDITION_COMPLIANCE_STATUS_DEF" contentType="CD"
+					label="Permit Condition Compliance Status" columnPrefix="PERMIT_CONDITION_COMPLIANCE_STATUS"
+					deprecateModel="flag" create="T" update="T" orderBy="PERMIT_CONDITION_COMPLIANCE_STATUS_CD"
+					description="List of Permit Condition Compliance Status for Inspection"
+					importClass="us.wy.state.deq.impact.def.PermitConditionComplianceStatusDef">
+				</definition-set>
+				<definition-set table="CE_FCE_OVERALL_INSPECTION_COMPLIANCE_STATUS_DEF"
+					contentType="custom" label="Overall Inspection Compliance Status"
+					columnPrefix="INSPECTION_COMPLIANCE_STATUS" deprecateModel="flag" create="T" update="T"
+					orderBy="INSPECTION_COMPLIANCE_STATUS_CD"
+					description="List of Overall Compliance Status for Inspection"
+					importClass="us.wy.state.deq.impact.def.OverallInspectionComplianceStatusDef">
+					<field column="INSPECTION_COMPLIANCE_STATUS_CD" label="Code" update="T" />
+					<field column="INSPECTION_COMPLIANCE_STATUS_DSC" label="Description" update="T" />
+					<field column="INSPECTION_COMPLIANCE_STATUS_LONG_DSC" label="Long Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			</category>
+			<category label="Stack Test" description="">
+				<definition-set table="CE_ST_ATTACHMENT_TYPE_DEF"
+					contentType="custom" label="Stack Test Attachment Types"
+					columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+					orderBy="ST_ATTACHMENT_TYPE_CD" description="Stack Test Attachment Types"
+					importClass="us.oh.state.epa.stars2.def.StAttachmentTypeDef">
+					<field column="ST_ATTACHMENT_TYPE_CD" label="Attachment Type Code"
+						update="T" />
+					<field column="ST_ATTACHMENT_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="TRADE_SECRET_ALLOWED" label="Trade Secret Allowed"
+						update="T" pickListTable="CM_TRADE_SECRET_DEF" pickListColumn="TRADE_SECRET_CD"
+						pickListDisplay="TRADE_SECRET_DSC" />							
+				</definition-set>
+				<definition-set table="CE_STACK_TEST_METHOD_DEF"
+					contentType="custom" label="Stack Test Methods" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" 
+					 orderBy="SORT_ORDER"   
+					 description="Stack Test Methods" importClass="us.oh.state.epa.stars2.def.CetaStackTestMethodDef">
+					<!-- orderBy="Case When IsNumeric(LEFT([STACK_TEST_METHOD_CD],1)) = 1 
+                                    Then CASE When IsNumeric([STACK_TEST_METHOD_CD]) = 1 
+                                          Then Right(Replicate('0',20) + STACK_TEST_METHOD_CD + '0', 20) 
+                                          Else Right(Replicate('0',20) + STACK_TEST_METHOD_CD, 20) 
+                                  END 
+                                  When IsNumeric(LEFT(STACK_TEST_METHOD_CD,1)) = 0 
+                                     Then Left(STACK_TEST_METHOD_CD + Replicate('',21), 20) 
+                                  End"  -->                        
+					
+					<field column="STACK_TEST_METHOD_CD" label="Test Method Code"
+						update="T" />
+					<field column="STACK_TEST_METHOD_DSC" label="Description"
+						update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+					<field column="SORT_ORDER" label="Sort order" update="T"/>
+				</definition-set>
+				<definition-set table="CE_STACK_TEST_METHOD_POLL_XREF"
+					contentType="custom" label="Stack Test Pollutants"
+					columnPrefix="xx" deprecateModel="flag" create="T" update="F"
+					orderBy="STACK_TEST_METHOD_CD"
+					importClass="us.oh.state.epa.stars2.def.CetaStackTestMethodXrefTypeDef"
+					description="This table defines what pollutants can be tested with a particular stack test method. You can add an additional row specifying test method and pollutant or you can inactivate a existing pollutant for a particular test method.">
+					<field column="STACK_TEST_METHOD_CD" label="Stack Test Method"
+						update="F" pickListTable="CE_STACK_TEST_METHOD_DEF"
+						pickListColumn="STACK_TEST_METHOD_CD" pickListDisplay="STACK_TEST_METHOD_DSC" />
+					<field column="POLLUTANT_CD" label="Pollutant" update="F"
+						pickListTable="CM_POLLUTANT_DEF" pickListColumn="POLLUTANT_CD"
+						pickListDisplay="POLLUTANT_DSC" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CE_STACK_TEST_AUDITS_DEF"
+					contentType="CD" label="Stack Test Audits" columnPrefix="STACKTEST_AUDITS"
+					deprecateModel="flag" create="T" update="T" orderBy="STACKTEST_AUDITS_CD"
+					description="Audits available for stack testing." importClass="us.oh.state.epa.stars2.def.CetaStackTestAuditsDef">
+				</definition-set>
+				<definition-set table="CE_STACK_TEST_RESULT_DEF"
+					contentType="CD" label="Stack Test Results" columnPrefix="STACK_TEST_RESULT"
+					deprecateModel="flag" create="T" update="T" orderBy="STACK_TEST_RESULT_CD"
+					description="Available results for stack tests." importClass="us.oh.state.epa.stars2.def.CetaStackTestResultsDef">
+				</definition-set>
+				<definition-set table="CE_STACK_TEST_CATEGORY_DEF"
+					contentType="CD" label="Stack Test Categories" columnPrefix="STACKTEST_CATEGORY"
+					deprecateModel="flag" create="T" update="T" orderBy="STACKTEST_CATEGORY_CD"
+					description="Categories available for stack testing." importClass="us.oh.state.epa.stars2.def.CetaStackTestCategoryDef">
+				</definition-set>
+				<definition-set table="CE_STACK_TEST_TESTING_METHOD_DEF"
+					contentType="CD" label="Stack Test Testing Methods" columnPrefix="STACKTEST_METHOD"
+					deprecateModel="flag" create="T" update="T" orderBy="STACKTEST_METHOD_CD"
+					description="Testing Methods available for stack testing." importClass="us.oh.state.epa.stars2.def.CetaStackTestTestingMethodDef">
+				</definition-set>
+			</category>
+		</category>
+
+		<category label="Correspondence" description="">
+			<definition-set table="DC_CORRESPONDENCE_TYPE_DEF"
+				contentType="custom" label="Types" columnPrefix="xx" deprecateModel="flag"
+				create="T" update="T" description="List of possible types of correspondence."
+				orderBy="CORRESPONDENCE_TYPE_CD" importClass="us.oh.state.epa.stars2.def.CorrespondenceDef">
+				<field column="CORRESPONDENCE_TYPE_CD" label="Code" update="F" />
+				<field column="CORRESPONDENCE_TYPE_DSC" label="Description"
+					update="T" />
+				<field column="SAVED_DOC_REQD" label="Copy saved?" update="T" />
+				<field column="TEMPLATE_DOC_TYPE_CD" label="Document Template Code" update="T"
+					pickListTable="DC_TEMPLATE_DOC_TYPE_DEF" pickListColumn="TEMPLATE_DOC_TYPE_CD" orderBy="LEN(TEMPLATE_DOC_TYPE_CD),TEMPLATE_DOC_TYPE_CD"
+					pickListDisplay="TEMPLATE_DOC_TYPE_CD+'-'+TEMPLATE_DOC_TYPE_DSC" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="DC_CORRESPONDENCE_FORM_CATEGORY_DEF"
+				contentType="CD" label="Correspondence Categories" columnPrefix="CORRESPONDENCE_CATEGORY"
+				deprecateModel="flag" create="T" update="T" orderBy="CORRESPONDENCE_CATEGORY_CD"
+				description="Categories available for Correspondence." importClass="us.oh.state.epa.stars2.def.CorrespondenceCategoryDef">
+			</definition-set>
+			<definition-set table="DC_CORRESPONDENCE_DIRECTION_DEF"
+				contentType="CD" label="Correspondence Direction" columnPrefix="CORRESPONDENCE_DIRECTION"
+				deprecateModel="flag" create="T" update="T" orderBy="CORRESPONDENCE_DIRECTION_CD"
+				description="Directions available for Correspondence." importClass="us.oh.state.epa.stars2.def.CorrespondenceDirectionDef">
+			</definition-set>
+			<definition-set table="DC_CORRESPONDENCE_ATTACHMENT_TYPE_DEF"
+				contentType="CD" label="Correspondence Attachment Types" columnPrefix="CORRESPONDENCE_ATTACHMENT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="CORRESPONDENCE_ATTACHMENT_TYPE_CD"
+				description="Correspondence Attachment Types" importClass="us.oh.state.epa.stars2.def.CorrespondenceAttachmentTypeDef">
+			</definition-set>
+		</category>
+		
+		<category label="Event Log" description="">
+			<definition-set table="FP_EVENT_TYPE_DEF" contentType="CD"
+				label="Event Types" columnPrefix="EVENT_TYPE" deprecateModel="flag"
+				create="T" update="T" orderBy="EVENT_TYPE_CD"
+				importClass="us.oh.state.epa.stars2.def.EventTypeDef"
+				description="Types of events that may appear in the event log">
+			</definition-set>
+		</category>
+
+		<category label="Facilities" description="">
+			<definition-set table="CM_VALIDATION_CONTROL"
+				contentType="custom" label="Validation Control" columnPrefix="xx"
+				deprecateModel="none" create="F" update="T" orderBy="VALIDATION_TAG"
+				description="This table controls what is validated depending upon the object using the inventory"
+				importClass="us.oh.state.epa.stars2.def.ValidationControl">
+				<field column="VALIDATION_TAG" label="Category" update="F" />
+				<field column="VALIDATION_DSC" label="Description" update="T" />
+				<field column="REQ_ADMIN_PERMIT_MOD" label="RAPM" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="TV_PTO_PERMIT_APP" label="TV Permit Application"
+					update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="TV_PTI_PTIO_PERMIT_APP" label="NSR Permit Application"
+					update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="TIV_ACID_RAIN" label="TIV Acid Rain" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="DEMEGPNT_MODELING" label="DEM Modeling" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="PSD_SCREEN_MODELING" label="PSD Modeling"
+					update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="SMTV_TV_ER" label="EI" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="ER_THREASHOLD_EXCEEDED" label="Exceed EI Threshold"
+					update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="STACK_TEST" label="Stack Test"
+					update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="CEMS_COMS_RATA_REPORT" label="CEMS/COMS/RATA Report"
+					update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+				<field column="FACILITY_CHECK" label="Facility"
+					update="T" pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />  <!-- picklist used to get Yes/No -->
+			</definition-set>
+			
+			<definition-set table="CM_GEO_POLYGON_DEF"
+				contentType="custom" label="Geo Polygons" columnPrefix="polygon"
+				deprecateModel="flag" create="T" update="T"
+				description="Geographic 4-sided polygons (quadrilaterals)" importClass="us.oh.state.epa.stars2.def.GeoPolygonDef">
+				<field column="GEO_POLYGON_CD" label="Code" update="T" />
+				<field column="LABEL" label="Label"	update="T" />
+				<field column="DESCRIPTION" label="Description"	update="T" />
+				<field column="LAT_NW_DEG" label="NW Latitude"	update="T" />
+				<field column="LON_NW_DEG" label="NW Longitude"	update="T" />
+				<field column="LAT_NE_DEG" label="NE Latitude"	update="T" />
+				<field column="LON_NE_DEG" label="NE Longitude"	update="T" />
+				<field column="LAT_SE_DEG" label="SE Latitude"	update="T" />
+				<field column="LON_SE_DEG" label="SE Longitude"	update="T" />
+				<field column="LAT_SW_DEG" label="SW Latitude"	update="T" />
+				<field column="LON_SW_DEG" label="SW Longitude"	update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			
+			
+			
+			<category label="Release points" description="">
+				<definition-set table="FP_EGRESS_POINT_TYPE_DEF"
+					contentType="custom" label="EP type" columnPrefix="EGRESS_POINT_TYPE"
+					deprecateModel="flag" create="F" update="T" orderBy="EGRESS_POINT_TYPE_CD"
+					description="Allowable values for release point type" importClass="us.oh.state.epa.stars2.def.EgrPointTypeDef">
+					<field column="EGRESS_POINT_TYPE_CD" label="Code" update="T" />
+					<field column="EGRESS_POINT_TYPE_DSC" label="Description"
+						update="T" />
+					<field column="EPA_EGRESS_POINT_TYPE_CD" label="EPA Release Point Type Code"
+						update="T" />		
+					<field column="DEPRECATED" label="Deprecated" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="FP_EGRESS_POINT_SHAPE_DEF"
+					contentType="CD" label="EP shape" columnPrefix="EGRESS_POINT_SHAPE"
+					deprecateModel="flag" create="T" update="T" orderBy="EGRESS_POINT_SHAPE_CD"
+					description="Allowable values for release point shape" importClass="us.oh.state.epa.stars2.def.EgrPointShapeDef">
+				</definition-set>
+				<definition-set table="FP_HORT_COLLECTION_METHOD"
+					contentType="CD" label="Horiz. coll. method" columnPrefix="HORT_COLLECTION_METHOD"
+					deprecateModel="flag" create="F" update="T" orderBy="HORT_COLLECTION_METHOD_CD"
+					description="Allowable values for release point horizontal collection method (EIS section)"
+					importClass="us.oh.state.epa.stars2.def.HortCollectionMethods">
+				</definition-set>
+				<definition-set table="FP_HORT_REFERENCE_DATUM"
+					contentType="CD" label="Horiz. reference datum" columnPrefix="HORT_REFERENCE_DATUM"
+					deprecateModel="flag" create="F" update="T" orderBy="HORT_REFERENCE_DATUM_CD"
+					description="Allowable values for release point horizontal reference datum (EIS section)"
+					importClass="us.oh.state.epa.stars2.def.HortReferenceDatum">
+				</definition-set>
+				<definition-set table="FP_REFERENCE_POINT"
+					contentType="CD" label="Reference Point Code" columnPrefix="REFERENCE_POINT"
+					deprecateModel="flag" create="F" update="T" orderBy="REFERENCE_POINT_CD"
+					description="Allowable values for release point reference point code (EIS section)"
+					importClass="us.oh.state.epa.stars2.def.ReferencePoints">
+				</definition-set>
+				<definition-set table="FP_HORT_ACCURACY_MEAS"
+					contentType="CD" label="Horiz. accuracy Meas" columnPrefix="HORT_ACCURACY_MEAS"
+					deprecateModel="flag" create="F" update="T" orderBy="HORT_ACCURACY_MEAS_CD"
+					description="Allowable values for release point horizontal accuracy measure (EIS section)"
+					importClass="us.oh.state.epa.stars2.def.HortAccuracyMeasure">
+				</definition-set>
+			</category>
+
+			<category label="Emission Units" description="">
+				<definition-set table="FP_EXEMPT_STATUS" contentType="CD"
+					label="EU Exemption status" columnPrefix="EXEMPT_STATUS"
+					deprecateModel="flag" create="F" update="T" orderBy="EXEMPT_STATUS_CD"
+					description="The possible values for an EU's exemption status"
+					importClass="us.oh.state.epa.stars2.def.ExemptStatusDef">
+				</definition-set>
+				<definition-set table="CM_TV_CLASSIFICATION_DEF"
+					contentType="CD" label="EU Title V Classification" columnPrefix="TV_CLASSIFICATION"
+					deprecateModel="flag" create="F" update="T" orderBy="TV_CLASSIFICATION_CD"
+					description="The classification of pollution sources (i.e., Emissions Units) according to how they are identified with respect to Title V reporting requirements."
+					importClass="us.oh.state.epa.stars2.def.TVClassification">
+				</definition-set>
+				<definition-set table="CM_PTIO_REGULATORY_STATUS"
+					contentType="CD" label="EU Permit status" columnPrefix="PTIO_REGULATORY_STATUS"
+					deprecateModel="flag" create="F" update="T" orderBy="PTIO_REGULATORY_STATUS_CD"
+					description="The possible values for an EU's permitting status"
+					importClass="us.oh.state.epa.stars2.def.PTIORegulatoryStatus">
+				</definition-set>
+				<definition-set table="FP_EMISSION_TYPE_DEF"
+					contentType="custom" label="EU Types" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" description="Types of Emission Units"
+					orderBy="EU_TYPE_CD" importClass="us.wy.state.deq.impact.def.EmissionUnitTypeDef">
+					<field column="EU_TYPE_CD" label="Type Code" update="T" />
+					<field column="EU_TYPE_NAME" label="Types Name" update="T" />
+					<field column="EU_TYPE_DESC" label="Types of EUs Included Under This Cat."
+						update="T" />
+					<field column="DEPRECATED" label="Deprecated" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="CM_PTI_REGULATORY_STATUS"
+					contentType="CD" label="EU PTI status" columnPrefix="PTI_REGULATORY_STATUS"
+					deprecateModel="flag" create="F" update="T" orderBy="PTI_REGULATORY_STATUS_CD"
+					description="The possible values for an EU's PTI status"
+					importClass="us.oh.state.epa.stars2.def.PTIRegulatoryStatus">
+				</definition-set>
+				<definition-set table="FP_DESIGN_CAPACITY_DEF"
+					contentType="CD" label="EU Design capacity" columnPrefix="DESIGN_CAPACITY"
+					deprecateModel="flag" create="T" update="T" orderBy="DESIGN_CAPACITY_CD"
+					description="The possible values for an EU's design capacity (EIS section)"
+					importClass="us.oh.state.epa.stars2.def.DesignCapacityDef">
+				</definition-set>
+				<definition-set table="FP_DESIGN_CAPACITY_UNITS_DEF"
+					contentType="CD" label="EU Design capacity units" columnPrefix="DESIGN_CAPACITY_UNITS"
+					deprecateModel="flag" create="T" update="T" orderBy="DESIGN_CAPACITY_UNITS_CD"
+					description="The possible values for an EU's design capacity units(EIS section)"
+					importClass="us.oh.state.epa.stars2.def.DesignCapacityUnitsDef">
+				</definition-set>
+				<category label="EU Type Reference Data" description="">
+					<definition-set table="CM_BATCHING_TYPE_DEF"
+						contentType="custom" label="Batching Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.BatchingTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_CMX_MAX_PRODUCTION_RATE_UNITS_DEF"
+						contentType="custom"
+						label="Concrete Batch/Cement Mixer Maximum Production Rate Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="UNIT_CD" importClass="us.wy.state.deq.impact.def.CmxMaxProductionRateUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_DEHYDRATION_TYPE_DEF"
+						contentType="custom" label="Dehydration Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.DehydrationTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_ENGINE_TYPE_DEF"
+						contentType="custom" label="Engine Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.EngineTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_EQUIP_TYPE_DEF"
+						contentType="custom" label="Equipment Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.EquipTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_EVENT_TYPE_DEF"
+						contentType="custom" label="Type of Event" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.EventTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Deprecated" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_FIRING_TYPE_DEF"
+						contentType="custom" label="Firing Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.UnitTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_HMA_MAX_PRODUCTION_RATE_UNITS_DEF"
+						contentType="custom" label="Hot Mix Asphalt Mixer Maximum Production Rate Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="UNIT_CD" importClass="us.wy.state.deq.impact.def.HmaMaxProductionRateUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_FUEL_TYPE_DEF"
+						contentType="custom" label="Fuel Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.FuelTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_CSH_UNIT_TYPE_DEF"
+						contentType="custom" label="Crushing/Screening/Handling Unit Type"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.CshUnitTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_CSH_MAX_ANNUAL_THROUGHPUT_UNITS_DEF"
+						contentType="custom"
+						label="Crushing/Screening/Handling Maximum Annual Throughput Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="UNIT_CD"
+						importClass="us.wy.state.deq.impact.def.CshMaxAnnualThroughputUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_NAME_PLATE_RATING_UNITS_DEF"
+						contentType="custom" label="Name Plate Rating Units" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="UNIT_CD"
+						importClass="us.wy.state.deq.impact.def.NamePlateRatingUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_PLANT_TYPE_DEF"
+						contentType="custom" label="Plant Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.PlantTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_POWER_SOURCE_TYPE_DEF"
+						contentType="custom" label="Primary Fuel Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.PowerSourceTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_PRIMARY_FUEL_TYPE_DEF"
+						contentType="custom" label="Primary Fuel Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.PrimaryFuelTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_SECONDARY_FUEL_TYPE_DEF"
+						contentType="custom" label="Secondary Fuel Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.SecondaryFuelTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_UNIT_TYPE_DEF"
+						contentType="custom" label="Unit Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.UnitTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_HEAT_CONTENT_FUEL_UNITS_DEF"
+						contentType="custom" label="Heat Content of Fuel Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.HeatContentFuelUnitsDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_INCINERATOR_TYPE_DEF"
+						contentType="custom" label="Incinerator Type" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.IncineratorTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_BURNER_TYPE_DEF"
+						contentType="custom" label="Burner System" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.BurnerTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_INCINERATOR_DESIGN_CAPACITY_UNITS_DEF"
+						contentType="custom" label="Incinerator Design Capacity Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.IncineratorDesignCapacityUnitsDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_TNK_MAX_THROUGHPUT_UNIT_DEF"
+						contentType="custom" label="Storage Tank Maximum Throughput Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.TnkMaxThroughputUnitDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_TNK_CAPACITY_UNIT_DEF"
+						contentType="custom" label="Storage Tank Capacity Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.TnkCapacityUnitDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_LUD_MAX_ANNUAL_THROUGHPUT_UNITS_DEF"
+						contentType="custom" label="Loading/Unloading/Dump Max Annual Throughput Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="UNIT_CD"
+						importClass="us.wy.state.deq.impact.def.LudMaxAnnualThroughputUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_MATERIAL_TYPE_DEF"
+						contentType="custom" label="Loading/Unloading/Dump Material Type"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.MaterialTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_TNK_MATERIAL_STORED_TYPE_DEF"
+						contentType="custom" label="Storage Tanks Stored Material Type"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.TnkMaterialStoredTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_TNK_MATERIAL_STORED_TYPE_LIQUID_DEF"
+						contentType="custom" label="Storage Tanks Stored Material Type - Liquid"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.TnkMaterialStoredTypeLiquidDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_CKD_UNIT_TYPE_DEF"
+						contentType="custom" label="Calciner- Kiln- Dryer Unit Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.CkdUnitTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_MATERIAL_PRODUCED_DEF"
+						contentType="custom" label="Material Produced" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.MaterialProducedDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_EGU_UNIT_TYPE_DEF"
+						contentType="custom" label="Electric Generating Unit Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.EguUnitTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_SEP_VESSEL_TYPE_DEF"
+						contentType="custom" label="Vessel Types" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.SepVesselTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_SEB_UNIT_TYPE_DEF"
+						contentType="custom" label="Spray Booth-Electroplating Unit Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.SebUnitTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_SRU_MAX_ANNUAL_THROUGHPUT_UNITS_DEF"
+						contentType="custom" label="Sulfur Recovery Unit Maximum Annual Throughput Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="UNIT_CD"
+						importClass="us.wy.state.deq.impact.def.SruMaxAnnualThroughputUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_CKD_MAX_ANNUAL_THROUGHPUT_UNITS_DEF"
+						contentType="custom" label="Calciner- Kiln- Dryer Max Annual Throughput Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="UNIT_CD"
+						importClass="us.wy.state.deq.impact.def.CkdMaxAnnualThroughputUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_APT_MAX_THROUGHPUT_UNITS_DEF"
+						contentType="custom" label="Acid Plant-Prill Tower Max Throughput Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="UNIT_CD" importClass="us.wy.state.deq.impact.def.AptMaxThroughputUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_SITE_RATING_UNITS_DEF"
+						contentType="custom" label="Site Rating Units" columnPrefix="xx"
+						deprecateModel="flag" create="T" update="T" orderBy="UNIT_CD"
+						importClass="us.wy.state.deq.impact.def.SiteRatingUnitsDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_FLARE_DESIGN_CAPACITY_UNITS_DEF"
+						contentType="custom" label="Flare Design Capacity Units"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD"
+						importClass="us.wy.state.deq.impact.def.FlareDesignCapacityUnitsDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_ABS_APPLICATION_METHOD_TYPE_DEF"
+						contentType="custom" label="Abrasive Blasting-Application Method Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.AbsApplicationMethodTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_WELDING_PROCESS_TYPE_DEF"
+						contentType="custom" label="Welding Process Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.WeldingProcessTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_MAX_ANNUAL_THROUGHPUT_UNIT_DEF"
+						contentType="CD" label="Max Annual Throughput Units" columnPrefix="UNIT"
+						deprecateModel="flag" create="T" update="T" orderBy="UNIT_CD"
+						description="Max Annual Throughput Units" importClass="us.oh.state.epa.stars2.def.MaxAnnualThroughputUnitDef">
+						<field column="UNIT_CD" label="Code" update="F" />
+						<field column="UNIT_VAL" label="Description" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />			
+				</definition-set>
+				<definition-set table="CM_MAX_ANNUAL_THROUGHPUT_UNITEUTYPE_DEF"
+					contentType="custom" label="Max Annual Throughput Units EuType" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="CODE"
+					description="Max Annual Throughput Units EuType" importClass="us.oh.state.epa.stars2.def.MaxAnnualThroughputUnitEutypeDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="MAX_ANNUAL_THROUGHPUT_CD" label="Max Annual Throughput" update="T"
+						pickListTable="CM_MAX_ANNUAL_THROUGHPUT_UNIT_DEF" pickListColumn="UNIT_CD"
+						pickListDisplay="UNIT_VAL" />					
+					<field column="EU_TYPE_CD" label="Emission Unit Type" update="T"
+						pickListTable="FP_EMISSION_TYPE_DEF" pickListColumn="EU_TYPE_CD"
+						pickListDisplay="EU_TYPE_NAME" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />			
+				</definition-set>						
+					<definition-set table="CM_ABS_SUBSTRATE_BLASTED_TYPE_DEF"
+						contentType="custom" label="Abrasive Blasting-Substrate Being Blasted Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.AbsSubstrateBlastedTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" />		
+					</definition-set>
+					<definition-set table="CM_ABS_SUBSTRATE_REMOVED_TYPE_DEF"
+						contentType="custom" label="Abrasive Blasting-Substrate Being Removed Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.AbsSubstrateRemovedTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" />		
+					</definition-set>
+				<definition-set label="Abrasive Blasting-Percentage Of Lead in Paint Types" 
+					importClass="us.wy.state.deq.impact.def.AbsLeadConcentrationPctTypeDef" 
+					orderBy="TYPE_CD" update="T" create="T" deprecateModel="flag" columnPrefix="xx" 
+					contentType="custom" table="CM_ABS_LEAD_CONCENTRATION_PCT_TYPE_DEF">
+					<field label="Code" update="F" column="TYPE_CD"/>
+					<field label="Value" update="T" column="TYPE_DSC"/>
+					<field label="Inactive" update="T" column="DEPRECATED" pickListDisplay="DEPRECATED_DSC" 
+						pickListColumn="DEPRECATED_CD" pickListTable="CM_DEPRECATED_DEF" />
+				</definition-set>
+					<definition-set table="CM_RES_APPLICATION_METHOD_TYPE_DEF"
+						contentType="custom" label="Polyster Resin-Application Method Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.ResApplicationMethodTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Name" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_FAT_UNIT_TYPE_DEF"
+						contentType="custom" label="Deep Fat Frying/Cooking-Unit Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.FatUnitTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" />		
+					</definition-set>
+					<definition-set table="CM_TKO_PLATING_TYPE_DEF"
+						contentType="custom" label="Tank - Open-Plating Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.TkoPlatingTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" />		
+					</definition-set>					
+					<definition-set table="CM_TKO_METAL_TYPE_DEF"
+						contentType="custom" label="Tank - Open-Metal Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.TkoMetalTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" />		
+					</definition-set>
+					<definition-set table="CM_DRY_TYPE_OF_OPERATION_TYPE_DEF"
+						contentType="custom" label="Dry Cleaning- Type of Operation Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.DryTypeOfOperationTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_DRY_TYPE_OF_DRY_CLEANING_TYPE_DEF"
+						contentType="custom" label="Dry Cleaning-Dry Cleaning Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.DryTypeOfDryCleaningTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_PAM_EQUIP_TYPE_DEF"
+						contentType="custom" label="Paper Manufacturing -Equipment Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.PamEquipTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_SEM_EQUIP_TYPE_DEF"
+						contentType="custom" label="Semiconductor Manufacturing -Equipment Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.SemEquipTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_SVC_EQUIP_TYPE_DEF"
+						contentType="custom" label="Solvent Cleaner -Equipment Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.SvcEquipTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" /> 	
+					</definition-set>	
+					<definition-set table="CM_WWE_EQUIP_TYPE_DEF"
+						contentType="custom" label="Wood Working -Equipment Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.WweEquipTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" /> 		
+					</definition-set>					 		
+					<definition-set table="CM_PRN_PRESS_TYPE_DEF"
+						contentType="custom" label="Printing Line -Press Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.PrnPressTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" /> 			
+					</definition-set>					
+					<definition-set table="CM_PRN_SUBSTRATE_FEED_METHOD_TYPE_DEF"
+						contentType="custom" label="Printing Line -Substrate Feed Method Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.PrnSubstrateFeedMethodTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_ORD_EXPLOSIVE_TYPE_DEF"
+						contentType="custom" label="Ordnance Detonation/Explosive Testing - Explosive Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.OrdExplosiveTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" /> 		
+					</definition-set>					
+					<definition-set table="CM_REM_CONTAMINANT_TYPE_DEF"
+						contentType="custom" label="Water and Soil Remediation - Contaminant Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.RemContminantTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" /> 	
+					</definition-set>					
+					<definition-set table="CM_REM_CONTAMINATED_MATERIAL_TYPE_DEF"
+						contentType="custom" label="Water and Soil Remediation - Contaminated Material Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.RemContaminatedMaterialTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_COT_COATING_OPERATION_TYPE_DEF"
+						contentType="custom" label="Spray Booth or Coating Line - Coating Operation Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.CotCoatingOperationTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>					
+					<definition-set table="CM_COT_MATERIAL_BEING_COATED_TYPE_DEF"
+						contentType="custom" label="Spray Booth or Coating Line - Material Being Coated Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.CotMaterialBeingCoatedTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" /> 	
+					</definition-set>					
+					<definition-set table="CM_COT_APPLICATION_METHOD_TYPE_DEF"
+						contentType="custom" label="Spray Booth or Coating Line - Application Method Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="SORT_ORDER" importClass="us.wy.state.deq.impact.def.CotApplicationMethodTypeDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+						<field column="SORT_ORDER" label="Sort Order" update="T" /> 	
+					</definition-set>
+					<definition-set table="CM_ENG_TYPE_OF_USE_DEF"
+						contentType="custom" label="Engine - Type of Use Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.EngTypeOfUseDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+					<definition-set table="CM_TNK_TANK_LOCATION_DEF"
+						contentType="custom" label="Tank Enclosed - Tank Location Types"
+						columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+						orderBy="TYPE_CD" importClass="us.wy.state.deq.impact.def.TnkTankLocationDef">
+						<field column="TYPE_CD" label="Code" update="F" />
+						<field column="TYPE_DSC" label="Value" update="T" />
+						<field column="DEPRECATED" label="Inactive" update="T"
+							pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+							pickListDisplay="DEPRECATED_DSC" />
+					</definition-set>
+
+							
+				</category>
+			</category>
+
+			<category label="Programs" description="">
+				<definition-set table="PA_MACT_SUBPART_DEF"
+					contentType="CD" label="Part 63 NESHAP subparts" columnPrefix="MACT_SUBPART"
+					deprecateModel="flag" create="T" update="T" orderBy="MACT_SUBPART_DSC"
+					description="List of Part 63 NESHAP subparts" importClass="us.oh.state.epa.stars2.def.PTIOMACTSubpartDef">
+				</definition-set>
+				<definition-set table="PA_NESHAPS_SUBPART_DEF"
+					contentType="custom" label="Part 61 NESHAP subparts" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="NESHAPS_SUBPART_DSC"
+					description="List of Part 61 NESHAP subparts" importClass="us.oh.state.epa.stars2.def.PTIONESHAPSSubpartDef">
+					<field column="NESHAPS_SUBPART_CD" label="NESHAP Code"
+						update="F" />
+					<field column="NESHAPS_SUBPART_DSC" label="Description"
+						update="T" />
+					<field column="POLLUTANT_CD" label="Pollutant Code" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="PA_NSPS_SUBPART_DEF"
+					contentType="custom" label="Part 60 NSPS subparts" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="NSPS_SUBPART_DSC"
+					description="List of Part 60 NSPS subparts" importClass="us.oh.state.epa.stars2.def.PTIONSPSSubpartDef">
+					<field column="NSPS_SUBPART_CD" label="NSPS Code" update="F" />
+					<field column="NSPS_SUBPART_AFS_CD" label="NSPS AFS Code"
+						update="F" />
+					<field column="NSPS_SUBPART_DSC" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			</category>
+
+			<definition-set table="FP_ATTACHMENT_TYPE_DEF"
+				contentType="CD" label="Attachment types" columnPrefix="ATTACHMENT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="ATTACHMENT_TYPE_CD"
+				description="Facility Detail File Attachment Types" importClass="us.oh.state.epa.stars2.def.FacilityAttachmentTypeDef">
+			</definition-set>
+			<definition-set table="FP_PERMIT_STATUS_DEF"
+				contentType="CD" label="Permit status" columnPrefix="PERMIT_STATUS"
+				deprecateModel="flag" create="F" update="T" orderBy="PERMIT_STATUS_DSC"
+				description="Facility wide Title V permit statuses" importClass="us.oh.state.epa.stars2.def.FacPermitStatusDef">
+			</definition-set>
+			<definition-set table="FP_PORTABLE_GROUP_TYPE"
+				contentType="CD" label="Portable source categories" columnPrefix="PORTABLE_GROUP_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="PORTABLE_GROUP_TYPE_CD"
+				description="types of portable facilities. Used on the Facility Detail page"
+				importClass="us.oh.state.epa.stars2.def.PortableGroupTypes">
+			</definition-set>
+			<definition-set table="FP_PORTABLE_GROUP_DEF"
+				contentType="CD" label="Portable group names" columnPrefix="PORTABLE_GROUP"
+				deprecateModel="flag" create="T" update="T" orderBy="PORTABLE_GROUP_CD"
+				description="Names for groups of portable facilities" importClass="us.oh.state.epa.stars2.def.PortableGroupNames">
+			</definition-set>
+			<definition-set table="FP_FACILITY_ROLE_DEF"
+				contentType="CD" label="Facility roles" columnPrefix="FACILITY_ROLE"
+				deprecateModel="flag" create="F" update="T" orderBy="FACILITY_ROLE_DSC"
+				description="Facility roles" importClass="us.oh.state.epa.stars2.def.FacilityRoleDef">
+			</definition-set>
+			<definition-set table="CM_DEFAULT_FACILITY_ROLE_DEF"
+				contentType="custom" label="Default Facility Roles" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="COUNTY_CD"
+				importClass="us.oh.state.epa.stars2.def.DefaultFacilityRoleTypeDef"
+				description="These values are used by IMPACT to set the initial values for the facility roles when a facility is created.">
+				<field column="COUNTY_CD" label="County" update="F"
+					pickListTable="CM_COUNTY_DEF" pickListColumn="COUNTY_CD"
+					pickListDisplay="COUNTY_NM" />
+				<field column="FACILITY_ROLE_CD" label="Facility role" update="F"
+					pickListTable="FP_FACILITY_ROLE_DEF" pickListColumn="FACILITY_ROLE_CD"
+					pickListDisplay="FACILITY_ROLE_DSC" />
+				<field column="USER_ID" label="User" update="T" pickListTable="CM_USER_DEF"
+					pickListColumn="USER_ID" pickListDisplay="NETWORK_LOGIN_NM" />
+			</definition-set>
+			<definition-set table="FP_OPERATING_STATUS_DEF"
+				contentType="CD" label="Operating Status" columnPrefix="OPERATING_STATUS"
+				deprecateModel="flag" create="F" update="T" orderBy="OPERATING_STATUS_CD"
+				description="The combined set of Facility and Emissions Units operating statuses"
+				importClass="us.oh.state.epa.stars2.def.OperatingStatusDef">
+			</definition-set>
+			<definition-set table="FP_NAICS_DEF" contentType="CD"
+				label="NAICS Codes" columnPrefix="NAICS" deprecateModel="flag"
+				create="T" update="T" orderBy="NAICS_CD"
+				description="North American Industry Classification System (NAICS) codes"
+				importClass="us.oh.state.epa.stars2.def.NAICSDef">
+			</definition-set>
+			<definition-set table="FP_SIC_DEF" contentType="CD"
+				label="SIC Codes" columnPrefix="SIC" deprecateModel="flag" create="T"
+				update="T" orderBy="SIC_CD" description="Standard Industrial Classification (SIC) codes"
+				importClass="us.oh.state.epa.stars2.def.SICDef">
+			</definition-set>
+			<definition-set table="CM_SCC" contentType="custom"
+				label="SCC Codes" columnPrefix="xx" deprecateModel="date" create="T"
+				update="T"
+				description="Source Classification Codes (SCC):&lt;br&gt;If the SCC ID is '&lt;b&gt;A-BC-DEF-GH&lt;/b&gt;', then&lt;br&gt;&#160;&#160;&lt;b&gt;L1 Desc&lt;/b&gt; must be '&lt;b&gt;A:&lt;/b&gt;level 1 description',&lt;br&gt;&#160;&#160;&lt;b&gt;L2 Desc&lt;/b&gt; must be '&lt;b&gt;BC:&lt;/b&gt;level 2 description',&lt;br&gt;&#160;&#160;&lt;b&gt;L3 Desc&lt;/b&gt; must be '&lt;b&gt;DEF:&lt;/b&gt;level 3 description' and&lt;br&gt;&#160;&#160;&lt;b&gt;L4 Desc&lt;/b&gt; must be '&lt;b&gt;GH:&lt;/b&gt;level 4 description'.&lt;br&gt;&lt;br&gt;Where two SCCs have the same value down to a certain level, those SCCs must specify exactly the same descriptions for each of those matching levels."
+				importClass="us.oh.state.epa.stars2.def.SccCodesDef"
+				orderBy="SCC_ID">
+				<field column="SCC_ID" label="ID" update="F" />
+				<field column="FED_SCC_ID" label="Federal SCC" update="T" />
+				<field column="SOURCE_LSCC" label="Source (Fed or WY)"
+					update="T" />
+				<field column="CREATED" label="Create Date" update="T" />
+				<field column="LEVEL1_DSC" label="L1 Desc" update="T" />
+				<field column="LEVEL2_DSC" label="L2 Desc" update="T" />
+				<field column="LEVEL3_DSC" label="L3 Desc" update="T" />
+				<field column="LEVEL4_DSC" label="L4 Desc" update="T" />
+				<field column="CATEGORY" label="Category" update="T" />
+				<field column="EPA_UNIT_TYPE_CD" label = "EPA Unit Type Code" update ="T" />
+				<field column="INACTIVE" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="FP_EMISSION_REPORTING_DEF"
+				contentType="CD" label="Emissions Rpt. Category" columnPrefix="EMISSIONS_RPT"
+				deprecateModel="flag" create="F" update="T" orderBy="EMISSIONS_RPT_CD"
+				description="The classification of regulated facilities that dictates the emissions fees that apply."
+				importClass="us.oh.state.epa.stars2.def.EmissionReportsTemplateDef">
+			</definition-set>
+			<definition-set table="FP_EMISSION_TYPE_DEF"
+				contentType="custom" label="Emissions Types" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" description="Types of Emission Units"
+				orderBy="EU_TYPE_CD" importClass="us.wy.state.deq.impact.def.EmissionUnitTypeDef">
+				<field column="EU_TYPE_CD" label="Abbreviation" update="T" />
+				<field column="EU_TYPE_NAME" label="Types Name" update="T" />
+				<field column="EU_TYPE_DESC" label="Types of EUs Included Under This Cat."
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="FP_PERMIT_CLASSIFICATION_DEF"
+				contentType="CD" label="Facility class" columnPrefix="PERMIT_CLASSIFICATION"
+				deprecateModel="flag" create="F" update="T" orderBy="PERMIT_CLASSIFICATION_CD"
+				description="The set of possible facility classes for a facility"
+				importClass="us.oh.state.epa.stars2.def.PermitClassDef">
+			</definition-set>
+			<definition-set table="FP_FACILITY_TYPE_DEF" update="T"
+				create="T" label="Facility Type" description="List of Facility Types.  Note, the following combination of field values is not allowed: HasAPIs = 'No' and RequiresAPIs = 'Yes'.  Attempting to save this combination will result in an error."
+				columnPrefix="xx" deprecateModel="flag" contentType="custom"
+				orderBy="FACILITY_TYPE_GROUP, FACILITY_TYPE_DSC" importClass="us.oh.state.epa.stars2.def.FacilityTypeDef">
+				<field column="FACILITY_TYPE_CD" label="Code" update="F" />
+				<field column="FACILITY_TYPE_GROUP" label="Group" update="F" />
+				<field column="FACILITY_TYPE_DSC" label="Facility Type"
+					update="T" />
+				<field column="FACILITY_TYPE_MEMO" label="Type Memo" update="T" />
+				<field column="IS_PORTABLE" label="IsPortable" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="HAS_APIS" label="HasAPIs" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="REQUIRES_APIS" label="RequiresAPIs" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="HAS_HC_ANALYSIS" label="Has HC Analysis" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />	
+				<field column="TV_INSPECTION_FREQUENCY" label="TV Inspection Frequency" update="T"/>
+				<field column="SMTV_INSPECTION_FREQUENCY" label="SMTV Inspection Frequency" update="T"/>
+				<field column="NTV_INSPECTION_FREQUENCY" label="NTV Inspectio nFrequency" update="T"/>
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+
+			<definition-set table="FP_EMISSIONS_RPT_INTERVAL_DEF"
+				update="T" create="T" label="Emissions rpt interval" description="List of emissions rpt interval"
+				columnPrefix="xx" deprecateModel="flag" contentType="custom"
+				importClass="us.oh.state.epa.stars2.def.EmissionsRptIntervalTypeDef"
+				orderBy="EMISSIONS_RPT_INTERVAL_DESC">
+				<field column="EMISSIONS_RPT_INTERVAL_CD" label="Code" update="F" />
+				<field column="EMISSIONS_RPT_INTERVAL_DESC" label="Desc"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+
+			<definition-set table="FP_CERR_CLASS_DEF" update="T"
+				create="T" label="CERR class" description="List of CERR class"
+				columnPrefix="xx" deprecateModel="flag" contentType="custom"
+				importClass="us.oh.state.epa.stars2.def.CERRClassTypeDef"
+				orderBy="CERR_CLASS_DESC">
+				<field column="CERR_CLASS_CD" label="Code" update="F" />
+				<field column="CERR_CLASS_DESC" label="Desc" update="T" />
+				<field column="DEPRECATED" label="Deprecated" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			
+			<definition-set table="FP_EMISSION_FACTOR_GROUP_DEF" update="T"
+				create="T" label="AQD Emission Factor Group" description="List of AQD Emission Factor Groups"
+				columnPrefix="xx" deprecateModel="flag" contentType="custom"
+				importClass="us.wy.state.deq.impact.def.AqdEmissionFactorGroupDef"
+				orderBy="EMISSION_FACTOR_GROUP_DSC">
+				<field column="EMISSION_FACTOR_GROUP_CD" label="Code" update="F" />
+				<field column="EMISSION_FACTOR_GROUP_DSC" label="Desc" update="T" />
+				<field column="DEPRECATED" label="Deprecated" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+
+			<definition-set table="FP_TRANSITIONAL_STATUS_DEF"
+				contentType="CD" label="Transitional status" columnPrefix="TRANSITIONAL_STATUS"
+				deprecateModel="flag" create="F" update="T" orderBy="TRANSITIONAL_STATUS_CD"
+				description="The set of possible transitional statuses for a facility"
+				importClass="us.oh.state.epa.stars2.def.TransitStatusDef">
+			</definition-set>
+
+			<definition-set table="FP_PERMITTED_EMISSIONS_UNIT_DEF"
+				contentType="custom" label="Permitted Emissions Units" columnPrefix="PERMITTED_EMISSIONS_UNIT"
+				deprecateModel="flag" create="T" update="T" orderBy="PERMITTED_EMISSIONS_UNIT_CD"
+				description="Units available for potential and allowable emissions."
+				importClass="us.wy.state.deq.impact.def.PermittedEmissionsUnitDef">
+				<field column="PERMITTED_EMISSIONS_UNIT_CD" label="Code" update="F" />
+				<field column="PERMITTED_EMISSIONS_UNIT_DESC" label="Desc"
+					update="T" />
+				<field column="PERMITTED_EMISSIONS_UNIT_FACTOR" label="TPY Factor"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+		</category>
+
+		<category label="Invoices" description="">
+			<!--  Not valid for WY
+			<definition-set table="IV_REVENUE_TYPE_DEF"
+				contentType="custom" label="Revenue Types" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="REVENUE_TYPE_CD"
+				importClass="us.oh.state.epa.stars2.def.RevenueTypeDef"
+				description="Revenue types by year. The emissions inventory column should be set to one of the following: NTV, SMTV, TV">
+				<field column="REVENUE_TYPE_CD" label="Code" update="F" />
+				<field column="EMISSIONS_RPT_CD" label="Emissions Inventory"
+					update="T" pickListTable="FP_EMISSION_REPORTING_DEF"
+					pickListColumn="EMISSIONS_RPT_CD" pickListDisplay="EMISSIONS_RPT_DSC" />
+				<field column="YEAR" label="Year" update="T" />
+				<field column="REVENUE_TYPE_DSC" label="Revenue type" update="T" />
+			</definition-set>
+			<definition-set table="IV_REVENUE_STATE_DEF"
+				contentType="CD" label="Revenues System States" columnPrefix="REVENUE_STATE"
+				deprecateModel="flag" create="F" update="T" orderBy="REVENUE_STATE_CD"
+				description="Set of Revenue System States" importClass="us.oh.state.epa.stars2.def.RevenueState">
+			</definition-set> -->
+		</category>
+
+		<category label="PBR" description="">
+			<definition-set table="PA_PBR_NOTIF_DOC_TYPE_DEF"
+				contentType="CD" label="Attachment types" columnPrefix="PBR_NOTIF_DOC_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="PBR_NOTIF_DOC_TYPE_CD"
+				description="PBR File Attachment Types" importClass="us.oh.state.epa.stars2.def.PBRNotifDocTypeDef">
+			</definition-set>
+			<definition-set table="PA_PBR_REASON_DEF" contentType="CD"
+				label="Reasons" columnPrefix="PBR_REASON" deprecateModel="flag"
+				create="T" update="T" orderBy="PBR_REASON_CD" description="List of PBR reasons"
+				importClass="us.oh.state.epa.stars2.def.PBRReasonDef">
+			</definition-set>
+			<definition-set table="PA_PBR_TYPE_DEF" contentType="custom"
+				label="Types" columnPrefix="xx" deprecateModel="flag" create="T"
+				update="T" orderBy="PBR_TYPE_CD" description="Types of Permits-By-Rule (PBRs)"
+				importClass="us.oh.state.epa.stars2.def.PBRTypeDef">
+				<field column="PBR_TYPE_CD" label="Code" update="F" />
+				<field column="PBR_TYPE_DSC" label="Description" update="T" />
+				<field column="LONG_DSC" label="Long Description" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+		</category>
+
+		<category label="Permits" description="">
+			<category label="Conditions" description="">
+				<definition-set table="PT_PERMIT_CONDITION_STATUS_DEF"
+					contentType="CD" label="Permit Condition Status" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="CODE"
+					description="Set of possible permit condition statuses"
+					importClass="us.wy.state.deq.impact.def.PermitConditionStatusDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="DESCRIPTION" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="PT_PERMIT_COMPLIANCE_TRACKING_EVENT_TYPE_DEF"
+					contentType="CD" label="Compliance Tracking Event Type" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="CODE"
+					description="Set of possible permit condition compliance tracking event types"
+					importClass="us.wy.state.deq.impact.def.ComplianceTrackingEventTypeDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="DESCRIPTION" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="PT_PERMIT_CONDITION_CATEGORY_DEF"
+					contentType="CD" label="Permit Condition Category" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="CODE"
+					description="Set of possible permit condition categories"
+					importClass="us.wy.state.deq.impact.def.PermitConditionCategoryDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="DESCRIPTION" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="PT_PERMIT_CONDITION_SUPERSEDENCE_STATUS_DEF"
+					contentType="CD" label="Supersedence Status" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="CODE"
+					description="Set of possible permit condition supersedence statuses"
+					importClass="us.wy.state.deq.impact.def.PermitConditionSupersedenceStatusDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="DESCRIPTION" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			</category>
+			<category label="NSR Billing" description="">
+				<definition-set table="NSR_BILLING_BILLABLE_RATE_DEF"
+					contentType="custom" label="Billable Rates" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="EFFECTIVE_DATE"
+					description="Hourly Rate for NSR Billing"
+					importClass="us.oh.state.epa.stars2.def.NSRBillingBillableRateDef">
+					<field column="CODE" label="Code" update="F" />
+					<filed column="DESCRIPTION" label="Description" update="T" />
+					<field column="EFFECTIVE_DATE" label="Effective Date" update="T" />
+					<field column="HOURLY_RATE" label="Hourly Rate" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="NSR_BILLING_CHARGE_PAYMENT_TYPE_DEF"
+					contentType="custom" label="Charge/Payment Types" columnPrefix="xx"
+					deprecateModel="flag" create="F" update="T" orderBy="CODE"
+					description="Charge/Payment types for NSR Billing"
+					importClass="us.oh.state.epa.stars2.def.NSRBillingChargePaymentTypeDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="DESCRIPTION" label="Description" update="T" />
+					<field column="TYPE" label="Type" update="T" 
+						pickListTable="CM_TRANSACTION_TYPE_DEF" pickListColumn="TRANSACTION_TYPE_CODE"
+						pickListDisplay="TRANSACTION_TYPE_DESCRIPTION"/>
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="NSR_BILLING_FEE_TYPE_DEF"
+					contentType="CD" label="Fee Types" columnPrefix="xx"
+					deprecateModel="flag" create="F" update="T" orderBy="CODE"
+					description="Fee types for NSR Billing"
+					importClass="us.oh.state.epa.stars2.def.NSRBillingFeeTypeDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="DESCRIPTION" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+				<definition-set table="NSR_BILLING_STANDARD_FEES_DEF"
+					contentType="custom" label="Standard Fees" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="CODE"
+					description="Standard fees for NSR Billing"
+					importClass="us.oh.state.epa.stars2.def.NSRBillingStandardFeesDef">
+					<field column="CODE" label="Code" update="F" />
+					<filed column="DESCRIPTION" label="Description" update="T" />
+					<field column="INVOICE_TYPE_CD" label="Invoice Type" update="T"
+						pickListTable="NSR_BILLING_FEE_TYPE_DEF" pickListColumn="CODE"
+						pickListDisplay="DESCRIPTION"/>
+					<field column="FEE" label="Fee" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			</category>
+			<definition-set table="PT_PERMIT_DOC_TYPE_DEF"
+				contentType="CD" label="Attachment types" columnPrefix="PERMIT_DOC_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="PERMIT_DOC_TYPE_DSC, SORT_ORDER"
+				description="Permit File Attachment Types. The column labeled 'Document Template Code' refers to an entry in the Common->Document templates definition list. This is an optional column. If you configure a value for this column, the system will display a 'generate' button for the corresponding attachment in the permit detail pages (datagrid)." 
+				importClass="us.oh.state.epa.stars2.def.PermitDocTypeDef">
+				<field column="PERMIT_DOC_TYPE_CD" label="Code" update="F" />
+				<field column="PERMIT_DOC_TYPE_DSC" label="Description"
+					update="F" />
+				<field column="FIXED" label="Fixed" update="T" />
+				<field column="NSR" label="NSR" update="T" />
+				<field column="TITLE_V" label="TitleV" update="T" />
+				<field column="PERMIT_DETAIL" label="Permit Detail" update="T" />
+				<field column="DRAFT_PUBLICATION" label="Draft Publication"
+					update="T" />
+				<field column="PP_PUBLICATION" label="PP Publication" update="T" />
+				<field column="FINAL_ISSUANCE" label="Final Issuance" update="T" />
+				<field column="WITHDRAWAL_ISSUANCE" label="Withdrawal Issuance"
+					update="T" />
+				<field column="FEE_SUMMARY" label="Fee Summary"
+					update="T" />
+				<field column="SORT_ORDER" label="Sort Order" update="T" />
+				<field column="DOCUMENT_ID" label="Document Template Code" update="T"
+					pickListTable="DC_TEMPLATE_DOC_TYPE_DEF" pickListColumn="TEMPLATE_DOC_TYPE_CD" orderBy="LEN(TEMPLATE_DOC_TYPE_CD),TEMPLATE_DOC_TYPE_CD"
+					pickListDisplay="TEMPLATE_DOC_TYPE_CD+'-'+TEMPLATE_DOC_TYPE_DSC" />
+			</definition-set>
+			<definition-set table="PT_ISSUANCE_STATUS_DEF"
+				contentType="CD" label="Issuance status" columnPrefix="ISSUANCE_STATUS"
+				deprecateModel="flag" create="F" update="T" orderBy="ISSUANCE_STATUS_CD"
+				description="Set of possible permit issuance statuses" importClass="us.oh.state.epa.stars2.def.IssuanceStatusDef">
+			</definition-set>
+			<definition-set table="PT_PERMIT_ISSUANCE_TYPE_DEF"
+				contentType="CD" label="Issuance types" columnPrefix="ISSUANCE_TYPE"
+				deprecateModel="flag" create="F" update="F" orderBy="ISSUANCE_TYPE_CD"
+				description="Issuance types - internal use only " importClass="us.oh.state.epa.stars2.def.PermitIssuanceTypeDef">
+			</definition-set>
+			<definition-set table="PT_PERMIT_STATUS_DEF"
+				contentType="CD" label="EU level status" columnPrefix="PERMIT_STATUS"
+				deprecateModel="flag" create="F" update="T" orderBy="PERMIT_STATUS_CD"
+				description="Set of possible EU level permit statuses" importClass="us.oh.state.epa.stars2.def.PermitStatusDef">
+			</definition-set>
+			<definition-set table="PT_PERMIT_LEVEL_STATUS_DEF"
+					contentType="CD" label="Permit status" columnPrefix="xx"
+					deprecateModel="flag" create="T" update="T" orderBy="CODE"
+					description="Set of possible permit level permit statuses"
+					importClass="us.wy.state.deq.impact.def.PermitLevelStatusDef">
+					<field column="CODE" label="Code" update="F" />
+					<field column="DESCRIPTION" label="Description" update="T" />
+					<field column="DEPRECATED" label="Inactive" update="T"
+						pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+						pickListDisplay="DEPRECATED_DSC" />
+				</definition-set>
+			<definition-set table="PT_PERMIT_TYPE_DEF"
+				contentType="custom" label="Permit types" columnPrefix="xx"
+				deprecateModel="flag" create="F" update="T" orderBy="PERMIT_TYPE_CD"
+				description="Permit Types" importClass="us.oh.state.epa.stars2.def.PermitTypeDef">
+				<field column="PERMIT_TYPE_CD" label="Code" update="F" />
+				<field column="PERMIT_TYPE_DSC" label="Description" update="T" />
+				<field column="LONG_DSC" label="Long Description" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="PT_PERMIT_GLOBAL_STATUS_DEF"
+				contentType="CD" label="Global status" columnPrefix="PERMIT_GLOBAL_STATUS"
+				deprecateModel="flag" create="F" update="T" orderBy="PERMIT_GLOBAL_STATUS_CD"
+				description="Permit global statuses" importClass="us.oh.state.epa.stars2.def.PermitGlobalStatusDef">
+			</definition-set>
+<!-- 			<definition-set table="PT_FEE_ADJUSTMENT_DEF" -->
+<!-- 				contentType="custom" label="PTI/PTIO fee adjustments" columnPrefix="xx" -->
+<!-- 				deprecateModel="flag" create="T" update="T" orderBy="ADJUSTMENT_CD" -->
+<!-- 				description="List of adjustments to the base fee amount for PTI and PTIO permits" -->
+<!-- 				importClass="us.oh.state.epa.stars2.def.PermitFeeAdjustmentDef"> -->
+<!-- 				<field column="ADJUSTMENT_CD" label="ID" update="F" /> -->
+<!-- 				<field column="ADJUSTMENT_DSC" label="Description" update="T" /> -->
+<!-- 				<field column="OPERATOR" label="Operator" update="T" /> -->
+<!-- 				<field column="OPERAND" label="Operand" update="T" /> -->
+<!-- 				<field column="DEPRECATED" label="Deprecated" update="T" -->
+<!-- 					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD" -->
+<!-- 					pickListDisplay="DEPRECATED_DSC" /> -->
+<!-- 			</definition-set> -->
+			<definition-set table="PT_REASON_DEF" contentType="custom"
+				label="Permit reasons" columnPrefix="xx" deprecateModel="flag"
+				create="F" update="T" orderBy="REASON_CD" description="Set of possible permit reasons. The Priority Order column is not changeable because of dependencies on IMPACT source code and business logic."
+				importClass="us.oh.state.epa.stars2.def.PermitReasonsDef">
+				<field column="REASON_CD" label="ID" update="F" />
+				<field column="LINE_ORDER" label="Priority order" update="F" />
+				<field column="REASON_DSC" label="Reason" update="T" />
+				<field column="DEPRECATED" label="Deprecated" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="PT_USEPA_OUTCOME_DEF"
+				contentType="CD" label="USEPA Outcome" columnPrefix="USEPA_OUTCOME"
+				deprecateModel="flag" create="T" update="T" orderBy="USEPA_OUTCOME_CD"
+				description="Set of possible outcomes for the USEPA review of a Title V permit (PP stage)"
+				importClass="us.oh.state.epa.stars2.def.USEPAOutcomeDef">
+			</definition-set>
+			<definition-set table="PT_PERMIT_ACTION_TYPE_DEF"
+				contentType="CD" label="Permit action types" columnPrefix="ACTION_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="ACTION_TYPE_CD"
+				description="Set of possible action types for NSR permit"
+				importClass="us.oh.state.epa.stars2.def.PermitActionTypeDef">
+			</definition-set>
+			<definition-set table="PT_PERMIT_FEE_BALANCE_TYPE_DEF"
+				contentType="CD" label="Invoice fee balance types" columnPrefix="PERMIT_FEE_BALANCE_TYPE"
+				deprecateModel="flag" create="F" update="T" orderBy="PERMIT_FEE_BALANCE_TYPE_CD"
+				description="NSR permit invoice fee balance search types"
+				importClass="us.oh.state.epa.stars2.def.PermitFeeBalanceTypeDef">
+			</definition-set>
+			<definition-set table="PT_PERMIT_GENERAL_PERMIT_TYPE_DEF"
+				contentType="custom" label="General Permit Types" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="TYPE_DSC"
+				description="General Permit Types" importClass="us.az.state.deq.impact.def.GeneralPermitTypeDef">
+				<field column="TYPE_CD" label="Code" update="F" />
+				<field column="TYPE_DSC" label="Description" update="T" />
+				<field column="ISSUANCE_RENEWAL_DATE" label="Issuance/Renewal Date" update="T" />
+				<field column="EXPIRATION_DATE" label="Expiration Date" update="T" />
+				<field column="TEMPLATE_PATH" label="Template Path" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="F"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />						
+			</definition-set>
+		</category>
+
+		<category label="RAPM" description="">
+			<definition-set table="PA_RPC_REQUEST_DOC_TYPE_DEF"
+				contentType="CD" label="Attachment types" columnPrefix="RPC_REQUEST_DOC_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="RPC_REQUEST_DOC_TYPE_CD"
+				description="Request Administrative Permit Amendment (RAPA) File Attachment Types"
+				importClass="us.oh.state.epa.stars2.def.RPCRequestDocTypeDef">
+			</definition-set>
+			<definition-set table="PA_RPC_TYPE_DEF" contentType="CD"
+				label="Types" columnPrefix="RPC_TYPE" deprecateModel="flag" create="T"
+				update="T" orderBy="RPC_TYPE_CD"
+				description="Request Administrative Permit Amendment (RAPA) Types"
+				importClass="us.oh.state.epa.stars2.def.RPCTypeDef">
+			</definition-set>
+		</category>
+		
+		<category label="Reports" description="">
+			<definition-set table="PT_ISSUED_METRICS_BENCHMARK_DEF"
+				contentType="custom" label="Issued Metrics Report" columnPrefix="xx"
+				deprecateModel="flag" create="F" update="T" orderBy="ISSUED_METRICS_BENCHMARK_DESC"
+				description="Issued Metrics Report Benchmarks. These values are used as benchmarks for the Issued Metrics Report only. The Advanced Permit Workflow Search feature also uses similar benchmarks, but the benchmark values for that feature and this one may differ. The Admin user can change the Days value for each benchmark."
+				importClass="us.wy.state.deq.impact.def.IssuedMetricsBenchmarkDef">
+				<field column="ISSUED_METRICS_BENCHMARK_CD" label="ID" update="F" />
+				<field column="ISSUED_METRICS_BENCHMARK_DESC" label="Description"
+					update="F" />
+				<field column="ISSUED_METRICS_BENCHMARK_DAYS" label="Days"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="F"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+		</category>
+		
+
+		<category label="RPR" description="">
+			<definition-set table="PA_RPR_REASON_DEF" contentType="CD"
+				label="Reasons" columnPrefix="RPR_REASON" deprecateModel="flag"
+				create="T" update="T" orderBy="RPR_REASON_CD"
+				description="Request Permit Rescission (RPR) Reasons " importClass="us.oh.state.epa.stars2.def.RPRReasonDef">
+			</definition-set>
+		</category>
+
+		<category label="Workflow" description="">
+			<definition-set table="WF_ACTIVITY_STATUS_DEF"
+				contentType="CD" label="Activity Status" columnPrefix="ACTIVITY_STATUS"
+				deprecateModel="flag" create="F" update="T" orderBy="ACTIVITY_STATUS_CD"
+				description="Set of possible workflow activity status values"
+				importClass="us.oh.state.epa.stars2.def.ActivityStatusDef">
+			</definition-set>
+			<definition-set table="WF_ACTIVITY_REFERRAL_TYPE_DEF"
+				contentType="custom" label="Referral Types" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="ACTIVITY_REFERRAL_TYPE_DSC"
+				description="Referral types and default durations. Setting the Default Days to Extend value to zero means that the referral is indefinite (stays referred until manually unreferred)"
+				importClass="us.oh.state.epa.stars2.def.ActivityReferralTypeDef">
+				<field column="ACTIVITY_REFERRAL_TYPE_ID" label="ID" update="F" />
+				<field column="ACTIVITY_REFERRAL_TYPE_DSC" label="Description"
+					update="T" />
+				<field column="EXTEND_PROCESS_END_DATE" label="Extend End Date?"
+					update="T" />
+				<field column="DEFAULT_DAYS" label="Default Days to Extend"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="WF_ACTIVITY_TEMPLATE_TYPE_DEF"
+				contentType="CD" label="Activity Template Types" columnPrefix="ACTIVITY_TEMPLATE_TYPE"
+				deprecateModel="flag" create="F" update="T" orderBy="ACTIVITY_TEMPLATE_TYPE_CD"
+				importClass="us.oh.state.epa.stars2.database.dbObjects.workflow.ActivityTemplateDef"
+				description="Set of possible workflow activity template types">
+			</definition-set>
+			<definition-set table="WF_PERMIT_SOP_DEF" contentType="custom"
+				label="SOP Rpt. Parameters" columnPrefix="xx" deprecateModel="date"
+				importClass="us.oh.state.epa.stars2.def.PermitSOPTypeDef"
+				create="T" update="T" description="Logic parameters for the permit SOP report">
+				<field column="PARAM_ID" label="ID" update="F" />
+				<field column="PERMIT_GLOBAL_STATUS_CD" label="Global status code"
+					update="T" pickListTable="PT_PERMIT_GLOBAL_STATUS_DEF"
+					pickListColumn="PERMIT_GLOBAL_STATUS_CD" pickListDisplay="PERMIT_GLOBAL_STATUS_DSC" />
+				<field column="SCHEDULE" label="Schedule" update="T" />
+				<field column="ACTIVITY_TEMPLATE_NM" label="Activity template"
+					update="T" />
+				<field column="WARNING_DURATION" label="Warning duration"
+					update="T" />
+				<field column="DANGER_DURATION" label="Danger duration"
+					update="T" />
+			</definition-set>
+		</category>
+		
+		<category label="Timesheets" description="">
+			<definition-set table="TS_FUNCTION_TYPE_DEF"
+				contentType="custom" label="Functions" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="FUNCTION_CD"
+				description="A function marked as fixed will be added to the timesheet report regardless
+				of whether the user has charged any hours for the function.
+				Note: If the value for the grouped column is set to yes, then for the non-exempt grouped report,
+				the hours charged as overtime for the given function will be grouped along with the hours charged
+				as non-overtime in the timesheet report. "  
+				importClass="us.oh.state.epa.stars2.def.TimesheetFunctionTypeDef">
+				<field column="FUNCTION_CD" label="Code" update="F" />
+				<filed column="FUNCTION_DESC" label="Description" update="T" />
+				<field column="FUNCTION_LONG_DESC" label="Long Description" update="T" />
+				<field column="FUNCTION_REQUIRES_SECTION_VALUE" label="Requires Section Value" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="SORT_ORDER" label="Sort Order" update="T" />
+				<field column="FIXED" label="Fixed" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="GROUPED" label="Grouped" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />	
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="TS_SECTION_TYPE_DEF"
+				contentType="custom" label="Sections" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="SECTION_CD"
+				description="If the hours entered for a particular section needs to be reported
+				separately on the timesheet report, then set the Report Separately value to Yes
+				for such sections. Also, if you prefer to display a different value other than
+				the section code in the timesheet report, then specify the desired value in the
+				Display Code column."
+				importClass="us.oh.state.epa.stars2.def.TimesheetSectionTypeDef">
+				<field column="SECTION_CD" label="Code" update="F" />
+				<filed column="SECTION_DESC" label="Description" update="T" />
+				<field column="SECTION_FUNCTION_CD" label="Function" update="T"
+					pickListTable="TS_FUNCTION_TYPE_DEF" pickListColumn="FUNCTION_CD"
+					pickListDisplay="FUNCTION_DESC" />
+				<field column="SECTION_DEFAULT_FOR_FUNCTION" label="Default for Function" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="SECTION_REQUIRES_NSR_VALUE" label="Requires NSR Value" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="SECTION_REQUIRES_TV_VALUE" label="Requires Title V Value" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="REPORT_SEPARATELY" label="Report Separately" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />				
+				<field column="DISPLAY_CODE" label="Display Code" update="T" />	
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="TS_MONTHLY_REPORT_TYPE_DEF"
+				contentType="CD" label="Monthly Report Types" columnPrefix="MONTHLY_REPORT_TYPE"
+				deprecateModel="flag" create="F" update="T" orderBy="MONTHLY_REPORT_TYPE_CD"
+				description="Monthly timesheet report types that can be generated by the system"
+				importClass="us.oh.state.epa.stars2.def.TimesheetMonthlyReportTypeDef">
+			</definition-set>
+		</category>	
+		
+		<category label="Offset Tracking" description="">
+			<definition-set table="OT_ATTAINMENT_STANDARD_DEF"
+				contentType="custom" label="Attainment Standards" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="ATTAINMENT_STANDARD_CD"
+				description="Offset Tracking Attainment Standards"
+				importClass="us.oh.state.epa.stars2.def.OffsetTrackingAttainmentStandardDef" >
+				<field column="ATTAINMENT_STANDARD_CD" label="Code" update="F" />
+				<filed column="ATTAINMENT_STANDARD_DSC" label="Description" update="T" />
+				<field column="ATTAINMENT_STANDARD_AUTHORITY" label="Authority" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="OT_CONTRIBUTING_POLLUTANT_DEF"
+				contentType="custom" label="Contributing Pollutants" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="CODE"
+				description="Offset Tracking Contributing Pollutants"
+				importClass="us.oh.state.epa.stars2.def.OffsetTrackingContributingPollutantDef" >
+				<field column="CODE" label="Code" update="F" />
+				<filed column="ATTAINMENT_STANDARD_CD" label="Standard" update="T"
+					pickListTable="OT_ATTAINMENT_STANDARD_DEF" pickListColumn="ATTAINMENT_STANDARD_CD"
+					pickListDisplay="ATTAINMENT_STANDARD_DSC" /> 
+				<field column="POLLUTANT_CD" label="Pollutant" update="T"
+						pickListTable="CM_POLLUTANT_DEF" pickListColumn="POLLUTANT_CD"
+					pickListDisplay="POLLUTANT_DSC" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="OT_NON_ATTAINMENT_AREA_DEF"
+				contentType="custom" label="Non-Attainment Areas" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="AREA_CD"
+				description="Offset Tracking Non-Attainment Areas"
+				importClass="us.oh.state.epa.stars2.def.OffsetTrackingNonAttainmentAreaDef" >
+				<field column="AREA_CD" label="Code" update="F" />
+				<field column="AREA_NAME" label="Area Name" update="T" />
+				<field column="AREA_SHAPE" label="Area Shape" update="T" 
+					pickListTable="CM_SHAPE" pickListColumn="SHAPE_ID"
+					pickListDisplay="LABEL" /> 
+				<filed column="ATTAINMENT_STANDARD_CD" label="Standard" update="T"
+					pickListTable="OT_ATTAINMENT_STANDARD_DEF" pickListColumn="ATTAINMENT_STANDARD_CD"
+					pickListDisplay="ATTAINMENT_STANDARD_DSC" /> 
+				<field column="NON_ATTAINMENT_LEVEL_CD" label="Level" update="T"
+						pickListTable="OT_NON_ATTAINMENT_LEVEL_DEF" pickListColumn="NON_ATTAINMENT_LEVEL_CD"
+					pickListDisplay="NON_ATTAINMENT_LEVEL_DSC" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="OT_DEFAULT_MULTIPLIER_DEF"
+				contentType="custom" label="Default Offset Multiplier" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="MULTIPLIER_CD"
+				description="Offset Tracking Default Offset Multiplier"
+				importClass="us.oh.state.epa.stars2.def.OffsetTrackingDefaultMultiplierDef" >
+				<field column="MULTIPLIER_CD" label="Code" update="F" />
+				<field column="POLLUTANT_CD" label="Pollutant" update="T"
+					pickListTable="CM_POLLUTANT_DEF" pickListColumn="POLLUTANT_CD"
+					pickListDisplay="POLLUTANT_DSC" />
+				<field column="AREA_CD" label="Non-Attainment Area" update="T"
+					pickListTable="OT_NON_ATTAINMENT_AREA_DEF" pickListColumn="AREA_CD"
+					pickListDisplay="AREA_NAME" />
+				<field column="MULTIPLIER" label="Multiplier" update="T" />
+				<field column="EFFECTIVE_DATE" label="Effective Date" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="OT_NON_ATTAINMENT_LEVEL_DEF"
+				contentType="CD" label="Non-Attainment Levels" columnPrefix="NON_ATTAINMENT_LEVEL"
+				deprecateModel="flag" create="T" update="T" orderBy="NON_ATTAINMENT_LEVEL_CD"
+				description="Offset Tracking Non-Attainment Levels"
+				importClass="us.oh.state.epa.stars2.def.OffsetTrackingNonAttainmentLevelDef" >
+			</definition-set>
+		</category>
+			
+	
+	</definitions>
+</root>
+
+

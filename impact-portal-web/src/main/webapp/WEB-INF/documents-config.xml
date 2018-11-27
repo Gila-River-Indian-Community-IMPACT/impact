@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Documents Tab CONFIGURATION FILE =============== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+  <!--Documents Tab-->
+
+  <!-- end menu items -->
+
+  <!-- Backing beans -->
+  
+  <!-- 
+  <managed-bean>
+    <managed-bean-name>documentReference</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.portal.document.DocumentReference
+    </managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+   -->
+
+  <managed-bean>
+    <managed-bean-name>attachments</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.document.Attachments
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>documentService</property-name>
+            <value>#{documentBO}</value>
+        </managed-property>
+  </managed-bean>
+
+  <!-- Navigation rules -->
+  <navigation-rule>
+    <navigation-case>
+      <from-outcome>openDoc</from-outcome>
+      <to-view-id>/documents/opendoc.jsp</to-view-id>
+      <redirect />
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>printDocs</from-outcome>
+      <to-view-id>/documents/printdocs.jsp</to-view-id>
+      <redirect />
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>dialog:editComplianceAttachment</from-outcome>
+      <to-view-id>/doc_attachments/editDocAttachment.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+</faces-config>

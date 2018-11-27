@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>util</short-name>
+  <uri>http://us.oh.state.epa.stars2/util</uri>
+  
+  <!-- ====================================================== -->
+  <tag>
+    <name>areaMap</name>
+    <tag-class>us.oh.state.epa.stars2.webcommon.tag.AreaMapTag</tag-class>
+    <attribute>
+      <name>beanName</name>
+    </attribute>
+  </tag>
+  
+  <!-- ====================================================== -->
+  <tag>
+    <name>ImageOutput</name>
+    <tag-class>us.oh.state.epa.stars2.webcommon.tag.ImageOutputTag</tag-class>
+    <attribute>
+      <name>beanName</name>
+    </attribute>
+  </tag>
+  
+  <!-- ====================================================== -->
+  <tag>
+    <name>setProperty</name>
+    <tag-class>us.oh.state.epa.stars2.webcommon.tag.SetPropertyTag</tag-class>
+    <description> Use this to set any value into backend bean which defined in any config.xml
+      It is a replacement jsp:useBean and jsp:setProperty. It works for setting a value into
+      a backend bean in a JSP page. For example, to set bean.whichPage to A in A.jsp and set
+      bean.whichPage to B in B.jsp</description>
+    <attribute>
+      <name>property</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>Property to set value to #{bean.property}</description>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>Value to set to property. It can be #{bean.value}, true/false, or any
+        String.</description>
+    </attribute>
+    <attribute>
+      <name>converter</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>Converter class string to conver value into property.</description>
+    </attribute>
+  </tag>
+  
+  <!-- ====================================================== -->
+  <tag>
+    <name>selectItems</name>
+    <tag-class>us.oh.state.epa.stars2.webcommon.tag.SelectItemsTag</tag-class>
+    <body-content>empty</body-content>
+    <description> This selectItems is using the value of parent CoreSelectOneChoice for
+      deprecated check. </description>
+    <!-- UISelectItems attributes -->
+    <attribute>
+      <name>binding</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>Component binding.</description>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>Value reference pointing at a List or Array of
+        javax.faces.model.SelectItem instances.</description>
+    </attribute>
+  </tag>
+  
+  <!-- ====================================================== -->
+  <tag>
+    <name>convertSigDigNumber</name>
+    <tag-class>us.oh.state.epa.stars2.webcommon.tag.SigDigNumberConverterTag</tag-class>
+    <description>
+    Use this as a converter that will ensure that the number entered in the parent
+    text field is a valid number limited to the number of integral and fractional
+    digits specified in the pattern attribute. Value entered in text field will
+    be formatted as specified by the pattern attribute if it is a legal value.
+    </description>
+    <attribute>
+      <name>pattern</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>Pattern describing valid input to this field.</description>
+    </attribute>
+    <attribute>
+      <name>nonNumericAllowed</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.Boolean</type>
+      <description>Flag indicating whether non-numeric characters are allowed 
+      after numeric characters (e.g. to express units). Set to true if non-numeric
+      values are allowed. This attribute is false by default.</description>
+    </attribute>
+    <attribute>
+      <name>maximumValue</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>The maximum value that is allowed to be entered in this field.
+      This number should not exceed the largest number that can be expressed by
+      the specified pattern.
+      </description>
+    </attribute>
+    <attribute>
+      <name>minimumValue</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>The minimum value that is allowed to be entered in this field.
+      This number should not be less than the smallest number that can be expressed by
+      the specified pattern. The Default value is 0.0.
+      </description>
+    </attribute>
+  </tag>
+</taglib>

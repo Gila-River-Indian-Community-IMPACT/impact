@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<adf-faces-config xmlns="http://xmlns.oracle.com/adf/view/faces/config">
+
+<skin-family>#{skinUtil.skinSelection}</skin-family>
+<two-digit-year-start>1980</two-digit-year-start>
+<oracle-help-servlet-url>/stars2/help</oracle-help-servlet-url>
+</adf-faces-config>

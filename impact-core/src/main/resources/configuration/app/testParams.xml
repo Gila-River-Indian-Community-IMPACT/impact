@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+<!-- 
+ -->
+  <params createNew="no">
+    
+    <referalStr value="test"/>
+    <loginName value="test_user"/>
+    <corePlaceIdStr value="16"/>
+    <hasSubmit value="true"/>
+  
+  </params>
+
+</root>

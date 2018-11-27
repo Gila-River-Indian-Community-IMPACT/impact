@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<ApplicationEUTypeSQL>
+	
+	
+	
+		<retrieveApplicationEUTypeDefault>
+			SELECT application_eu_id, unit_type_cd
+			FROM
+			%Schema%pa_nsr_eu_type_default
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeDefault>
+		<removeApplicationEUTypeDefault>
+			delete from %Schema%pa_nsr_eu_type_default
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeDefault>
+		<createApplicationEUTypeDefault>INSERT INTO %Schema%pa_nsr_eu_type_default
+			(application_eu_id, unit_type_cd)
+			VALUES(?,?)
+		</createApplicationEUTypeDefault>
+	
+	
+	
+		<AMNColumns>
+			application_eu_id, inlet_c02_conc,
+			inlet_h2s_conc,
+			acid_gas_c02_conc, acid_gas_h2s_conc, amine_circ_rate,
+			amine_circ_units_cd, amine_type_cd, inlet_gas_temp,
+			inlet_gas_pressure, outlet_gas_flow_rate,
+			acid_gas_flow_rate,
+			amine_circ_pump_type_cd, pump_volume_ratio,
+			max_lean_amine_circ_rate,
+			actual_lean_amine_circ_rate,
+			motive_gas_pump_source
+		</AMNColumns>
+
+		<retrieveApplicationEUTypeAMN>
+			SELECT
+			${ApplicationEUTypeSQL.AMNColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_amn
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeAMN>
+		<removeApplicationEUTypeAMN>
+			delete from %Schema%pa_nsr_eu_type_amn
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeAMN>
+		<createApplicationEUTypeAMN>INSERT INTO %Schema%pa_nsr_eu_type_amn
+			(application_eu_id, inlet_c02_conc,
+			inlet_h2s_conc,
+			acid_gas_c02_conc,
+			acid_gas_h2s_conc, amine_circ_rate,
+			amine_circ_units_cd,
+			amine_type_cd,
+			inlet_gas_temp, inlet_gas_pressure,
+			outlet_gas_flow_rate,
+			acid_gas_flow_rate,
+			amine_circ_pump_type_cd,
+			pump_volume_ratio,
+			max_lean_amine_circ_rate,
+			actual_lean_amine_circ_rate,
+			motive_gas_pump_source)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeAMN>
+
+		<ENGColumns>
+			application_eu_id,
+			btu,
+			units_btu_cd,
+			fuel_sulfur,
+			units_fuel_sulfur_cd,
+			service_type_cd,
+			diesel_engine_epa_tier_certified_flag,
+			tier_rating
+		</ENGColumns>
+
+		<retrieveApplicationEUTypeENG>
+			SELECT
+			${ApplicationEUTypeSQL.ENGColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_eng
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeENG>
+		<removeApplicationEUTypeENG>
+			delete from %Schema%pa_nsr_eu_type_ENG
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeENG>
+		<createApplicationEUTypeENG>INSERT INTO %Schema%pa_nsr_eu_type_eng
+			(application_eu_id, btu
+			,units_btu_cd,fuel_sulfur,
+			units_fuel_sulfur_cd,service_type_cd,diesel_engine_epa_tier_certified_flag,
+			tier_rating)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeENG>
+
+		<BOLColumns>
+			application_eu_id,
+			boiler_type_cd,
+			btu,
+			units_btu_cd,
+			fuel_sulfur,
+			units_fuel_sulfur_cd,
+			fuel_ash,
+			service_type_cd
+		</BOLColumns>
+
+		<retrieveApplicationEUTypeBOL>
+			SELECT
+			${ApplicationEUTypeSQL.BOLColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_BOL
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeBOL>
+		<removeApplicationEUTypeBOL>
+			delete from %Schema%pa_nsr_eu_type_BOL
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeBOL>
+		<createApplicationEUTypeBOL>INSERT INTO %Schema%pa_nsr_eu_type_bol
+			(application_eu_id, boiler_type_cd , btu
+			,units_btu_cd,fuel_sulfur,
+			units_fuel_sulfur_cd, fuel_ash, service_type_cd)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeBOL>
+
+		<CTWColumns>
+			application_eu_id, cell_flow_rate, circulation_rate, voc,
+			hap, number_of_cells
+		</CTWColumns>
+
+		<retrieveApplicationEUTypeCTW>
+			SELECT
+			${ApplicationEUTypeSQL.CTWColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_ctw
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeCTW>
+		<removeApplicationEUTypeCTW>
+			delete from %Schema%pa_nsr_eu_type_ctw
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeCTW>
+		<createApplicationEUTypeCTW>INSERT INTO %Schema%pa_nsr_eu_type_ctw
+			(application_eu_id, cell_flow_rate, circulation_rate, voc,
+			hap,
+			number_of_cells)
+			VALUES(?,?,?,?,?,?)
+		</createApplicationEUTypeCTW>
+
+		<CKDColumns>
+			application_eu_id,
+			btu,
+			units_btu_cd,
+			fuel_sulfur,
+			units_fuel_sulfur_cd,
+			type_of_material_processed_cd,
+			fuel_fired_source_flag
+		</CKDColumns>
+		<retrieveApplicationEUTypeCKD>
+			SELECT
+			${ApplicationEUTypeSQL.CKDColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_ckd
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeCKD>
+		<createApplicationEUTypeCKD>INSERT INTO %Schema%pa_nsr_eu_type_ckd
+			(${ApplicationEUTypeSQL.CKDColumns})
+			VALUES(?,?,?,?,?,?,?)
+		</createApplicationEUTypeCKD>
+		<removeApplicationEUTypeCKD>
+			delete from %Schema%pa_nsr_eu_type_ckd
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeCKD>
+
+		<APTColumns>
+			application_eu_id,
+			unit_type_cd,
+			exhaust_flow_rate
+		</APTColumns>
+		<retrieveApplicationEUTypeAPT>
+			SELECT
+			${ApplicationEUTypeSQL.APTColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_apt
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeAPT>
+		<removeApplicationEUTypeAPT>
+			delete from %Schema%pa_nsr_eu_type_apt
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeAPT>
+		<createApplicationEUTypeAPT>INSERT INTO %Schema%pa_nsr_eu_type_apt
+			(${ApplicationEUTypeSQL.APTColumns})
+			VALUES(?,?,?)
+		</createApplicationEUTypeAPT>
+
+		<EGUColumns>
+			application_eu_id,
+			btu,
+			units_btu_cd,
+			fuel_sulfur,
+			units_fuel_sulfur_cd,
+			net_electrical_output,
+			gross_electrical_output,
+			turbine_cycle_type_cd,
+			coal_usage_type_cd
+		</EGUColumns>
+		<retrieveApplicationEUTypeEGU>
+			SELECT
+			${ApplicationEUTypeSQL.EGUColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_egu
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeEGU>
+		<removeApplicationEUTypeEGU>
+			delete from %Schema%pa_nsr_eu_type_egu
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeEGU>
+		<createApplicationEUTypeEGU>INSERT INTO %Schema%pa_nsr_eu_type_egu
+			(${ApplicationEUTypeSQL.EGUColumns})
+			VALUES(?,?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeEGU>
+
+		<SEBColumns>
+			application_eu_id,
+			material_usage,
+			unit_material_usage_cd,
+			voc,
+			haps
+		</SEBColumns>
+		<retrieveApplicationEUTypeSEB>
+			SELECT
+			${ApplicationEUTypeSQL.SEBColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_seb
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeSEB>
+		<removeApplicationEUTypeSEB>
+			delete from %Schema%pa_nsr_eu_type_seb
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeSEB>
+		<createApplicationEUTypeSEB>INSERT INTO %Schema%pa_nsr_eu_type_seb
+			(${ApplicationEUTypeSQL.SEBColumns})
+			VALUES(?,?,?,?,?)
+		</createApplicationEUTypeSEB>
+
+		<SEPColumns>
+			application_eu_id,
+			operating_temperature,
+			operating_pressure
+		</SEPColumns>
+		<retrieveApplicationEUTypeSEP>
+			SELECT
+			${ApplicationEUTypeSQL.SEPColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_sep
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeSEP>
+		<removeApplicationEUTypeSEP>
+			delete from %Schema%pa_nsr_eu_type_sep
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeSEP>
+		<createApplicationEUTypeSEP>INSERT INTO %Schema%pa_nsr_eu_type_sep
+			(${ApplicationEUTypeSQL.SEPColumns})
+			VALUES(?,?,?)
+		</createApplicationEUTypeSEP>
+
+		<SRUColumns>
+			application_eu_id, inlet_sulfur_concentration,
+			outlet_sulfur_concentration,
+			design_capacity
+		</SRUColumns>
+
+		<retrieveApplicationEUTypeSRU>
+			SELECT
+			${ApplicationEUTypeSQL.SRUColumns}
+			FROM %Schema%pa_nsr_eu_type_sru
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeSRU>
+		<removeApplicationEUTypeSRU>
+			DELETE FROM %Schema%pa_nsr_eu_type_sru
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeSRU>
+
+		<createApplicationEUTypeSRU>
+			INSERT INTO %Schema%pa_nsr_eu_type_sru
+			(application_eu_id, inlet_sulfur_concentration,
+			outlet_sulfur_concentration,
+			design_capacity)
+			VALUES(?,?,?,?)
+		</createApplicationEUTypeSRU>
+
+		<TGTColumns>
+			application_eu_id, exhaust_flow_rate,
+			inlet_sulfur_concentration, outlet_sulfur_concentration
+		</TGTColumns>
+
+		<retrieveApplicationEUTypeTGT>
+			SELECT
+			${ApplicationEUTypeSQL.TGTColumns}
+			FROM %Schema%pa_nsr_eu_type_tgt
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeTGT>
+		<removeApplicationEUTypeTGT>
+			DELETE FROM %Schema%pa_nsr_eu_type_tgt
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeTGT>
+
+		<createApplicationEUTypeTGT>
+			INSERT INTO %Schema%pa_nsr_eu_type_tgt
+			(application_eu_id, exhaust_flow_rate, inlet_sulfur_concentration,
+			outlet_sulfur_concentration)
+			VALUES(?,?,?,?)
+		</createApplicationEUTypeTGT>
+
+		<VNTColumns>
+			application_eu_id, flow_rate_or_throughput,
+			units_flow_rate_or_throughput_cd, voc_concentration,
+			haps_concentration
+		</VNTColumns>
+
+		<retrieveApplicationEUTypeVNT>
+			SELECT
+			${ApplicationEUTypeSQL.VNTColumns}
+			FROM %Schema%pa_nsr_eu_type_vnt
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeVNT>
+		<removeApplicationEUTypeVNT>
+			DELETE FROM %Schema%pa_nsr_eu_type_vnt
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeVNT>
+
+		<createApplicationEUTypeVNT>
+			INSERT INTO %Schema%pa_nsr_eu_type_vnt
+			(application_eu_id, flow_rate_or_throughput,
+			units_flow_rate_or_throughput_cd, voc_concentration,
+			haps_concentration)
+			VALUES(?,?,?,?,?)
+		</createApplicationEUTypeVNT>
+
+		<LUDColumns>
+			application_eu_id, max_hourly_throughput,
+			units_max_hourly_throughput_cd, detailed_description
+		</LUDColumns>
+		<retrieveApplicationEUTypeLUD>
+			SELECT
+			${ApplicationEUTypeSQL.LUDColumns}
+			FROM %Schema%pa_nsr_eu_type_lud
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeLUD>
+		<removeApplicationEUTypeLUD>
+			DELETE from %Schema%pa_nsr_eu_type_lud
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeLUD>
+		<createApplicationEUTypeLUD>
+			INSERT INTO %Schema%pa_nsr_eu_type_lud
+			(application_eu_id, max_hourly_throughput,
+			units_max_hourly_throughput_cd, detailed_description)
+			VALUES(?,?,?,?)
+		</createApplicationEUTypeLUD>
+
+		<HMAColumns>
+			application_eu_id,
+			manufacture,
+			model_number,
+			fuel_sulfur,
+			units_fuel_sulfur_cd,
+			fuel_consumption,
+			units_fuel_consumption_cd,
+			fuel_gas_heating,
+			units_fuel_gas_heating_cd,
+			stack_volumetric_flow,
+			plant_processes_recycled_asphalt_cd,
+			max_percent_rap
+		</HMAColumns>
+
+		<retrieveApplicationEUTypeHMA>
+			SELECT
+			${ApplicationEUTypeSQL.HMAColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_HMA
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeHMA>
+		<removeApplicationEUTypeHMA>
+			delete from %Schema%pa_nsr_eu_type_HMA
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeHMA>
+		<createApplicationEUTypeHMA>INSERT INTO %Schema%pa_nsr_eu_type_hma
+			(application_eu_id, manufacture, model_number,
+			fuel_sulfur,
+			units_fuel_sulfur_cd, fuel_consumption,
+			units_fuel_consumption_cd,
+			fuel_gas_heating, units_fuel_gas_heating_cd,
+			stack_volumetric_flow,
+			plant_processes_recycled_asphalt_cd, max_percent_rap)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeHMA>
+
+		<CMXColumns>
+			application_eu_id,
+			max_annual_production_rate,
+			units_max_annual_production_rate_cd,
+			avg_hourly_production_rate,
+			units_avg_hourly_production_rate_cd
+		</CMXColumns>
+
+		<retrieveApplicationEUTypeCMX>
+			SELECT
+			${ApplicationEUTypeSQL.CMXColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_CMX
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeCMX>
+		<removeApplicationEUTypeCMX>
+			delete from %Schema%pa_nsr_eu_type_CMX
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeCMX>
+		<createApplicationEUTypeCMX>INSERT INTO %Schema%pa_nsr_eu_type_cmx
+			(
+			application_eu_id,
+			max_annual_production_rate, units_max_annual_production_rate_cd,
+			avg_hourly_production_rate,
+			units_avg_hourly_production_rate_cd)
+			VALUES(?,?,?,?,?)
+		</createApplicationEUTypeCMX>
+
+		<FUGColumns>
+			application_eu_id,
+			fugitive_emission_type_cd,
+			max_distance_materia_hauled,
+			truck_type_1,
+			number_of_type_1_trucks,
+			capacity_of_type_1_trucks,
+			empty_weight_of_type_1_trucks,
+			truck_type_2,
+			number_of_type_2_trucks,
+			capacity_of_type_2_trucks,
+			empty_weight_of_type_2_trucks,
+			truck_type_3,
+			number_of_type_3_trucks,
+			capacity_of_type_3_trucks,
+			empty_weight_of_type_3_trucks,
+			truck_type_4,
+			number_of_type_4_trucks,
+			capacity_of_type_4_trucks,
+			empty_weight_of_type_4_trucks,
+			acreage_subject_to_wind_erosion,
+			stockpile_type_cd,
+			material_added_removed_from_pile_day,
+			material_added_removed_from_pile_yr,
+			number_of_stockpiles,
+			size_of_stockpile,
+			units_stockpile_cd,
+			number_of_blasts_per_year,
+			blasting_agent_used_type,
+			amount_of_blasting_agent_used,
+			horizontal_area_of_blast,
+			material_blasted_type_cd,
+			detailed_description_of_fugitive_source
+		</FUGColumns>
+
+		<retrieveApplicationEUTypeFUG>
+			SELECT
+			${ApplicationEUTypeSQL.FUGColumns}
+			FROM
+			%Schema%pa_nsr_eu_type_FUG
+			WHERE application_eu_id
+			= ?
+		</retrieveApplicationEUTypeFUG>
+		<removeApplicationEUTypeFUG>
+			delete from %Schema%pa_nsr_eu_type_FUG
+			where
+			application_eu_id = ?
+		</removeApplicationEUTypeFUG>
+		<createApplicationEUTypeFUG>INSERT INTO %Schema%pa_nsr_eu_type_fug
+			(
+			application_eu_id, fugitive_emission_type_cd,
+			max_distance_materia_hauled, truck_type_1, number_of_type_1_trucks,
+			capacity_of_type_1_trucks, empty_weight_of_type_1_trucks,
+			truck_type_2, number_of_type_2_trucks, capacity_of_type_2_trucks,
+			empty_weight_of_type_2_trucks, truck_type_3, number_of_type_3_trucks,
+			capacity_of_type_3_trucks, empty_weight_of_type_3_trucks,
+			truck_type_4, number_of_type_4_trucks, capacity_of_type_4_trucks,
+			empty_weight_of_type_4_trucks, acreage_subject_to_wind_erosion,
+			stockpile_type_cd, material_added_removed_from_pile_day,
+			material_added_removed_from_pile_yr,
+			number_of_stockpiles,
+			size_of_stockpile, units_stockpile_cd, number_of_blasts_per_year,
+			blasting_agent_used_type, amount_of_blasting_agent_used,
+			horizontal_area_of_blast, material_blasted_type_cd,
+			detailed_description_of_fugitive_source)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeFUG>
+
+		<TNKColumns>
+			application_eu_id, max_hourly_throughput,
+			units_max_hourly_throughput_cd, is_tank_heated_cd,
+			operating_pressure, vapor_pressure_of_material_stored
+		</TNKColumns>
+		<retrieveApplicationEUTypeTNK>
+			SELECT
+			${ApplicationEUTypeSQL.TNKColumns}
+			FROM %Schema%pa_nsr_eu_type_tnk
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeTNK>
+		<removeApplicationEUTypeTNK>
+			DELETE from %Schema%pa_nsr_eu_type_tnk
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeTNK>
+		<createApplicationEUTypeTNK>
+			INSERT INTO %Schema%pa_nsr_eu_type_tnk
+			(application_eu_id, max_hourly_throughput,
+			units_max_hourly_throughput_cd, is_tank_heated_cd,
+			operating_pressure, vapor_pressure_of_material_stored)
+			VALUES(?,?,?,?,?,?)
+		</createApplicationEUTypeTNK>
+
+		<INCColumns>
+			application_eu_id, primary_fuel_type_cd,
+			btu, units_btu_cd,
+			fuel_sulfur, units_fuel_sulfur_cd
+		</INCColumns>
+		<retrieveApplicationEUTypeINC>
+			SELECT
+			${ApplicationEUTypeSQL.INCColumns}
+			FROM %Schema%pa_nsr_eu_type_inc
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeINC>
+		<removeApplicationEUTypeINC>
+			DELETE from %Schema%pa_nsr_eu_type_inc
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeINC>
+		<createApplicationEUTypeINC>
+			INSERT INTO %Schema%pa_nsr_eu_type_inc
+			(application_eu_id, primary_fuel_type_cd,
+			btu, units_btu_cd,
+			fuel_sulfur, units_fuel_sulfur_cd)
+			VALUES(?,?,?,?,?,?)
+		</createApplicationEUTypeINC>
+
+
+		<CCUColumns>
+			application_eu_id
+			,requested_charge_rate
+			,odor_masking_agent_used_cd
+			,batch_cycle_time
+			,quench_cycle_time
+			,quench_gas_volums
+			,sulfur_content_of_quench_gas
+			,type_of_equipment_cd
+		</CCUColumns>
+
+		<retrieveApplicationEUTypeCCU>
+			SELECT
+			${ApplicationEUTypeSQL.CCUColumns}
+			FROM %Schema%pa_nsr_eu_type_ccu
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeCCU>
+		<removeApplicationEUTypeCCU>
+			DELETE FROM %Schema%pa_nsr_eu_type_ccu
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeCCU>
+
+		<createApplicationEUTypeCCU>
+			INSERT INTO %Schema%pa_nsr_eu_type_ccu
+			(application_eu_id
+			,requested_charge_rate
+			,odor_masking_agent_used_cd
+			,batch_cycle_time
+			,quench_cycle_time
+			,quench_gas_volums
+			,sulfur_content_of_quench_gas
+			,type_of_equipment_cd)
+			VALUES(?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeCCU>
+
+		<DHYColumns>
+			application_eu_id
+			,temperature_of_wet_gas
+			,pressure_of_wet_gas
+			,water_content_of_wet_gas
+			,flow_rate_of_dry_gas
+			,water_content_of_dry_gas
+			,manufacture_name_of_glycol_circulation_pump
+			,model_name_and_number_of_glycol_circulation_pump
+			,type_of_glycol_circulation_pump_cd
+			,pump_volume_ratio
+			,max_lean_glycol_circulation_rate
+			,actual_lean_glycol_circulation_rate
+			,source_of_motive_gas_for_pump
+			,additional_gas_stripping_cd
+			,source_of_stripping_gas_cd
+			,stripping_gas_rate
+			,include_glycol_flash_tank_separator_cd
+			,flash_tank_off_gas_stream
+			,flash_vapors_routed
+			,operating_temperature
+			,operating_pressure
+			,is_vessel_heated_cd
+		</DHYColumns>
+
+		<retrieveApplicationEUTypeDHY>
+			SELECT
+			${ApplicationEUTypeSQL.DHYColumns}
+			FROM %Schema%pa_nsr_eu_type_dhy
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeDHY>
+
+		<removeApplicationEUTypeDHY>
+			DELETE FROM %Schema%pa_nsr_eu_type_dhy
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeDHY>
+
+		<createApplicationEUTypeDHY>
+			INSERT INTO %Schema%pa_nsr_eu_type_dhy
+			(application_eu_id
+			,temperature_of_wet_gas
+			,pressure_of_wet_gas
+			,water_content_of_wet_gas
+			,flow_rate_of_dry_gas
+			,water_content_of_dry_gas
+			,manufacture_name_of_glycol_circulation_pump
+			,model_name_and_number_of_glycol_circulation_pump
+			,type_of_glycol_circulation_pump_cd
+			,pump_volume_ratio
+			,max_lean_glycol_circulation_rate
+			,actual_lean_glycol_circulation_rate
+			,source_of_motive_gas_for_pump
+			,additional_gas_stripping_cd
+			,source_of_stripping_gas_cd
+			,stripping_gas_rate
+			,include_glycol_flash_tank_separator_cd
+			,flash_tank_off_gas_stream
+			,flash_vapors_routed
+			,operating_temperature
+			,operating_pressure
+			,is_vessel_heated_cd)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeDHY>
+		<HETColumns>
+			application_eu_id
+			,fuel_sulfur
+			,units_fuel_sulfur_cd
+		</HETColumns>
+		
+		<ABSColumns>
+		</ABSColumns>
+		<retrieveApplicationEUTypeABS>
+		</retrieveApplicationEUTypeABS>
+		<removeApplicationEUTypeABS>
+		</removeApplicationEUTypeABS>
+		<createApplicationEUTypeABS>
+		</createApplicationEUTypeABS>		
+
+		<BAKColumns>
+		</BAKColumns>
+		<retrieveApplicationEUTypeBAK>
+		</retrieveApplicationEUTypeBAK>
+		<removeApplicationEUTypeBAK>
+		</removeApplicationEUTypeBAK>
+		<createApplicationEUTypeBAK>
+		</createApplicationEUTypeBAK>
+
+		<BGMColumns>
+		</BGMColumns>
+		<retrieveApplicationEUTypeBGM>
+		</retrieveApplicationEUTypeBGM>
+		<removeApplicationEUTypeBGM>
+		</removeApplicationEUTypeBGM>
+		<createApplicationEUTypeBGM>
+		</createApplicationEUTypeBGM>
+		
+		<MILColumns>
+		</MILColumns>
+		<retrieveApplicationEUTypeMIL>
+		</retrieveApplicationEUTypeMIL>
+		<removeApplicationEUTypeMIL>
+		</removeApplicationEUTypeMIL>
+		<createApplicationEUTypeMIL>
+		</createApplicationEUTypeMIL>		
+		
+		<METColumns>
+		</METColumns>
+		<retrieveApplicationEUTypeMET>
+		</retrieveApplicationEUTypeMET>
+		<removeApplicationEUTypeMET>
+		</removeApplicationEUTypeMET>
+		<createApplicationEUTypeMET>
+		</createApplicationEUTypeMET>
+		
+		<MATColumns>
+		</MATColumns>
+		<retrieveApplicationEUTypeMAT>
+		</retrieveApplicationEUTypeMAT>
+		<removeApplicationEUTypeMAT>
+		</removeApplicationEUTypeMAT>
+		<createApplicationEUTypeMAT>
+		</createApplicationEUTypeMAT>
+		
+		<PAMColumns>
+		</PAMColumns>
+		<retrieveApplicationEUTypePAM>
+		</retrieveApplicationEUTypePAM>
+		<removeApplicationEUTypePAM>
+		</removeApplicationEUTypePAM>
+		<createApplicationEUTypePAM>
+		</createApplicationEUTypePAM>
+		
+		<SEMColumns>
+		</SEMColumns>
+		<retrieveApplicationEUTypeSEM>
+		</retrieveApplicationEUTypeSEM>
+		<removeApplicationEUTypeSEM>
+		</removeApplicationEUTypeSEM>
+		<createApplicationEUTypeSEM>
+		</createApplicationEUTypeSEM>							
+		
+		<TARColumns>
+		</TARColumns>
+		<retrieveApplicationEUTypeTAR>
+		</retrieveApplicationEUTypeTAR>
+		<removeApplicationEUTypeTAR>
+		</removeApplicationEUTypeTAR>
+		<createApplicationEUTypeTAR>
+		</createApplicationEUTypeTAR>
+		
+		<MIXColumns>
+		</MIXColumns>
+		<retrieveApplicationEUTypeMIX>
+		</retrieveApplicationEUTypeMIX>
+		<removeApplicationEUTypeMIX>
+		</removeApplicationEUTypeMIX>
+		<createApplicationEUTypeMIX>
+		</createApplicationEUTypeMIX>
+		
+		<PELColumns>
+		</PELColumns>
+		<retrieveApplicationEUTypePEL>
+		</retrieveApplicationEUTypePEL>
+		<removeApplicationEUTypePEL>
+		</removeApplicationEUTypePEL>
+		<createApplicationEUTypePEL>
+		</createApplicationEUTypePEL>
+		
+		
+		<MLDColumns>
+		</MLDColumns>
+		<retrieveApplicationEUTypeMLD>
+		</retrieveApplicationEUTypeMLD>
+		<removeApplicationEUTypeMLD>
+		</removeApplicationEUTypeMLD>
+		<createApplicationEUTypeMLD>
+		</createApplicationEUTypeMLD>					
+		<GINColumns>
+		</GINColumns>
+		<retrieveApplicationEUTypeGIN>
+		</retrieveApplicationEUTypeGIN>
+		<removeApplicationEUTypeGIN>
+		</removeApplicationEUTypeGIN>
+		<createApplicationEUTypeGIN>
+		</createApplicationEUTypeGIN>
+		<DISColumns>
+		</DISColumns>
+		<retrieveApplicationEUTypeDIS>
+		</retrieveApplicationEUTypeDIS>
+		<removeApplicationEUTypeDIS>
+		</removeApplicationEUTypeDIS>
+		<createApplicationEUTypeDIS>
+		</createApplicationEUTypeDIS>
+		<GRIColumns>
+		</GRIColumns>
+		<retrieveApplicationEUTypeGRI>
+		</retrieveApplicationEUTypeGRI>
+		<removeApplicationEUTypeGRI>
+		</removeApplicationEUTypeGRI>
+		<createApplicationEUTypeGRI>
+		</createApplicationEUTypeGRI>								
+<!-- End: Review it once finalized -->
+				
+		<retrieveApplicationEUTypeHET>
+			SELECT
+			${ApplicationEUTypeSQL.HETColumns}
+			FROM %Schema%pa_nsr_eu_type_het
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeHET>
+		<removeApplicationEUTypeHET>
+			DELETE FROM %Schema%pa_nsr_eu_type_het
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeHET>
+		
+		<createApplicationEUTypeHET>
+			INSERT INTO %Schema%pa_nsr_eu_type_het
+			(application_eu_id
+			,fuel_sulfur
+			,units_fuel_sulfur_cd)
+			VALUES(?,?,?)
+		</createApplicationEUTypeHET>
+
+		<PNEColumns>
+			application_eu_id
+			,motive_force_cd
+			,voc
+			,hap
+			,new_or_modified_eqp_cnt
+		</PNEColumns>
+
+		<retrieveApplicationEUTypePNE>
+			SELECT
+			${ApplicationEUTypeSQL.PNEColumns}
+			FROM %Schema%pa_nsr_eu_type_pne
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypePNE>
+		<removeApplicationEUTypePNE>
+			DELETE FROM %Schema%pa_nsr_eu_type_pne
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypePNE>
+
+		<createApplicationEUTypePNE>
+			INSERT INTO %Schema%pa_nsr_eu_type_pne
+			(application_eu_id
+			,motive_force_cd
+			,voc
+			,hap
+			,new_or_modified_eqp_cnt)
+			VALUES(?,?,?,?,?)
+		</createApplicationEUTypePNE>
+		
+		<FLRColumns>
+			application_eu_id, emergency_flare_only_cd,
+			ignition_device_type_cd, btu, smokeless_design_cd,
+			assist_gas_utilized_cd, assist_gas_utilized_btu,
+			fuel_sulfur, units_fuel_sulfur_cd,
+			waste_gas_volume, units_waste_gas_volume_cd,
+			installation_date, continuously_monitored_cd,
+			describe_continuous_monitoring
+		</FLRColumns>
+		<retrieveApplicationEUTypeFLR>
+			SELECT
+			${ApplicationEUTypeSQL.FLRColumns}
+			FROM %Schema%pa_nsr_eu_type_flr
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeFLR>
+		<removeApplicationEUTypeFLR>
+			DELETE from %Schema%pa_nsr_eu_type_flr
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeFLR>
+		<createApplicationEUTypeFLR>
+			INSERT INTO %Schema%pa_nsr_eu_type_flr
+			(application_eu_id, emergency_flare_only_cd,
+			ignition_device_type_cd, btu, smokeless_design_cd,
+			assist_gas_utilized_cd, assist_gas_utilized_btu,
+			fuel_sulfur, units_fuel_sulfur_cd,
+			waste_gas_volume, units_waste_gas_volume_cd,
+			installation_date, continuously_monitored_cd,
+			describe_continuous_monitoring)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeFLR>
+		
+		<CSHColumns>
+			application_eu_id, type_of_material_crushed,
+			type_of_crusher_cd, crushing_manufacture_date,
+			crushing_power_source_cd, max_crusher_capacity,
+			screen_cd, screen_type, type_of_material_screened,
+			screening_manufacture_date, screening_power_source_cd,
+			operating_in_conjunction_cd, max_screening_capacity,
+			number_of_conveyor_transfer_and_drop_points,
+			type_of_material_being_transferred, detailed_description
+		</CSHColumns>
+		<retrieveApplicationEUTypeCSH>
+			SELECT
+			${ApplicationEUTypeSQL.CSHColumns}
+			FROM %Schema%pa_nsr_eu_type_csh
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUTypeCSH>
+		<removeApplicationEUTypeCSH>
+			DELETE from %Schema%pa_nsr_eu_type_csh
+			WHERE application_eu_id = ?
+		</removeApplicationEUTypeCSH>
+		<createApplicationEUTypeCSH>
+			INSERT INTO %Schema%pa_nsr_eu_type_csh
+			(application_eu_id, type_of_material_crushed,
+			type_of_crusher_cd, crushing_manufacture_date,
+			crushing_power_source_cd, max_crusher_capacity,
+			screen_cd, screen_type, type_of_material_screened,
+			screening_manufacture_date, screening_power_source_cd,
+			operating_in_conjunction_cd, max_screening_capacity,
+			number_of_conveyor_transfer_and_drop_points,
+			type_of_material_being_transferred, detailed_description)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createApplicationEUTypeCSH>
+	</ApplicationEUTypeSQL>
+</root>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Companies Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--Companies Tab -->
+
+	<!-- menu items -->
+
+
+	<!-- TODO this should use a class from the public package, not the app package -->
+	<managed-bean>
+		<managed-bean-name>companySearch</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.app.company.CompanySearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>companyService</property-name>
+			<value>#{companyBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>companyProfile</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.portal.company.CompanyProfile
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>companyService</property-name>
+			<value>#{companyBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:companyProfile</from-outcome>
+			<to-view-id>/companies/companyDetailDialog.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+
+</faces-config>

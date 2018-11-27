@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Reports Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+  <!-- menu items -->
+  <managed-bean>
+    <managed-bean-name>menuItem_compliance</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_compliance</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>Compliance Report</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <value>compliance</value>
+    </managed-property>
+    <managed-property>
+      <property-name>children</property-name>
+      <list-entries>
+        <value-class>
+          us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+        </value-class>
+        <value>#{menuItem_compReportDetail}</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/compliance/compReportDetail.jsp</value>
+        <value>/compliance/valTradSecNotif.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>rendered</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>method.complianceReport.from2ndLevelMenu</value>
+    </managed-property>
+  </managed-bean>
+
+  <!-- menu items -->
+  
+  <managed-bean>
+    <managed-bean-name>menuItem_compReportDetail</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_compReportDetail</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>Compliance Report Detail</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <list-entries>
+      	<value>compliance.detail</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+       <property-name>disabled</property-name>
+       <value>false</value>
+    </managed-property>
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/compliance/compReportDetail.jsp</value>
+        <value>/compliance/valTradSecNotif.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>complianceDetail</value>
+    </managed-property>
+  </managed-bean>
+
+  <!-- Backing beans -->
+  <managed-bean>
+    <managed-bean-name>complianceReport</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.portal.compliance.ComplianceReports
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>complianceReportService</property-name>
+            <value>#{complianceReportBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>facilityService</property-name>
+            <value>#{facilityBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>infrastructureService</property-name>
+            <value>#{infrastructureBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>infraDefs</property-name>
+            <value>#{infraDefs}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>myTasks</property-name>
+            <value>#{myTasks}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>companyProfile</property-name>
+            <value>#{companyProfile}</value>
+        </managed-property>
+        
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>complianceReportSearch</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.portal.compliance.ComplianceReportSearch
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>complianceReportService</property-name>
+            <value>#{complianceReportBO}</value>
+        </managed-property>
+    </managed-bean>
+  <!-- Backing beans -->
+
+  <navigation-rule>
+    <navigation-case>
+      <from-outcome>dialog:newComplianceReport</from-outcome>
+      <to-view-id>/compliance/newComplianceReport.jsp</to-view-id>
+    </navigation-case>
+	  <navigation-case>
+	      <from-outcome>dialog:editComplianceDeviationTV</from-outcome>
+	      <to-view-id>/compliance/editCompDeviationTV.jsp</to-view-id>
+	  </navigation-case>
+	  
+	    <navigation-case>
+	      <from-outcome>dialog:editComplianceDeviationPER</from-outcome>
+	      <to-view-id>/compliance/editCompDeviationPER.jsp</to-view-id>
+	  </navigation-case>
+  
+    <navigation-case>
+      <from-outcome>complianceDetail</from-outcome>
+      <to-view-id>/compliance/compReportDetail.jsp</to-view-id>
+      <redirect />
+    </navigation-case>
+    
+    <navigation-case>
+			<from-outcome>home.compliance.complianceReportDetails</from-outcome>
+			<to-view-id>/compliance/homeComReportDetail.jsp</to-view-id>
+			<redirect />
+	</navigation-case>  
+
+	<navigation-case>
+      <from-outcome>complianceDetailNoRedirect</from-outcome>
+      <to-view-id>/compliance/compReportDetail.jsp</to-view-id>
+    </navigation-case>
+    
+    <navigation-case>
+      <from-outcome>dialog:editComplianceDeviation</from-outcome>
+      <to-view-id>/compliance/editCompDeviation.jsp</to-view-id>
+    </navigation-case>
+
+    
+
+    <navigation-case>
+      <from-outcome>complianceSearch</from-outcome>
+      <to-view-id>/compliance/compReportSearch.jsp</to-view-id>
+      <redirect />
+    </navigation-case>
+    
+    <navigation-case>
+      <from-outcome>dialog:viewPDF</from-outcome>
+      <to-view-id>/compliance/documentPrintInfo.jsp</to-view-id>
+    </navigation-case>
+  
+  </navigation-rule>
+  
+  <navigation-rule>
+		<navigation-case>
+			<from-outcome>validationTradeSecretNotification</from-outcome>
+			<to-view-id>/compliance/valTradSecNotif.jsp</to-view-id>
+		</navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/home.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+  <navigation-rule>
+  	<navigation-case>
+  		<from-outcome>dialog:complianceReportTypeHelpInfo</from-outcome>
+  		<to-view-id>/compliance/complianceReportTypeHelpInfo.jsp</to-view-id>
+  	</navigation-case>
+  </navigation-rule>	
+
+</faces-config>

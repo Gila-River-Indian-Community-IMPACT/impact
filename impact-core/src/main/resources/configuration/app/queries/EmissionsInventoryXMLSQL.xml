@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<EmissionsInventoryXMLSQL>
+		<generateEmissionsInventoryXML>
+						;WITH XMLNAMESPACES (
+			'http://www.exchangenetwork.net/schema/header/2' as hdr,
+			'http://www.exchangenetwork.net/schema/cer/1' as cer
+			)
+			select
+			(
+				select
+					"@id" = ?,
+					'http://www.exchangenetwork.net/schema/header/2 http://www.exchangenetwork.net/schema/header/2/header_v2.0.xsd' as "@xsi:schemaLocation",
+				( 
+					select
+						'hdr:AuthorName' = ?,
+						'Wyoming DEQ' as 'hdr:OrganizationName',
+						'EIS' as 'hdr:DocumentTitle',
+						SYSDATETIMEOFFSET() as 'hdr:CreationDateTime',
+						'EIS_v1_0' as 'hdr:DataFlowName',
+						 'hdr:SenderContact' = ?,
+						( select
+							'SubmissionType' as 'hdr:PropertyName',
+							'hdr:PropertyValue' = ?
+							FOR XML PATH ('hdr:Property'), type
+						),
+						( select
+							'DataCategory' as 'hdr:PropertyName',
+							'Point' as 'hdr:PropertyValue'
+							FOR XML PATH ('hdr:Property'), type
+						)
+					FOR XML PATH ('hdr:Header'), type
+				),
+				(
+					select
+					(
+						select
+						(
+							select
+								'http//www.exchangenetwork.net/schema/cer/1 http://www.exchangenetwork.net/schema/cer/1/index.xsd' as "@xsi:schemaLocation",
+								'cer:UserIdentifier' = ?,
+								'WYDEQ' as 'cer:ProgramSystemCode',
+								'cer:EmissionsYear' = ?,
+								'cer:SubmittalComment' = ?,
+							(
+								select
+								(
+									select 
+									(
+										select 
+											fnx.naics_cd as 'cer:NAICSCode'
+											from dbo.fp_facility f1
+											inner join dbo.fp_facility_naics_xref fnx
+											on fnx.fp_id = f1.FP_ID
+											WHERE f1.FP_ID = f.fp_id
+	
+										FOR XML PATH ('cer:FacilityNAICS'), type
+									), 
+									( 
+										select Distinct
+											RIGHT(f.facility_id, 5) as "cer:FacilitySiteIdentifier",
+											'WYDEQ' as "cer:ProgramSystemCode",
+											county.FIPS_COUNTY_CD as "cer:StateAndCountyFIPSCode"
+											FROM dbo.fp_facility f2	
+											left outer JOIN dbo.FP_FACILITY_Address_XREF fax
+											on f2.FP_ID = fax.FP_ID 
+											left outer JOIN dbo.CM_ADDRESS a
+											on fax.address_ID = a.Address_ID
+											left outer JOIN dbo.CM_COUNTY_DEF county
+											on a.COUNTY_CD = county.COUNTY_CD 
+											where f.FP_ID = f2.FP_ID 
+				
+										FOR XML PATH ('cer:FacilityIdentification'), type
+									),
+									(
+										select 
+										(
+											select distinct
+												rppx.CORR_ID as "cer:Identifier",
+												'WYDEQ' as "cer:ProgramSystemCode"
+												from dbo.FP_FACILITY fre
+												inner join  dbo.rp_EMISSIONS_RPT rer 
+												on fre.FP_ID = rer.FP_ID 
+												inner join dbo.rp_REPORT_PERIOD_XREF rppx
+												on rer.EMISSIONS_RPT_ID = rppx.EMISSIONS_RPT_ID
+												INNER JOIN dbo.FP_EMISSIONS_UNIT as emu21
+												on rppx.CORR_ID = emu21.CORR_EPA_EMU_ID
+												INNER JOIN dbo.rp_EMISSION_PERIOD rep
+												on rppx.EMISSION_PERIOD_ID = rep.EMISSION_PERIOD_ID
+												where  fre.FP_ID = f.FP_ID and  fre.FP_ID = fre1.FP_ID
+												and rer.EMISSIONS_RPT_ID = eee.EMISSIONS_RPT_ID
+												and rer.REPORT_YEAR = ?
+												and emu21.CORR_EPA_EMU_ID = emu.CORR_EPA_EMU_ID
+				
+											FOR XML PATH ('cer:UnitIdentification'), type
+										),
+										( 
+											Select 
+											(
+												Select distinct
+													Cast(rppx3.CORR_ID as varchar(20)) + '-' + fep.PROCESS_ID as "cer:Identifier",
+													'WYDEQ' as "cer:ProgramSystemCode"
+													from dbo.FP_FACILITY fre3
+													inner join  dbo.rp_EMISSIONS_RPT rer3 
+													on fre3.FP_ID = rer3.FP_ID
+													inner join dbo.rp_REPORT_PERIOD_XREF rppx3
+													on rer3.EMISSIONS_RPT_ID = rppx3.EMISSIONS_RPT_ID
+													INNER JOIN dbo.FP_EMISSIONS_UNIT as emu31
+													on (rppx3.CORR_ID = emu31.CORR_EPA_EMU_ID and emu31.FP_ID = rer3.FP_ID)
+													INNER JOIN dbo.rp_EMISSION_PERIOD rep3
+													on rppx3.EMISSION_PERIOD_ID = rep3.EMISSION_PERIOD_ID
+														and rep2.SCC_ID = rep3.SCC_ID
+													INNER JOIN dbo.FP_EMISSION_PROCESS fep
+													on (fep.EMU_ID = emu31.EMU_ID and fep.SCC_ID = rep3.SCC_ID)
+													where  fre3.FP_ID = f.FP_ID 
+													and rer3.EMISSIONS_RPT_ID = eee.EMISSIONS_RPT_ID
+													and rppx2.CORR_ID = rppx3.CORR_ID
+													and rep2.SCC_ID = rep3.SCC_ID
+													and rer3.REPORT_YEAR = ?
+													and emu31.CORR_EPA_EMU_ID = emu.CORR_EPA_EMU_ID
+		
+												FOR XML PATH ('cer:ProcessIdentification'), type
+										),
+										(
+											Select 
+												'A' as "cer:ReportingPeriodTypeCode",  /*  Check constant */
+												'R' as "cer:EmissionOperatingTypeCode", /*   check constant */
+												 "cer:StartDate" = ?,  /* check constant */
+												"cer:EndDate" = ?,  /* check constant */				
+												(
+													select Distinct
+														rep5.HOURS_PER_YEAR as "cer:ActualHoursPerPeriod",
+														rep5.WINTER_THROUGHPUT_PCT as "cer:PercentWinterActivity",
+														rep5.SPRING_THROUGHPUT_PCT as "cer:PercentSpringActivity",
+														rep5.SUMMER_THROUGHPUT_PCT as "cer:PercentSummerActivity",
+														rep5.FALL_THROUGHPUT_PCT as "cer:PercentFallActivity"
+														from dbo.FP_FACILITY fre5
+														inner join  dbo.rp_EMISSIONS_RPT rer5 
+														on fre5.FP_ID = rer5.FP_ID 
+														inner join dbo.rp_REPORT_PERIOD_XREF rppx5
+														on rer5.EMISSIONS_RPT_ID = rppx5.EMISSIONS_RPT_ID
+														INNER JOIN dbo.FP_EMISSIONS_UNIT as emu41
+														on rppx5.CORR_ID = emu41.CORR_EPA_EMU_ID
+														INNER JOIN dbo.rp_EMISSION_PERIOD rep5
+														on rppx5.EMISSION_PERIOD_ID = rep5.EMISSION_PERIOD_ID 
+															and rep2.SCC_ID = rep5.SCC_ID
+														where  fre5.FP_ID = f.FP_ID 
+															and rer5.EMISSIONS_RPT_ID = eee.EMISSIONS_RPT_ID
+															and rppx2.CORR_ID = rppx5.CORR_ID
+															and rep2.SCC_ID = rep5.SCC_ID
+															and emu41.CORR_EPA_EMU_ID = emu.CORR_EPA_EMU_ID
+
+													FOR XML PATH ('cer:OperatingDetails'), type
+												),
+												(
+													select 
+														re6.Pollutant_CD as "cer:PollutantCode", /* check this */
+														replace(rtrim(replace(replace(rtrim(replace(cast(cast(cast(replace(re6.Stack_Emissions, ',', '') as float) + cast(replace(re6.FUGITIVE_EMISSIONS, ',', '') as float) as decimal(18,10)) as varchar(max)), '0', ' ')), ' ', '0'), '.' , ' ')), ' ', '.') as "cer:TotalEmissions",
+														re6.EMISSION_UNIT_NUMERATOR as "cer:EmissionsUnitofMeasureCode", /* check this */
+														re6.EMISSION_CALC_METHOD_CD as "cer:EmissionCalculationMethodCode"
+														from dbo.FP_FACILITY fre6
+														inner join  dbo.rp_EMISSIONS_RPT rer6 
+														on fre6.FP_ID = rer6.FP_ID 
+														inner join dbo.rp_REPORT_PERIOD_XREF rppx6
+														on rer6.EMISSIONS_RPT_ID = rppx6.EMISSIONS_RPT_ID
+														INNER JOIN dbo.rp_EMISSION_PERIOD rep6
+														on rppx6.EMISSION_PERIOD_ID = rep6.EMISSION_PERIOD_ID 
+															and rep6.SCC_ID =rep2.SCC_ID
+														LEFT OUTER JOIN dbo.RP_EMISSIONS re6
+														on rep6.EMISSION_PERIOD_ID = re6.EMISSION_PERIOD_ID
+														where  fre6.FP_ID = f.FP_ID 
+														and rer6.EMISSIONS_RPT_ID = eee.EMISSIONS_RPT_ID
+														and rppx6.CORR_ID = rppx2.CORR_ID
+														and rer6.REPORT_YEAR = ?
+														and rep6.SCC_ID = rep2.SCC_ID
+														and re6.POLLUTANT_CD NOT IN	('PM-PRI', 'NO', 'NO2', 'VE', '7664939', 'HAPS_TOT', 'FL', '199', '95501', 'CO2E', 'NMOCs', '195', '67641', '74931', '74986', '246', '40', 'PM-FIL' )
+														group by fre6.FP_ID, rppx6.CORR_ID,
+														re6.POLLUTANT_CD, re6.STACK_EMISSIONS, re6.FUGITIVE_EMISSIONS, 
+														re6.EMISSION_UNIT_NUMERATOR,re6.EMISSION_CALC_METHOD_CD
+														
+													FOR XML PATH ('cer:ReportingPeriodEmissions'), type
+												)
+										  FOR XML PATH ('cer:ReportingPeriod'), type
+										)
+									  	from dbo.FP_FACILITY fre2
+										  inner join  dbo.rp_EMISSIONS_RPT rer2 
+										  on fre2.FP_ID = rer2.FP_ID 
+										  inner join dbo.rp_REPORT_PERIOD_XREF rppx2
+										  INNER JOIN dbo.FP_EMISSIONS_UNIT as emu2
+										  on rppx2.CORR_ID = emu2.CORR_EPA_EMU_ID
+										  on rer2.EMISSIONS_RPT_ID = rppx2.EMISSIONS_RPT_ID
+										  Inner join dbo.FP_EMISSIONS_UNIT ee3
+										  on rppx2.CORR_ID = ee3.CORR_EPA_EMU_ID
+										  INNER JOIN dbo.rp_EMISSION_PERIOD rep2
+										  on rppx2.EMISSION_PERIOD_ID = rep2.EMISSION_PERIOD_ID
+										  where  fre2.FP_ID = f.FP_ID 
+										  and rer2.EMISSIONS_RPT_ID = eee.EMISSIONS_RPT_ID
+										  and ee3.CORR_EPA_EMU_ID = emu.CORR_EPA_EMU_ID
+										  and ee3.FP_ID = f.FP_ID
+										  and rep2.HOURS_PER_YEAR > 0
+										  GROUP BY fre2.FP_ID,rppx2.CORR_ID, rep2.SCC_ID
+										  
+										FOR XML PATH ('cer:UnitEmissionsProcess'), type
+									)
+									from dbo.FP_FACILITY fre1
+									inner join  dbo.rp_EMISSIONS_RPT rer1 
+									on fre1.FP_ID = rer1.FP_ID  and fre1.FP_ID = f.FP_ID 
+									inner join dbo.rp_REPORT_PERIOD_XREF rppx1
+									on rer1.EMISSIONS_RPT_ID = rppx1.EMISSIONS_RPT_ID
+									INNER JOIN dbo.FP_EMISSIONS_UNIT as emu
+									on rppx1.CORR_ID = emu.CORR_EPA_EMU_ID
+									INNER JOIN dbo.rp_EMISSION_PERIOD rep25
+									on rppx1.EMISSION_PERIOD_ID = rep25.EMISSION_PERIOD_ID
+									where  fre1.FP_ID = f.FP_ID 
+									and rer1.EMISSIONS_RPT_ID = eee.EMISSIONS_RPT_ID
+									and rer1.REPORT_YEAR = ?
+									GROUP BY fre1.FP_ID, emu.CORR_EPA_EMU_ID
+									
+								FOR XML PATH ('cer:EmissionsUnit'), type
+							)
+							from  dbo.fp_FACILITY f
+							INNER JOIN dbo.rp_EMISSIONS_RPT eee
+							on f.FP_ID = eee.FP_ID AND eee.EMISSIONS_RPT_ID IN
+								( SELECT res.EMISSIONS_RPT_ID FROM
+									(	SELECT ROW_NUMBER() OVER (PARTITION BY fp.FACILITY_ID ORDER BY rp.EMISSIONS_RPT_ID DESC) RN, rp.EMISSIONS_RPT_ID from dbo.RP_EMISSIONS_RPT rp
+											INNER JOIN dbo.FP_FACILITY fp ON fp.FP_ID = rp.FP_ID
+											INNER JOIN dbo.RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF rptscx ON rptscx.EMISSIONS_RPT_ID = rp.EMISSIONS_RPT_ID
+											INNER JOIN dbo.SC_EMISSIONS_REPORT scr ON scr.SC_EMISSIONS_REPORT_ID = rptscx.SC_EMISSIONS_REPORT_ID
+											INNER JOIN dbo.RP_REGULATORY_REQUIREMENT_TYPE_DEF rrdef ON rrdef.REGULATORY_REQUIREMENT_CODE = scr.REGULATORY_REQUIREMENT_CD 
+											WHERE 
+												rp.REPORT_YEAR = ? 
+												AND rp.RPT_RECEIVED_STATUS_CD='10aa'
+												AND rrdef.REPORT_TO_USEPA = 'Y'
+												AND fp.PERMIT_CLASSIFICATION_CD IN (@pos1)
+												AND fp.FACILITY_TYPE_CD NOT IN (@pos2)
+									) res WHERE res.RN = 1
+								)
+							FOR XML PATH ('cer:FacilitySite'),type
+							)
+						)
+						FOR XML PATH('cer:CERS'), type, ELEMENTS XSINIL
+						)
+					) 
+					FOR XML PATH ('hdr:Payload'), type
+				)
+				FOR XML PATH ('hdr:Document'), type, ELEMENTS XSINIL
+			)
+		</generateEmissionsInventoryXML>
+	</EmissionsInventoryXMLSQL>
+</root>

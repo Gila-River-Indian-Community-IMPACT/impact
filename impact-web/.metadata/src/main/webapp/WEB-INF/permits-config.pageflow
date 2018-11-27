@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf1376402287836149" configfile="/impact-web/src/main/webapp/WEB-INF/permits-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="4608" id="pf1376402305280150" outlinks="pf1376402305280151 pf1376402305280152 pf1376402305280153 pf1376402305280154 pf1376402305280155 pf1376402305280156 pf1376402305280157 pf1376402305280158 pf1376402305280159 pf1376402305280160 pf1376402305280161 pf1376402305280162 pf1376402305280163 pf1376402305280164 pf1376402305280165 pf1376402305280166 pf1376402305280167 pf1376402305280168 pf1376402305280169 pf1376402305280170 pf1376402305280171 pf1376402305280172 pf1376402305280173 pf1376402305280174 pf13902529203790 pf13902529203791" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/permitDetail" x="338" y="178" id="pf1376402305280175" referenceLink="//@navigationRule.1/@navigationCase.10/@toViewId|" inlinks="pf1376402305280151 pf1376402305280173" path="/permits/permitDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/draftIssuance" x="338" y="562" id="pf1376402305280176" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf1376402305280152" path="/permits/draftIssuance.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/denialIssuance" x="338" y="946" id="pf1376402305280177" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf1376402305280153" path="/permits/denialIssuance.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/PPPIssuance" x="338" y="1330" id="pf1376402305280178" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf1376402305280154" path="/permits/PPPIssuance.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/PPIssuance" x="338" y="1714" id="pf1376402305280179" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf1376402305280155" path="/permits/PPIssuance.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/finalIssuance" x="338" y="2098" id="pf1376402305280180" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf1376402305280156" path="/permits/finalIssuance.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/feeSummary" x="338" y="2482" id="pf1376402305280181" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf1376402305280157" path="/permits/feeSummary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/attachments" x="338" y="2866" id="pf1376402305280182" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf1376402305280158" path="/permits/attachments.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/tcList" x="338" y="3250" id="pf1376402305280183" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf1376402305280159" path="/permits/tcList.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/ccList" x="338" y="3634" id="pf1376402305280184" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf1376402305280160" path="/permits/ccList.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/notes" x="338" y="4018" id="pf1376402305280185" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf1376402305280161" path="/permits/notes.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/batSummary" x="338" y="4402" id="pf1376402305280186" referenceLink="//@navigationRule.0/@navigationCase.11/@toViewId|" inlinks="pf1376402305280162" path="/permits/batSummary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/workflows" x="338" y="4786" id="pf1376402305280187" referenceLink="//@navigationRule.0/@navigationCase.12/@toViewId|" inlinks="pf1376402305280163" path="/permits/workflows.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/keywordSearch" x="338" y="5170" id="pf1376402305280188" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf1376402305280164" path="/permits/keywordSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/applicationDetail" x="338" y="5554" id="pf1376402305280189" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf1376402305280165" path="/applications/applicationDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/documentDetail" x="338" y="5938" id="pf1376402305280190" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf1376402305280166" path="/permits/documentDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/issuanceDocDetail" x="338" y="6322" id="pf1376402305280191" referenceLink="//@navigationRule.1/@navigationCase.4/@toViewId|" inlinks="pf1376402305280167" path="/permits/issuanceDocDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/attachmentDetail" x="338" y="6706" id="pf1376402305280192" referenceLink="//@navigationRule.1/@navigationCase.5/@toViewId|" inlinks="pf1376402305280168" path="/permits/attachmentDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="tools/listPermitTempFilesPopup" x="338" y="7090" id="pf1376402305280193" referenceLink="//@navigationRule.1/@navigationCase.6/@toViewId|" inlinks="pf1376402305280169" path="/tools/listPermitTempFilesPopup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/newPermit" x="338" y="7474" id="pf1376402305280194" referenceLink="//@navigationRule.1/@navigationCase.7/@toViewId|" inlinks="pf1376402305280170" path="/permits/newPermit.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/dapcComment" x="338" y="7858" id="pf1376402305280195" referenceLink="//@navigationRule.1/@navigationCase.8/@toViewId|" inlinks="pf1376402305280171" path="/permits/dapcComment.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/facilityProfile" x="338" y="8242" id="pf1376402305280196" referenceLink="//@navigationRule.1/@navigationCase.9/@toViewId|" inlinks="pf1376402305280172" path="/facilities/facilityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/requestUnDeadEndPopup" x="338" y="8626" id="pf1376402305280197" referenceLink="//@navigationRule.1/@navigationCase.11/@toViewId|" inlinks="pf1376402305280174" path="/permits/requestUnDeadEndPopup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/opengendoc" x="338" y="9010" id="pf13902529203802" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf13902529203790" path="/permits/opengendoc.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/addReferencedApp" x="338" y="9394" id="pf13902529203803" referenceLink="//@navigationRule.1/@navigationCase.12/@toViewId|" inlinks="pf13902529203791" path="/permits/addReferencedApp.jsp"/>
+  <links id="pf1376402305280151" target="pf1376402305280175" source="pf1376402305280150" outcome="permitProfile" redirect="true"/>
+  <links id="pf1376402305280152" target="pf1376402305280176" source="pf1376402305280150" outcome="permits.detail.draftIssuance" redirect="true"/>
+  <links id="pf1376402305280153" target="pf1376402305280177" source="pf1376402305280150" outcome="permits.detail.denialIssuance" redirect="true"/>
+  <links id="pf1376402305280154" target="pf1376402305280178" source="pf1376402305280150" outcome="permits.detail.PPPIssuance" redirect="true"/>
+  <links id="pf1376402305280155" target="pf1376402305280179" source="pf1376402305280150" outcome="permits.detail.PPIssuance" redirect="true"/>
+  <links id="pf1376402305280156" target="pf1376402305280180" source="pf1376402305280150" outcome="permits.detail.finalIssuance" redirect="true"/>
+  <links id="pf1376402305280157" target="pf1376402305280181" source="pf1376402305280150" outcome="permits.detail.feeSummary" redirect="true"/>
+  <links id="pf1376402305280158" target="pf1376402305280182" source="pf1376402305280150" outcome="permits.detail.attachments" redirect="true"/>
+  <links id="pf1376402305280159" target="pf1376402305280183" source="pf1376402305280150" outcome="permits.detail.tcList" redirect="true"/>
+  <links id="pf1376402305280160" target="pf1376402305280184" source="pf1376402305280150" outcome="permits.detail.ccList" redirect="true"/>
+  <links id="pf1376402305280161" target="pf1376402305280185" source="pf1376402305280150" outcome="permits.detail.notes" redirect="true"/>
+  <links id="pf1376402305280162" target="pf1376402305280186" source="pf1376402305280150" outcome="permits.detail.batSummary" redirect="true"/>
+  <links id="pf1376402305280163" target="pf1376402305280187" source="pf1376402305280150" outcome="allPermitWorkflows" redirect="true"/>
+  <links id="pf1376402305280164" target="pf1376402305280188" source="pf1376402305280150" outcome="keywordSearch" redirect="true"/>
+  <links id="pf1376402305280165" target="pf1376402305280189" source="pf1376402305280150" outcome="applicationDetail" redirect="true" fromaction="#{permitDetail.loadPermit}"/>
+  <links id="pf1376402305280166" target="pf1376402305280190" source="pf1376402305280150" outcome="dialog:permitDoc"/>
+  <links id="pf1376402305280167" target="pf1376402305280191" source="pf1376402305280150" outcome="dialog:issuanceDocDetail"/>
+  <links id="pf1376402305280168" target="pf1376402305280192" source="pf1376402305280150" outcome="dialog:permitAttach"/>
+  <links id="pf1376402305280169" target="pf1376402305280193" source="pf1376402305280150" outcome="dialog:listPermitTempFilesPopup"/>
+  <links id="pf1376402305280170" target="pf1376402305280194" source="pf1376402305280150" outcome="dialog:newPermit"/>
+  <links id="pf1376402305280171" target="pf1376402305280195" source="pf1376402305280150" outcome="dialog:dapcComment"/>
+  <links id="pf1376402305280172" target="pf1376402305280196" source="pf1376402305280150" outcome="Success" redirect="true" fromaction="#{facilityProfile.submitProfile}"/>
+  <links id="pf1376402305280173" target="pf1376402305280175" source="pf1376402305280150" outcome="Success" redirect="true" fromaction="#{permitDetail.euFeeClicked}"/>
+  <links id="pf1376402305280174" target="pf1376402305280197" source="pf1376402305280150" outcome="dialog:unDeadEndPermit"/>
+  <links id="pf13902529203790" target="pf13902529203802" source="pf1376402305280150" outcome="dialog:openGenDoc"/>
+  <links id="pf13902529203791" target="pf13902529203803" source="pf1376402305280150" outcome="dialog:addApplicationDetail"/>
+</pageflow:Pageflow>

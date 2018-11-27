@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+
+<!-- =========== AQD Monitors Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--AQD Monitors Tab -->  
+	
+	<!-- menu items -->
+	<managed-bean>
+		<managed-bean-name>menuItem_monitors</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_monitors</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>AQD Monitors</value>
+		</managed-property>
+		<managed-property>
+			<property-name>children</property-name>
+			<list-entries>
+				<value-class>
+					us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+				</value-class>
+				<value>#{menuItem_monitorGroupSearch}</value>
+				<value>#{menuItem_aqdMonitorGroupDetail}</value>
+				<value>#{menuItem_aqdMonitorSiteDetail}</value>
+				<value>#{menuItem_aqdMonitorDetail}</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>monitoring</value>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.monitorGroupSearch.refresh</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/monitoring/monitorGroupSearch.jsp</value>
+			</list-entries>
+		</managed-property>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>menuItem_monitorGroupSearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_monitorGroupSearch</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Monitor Group Search</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>monitoring.monitorGroupSearch</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/monitoring/monitorGroupSearch.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.monitorGroupSearch.refresh</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_aqdMonitorGroupDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_aqdMonitorGroupDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Monitor Group Detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>aqdmonitors.aqdMonitorGroupDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>disabled</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/monitoring/monitorGroup.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.monitorGroupDetail.refresh</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>menuItem_aqdMonitorSiteDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_aqdMonitorSiteDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Monitor Site Detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>aqdmonitors.aqdMonitorSiteDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>disabled</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/monitoring/monitorSite.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.monitorSiteDetail.refresh</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>menuItem_aqdMonitorDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_aqdMonitorDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Monitor Detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>aqdmonitors.monitorDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>disabled</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/monitoring/monitor.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.monitorDetail.refresh</value>
+		</managed-property>
+	</managed-bean>	
+
+	<!-- end menu items -->
+
+	<!-- navigation rules -->
+
+	<navigation-rule>	
+		<navigation-case>
+			<from-outcome>monitoring.monitorGroupSearch</from-outcome>
+			<to-view-id>/monitoring/monitorGroupSearch.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>	
+		<navigation-case>
+			<from-outcome>monitoring.monitorGroupDetail</from-outcome>
+			<to-view-id>/monitoring/monitorGroup.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>	
+		<navigation-case>
+			<from-outcome>monitoring.monitorSiteDetail</from-outcome>
+			<to-view-id>/monitoring/monitorSite.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>	
+		<navigation-case>
+			<from-outcome>monitoring.monitorDetail</from-outcome>
+			<to-view-id>/monitoring/monitor.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!--  From AQD Group Search to Group Detail -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{monitorGroupDetail.submitFromJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitorGroup.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>	
+	
+	<!-- From AQD Group Detail to Site Detail-->
+	<navigation-rule>
+		<from-view-id>/monitoring/monitorGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorSiteDetail.submitFromJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitorSite.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Return to group from site -->
+	<navigation-rule>
+		<from-view-id>/monitoring/monitorSite.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorSiteDetail.showAssociatedGroup}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitorGroup.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- From AQD Site to Monitor -->
+	<navigation-rule>
+		<from-view-id>/monitoring/monitorSite.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorDetail.submitFromJsp}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitor.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Return to site from monitor -->
+	<navigation-rule>
+		<from-view-id>/monitoring/monitor.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{monitorDetail.showAssociatedSite}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/monitoring/monitorSite.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<!-- end navigation rules -->
+
+
+
+</faces-config>

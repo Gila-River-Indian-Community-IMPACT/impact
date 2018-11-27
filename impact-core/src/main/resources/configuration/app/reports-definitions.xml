@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<reports-definitions>
+		<category label="Emissions Inventories" description="">
+			<definition-set table="RP_ATTACHMENT_TYPE_DEF"
+				contentType="custom" label="Emissions Inventory Attachment Types"
+				columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+				orderBy="LEN(ATTACHMENT_TYPE_CD), ATTACHMENT_TYPE_CD" description="Emissions Inventory Attachment Types."
+				importClass="us.oh.state.epa.stars2.def.EmissionsAttachmentTypeDef">
+				<field column="ATTACHMENT_TYPE_CD" label="Attachment Type Code"
+					update="F" />
+				<field column="ATTACHMENT_TYPE_DSC" label="Description"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="TRADE_SECRET_ALLOWED" label="Trade Secret Allowed"
+					update="T" pickListTable="CM_TRADE_SECRET_DEF" pickListColumn="TRADE_SECRET_CD"
+					pickListDisplay="TRADE_SECRET_DSC" />
+			</definition-set>
+			<definition-set table="RP_PART_OF" contentType="custom"
+				label="Pollutant Sets" columnPrefix="xx" deprecateModel="flag"
+				create="T" update="T" orderBy="SUP_DESC"
+				importClass="us.oh.state.epa.stars2.def.PartOfTypeDef"
+				description="Defines pollutant supersets and subsets. Example: PM25-PRI is a subset of PM10-PRI and PM10-PRI is a subset of PM-PRI, therefore the amount of PM25-PRI cannot exceed the amount of PM10-PRI and PM10-PRI cannot exceed the amount of PM-PRI. Used when an emissions inventory is validated.  Also used when emissions inventory invoices are calculated, to ensure that no pollutants are double-counted.  Both pollutant code columns are from the pollutant table.">
+				<field column="SUP_CD" label="Superset Pollutant Code" update="F" />
+				<field column="SUP_DESC" label="Superset Description" update="F" />
+				<field column="SUB_CD" label="Subset Pollutant Code" update="F" />
+				<field column="SUB_DESC" label="Subset Description" update="F" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="FP_RPT_RECEIVED_STATUS_DEF"
+				contentType="CD" label="Emissions Inventory Received Status"
+				columnPrefix="RPT_RECEIVED_STATUS" deprecateModel="flag" create="F"
+				update="T" orderBy="RPT_RECEIVED_STATUS_CD" description="Set of Emissions Inventory States"
+				importClass="us.oh.state.epa.stars2.def.ReportReceivedStatusDef">
+			</definition-set>
+			<definition-set table="RP_FIRE_VARIABLE_NAMES_DEF"
+				contentType="custom" label="FIRE formula variables" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="VARIABLE_NAME_CD"
+				description="Definition of variables used in FIRE Database formulas. If a variable is used by a formula, the value of REQUIRED must be set to Y."
+				importClass="us.oh.state.epa.stars2.def.FireVariableNamesDef">
+				<field column="VARIABLE_NAME_CD" label="Variable Name" update="T" />
+				<field column="VARIABLE_NAME_DSC" label="Description" update="T" />
+				<field column="MIN_VAL" label="Minimum Value" update="T" />
+				<field column="MAX_VAL" label="Maximum Value" update="T" />
+				<field column="REQUIRED" label="REQUIRED (Y/N)" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="RP_FIRE_FACTOR" contentType="custom"
+				label="FIRE Factors" columnPrefix="xx" deprecateModel="none" create="T"
+				update="F" description="List of emissions factors from FIRE"
+				importClass="us.oh.state.epa.stars2.def.FireFactorsTypeDef" orderBy="FIRE_ID">
+				<field column="FIRE_ID" label="Fire ID" update="F" />
+				<field column="SCC_ID" label="SCC" update="F" />
+				<field column="POLLUTANT_CD" label="Pollutant" update="F"
+					pickListTable="CM_POLLUTANT_DEF" pickListColumn="POLLUTANT_CD"
+					pickListDisplay="POLLUTANT_DSC" />
+				<field column="FACTOR" label="Factor" update="F" />
+				<field column="FORMULA" label="Formula" update="F" />
+				<field column="EMISSIONS_UNIT_CD" label="Emissions Unit"
+					update="F" pickListTable="RP_UNIT_DEF" pickListColumn="UNIT_CD"
+					pickListDisplay="UNIT_DSC" />
+				<field column="MATERIAL_UNIT_CD" label="Material Units"
+					update="F" pickListTable="RP_UNIT_DEF" pickListColumn="UNIT_CD"
+					pickListDisplay="UNIT_DSC" />
+				<field column="MATERIAL_CD" label="Material" update="F"
+					pickListTable="RP_MATERIAL_DEF" pickListColumn="MATERIAL_CD"
+					pickListDisplay="MATERIAL_DSC" />
+				<field column="ACTION_CD" label="Action" update="F" />
+				<field column="NOTES" label="Notes" update="F" />
+				<field column="CAS" label="CAS" update="F" />
+				<field column="FIRE_POLLUTANT" label="FIRE Pollutant" update="F" />
+				<field column="FIRE_POLLUTANT_ID" label="FIRE Pollutant ID"
+					update="F" />
+				<field column="REF_DESC" label="Reference Desc." update="F" />
+				<field column="AP42_SECTION" label="AP42 Section" update="F" />
+				<field column="QUALITY" label="Quality" update="F" />
+				<field column="ORIGIN" label="Origin" update="F" />
+				<field column="CREATED" label="Created" update="F" />
+				<field column="DEPRECATED_YEAR" label="Year Inactive" update="F" />
+				<field column="ORIG_FACTOR" label="Original Factor" update="F" />
+				<field column="ORIG_EMISSIONS_UNIT_CD" label="Original Emissions Unit Code"
+					update="F" />
+				<field column="ORIG_MATERIAL_UNIT" label="Original Material Unit"
+					update="F" />
+				<field column="ORIG_MATERIAL" label="Original Material"
+					update="F" />
+				<field column="ORIG_ACTION_CD" label="Original Action Code"
+					update="F" />
+				<field column="ORIG_FORMULA" label="Original Formula" update="F" />
+				<field column="ORIG_NOTES" label="Original Notes" update="F" />
+				<field column="ORIG_QUALITY" label="Original Quality" update="F" />
+			</definition-set>
+			<definition-set table="RP_FIRE_FACTOR" contentType="custom"
+				label="FIRE Factors (Internal Format)" columnPrefix="xx"
+				deprecateModel="none" create="T" update="F"
+				description="List of emissions factors from FIRE.  Attributes are ordered the same as the import file."
+				importClass="us.oh.state.epa.stars2.def.FireFactorsTypeDef" orderBy="FIRE_ID">
+				<field column="FIRE_ID" label="Fire ID" update="F" />
+				<field column="SCC_ID" label="SCC" update="F" />
+				<field column="POLLUTANT_CD" label="Pollutant Code" update="F" />
+				<field column="FACTOR" label="Factor" update="F" />
+				<field column="FORMULA" label="Formula" update="F" />
+				<field column="EMISSIONS_UNIT_CD" label="Emissions Unit Code"
+					update="F" />
+				<field column="MATERIAL_UNIT_CD" label="Material Units Code"
+					update="F" />
+				<field column="MATERIAL_CD" label="Material Code" update="F" />
+				<field column="ACTION_CD" label="Action Code" update="F" />
+				<field column="NOTES" label="Notes" update="F" />
+				<field column="QUALITY" label="Quality" update="F" />
+				<field column="ORIGIN" label="Origin" update="F" />
+				<field column="CAS" label="CAS" update="F" />
+				<field column="FIRE_POLLUTANT" label="FIRE Pollutant" update="F" />
+				<field column="FIRE_POLLUTANT_ID" label="FIRE Pollutant ID"
+					update="F" />
+				<field column="ORIG_FACTOR" label="Original Factor" update="F" />
+				<field column="ORIG_FORMULA" label="Original Formula" update="F" />
+				<field column="ORIG_EMISSIONS_UNIT_CD" label="Original Emissions Unit Code"
+					update="F" />
+				<field column="ORIG_MATERIAL_UNIT" label="Original Material Unit"
+					update="F" />
+				<field column="ORIG_MATERIAL" label="Original Material"
+					update="F" />
+				<field column="ORIG_ACTION_CD" label="Original Action Code"
+					update="F" />
+				<field column="ORIG_NOTES" label="Original Notes" update="F" />
+				<field column="ORIG_QUALITY" label="Original Quality" update="F" />
+				<field column="REF_DESC" label="Reference Desc." update="F" />
+				<field column="AP42_SECTION" label="AP42 Section" update="F" />
+				<field column="CREATED" label="Created" update="F" />
+				<field column="DEPRECATED_YEAR" label="Year Inactive" update="F" />
+			</definition-set>
+			<definition-set table="RP_EMISSION_CALC_METHOD_DEF"
+				contentType="custom" label="Emissions Calculation Methods"
+				columnPrefix="xx" deprecateModel="flag" create="T" update="T"
+				orderBy="EMISSION_CALC_METHOD_CD"
+				description="The methods that may be used to estimate or derive emissions levels. The higher the accuracy number, the more accurate that calculation method is in comparison to the other methods. (Additional factor methods use codes under 100.  Additional emissions methods use codes in the 200s.) The User Selectable column indicates whether a user submitting an Emissions Inventory is allowed to choose this method when calculating Process Emissions."
+				importClass="us.oh.state.epa.stars2.def.EmissionCalcMethodDef">
+				<field column="EMISSION_CALC_METHOD_CD" label="Code" update="F" />
+				<field column="EMISSION_CALC_METHOD_DSC" label="Description"
+					update="T" />
+				<field column="EMISSION_CALC_METHOD_LONG_DSC" label="Long Description"
+					update="T" />
+				<field column="EMISSION_CALC_METHOD_ACCURACY" label="Accuracy"
+					update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="USER_SELECTABLE" label="User Selectable" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="RP_MATERIAL_DEF" contentType="CD"
+				label="Material" columnPrefix="MATERIAL" deprecateModel="flag"
+				create="T" update="T" orderBy="MATERIAL_DSC" description="The set of valid material values"
+				importClass="us.oh.state.epa.stars2.def.MaterialDef">
+			</definition-set>
+			<definition-set table="CM_MATERIAL_IO_DEF"
+				contentType="CD" label="Material I/O" columnPrefix="MATERIAL_IO"
+				deprecateModel="flag" create="T" update="T" orderBy="MATERIAL_IO_CD"
+				importClass="us.oh.state.epa.stars2.def.MaterialIOTypeDef"
+				description="The set of valid material I/O values">
+			</definition-set>
+			<definition-set table="RP_UNIT_DEF" contentType="custom"
+				label="Units" columnPrefix="UNIT" deprecateModel="none" create="T"
+				update="T" description="List of possible units or measures" orderBy="UNIT_CD"
+				importClass="us.oh.state.epa.stars2.def.UnitDef">
+				<field column="UNIT_CD" label="Code" update="F" />
+				<field column="UNIT_DSC" label="Description" update="T" />
+				<field column="US_EPA_UNIT_CD" label="Code used by US EPA"
+					update="T" />
+				<field column="NET_STANDARD_CD" label="Units converted to"
+					update="T" />
+				<field column="CONVERSION_FACTOR" label="Conversion factor"
+					update="T" />
+			</definition-set>
+			<definition-set table="RP_DEFAULT_STACK_PARMS"
+				contentType="custom" label="Default Stack Parameters" columnPrefix="xx"
+				create="T" update="T" orderBy="SCC_ID" deprecateModel="none"
+				importClass="us.oh.state.epa.stars2.def.DefaultStackParametersTypeDef"
+				description="Stack parameters to use for US EPA EIS when missing, based upon SCC Code">
+				<field column="SCC_ID" label="SCC ID" update="F" />
+				<field column="AVG_STACK_HEIGHT" label="Average Stack Height (ft)"
+					update="T" />
+				<field column="AVG_STACK_DIAMETER" label="Average Stack Diameter (ft)"
+					update="T" />
+				<field column="AVG_EXIT_GAS_TEMP" label="Average Exit Gas Temperature (F)"
+					update="T" />
+				<field column="AVG_EXIT_GAS_VEL" label="Average Exit Gas Velocity (ft/sec)"
+					update="T" />
+				<field column="CALC_FLOW_RATE" label="Calculated Flow Rate (cu ft/sec)"
+					update="T" />
+				<field column="FUGITIVE" label="Fugitive-Not Stack (Y/N)"
+					update="T" />
+			</definition-set>
+			<definition-set table="RP_EIS_SUBMISSION_TYPE_DEF"
+				contentType="CD" label="EIS Submission Types" columnPrefix="EIS_SUBMISSION_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="EIS_SUBMISSION_TYPE_CD"
+				importClass="us.oh.state.epa.stars2.def.EISSubmissionTypeDef"
+				description="Types of EIS submissions">
+			</definition-set>
+			<definition-set table="CM_SCC" contentType="custom"
+				label="SCC Codes" columnPrefix="xx" deprecateModel="date" create="T"
+				update="T"
+				description="Source Classification Codes (SCC):&lt;br&gt;If the SCC ID is '&lt;b&gt;A-BC-DEF-GH&lt;/b&gt;', then&lt;br&gt;&#160;&#160;&lt;b&gt;L1 Desc&lt;/b&gt; must be '&lt;b&gt;A:&lt;/b&gt;level 1 description',&lt;br&gt;&#160;&#160;&lt;b&gt;L2 Desc&lt;/b&gt; must be '&lt;b&gt;BC:&lt;/b&gt;level 2 description',&lt;br&gt;&#160;&#160;&lt;b&gt;L3 Desc&lt;/b&gt; must be '&lt;b&gt;DEF:&lt;/b&gt;level 3 description' and&lt;br&gt;&#160;&#160;&lt;b&gt;L4 Desc&lt;/b&gt; must be '&lt;b&gt;GH:&lt;/b&gt;level 4 description'.&lt;br&gt;&lt;br&gt;Where two SCCs have the same value down to a certain level, those SCCs must specify exactly the same descriptions for each of those matching levels."
+				importClass="us.oh.state.epa.stars2.def.SccCodesDef"
+				orderBy="SCC_ID">
+				<field column="SCC_ID" label="ID" update="F" />
+				<field column="FED_SCC_ID" label="Federal SCC" update="T" />
+				<field column="SOURCE_LSCC" label="Source (Fed or WY)"
+					update="T" />
+				<field column="CREATED" label="Create Date" update="T" />
+				<field column="LEVEL1_DSC" label="L1 Desc" update="T" />
+				<field column="LEVEL2_DSC" label="L2 Desc" update="T" />
+				<field column="LEVEL3_DSC" label="L3 Desc" update="T" />
+				<field column="LEVEL4_DSC" label="L4 Desc" update="T" />
+				<field column="CATEGORY" label="Category" update="T" />
+				<field column="EPA_UNIT_TYPE_CD" label = "EPA Unit Type Code" update ="T" />
+				<field column="INACTIVE" label="Inactive" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="RP_REGULATORY_REQUIREMENT_TYPE_DEF"
+				contentType="custom" label="Regulatory Requirements" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="REGULATORY_REQUIREMENT_CODE"
+				importClass="us.oh.state.epa.stars2.def.RegulatoryRequirementTypeDef"
+				description="Regulatory Requirements">
+				<field column="REGULATORY_REQUIREMENT_CODE" label="Code" update="F" />
+				<field column="REGULATORY_REQUIREMENT_DSC" label="Description" update="T" />
+				<field column="ALLOW_JUMPSTART_DATA_ENTRY" label="Allow data entry using wizard" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="REPORT_TO_USEPA" label="Report to US EPA" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="ALLOW_FILE_IMPORT" label="Allow File Import" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="PRIORITY" label="Priority" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="RP_CONTENT_TYPE_DEF"
+				contentType="custom" label="Content Types" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="CONTENT_TYPE_CODE"
+				importClass="us.oh.state.epa.stars2.def.ContentTypeDef"
+				description="Content Types" >
+				<field column="CONTENT_TYPE_CODE" label="Code" update="F" />
+				<field column="CONTENT_TYPE_DSC" label="Description" update="T" />
+				<field column="START_DAY" label="Start Day" update="T" /> 
+				<field column="START_MONTH" label="Start Month" update="T" />
+				<field column="END_DAY" label="End Day" update="T" />
+				<field column="END_MONTH" label="End Month" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T" 
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+		</category>
+	</reports-definitions>
+</root>

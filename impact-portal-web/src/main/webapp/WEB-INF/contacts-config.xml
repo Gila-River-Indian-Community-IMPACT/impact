@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Contacts Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!--Contacts Tab -->
+
+	<!-- menu items -->
+	<managed-bean>
+		<managed-bean-name>menuItem_changeContact</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_changeContact</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Task - Facility Contact Change</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>home.changeContact</value>
+		</managed-property>
+		<managed-property>
+			<property-name>children</property-name>
+			<list-entries>
+				<value-class>
+					us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+				</value-class>
+				<value>#{menuItem_contacts}</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/facilities/contacts.jsp</value>
+				<value>/facilities/addContact.jsp</value>
+				<value>/facilities/viewContact.jsp</value>
+				<value>/facilities/viewContactType.jsp</value>
+				<value>/facilities/addTypeToContact.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>rendered</property-name>
+			<value>false</value>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.myTasks.goFacilityContactChange</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_contacts</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_contacts</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Contacts</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>home.facContacts</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/facilities/contacts.jsp</value>
+				<value>/facilities/addContact.jsp</value>
+				<value>/facilities/viewContact.jsp</value>
+				<value>/facilities/viewContactType.jsp</value>
+				<value>/facilities/addTypeToContact.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>rendered</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.contactSearch.refreshSearchContacts</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_contactSearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_contactSearch</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Contact Search</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>contacts.search</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/contacts/contactSearch.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.contactSearch.refreshSearchContacts</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_createContact</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_createContact</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Create Contact</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>contacts.createContact</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/contacts/createContact.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>contacts.createContact</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuItem_contactDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>beanName</property-name>
+			<value>menuItem_contactDetail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>label</property-name>
+			<value>Contact Detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>name</property-name>
+			<value>contacts.detail</value>
+		</managed-property>
+		<managed-property>
+			<property-name>disabled</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/contacts/contactDetail.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>children</property-name>
+			<list-entries>
+				<value-class>
+					us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+				</value-class>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>viewIDs</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>/contacts/contactDetail.jsp</value>
+			</list-entries>
+		</managed-property>
+		<managed-property>
+			<property-name>outcome</property-name>
+			<value>method.contactDetail.refreshContactDetail</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>createContact</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.webcommon.contact.CreateContact
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>contactService</property-name>
+            <value>#{contactBO}</value>
+        </managed-property>
+  	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>contactSearch</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.app.contact.ContactSearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>contactService</property-name>
+            <value>#{contactBO}</value>
+        </managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>contactDetail</managed-bean-name>
+		<managed-bean-class>
+			us.wy.state.deq.impact.app.contact.ContactDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>contactService</property-name>
+            <value>#{contactBO}</value>
+        </managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>/contacts/contactSearch.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{contactSearch.submitSearch}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/contacts/contactSearch.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{contactDetail.saveContactDetail}</from-action>
+			<from-outcome>ContactDeleteSuccess</from-outcome>
+			<to-view-id>/contacts/contactSearch.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>contacts.createContact</from-outcome>
+			<to-view-id>/contacts/createContact.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>contactDetail</from-outcome>
+			<to-view-id>/contacts/contactDetail.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>contacts.detail.notes</from-outcome>
+			<to-view-id>/contacts/notes.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:contactNoteDetail</from-outcome>
+			<to-view-id>/contacts/noteDetail.jsp</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>facilities.profile.contacts</from-outcome>
+			<to-view-id>/facilities/contacts.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>dialog:displayDuplicateContacts</from-outcome>
+			<to-view-id>/contacts/displayDuplicateContactList.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+</faces-config>

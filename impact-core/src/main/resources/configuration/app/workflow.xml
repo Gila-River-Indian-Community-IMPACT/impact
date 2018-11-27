@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+<!-- 
+  <workflow>
+    <designer>
+      <instructions>
+        <actNamePanel>All Activity Templates must have a name, a description,</actNamePanel>
+        <actNamePanel>and a template type.  The name must be unique for the</actNamePanel>
+        <actNamePanel>template type.  You can have two different templates</actNamePanel>
+        <actNamePanel>named 'Abc' as long as they have different template</actNamePanel>
+        <actNamePanel>types (provisioning, sales flow, or undo).</actNamePanel>
+        <actNamePanel> </actNamePanel>
+        <actNamePanel>An 'Undo' template is a special kind of activity template</actNamePanel>
+        <actNamePanel>used to undo an activity that is part of a cancelled</actNamePanel>
+        <actNamePanel>workflow or sales flow.  Many activities do not need</actNamePanel>
+        <actNamePanel>an 'Undo' Activity Template.</actNamePanel>
+
+        <actSplashPanel>This wizard will guide you through the process</actSplashPanel>
+        <actSplashPanel>of creating a new Activity Template or editing</actSplashPanel>
+        <actSplashPanel>an existing Activity Template.  Once this</actSplashPanel>
+        <actSplashPanel>operation is finished, the template will be</actSplashPanel>
+        <actSplashPanel>available for all future workflows of the</actSplashPanel>
+        <actSplashPanel>specified type.</actSplashPanel>
+
+        <autoPanel>Automatic activities require a 'piece' of software</autoPanel>
+        <autoPanel>to actually perform the activity.  In addition,</autoPanel>
+        <autoPanel>the number of automatic retries (in the event that</autoPanel>
+        <autoPanel>first automatic attempt fails), can be specified</autoPanel>
+        <autoPanel>along with the time interval between retry attempts,</autoPanel>
+        <autoPanel>in minutes.</autoPanel>
+        <autoPanel> </autoPanel>
+        <autoPanel>If automatic retry is not desired, then retry attempts</autoPanel>
+        <autoPanel>and retry interval can both be left blank.</autoPanel>
+
+        <dataRatePanel>For Data rate data types, you may specify the minimum</dataRatePanel>
+        <dataRatePanel>value (which must always be greater than or equal to</dataRatePanel>
+        <dataRatePanel>zero), the maximum value (also greater than or equal</dataRatePanel>
+        <dataRatePanel>to zero), and the 'units'.  None of these values are</dataRatePanel>
+        <dataRatePanel>required.</dataRatePanel>
+        <dataRatePanel> </dataRatePanel>
+        <dataRatePanel>For minimum and maximum values, only the value specified</dataRatePanel>
+        <dataRatePanel>is applied.  For example, if you provide a minimum value</dataRatePanel>
+        <dataRatePanel>but no maximum value, then only the minimum value will</dataRatePanel>
+        <dataRatePanel>be applied during validation.  If both a minimum and</dataRatePanel>
+        <dataRatePanel>maximum value are provided, then the maximum value must</dataRatePanel>
+        <dataRatePanel>be greater than the mininum value.</dataRatePanel>
+        <dataRatePanel> </dataRatePanel>
+        <dataRatePanel>The 'units' selection is a way of identify the 'meaning'</dataRatePanel>
+        <dataRatePanel>or 'measurement' of a number.  This value is optional.</dataRatePanel>
+        <dataRatePanel>The values provided here are from the database.</dataRatePanel>
+
+        <datePanel>Validation of 'Date' data is strictly enforcing the</datePanel>
+        <datePanel>proper formating on the 'date' entry.  No further</datePanel>
+        <datePanel>input from you is needed.</datePanel>
+
+        <dbEnumPanel>WARNING:  Construction of this type of detail data</dbEnumPanel>
+        <dbEnumPanel>type should only be attempted by someone with expert</dbEnumPanel>
+        <dbEnumPanel>knowledge of the system and the database.</dbEnumPanel>
+        <dbEnumPanel> </dbEnumPanel>
+        <dbEnumPanel>This step constructs specific SQL clauses used to</dbEnumPanel>
+        <dbEnumPanel>populate a user selection component with a fixed set</dbEnumPanel>
+        <dbEnumPanel>of values.  You may find it helpful to use an SQL</dbEnumPanel>
+        <dbEnumPanel>editor tool to refine the query, and then copy components</dbEnumPanel>
+        <dbEnumPanel>from the query to the fields in this editor.</dbEnumPanel>
+
+        <detailDataPanel>Some Activity Templates require that service data </detailDataPanel>
+        <detailDataPanel>be entered before these activities can be checked in.</detailDataPanel>
+        <detailDataPanel>Typically, this is done to support workflow branching.</detailDataPanel>
+        <detailDataPanel>The left list contains all service detail data types</detailDataPanel>
+        <detailDataPanel>currently on the system (except those already associated</detailDataPanel>
+        <detailDataPanel>with this object).  The right list contains all service</detailDataPanel>
+        <detailDataPanel>detail data types associated with this object.</detailDataPanel>
+        <detailDataPanel> </detailDataPanel>
+        <detailDataPanel>To associate service data with this Activity Template,</detailDataPanel>
+        <detailDataPanel>select one (or more) data types in the left list and</detailDataPanel>
+        <detailDataPanel>then select the  button to move them to the right</detailDataPanel>
+        <detailDataPanel>list.  To remove an association, select the data type</detailDataPanel>
+        <detailDataPanel>in the right list and then select the  button to</detailDataPanel>
+        <detailDataPanel>move it back to the left list.</detailDataPanel>
+
+        <durationPanel>For Duration data types, you may specify the minimum</durationPanel>
+        <durationPanel>value (must be greater than or equal to zero), the </durationPanel>
+        <durationPanel>maximum value (also greater than or equal to zero),</durationPanel>
+        <durationPanel>and the 'units'.  None of these values are required.</durationPanel>
+        <durationPanel> </durationPanel>
+        <durationPanel>For minimum and maximum values, only the value specified</durationPanel>
+        <durationPanel>is applied.  For example, if you provide a minimum value</durationPanel>
+        <durationPanel>but no maximum value, then only the minimum value will</durationPanel>
+        <durationPanel>be applied during validation.  If both a minimum and</durationPanel>
+        <durationPanel>maximum value are provided, then the maximum value must</durationPanel>
+        <durationPanel>be greater than the mininum value.</durationPanel>
+        <durationPanel> </durationPanel>
+        <durationPanel>The 'units' selection is a way of identify the 'meaning'</durationPanel>
+        <durationPanel>or 'measurement' of a number.  This value is optional.</durationPanel>
+        <durationPanel>The values provided here are from the database.</durationPanel>
+
+        <dsfPanel>Dynamic Sub-Flows require an automatic workflow command</dsfPanel>
+        <dsfPanel>to perform the actual creation of the sub-flows.  The</dsfPanel>
+        <dsfPanel>value provided is the standard default creator and will</dsfPanel>
+        <dsfPanel>most likely work for all situations.  However, if a</dsfPanel>
+        <dsfPanel>custom creator class is needed, enter its full class</dsfPanel>
+        <dsfPanel>name here.</dsfPanel>
+        <dsfPanel> </dsfPanel>
+        <dsfPanel>IMPORTANT NOTE: </dsfPanel>
+        <dsfPanel> </dsfPanel>
+        <dsfPanel>When adding this activity to a workflow, be sure to</dsfPanel>
+        <dsfPanel>set the 'activitydata' value on the Activity to the</dsfPanel>
+        <dsfPanel>name of the sub-flow to be created and executed.</dsfPanel>
+
+        <enumEditorPanel>This panel allows you to enter an new enumeration set</enumEditorPanel>
+        <enumEditorPanel>or edit an existing enumeration set.  The enumeration</enumEditorPanel>
+        <enumEditorPanel>set will be stored in the database.</enumEditorPanel>
+        <enumEditorPanel> </enumEditorPanel>
+        <enumEditorPanel>The 'Enum Code' is a four-character code used within</enumEditorPanel>
+        <enumEditorPanel>the system to identify this enumertion.  The 'Description'</enumEditorPanel>
+        <enumEditorPanel>is simply a description of the enumeration set.</enumEditorPanel>
+        <enumEditorPanel> </enumEditorPanel>
+        <enumEditorPanel>The 'Enum Label' is the value that is presented to the</enumEditorPanel>
+        <enumEditorPanel>user for selection.  The 'Enum Value' is an optional</enumEditorPanel>
+        <enumEditorPanel>value that the label can be mapped to.  The 'Enum Value'</enumEditorPanel>
+        <enumEditorPanel>is given to the software for operation.  If no 'Enum Value'</enumEditorPanel>
+        <enumEditorPanel>is given, then the 'Enum Label' will be used.</enumEditorPanel>
+        <enumEditorPanel> </enumEditorPanel>
+        <enumEditorPanel>To edit an existing value, select the cell containing the</enumEditorPanel>
+        <enumEditorPanel>value and use normal text editing (enter characters,</enumEditorPanel>
+        <enumEditorPanel>use Backspace, Delete, and arrow keys) to enter the new</enumEditorPanel>
+        <enumEditorPanel>value.  To delete a row, select a cell containing the row</enumEditorPanel>
+        <enumEditorPanel>and then select the 'Delete' button.  To insert a new row,</enumEditorPanel>
+        <enumEditorPanel>select an empty row and start editing.  If there are no</enumEditorPanel>
+        <enumEditorPanel>empty rows, select an 'Add' button to add a new row.</enumEditorPanel>
+        <enumEditorPanel> </enumEditorPanel>
+        <enumEditorPanel>Entries with blank 'Enum Label' values are ignored and</enumEditorPanel>
+        <enumEditorPanel>are not stored in the database.  When the enumeration is</enumEditorPanel>
+        <enumEditorPanel>used in an application, the list will typically be</enumEditorPanel>
+        <enumEditorPanel>presented in the same order as shown in the table.</enumEditorPanel>
+
+        <enumPanel>The 'Codes' section identifies all currently known</enumPanel>
+        <enumPanel>enumeration sets in the database.  Selecting an entry</enumPanel>
+        <enumPanel>in this list will display all of its values in the</enumPanel>
+        <enumPanel>'Values' list and its description in the 'Description'</enumPanel>
+        <enumPanel>field.  To use an existing enumeration, select the</enumPanel>
+        <enumPanel>appropriate 'Code' and then select 'Finish'.</enumPanel>
+        <enumPanel> </enumPanel>
+        <enumPanel>If none of the existing enumerations meets the need,</enumPanel>
+        <enumPanel>select the 'New' button to launch the 'Create New</enumPanel>
+        <enumPanel>Enumeration' Wizard.</enumPanel>
+
+        <floatPanel>For numeric data types, you may specify the minimum</floatPanel>
+        <floatPanel>value, the maximum value, and the 'units'.  None of</floatPanel>
+        <floatPanel>these values are required.</floatPanel>
+        <floatPanel> </floatPanel>
+        <floatPanel>For minimum and maximum values, only the value specified</floatPanel>
+        <floatPanel>is applied.  For example, if you provide a minimum value</floatPanel>
+        <floatPanel>but no maximum value, then only the minimum value will</floatPanel>
+        <floatPanel>be applied during validation.  If both a minimum and</floatPanel>
+        <floatPanel>maximum value are provided, then the maximum value must</floatPanel>
+        <floatPanel>be greater than the mininum value.</floatPanel>
+        <floatPanel> </floatPanel>
+        <floatPanel>The 'units' selection is a way of identify the 'meaning'</floatPanel>
+        <floatPanel>or 'measurement' of a number.  This value is optional.</floatPanel>
+        <floatPanel>The values provided here are from the database.</floatPanel>
+
+        <integerPanel>For Integer data types, you may specify the minimum</integerPanel>
+        <integerPanel>value, the maximum value, and the 'units'.  None of</integerPanel>
+        <integerPanel>these values are required.</integerPanel>
+        <integerPanel> </integerPanel>
+        <integerPanel>For minimum and maximum values, only the value specified</integerPanel>
+        <integerPanel>is applied.  For example, if you provide a minimum value</integerPanel>
+        <integerPanel>but no maximum value, then only the minimum value will</integerPanel>
+        <integerPanel>be applied during validation.  If both a minimum and</integerPanel>
+        <integerPanel>maximum value are provided, then the maximum value must</integerPanel>
+        <integerPanel>be greater than the mininum value.</integerPanel>
+        <integerPanel> </integerPanel>
+        <integerPanel>The 'units' selection is a way of identify the 'meaning'</integerPanel>
+        <integerPanel>or 'measurement' of a number.  This value is optional.</integerPanel>
+        <integerPanel>The values provided here are from the database.</integerPanel>
+
+        <manualPanel>A 'Terminal' Activity allows a work flow to be</manualPanel>
+        <manualPanel>stopped if it encounters a situation where further</manualPanel>
+        <manualPanel>processing is impossible.  Termination of the order</manualPanel>
+        <manualPanel>requires manual consent by the provisioner.</manualPanel>
+        <manualPanel>Terminal Activities are rare.  To make this a terminal</manualPanel>
+        <manualPanel>activity, select 'Yes' in the box below.</manualPanel>
+
+        <namePanel>All Detail Data Types must have a unique name</namePanel>
+        <namePanel>and a description (which does not have to be;</namePanel>
+        <namePanel>unique.</namePanel>
+        <namePanel> </namePanel>
+        <namePanel>The list of data types identifies all currently</namePanel>
+        <namePanel>defined data types in the database.  These are</namePanel>
+        <namePanel>basic, primitive data types that will be further</namePanel>
+        <namePanel>refined at later steps of this wizard.</namePanel>
+        <namePanel> </namePanel>
+        <namePanel>All service detail data is associated with a subsystem.</namePanel>
+        <namePanel>The provisioning and sales force automation systems</namePanel>
+        <namePanel>are part of the Service subsystem.  As an alternative,</namePanel>
+        <namePanel>you may wish to associate this detail data type with</namePanel>
+        <namePanel>All subsystems.</namePanel>
+        
+        <performerPanel>The Performer Type indicates whether this Activity is</performerPanel>
+        <performerPanel>performed automatically by the system or manually by</performerPanel>
+        <performerPanel>provisioning personnel.</performerPanel>
+        <performerPanel> </performerPanel>
+        <performerPanel>The Expected and Jeopardy Durations are suggested values.</performerPanel>
+        <performerPanel>These can be over-written when editing activities in the</performerPanel>
+        <performerPanel>process designer.</performerPanel>
+
+        <phoneNumberPanel>Validation of 'ANI' (or phone number) data is strictly</phoneNumberPanel>
+        <phoneNumberPanel>enforcing the proper formating on the data entry.</phoneNumberPanel>
+        <phoneNumberPanel> No further input from you is needed.</phoneNumberPanel>
+        
+        <processDurationPanel>Process Durations indicate how long it should take</processDurationPanel>
+        <processDurationPanel>to peform this process.</processDurationPanel>
+        <processDurationPanel> </processDurationPanel>
+        <processDurationPanel>the 'Expected Duration' indicates how long it should</processDurationPanel>
+        <processDurationPanel>take to typically execute this process if everything</processDurationPanel>
+        <processDurationPanel>is optimal.  The 'Jeopardy Duration' identifies the</processDurationPanel>
+        <processDurationPanel>point at which the process may be in jeopardy of</processDurationPanel>
+        <processDurationPanel>failing to completeon time.  Generally, the 'Jeopardy</processDurationPanel>
+        <processDurationPanel>Duration' should be about 80 percent of the expected</processDurationPanel>
+        <processDurationPanel>duration.  The SLA system may adjust these values</processDurationPanel>
+        <processDurationPanel>(usually by increasing them) during actual provisioning.</processDurationPanel>
+        <processDurationPanel> </processDurationPanel>
+        <processDurationPanel>The 'Minimum Provisioning Interval' (Min Prov Interval)</processDurationPanel>
+        <processDurationPanel>is the fastest this process can be executed.  When a</processDurationPanel>
+        <processDurationPanel>service order is entered, the customer need date is</processDurationPanel>
+        <processDurationPanel>checked to insure the order can be completed on time.</processDurationPanel>
+        <processDurationPanel> </processDurationPanel>
+        <processDurationPanel>The 'Earliest Provisioning Interval' (Earliest Prov</processDurationPanel>
+        <processDurationPanel>Interval) specifies how far in advance an order can</processDurationPanel>
+        <processDurationPanel>be executed.  For example, if an certain order type</processDurationPanel>
+        <processDurationPanel>should not be executed until within 30 days of the</processDurationPanel>
+        <processDurationPanel>customer need date (Earliest Prov Interval is '30'),</processDurationPanel>
+        <processDurationPanel>and a customer places the order 90 days before they</processDurationPanel>
+        <processDurationPanel>actually need it, then the order is automatically</processDurationPanel>
+        <processDurationPanel>held for 60 days before provisioning begins.</processDurationPanel>
+
+        <processTmplNamePanel>This panel is used to create a new process template</processTmplNamePanel>
+        <processTmplNamePanel>or workflow.  This process template can be assigned</processTmplNamePanel>
+        <processTmplNamePanel>activities which must be completed in order to</processTmplNamePanel>
+        <processTmplNamePanel>execute this workflow.</processTmplNamePanel>
+        <processTmplNamePanel> </processTmplNamePanel>
+        <processTmplNamePanel>Enter a process template name, description, and </processTmplNamePanel>
+        <processTmplNamePanel>type.  The process template name must be unique.</processTmplNamePanel>
+        <processTmplNamePanel>The process type identifies the workflow type.</processTmplNamePanel>
+        <processTmplNamePanel>Usually, this is 'provisioning' for a standard, </processTmplNamePanel>
+        <processTmplNamePanel>provisioning workflow, or 'sales flow' for a process</processTmplNamePanel>
+        <processTmplNamePanel>associated with Sales Force Automation.</processTmplNamePanel>
+        <processTmplNamePanel> </processTmplNamePanel>
+        <processTmplNamePanel>Use the Product Catalog to associate this workflow</processTmplNamePanel>
+        <processTmplNamePanel>with a particular product or products, and a particular</processTmplNamePanel>
+        <processTmplNamePanel>workflow type, for example, 'new service' or 'change</processTmplNamePanel>
+        <processTmplNamePanel>service'.</processTmplNamePanel>
+
+        <processNamePanel>This panel allows you to define a Workflow process detailed</processNamePanel>
+        <processNamePanel>data item.  These data items are available to and shared by</processNamePanel>
+        <processNamePanel>all Activities in the workflow.  Activities may have their</processNamePanel>
+        <processNamePanel>own detailed data items.  Workflow detailed data items</processNamePanel>
+        <processNamePanel>supplement Activity data items.</processNamePanel>
+        <processNamePanel> </processNamePanel>
+        <processNamePanel>The default data item name is the same as the service</processNamePanel>
+        <processNamePanel>detail data item from the list.  This value may be</processNamePanel>
+        <processNamePanel>changed.</processNamePanel>
+        <processNamePanel> </processNamePanel>
+        <processNamePanel>The 'OE Required' setting indicates whether or not this</processNamePanel>
+        <processNamePanel>data item is required at Order Entry (OE).  If this is</processNamePanel>
+        <processNamePanel>set to 'Yes', then the value must be entered when the</processNamePanel>
+        <processNamePanel>order is taken.</processNamePanel>
+        <processNamePanel> </processNamePanel>
+        <processNamePanel>NOTE: When the workflow process is saved to the database,</processNamePanel>
+        <processNamePanel>process data items and activity data items will be merged.</processNamePanel>
+        <processNamePanel>You be given an opportunity to arrange the data items in</processNamePanel>
+        <processNamePanel>in a preferred order.</processNamePanel>
+
+        <sortPanel>Use this panel to group and order service detail data.</sortPanel>
+        <sortPanel>The data items shown consist of all the service detail</sortPanel>
+        <sortPanel>defined for this Workflow and all Activities in this</sortPanel>
+        <sortPanel>Workflow (duplicates have been removed).</sortPanel>
+        <sortPanel> </sortPanel>
+        <sortPanel>To order service detail data, select an entry in the</sortPanel>
+        <sortPanel>list.  Use the 'Move Up' and 'Move Down' to move the</sortPanel>
+        <sortPanel>selected entry to the proper position.  When done</sortPanel>
+        <sortPanel>sorting, select 'Finish'.  Selecting the 'Cancel'</sortPanel>
+        <sortPanel>button will leave the list in the original order.</sortPanel>
+        <sortPanel> </sortPanel>
+        <sortPanel>Once the service detail data has been sorted, these</sortPanel>
+        <sortPanel>items will appear in Order Entry and Provisioning in</sortPanel>
+        <sortPanel>the order set here.</sortPanel>
+
+        <splashPanel>This wizard will guide you through the process</splashPanel>
+        <splashPanel>of creating a new Detail Data Type or editing</splashPanel>
+        <splashPanel>an existing Detail Data Type.  Once this</splashPanel>
+        <splashPanel>operation is finished, the data type will be</splashPanel>
+        <splashPanel>available for all future services and workflows.</splashPanel>
+
+        <stringPanel>For basic text data types, you may specify the maximum</stringPanel>
+        <stringPanel>number of characters allowed in the text field.  However,</stringPanel>
+        <stringPanel>this value is not required.</stringPanel>        
+
+        <undoPanel>Undo Activities are used to 'undo' completed work in a</undoPanel>
+        <undoPanel>cancelled provisioning process.  For example, equipment</undoPanel>
+        <undoPanel>that was taken out of inventory needs to be returned</undoPanel>
+        <undoPanel>to inventory.  Undo Activities are used to build a</undoPanel>
+        <undoPanel>cancellation order.</undoPanel>
+        <undoPanel> </undoPanel>
+        <undoPanel>Most Activities will not require an 'undo' activity.</undoPanel>
+        <undoPanel>The drop-down list to the right identifies all currently</undoPanel>
+        <undoPanel>known 'Undo' Activities.  If the Activity you are</undoPanel>
+        <undoPanel>building needs an 'Undo' Acitivity, then select one of</undoPanel>
+        <undoPanel>these.  If no 'Undo' Activity is needed, leave the</undoPanel>
+        <undoPanel>selection blank.</undoPanel>
+      </instructions>
+    </designer>
+  </workflow>
+ -->
+</root>

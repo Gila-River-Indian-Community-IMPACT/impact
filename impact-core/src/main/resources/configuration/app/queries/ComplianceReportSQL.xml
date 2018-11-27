@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+  <ComplianceReportSQL>
+    <complianceReportColumns>
+      cr.report_id, cr.per_due_date_cd, cr.other_type_cd,
+      cr.report_type_cd, cr.user_id, cr.facility_id, cr.submitted_date,
+      cr.received_date, cr.comments, cr.report_status, cr.dapc_reviewer,
+      cr.dapc_reviewed_date, cr.dapc_deviations, cr.compliance_status_cd,
+      cr.dapc_tvcc_review_result, cr.dapc_comments, cr.dapc_accepted,
+      cr.tvcc_reporting_year, cr.tvcc_deviation_declared, cr.tvcc_afs_id,
+      cr.tvcc_afs_sent_date, per_start_date,
+      cr.per_end_date, cr.per_due_date, cr.final_action_date, cr.permit_number, cr.validated_flag, cr.last_modified AS cr_lm, cr.crpt_id,
+      cr.legacy_flag, cr.report_yr, cr.report_qtr, cr.fp_id
+    </complianceReportColumns>
+    <complianceReportPerColumns>
+      cpd.report_id, cpd.per_detail_comment, cpd.corr_epa_emu_id, cpd.permit_id, 
+      cpd.operating, cpd.physical_change, cpd.deviations, cpd.mrr_deviations, 
+      cpd.air_toxics_change, cpd.initial_install_complete_dt, cpd.modification_begun_dt, 
+      cpd.commenced_operation_dt, cpd.last_modified
+    </complianceReportPerColumns>
+    <documentColumns>
+      doc.document_id, doc.upload_dt, doc.facility_id, doc.description,
+      doc.path, doc.last_checkout_by, doc.last_modified_by,
+      doc.last_modified_ts, doc.temp_flag, doc.last_modified AS
+      dd_lm,per.last_modified AS ref_lm
+    </documentColumns>
+    <searchResultColumns>
+      cr.report_id, cr.per_due_date_cd, cr.other_type_cd,
+      cr.report_type_cd, cr.user_id, cr.facility_id, cr.submitted_date,
+      cr.received_date, cr.comments, cr.report_status, cr.dapc_reviewer,
+      cr.dapc_reviewed_date, cr.dapc_deviations, cr.compliance_status_cd,
+      cr.dapc_tvcc_review_result, cr.dapc_comments, cr.dapc_accepted,
+      cr.tvcc_reporting_year, cr.tvcc_deviation_declared, cr.tvcc_afs_id,
+      cr.tvcc_afs_sent_date, cr.per_start_date,
+      cr.per_end_date, cr.per_due_date, cr.last_modified AS cr_lm, cr.crpt_id, 
+      ccm.name as company_nm, ccm.cmp_id,
+      ff.facility_nm, 
+      ff.facility_type_cd, 
+      ff.permit_classification_cd,
+      ff.do_laa_cd,
+      ff.federal_scsc_id as scsc_id, 
+      ff.facility_registry_no AS facility_afs_num
+    </searchResultColumns>
+    
+    <ComplianceReportMonitorColumns>
+  		ccrm.cr_monitor_id, 
+  		ccrm.report_id, 
+  		ccrm.monitor_id,
+  		ccrm.audit_status,
+  		ccrm.test_dt,
+  		ccrm.certification_flag,
+  		ccrm.last_modified as ccrm_lm
+  	</ComplianceReportMonitorColumns>
+  	
+  	<ComplianceReportLimitColumns>
+  		ccrl.cr_limit_id,
+		ccrl.limit_id,
+		ccrl.cr_monitor_id,
+		ccrl.included_flag,
+		ccrl.limit_status,
+		ccrl.last_modified as ccrl_lm
+  	</ComplianceReportLimitColumns>
+  	
+    <retrieveComplianceReportAllTypes>
+		SELECT OTHER_TYPE_CD AS code, OTHER_TYPE_DSC AS description,
+		deprecated, REPORT_TYPE_CD, TV_ATTESTATION_REQ, BULK_ENABLED,
+		last_modified FROM %Schema%CR_OTHER_TYPE_DEF ORDER BY OTHER_TYPE_DSC
+	</retrieveComplianceReportAllTypes>
+	<retrieveOtherReportSubTypes>
+		SELECT other_type_cd AS code, other_type_dsc AS description,
+		deprecated, last_modified FROM %Schema%cr_other_type_def
+		WHERE report_type_cd = 'othr' ORDER BY other_type_dsc
+	</retrieveOtherReportSubTypes>
+	<retrieveTestingReportSubTypes>
+		SELECT other_type_cd AS code, other_type_dsc AS description,
+		deprecated, last_modified FROM %Schema%cr_other_type_def
+		WHERE report_type_cd = 'test' ORDER BY other_type_dsc
+	</retrieveTestingReportSubTypes>
+	<retrieveCemsReportSubTypes>
+		SELECT other_type_cd AS code, other_type_dsc AS description,
+		deprecated, last_modified FROM %Schema%cr_other_type_def
+		WHERE report_type_cd = 'cems' ORDER BY other_type_dsc
+	</retrieveCemsReportSubTypes>
+	<retrieveOneReportSubTypes>
+		SELECT other_type_cd AS code, other_type_dsc AS description,
+		deprecated, last_modified FROM %Schema%cr_other_type_def
+		WHERE report_type_cd = 'one' ORDER BY other_type_dsc
+	</retrieveOneReportSubTypes>
+	<retrieveSmbrReportSubTypes>
+		SELECT other_type_cd AS code, other_type_dsc AS description,
+		deprecated, last_modified FROM %Schema%cr_other_type_def
+		WHERE report_type_cd = 'smbr' ORDER BY other_type_dsc
+	</retrieveSmbrReportSubTypes>
+	<retrieveOtherAttachmentTypes>
+		SELECT other_attachment_type_cd AS code,
+		other_attachment_type_dsc AS description, deprecated,
+		last_modified, trade_secret_allowed FROM %Schema%cr_other_attachment_type_def
+		WHERE report_type_cd = 'othr' ORDER BY other_attachment_type_dsc
+	</retrieveOtherAttachmentTypes>
+	<retrieveCemsAttachmentTypes>
+		SELECT other_attachment_type_cd AS code,
+		other_attachment_type_dsc AS description, deprecated,
+		last_modified, trade_secret_allowed FROM %Schema%cr_other_attachment_type_def
+		WHERE report_type_cd = 'cems' ORDER BY other_attachment_type_dsc
+	</retrieveCemsAttachmentTypes>
+	<retrieveSmbrAttachmentTypes>
+		SELECT other_attachment_type_cd AS code,
+		other_attachment_type_dsc AS description, deprecated,
+		last_modified FROM %Schema%cr_other_attachment_type_def
+		WHERE report_type_cd = 'rsmb' ORDER BY other_attachment_type_dsc
+	</retrieveSmbrAttachmentTypes>
+	<retrieveTestingAttachmentTypes>
+		SELECT other_attachment_type_cd AS code,
+		other_attachment_type_dsc AS description, deprecated,
+		last_modified, trade_secret_allowed FROM %Schema%cr_other_attachment_type_def
+		WHERE report_type_cd = 'test' ORDER BY other_attachment_type_dsc
+	</retrieveTestingAttachmentTypes>
+	<retrieveOneAttachmentTypes>
+		SELECT other_attachment_type_cd AS code,
+		other_attachment_type_dsc AS description, deprecated,
+		last_modified, trade_secret_allowed FROM %Schema%cr_other_attachment_type_def
+		WHERE report_type_cd = 'one' ORDER BY other_attachment_type_dsc
+	</retrieveOneAttachmentTypes>	
+	<retrieveAllAttachmentTypes>
+		SELECT other_attachment_type_cd AS code,
+		other_attachment_type_dsc AS description, deprecated,
+		last_modified, trade_secret_allowed FROM %Schema%cr_other_attachment_type_def
+		ORDER BY other_attachment_type_dsc
+	</retrieveAllAttachmentTypes>		
+    <createComplianceReport>
+			INSERT INTO %Schema%CR_COMPLIANCE_REPORT (REPORT_ID,
+			REPORT_TYPE_CD, USER_ID, FACILITY_ID, RECEIVED_DATE, SUBMITTED_DATE,
+			COMMENTS, REPORT_STATUS, DAPC_REVIEWER, DAPC_REVIEWED_DATE,
+			DAPC_DEVIATIONS, COMPLIANCE_STATUS_CD, DAPC_TVCC_REVIEW_RESULT, DAPC_COMMENTS,
+			DAPC_ACCEPTED, PER_DUE_DATE, TVCC_REPORTING_YEAR,
+			TVCC_DEVIATION_DECLARED, TVCC_AFS_ID, TVCC_AFS_SENT_DATE,
+            PER_START_DATE, PER_END_DATE,OTHER_TYPE_CD,PER_DUE_DATE_CD,FINAL_ACTION_DATE,PERMIT_NUMBER, VALIDATED_FLAG, LEGACY_FLAG,
+            REPORT_YR, REPORT_QTR, FP_ID)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+	</createComplianceReport>
+
+		<createComplianceDeviation>
+			INSERT INTO %Schema%CR_COMPLIANCE_DEVIATION (DEVIATION_ID,
+			REPORT_ID, START_DATE, END_DATE, IDENTIFIER, CONTROL_PERMIT,
+			PER_DESCRIPTION,PER_PROBABLE_CAUSE, PER_CORRECTIVE_ACTION,
+			TVCC_COMPLIANCE_METHOD,TVCC_EXCURSIONS_SUBMITTED,TVCC_EXCURSIONS_OTHER,LAST_MODIFIED)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createComplianceDeviation>
+
+	<createCompliancePerDetail>
+		INSERT INTO %Schema%CR_PER_DETAIL 
+		(REPORT_ID,CORR_EPA_EMU_ID,PERMIT_ID,INITIAL_INSTALL_COMPLETE_DT,MODIFICATION_BEGUN_DT,COMMENCED_OPERATION_DT,DEVIATIONS,MRR_DEVIATIONS,PER_DETAIL_COMMENT,LAST_MODIFIED) 
+		VALUES (?,?,?,?,?,?,?,?,?,?)
+	</createCompliancePerDetail>
+	
+    <updateCompliancePERAttachment>UPDATE %Schema%CR_PER_ATTACHMENTS SET
+    document_id = ? , per_attachment_type_cd = ? , last_modified = ?
+    WHERE document_id = ?
+    AND last_modified = ?
+    </updateCompliancePERAttachment>
+    
+        <updateComplianceTVCCAttachment>UPDATE %Schema%CR_TVCC_ATTACHMENTS SET
+    document_id = ? , tvcc_attachment_type_cd = ? , last_modified = ?
+    WHERE document_id = ?
+    AND last_modified = ?
+    </updateComplianceTVCCAttachment>
+    
+        <updateComplianceOtherAttachment>UPDATE %Schema%CR_OTHER_ATTACHMENTS SET
+    document_id = ? , other_attachment_type_cd = ?, last_modified = ?
+    WHERE document_id = ?
+    AND last_modified = ?
+    </updateComplianceOtherAttachment>
+    
+		<createCompliancePERAttachment>
+			INSERT INTO %Schema%CR_PER_ATTACHMENTS
+			(DOCUMENT_ID,REPORT_ID,PER_ATTACHMENT_TYPE_CD,LAST_MODIFIED)
+			VALUES (?,?,?,?)
+		</createCompliancePERAttachment>
+
+		<createCompliancePERAttachment>
+			INSERT INTO %Schema%CR_PER_ATTACHMENTS
+			(DOCUMENT_ID,REPORT_ID,PER_ATTACHMENT_TYPE_CD,LAST_MODIFIED)
+			VALUES (?,?,?,?)
+		</createCompliancePERAttachment>
+
+		<createComplianceTVCCAttachment>
+			INSERT INTO %Schema%CR_TVCC_ATTACHMENTS
+			(DOCUMENT_ID,REPORT_ID,TVCC_ATTACHMENT_TYPE_CD,LAST_MODIFIED)
+			VALUES (?,?,?,?)
+		</createComplianceTVCCAttachment>
+
+		<createComplianceOtherAttachment>
+			INSERT INTO %Schema%CR_OTHER_ATTACHMENTS
+			(DOCUMENT_ID,REPORT_ID,other_attachment_type_cd,LAST_MODIFIED)
+			VALUES (?,?,?,?)
+		</createComplianceOtherAttachment>
+		
+		<updateComplianceOtherAttachment>
+			UPDATE %Schema%CR_OTHER_ATTACHMENTS SET 
+			LAST_MODIFIED = ? WHERE 
+			DOCUMENT_ID = ? AND LAST_MODIFIED = ?
+		</updateComplianceOtherAttachment>
+
+		<updateCompliancePERAttachment>
+			UPDATE %Schema%CR_PER_ATTACHMENTS SET 
+			PER_ATTACHMENT_TYPE_CD = ?, LAST_MODIFIED = ? WHERE 
+			DOCUMENT_ID = ? AND LAST_MODIFIED = ?
+		</updateCompliancePERAttachment>
+		
+		<updateComplianceTVCCAttachment>
+			UPDATE %Schema%CR_TVCC_ATTACHMENTS SET 
+			TVCC_ATTACHMENT_TYPE_CD = ?, LAST_MODIFIED = ? WHERE 
+			DOCUMENT_ID = ? AND LAST_MODIFIED = ?
+		</updateComplianceTVCCAttachment>
+		
+		<deleteCompliancePERAttachment>
+			DELETE FROM %Schema%cr_per_attachments cr_per 
+            WHERE cr_per.document_id = ? 
+            AND cr_per.report_id = ?
+		</deleteCompliancePERAttachment>
+
+		<deleteComplianceTVCCAttachment>
+			DELETE FROM %Schema%cr_tvcc_attachments cr_attachment 
+            WHERE cr_attachment.document_id = ? 
+            AND cr_attachment.report_id = ?
+		</deleteComplianceTVCCAttachment>
+
+		<deleteComplianceOtherAttachment>
+			DELETE FROM %Schema%cr_other_attachments 
+            WHERE document_id = ? 
+            AND report_id = ?
+		</deleteComplianceOtherAttachment>
+
+		<updateComplianceDeviation>
+			UPDATE %Schema%CR_COMPLIANCE_DEVIATION SET START_DATE=?,
+			END_DATE=?, IDENTIFIER=?, CONTROL_PERMIT=?,
+			PER_DESCRIPTION=?,PER_PROBABLE_CAUSE=?,
+			PER_CORRECTIVE_ACTION=?,
+			TVCC_COMPLIANCE_METHOD=?,TVCC_EXCURSIONS_SUBMITTED=?,TVCC_EXCURSIONS_OTHER=?,LAST_MODIFIED=?
+			WHERE DEVIATION_ID = ?
+		</updateComplianceDeviation>
+
+		<updateComplianceReport>
+			UPDATE %Schema%CR_COMPLIANCE_REPORT SET
+			COMMENTS=?,REPORT_STATUS=?, DAPC_REVIEWER=?,
+			DAPC_REVIEWED_DATE=?,
+			DAPC_DEVIATIONS=?, COMPLIANCE_STATUS_CD=?, DAPC_TVCC_REVIEW_RESULT=?,
+			DAPC_COMMENTS=?, DAPC_ACCEPTED=?,
+			PER_DUE_DATE=?,TVCC_REPORTING_YEAR=?, TVCC_DEVIATION_DECLARED=?,
+            TVCC_AFS_ID=?, TVCC_AFS_SENT_DATE=?,
+			PER_START_DATE=?, PER_END_DATE=?, RECEIVED_DATE=?, SUBMITTED_DATE=?, OTHER_TYPE_CD=?,
+			PER_DUE_DATE_CD=?, LAST_MODIFIED=?, USER_ID=? ,FINAL_ACTION_DATE=?, PERMIT_NUMBER=?, VALIDATED_FLAG=?, LEGACY_FLAG=?,
+			REPORT_YR=?, REPORT_QTR=?, FP_ID = ?
+			WHERE REPORT_ID = ? AND last_modified = ?
+		</updateComplianceReport>
+
+		<updateCompliancePerDetail>
+		    UPDATE %Schema%CR_PER_DETAIL 
+            SET PER_DETAIL_COMMENT=?, OPERATING=?, PHYSICAL_CHANGE=?,
+              DEVIATIONS=?,MRR_DEVIATIONS=?,AIR_TOXICS_CHANGE=?,
+              Initial_Install_Complete_DT=?,
+              Modification_Begun_DT=?,
+              Commenced_Operation_DT=?,
+              LAST_MODIFIED=? 
+            WHERE REPORT_ID=? AND CORR_EPA_EMU_ID=? AND LAST_MODIFIED=?
+		</updateCompliancePerDetail>
+
+		<createFacilityAttachment>
+			INSERT INTO %Schema%fp_facility_attachments (fp_id,
+			document_id, attachment_type_cd) VALUES(?,?,?,?,?,?,?)
+		</createFacilityAttachment>
+
+		<retrieveEmissionUnits>
+			SELECT ${FacilitySQL.emissionUnitColumns} 
+            FROM %Schema%fp_emissions_unit feu 
+            WHERE feu.fp_id = ?
+		</retrieveEmissionUnits>
+
+		<retrieveEmissionUnit>
+			SELECT ${FacilitySQL.emissionUnitColumns},
+			${FacilitySQL.euEmissionsColumns},
+			${FacilitySQL.pollutantColumns} 
+            FROM %Schema%fp_emissions_unit feu 
+            LEFT OUTER JOIN (fp_eu_emissions feuem LEFT OUTER JOIN cm_pollutant_def pol ON (feuem.pollutant_cd = pol.pollutant_cd)) ON (feu.emu_id = feuem.emu_id ) 
+            WHERE feu.fp_id = ? 
+            AND feu.emu_id = ?
+		</retrieveEmissionUnit>
+
+		<retrieveComplianceDeviations>
+			SELECT * 
+            FROM %Schema%cr_compliance_deviation dev 
+            WHERE dev.report_id = ?
+		</retrieveComplianceDeviations>
+
+		<deleteComplianceDeviation>
+			DELETE FROM %Schema%cr_compliance_deviation dev 
+            WHERE dev.deviation_id = ?
+		</deleteComplianceDeviation>
+
+		<retrieveCompliancePerDetails>
+			SELECT ${ComplianceReportSQL.complianceReportPerColumns} 
+            FROM %Schema%cr_per_detail cpd   
+			WHERE report_id = ? 
+            ORDER BY cpd.corr_epa_emu_id
+		</retrieveCompliancePerDetails>
+		
+		<retrievePERAttachments>
+			SELECT ${ComplianceReportSQL.documentColumns},
+			per.per_attachment_type_cd AS attachment_type_cd 
+            FROM %Schema%dc_document doc
+			INNER JOIN %Schema%cr_per_attachments per ON (doc.document_id = per.document_id)
+			WHERE doc.facility_id = ? 
+            AND per.report_id = ?
+		</retrievePERAttachments>
+
+		<retrieveTVCCAttachments>
+			SELECT ${ComplianceReportSQL.documentColumns},
+            per.tvcc_attachment_type_cd AS attachment_type_cd 
+            FROM %Schema%dc_document doc
+			INNER JOIN %Schema%cr_tvcc_attachments per ON (doc.document_id = per.document_id)   
+			WHERE doc.facility_id = ? 
+            AND per.report_id = ?
+		</retrieveTVCCAttachments>
+
+		<retrieveOtherAttachments>
+			SELECT ${ComplianceReportSQL.documentColumns},
+			other_attachment_type_cd AS attachment_type_cd 
+			FROM %Schema%dc_document doc
+            INNER JOIN %Schema%cr_other_attachments per ON (doc.document_id = per.document_id)
+			WHERE doc.facility_id = ? 
+            AND per.report_id = ?
+		</retrieveOtherAttachments>
+    
+        <createCRTradeSecretAttachment>
+          INSERT INTO %Schema%cr_trade_secret_attachments(document_id, report_id, 
+            public_doc_id, trade_secret_reason) 
+          VALUES (?, ?, ?, ?)
+        </createCRTradeSecretAttachment>
+    
+        <retrieveCRTradeSecretAttachmentInfo>
+          SELECT document_id, trade_secret_reason
+          FROM %Schema%cr_trade_secret_attachments
+          WHERE report_id = ? AND public_doc_id = ?
+        </retrieveCRTradeSecretAttachmentInfo>
+        
+        <deleteCRTradeSecretAttachment>
+          DELETE FROM %Schema%cr_trade_secret_attachments
+          WHERE document_id = ?
+        </deleteCRTradeSecretAttachment>
+        
+        <modifyCRTradeSecretAttachment>
+          UPDATE %Schema%cr_trade_secret_attachments
+          SET trade_secret_reason = ?
+          WHERE document_id = ?
+        </modifyCRTradeSecretAttachment>
+
+		<deleteComplianceReport>
+		DELETE FROM %Schema%cr_compliance_report 
+        WHERE report_id = ?
+		</deleteComplianceReport>
+		
+		<deleteCompliancePerDetail>
+		DELETE FROM %Schema%cr_per_detail 
+        WHERE report_id = ? 
+		</deleteCompliancePerDetail>
+
+		<findComplianceReports>
+			SELECT ${ComplianceReportSQL.searchResultColumns},
+			  ff2.fp_id,
+		      ff2.facility_nm as facility_nm2, 
+		      ff2.facility_type_cd as facility_type_cd2, 
+		      ff2.permit_classification_cd as permit_classification_cd2,
+		      ff2.do_laa_cd as do_laa_cd2,
+		      ff2.federal_scsc_id as scsc_id2, 
+		      ff2.facility_registry_no AS facility_afs_num2
+            FROM %Schema%cr_compliance_report cr
+            INNER JOIN %Schema%fp_facility ff ON (cr.facility_id = ff.facility_id AND ff.version_id = -1)
+            LEFT JOIN %Schema%fp_facility_company_xref fc on (ff.facility_id = fc.facility_id AND fc.end_date is null)
+			LEFT JOIN %Schema%cm_company ccm on (fc.company_id = ccm.company_id)
+			LEFT JOIN %Schema%fp_facility ff2 ON (cr.fp_id = ff2.fp_id)
+            WHERE 1 = 1 
+		</findComplianceReports>
+		
+		<retrieveReportById>
+			SELECT ${ComplianceReportSQL.complianceReportColumns}  
+            FROM %Schema%CR_COMPLIANCE_REPORT CR 
+            WHERE cr.report_id = ?
+		</retrieveReportById>
+
+		<retrieveReportsByFacility>
+			SELECT ${ComplianceReportSQL.searchResultColumns}  
+            FROM %Schema%cr_compliance_report cr
+            INNER JOIN %Schema%fp_facility ff ON (cr.facility_id = ff.facility_id AND ff.version_id = -1)
+            LEFT JOIN %Schema%fp_facility_company_xref fc on (ff.facility_id = fc.facility_id AND fc.end_date is null)
+			LEFT JOIN %Schema%cm_company ccm on (fc.company_id = ccm.company_id)
+            WHERE cr.facility_id = ?
+		</retrieveReportsByFacility>
+		
+		<retrievePerReportCount>
+		SELECT COUNT(*) 
+        FROM %Schema%cr_compliance_report 
+        WHERE facility_id = ? 
+        AND report_type_cd = 'per' 
+        AND report_status = ? 
+        AND per_start_date &gt; ? and per_end_date &lt; ? 
+		</retrievePerReportCount>
+		
+		<retrieveNotes>
+		   SELECT ${InfrastructureSQL.noteColumns}, crnx.REPORT_ID
+		   FROM %Schema%CR_NOTE_XREF crnx, %Schema%cm_note cn
+		   WHERE crnx.REPORT_ID = ?
+		   AND crnx.note_id = cn.note_id
+		   ORDER BY note_id DESC
+		</retrieveNotes>
+		
+		<createNote>
+      	   INSERT INTO %Schema%CR_NOTE_XREF (REPORT_ID, NOTE_ID) VALUES (?, ?)
+    	</createNote>
+    	
+    	<removeNote>
+      	   DELETE FROM %Schema%CR_NOTE_XREF WHERE REPORT_ID = ? AND NOTE_ID = ?
+    	</removeNote>
+    	<retrieveComplianceReportTypeCategories>
+	    	SELECT other_type_cd AS code, other_type_dsc AS description,
+			deprecated, last_modified, report_type_cd, bulk_enabled FROM %Schema%cr_other_type_def
+			ORDER BY other_type_dsc
+		</retrieveComplianceReportTypeCategories>
+		<retrieveComplianceReportTypeAttachments>
+			SELECT other_attachment_type_cd AS code, other_attachment_type_dsc AS description,
+			deprecated, last_modified, trade_secret_allowed, report_type_cd 
+			FROM %Schema%cr_other_attachment_type_def ORDER BY other_attachment_type_dsc
+		</retrieveComplianceReportTypeAttachments>
+		<retrieveComplianceReportCategoryInfo>
+			SELECT
+				rtd.report_type_dsc as report_type_desc, otd.other_type_dsc as category_type_desc,
+				otd.explanation	FROM %Schema%CR_OTHER_TYPE_DEF otd
+				INNER JOIN %Schema%CR_REPORT_TYPE_DEF rtd ON otd.REPORT_TYPE_CD = rtd.REPORT_TYPE_CD
+				WHERE otd.deprecated != 'Y'	ORDER BY rtd.report_type_dsc
+		</retrieveComplianceReportCategoryInfo>
+		
+		<retrieveComplianceReportLimitListByFpId>
+				SELECT report_id,
+					limit_id, 
+					ccrl.monitor_id,
+					limit_desc, 
+					limit_source,
+					start_dt, 
+					end_dt, 
+					ccrl.addl_info,
+					ccrl.added_by,
+					lim_id,
+					mon_id,
+					ccrl.last_modified as ccrl_lm,
+					ccrl.corr_limit_id,
+					ccrl.included_flag,
+					ccrl.limitStatus
+				FROM %Schema%CR_COMPLIANCE_REPORT_LIMIT ccrl
+				JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = ccrl.monitor_id)
+				WHERE fp_id = ?
+				ORDER BY start_dt DESC
+			</retrieveComplianceReportLimitListByFpId>
+			
+			<retrieveComplianceReportLimitListByMonitorId>
+				SELECT 
+					${FacilitySQL.facilityCemComLimitColumns},
+					${ComplianceReportSQL.ComplianceReportLimitColumns}
+				FROM %Schema%CR_COMPLIANCE_REPORT_LIMIT ccrl
+				JOIN %Schema%CR_COMPLIANCE_REPORT_MONITOR ccrm ON (ccrm.cr_monitor_id = ccrl.cr_monitor_id)
+				JOIN %Schema%FP_CEM_COM_LIMIT fccl ON (ccrl.limit_id = fccl.limit_id)
+				WHERE ccrl.cr_monitor_id = ?
+				ORDER BY lim_id
+			</retrieveComplianceReportLimitListByMonitorId>
+
+			<removeComplianceReportLimitList>
+				DELETE FROM %Schema%CR_COMPLIANCE_REPORT_LIMIT WHERE cr_monitor_id = ?
+			</removeComplianceReportLimitList>
+
+			<createComplianceReportLimit>
+				INSERT INTO %Schema%CR_COMPLIANCE_REPORT_LIMIT
+					(cr_limit_id, limit_id, cr_monitor_id, included_flag, limit_status)
+				VALUES (?, ?, ?, ?, ?)
+			</createComplianceReportLimit>
+
+			<modifyComplianceReportLimit>
+				UPDATE %Schema%CR_COMPLIANCE_REPORT_LIMIT
+					SET 
+					limit_id = ?,
+					cr_monitor_id = ?,
+					included_flag = ?,
+					limit_status = ?,
+					last_modified = ?
+				WHERE cr_limit_id = ? AND last_modified = ?
+			</modifyComplianceReportLimit>
+
+			<removeComplianceReportLimit>
+				DELETE FROM %Schema%CR_COMPLIANCE_REPORT_LIMIT WHERE cr_limit_id = ?
+			</removeComplianceReportLimit>
+		
+		<retrieveComplianceReportLimitByMonitorIdAndCorrId>
+  			SELECT report_id, 
+  					limit_id, 
+					ccrl.monitor_id,
+					limit_desc, 
+					limit_source,
+					start_dt, 
+					end_dt, 
+					ccrl.addl_info,
+					ccrl.added_by,
+					lim_id,
+					mon_id,
+					ccrl.last_modified as ccrl_lm,
+					ccrl.corr_limit_id,
+					ccrl.included_flag,
+					ccrl.limitStatus
+				FROM %Schema%CR_COMPLIANCE_REPORT_LIMIT ccrl
+				JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = ccrl.monitor_id)
+				WHERE ccrl.monitor_id = ? and ccrl.corr_limit_id = ?
+  	</retrieveComplianceReportLimitByMonitorIdAndCorrId>
+  	
+	<createComplianceReportMonitor>
+		INSERT INTO %Schema%CR_COMPLIANCE_REPORT_MONITOR (cr_monitor_id, report_id, monitor_id, audit_status, test_dt, certification_flag)
+		VALUES (?,?,?,?,?,?)
+	</createComplianceReportMonitor>
+	<deleteComplianceReportMonitor>
+      DELETE FROM %Schema%CR_COMPLIANCE_REPORT_MONITOR  WHERE cr_monitor_id = ?
+    </deleteComplianceReportMonitor>
+	<modifyComplianceReportMonitor>
+		UPDATE %Schema%CR_COMPLIANCE_REPORT_MONITOR SET
+		report_id = ?,
+		monitor_id = ?,
+		audit_status = ?,
+		test_dt = ?,
+		certification_flag = ?,
+		last_modified = ?
+		WHERE cr_monitor_id = ? AND last_modified = ?
+	</modifyComplianceReportMonitor>
+	<retrieveComplianceReportMonitor>
+		SELECT 
+			${FacilitySQL.facilityContinuousMonitorColumns},
+			${ComplianceReportSQL.ComplianceReportMonitorColumns},
+			ff.facility_id, ff.facility_nm, ff.version_id, ff.federal_scsc_id as scsc_id, ff.do_laa_cd as district_cd,
+			ccm.cmp_id, ccm.name as company_nm,
+			ca.county_cd, ccd.county_nm,
+			eqp.qaqc_accepted_date, eqp.serial_number, eqp.manufacturer_name, eqp.model_number
+			FROM %Schema%CR_COMPLIANCE_REPORT_MONITOR ccrm
+				JOIN %Schema%FP_CONTINUOUS_MONITOR fcm on (ccrm.MONITOR_ID = fcm.MONITOR_ID)
+			    JOIN %Schema%fp_facility ff ON (fcm.fp_id = ff.fp_id)
+  		        JOIN %Schema%fp_facility_address_xref faxr ON (ff.fp_id = faxr.fp_id)
+  		        JOIN %Schema%cm_address ca ON (faxr.address_id = ca.address_id AND ca.end_dt is null)
+  		        INNER JOIN %Schema%cm_county_def ccd ON (ca.county_cd = ccd.county_cd)
+  		        LEFT JOIN %Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id = ff.facility_id AND ffcx.end_date IS NULL)
+		        LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id 
+		        LEFT OUTER JOIN %Schema%fp_active_continuous_monitor_eqt eqp on eqp.monitor_id = fcm.monitor_id
+			WHERE ccrm.cr_monitor_id = ?
+	</retrieveComplianceReportMonitor>
+	
+	<retrieveComplianceReportMonitorListByReportId>
+		SELECT
+			${FacilitySQL.facilityContinuousMonitorColumns},
+			${ComplianceReportSQL.ComplianceReportMonitorColumns},
+			eqp.qaqc_accepted_date, eqp.serial_number, eqp.manufacturer_name, eqp.model_number
+		FROM %Schema%CR_COMPLIANCE_REPORT_MONITOR ccrm
+			JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = ccrm.monitor_id)
+			LEFT OUTER JOIN %Schema%fp_active_continuous_monitor_eqt eqp on eqp.monitor_id = fcm.monitor_id
+		WHERE ccrm.report_id = ?
+		ORDER BY fcm.mon_id
+	</retrieveComplianceReportMonitorListByReportId>
+
+	<retrieveComplianceReportLimitListByReportId>
+		SELECT ${FacilitySQL.facilityCemComLimitColumns},
+			${ComplianceReportSQL.ComplianceReportLimitColumns}
+		FROM %Schema%CR_COMPLIANCE_REPORT_LIMIT ccrl
+			JOIN %Schema%CR_COMPLIANCE_REPORT_MONITOR ccrm ON (ccrm.cr_monitor_id = ccrl.cr_monitor_id)
+			JOIN %Schema%FP_CEM_COM_LIMIT fccl ON (ccrl.limit_id = fccl.limit_id)
+		WHERE ccrm.report_id = ?
+		ORDER BY fccl.lim_id
+	</retrieveComplianceReportLimitListByReportId>
+	
+	<retrieveLimitTrendData>
+		SELECT 
+			cr.REPORT_ID
+			, cr.CRPT_ID
+			, cm.MON_ID
+			, cm.MONITOR_DESC
+			, lim.LIM_ID
+			, lim.LIMIT_DESC
+			, cr.REPORT_YR
+			, cr.REPORT_QTR
+			, cr.RECEIVED_DATE
+			, fp.FACILITY_ID
+			, crm.AUDIT_STATUS
+			, crm.TEST_DT
+			, crm.CERTIFICATION_FLAG
+			, crl.LIMIT_STATUS
+			, cr.OTHER_TYPE_CD
+			, eqp.QAQC_ACCEPTED_DATE
+			FROM
+			%Schema%FP_FACILITY fp
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT cr on cr.FP_ID = fp.FP_ID
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT_MONITOR crm ON crm.REPORT_ID = cr.REPORT_ID
+			INNER JOIN %Schema%CR_COMPLIANCE_REPORT_LIMIT crl ON crl.CR_MONITOR_ID = crm.CR_MONITOR_ID
+			INNER JOIN %Schema%FP_CONTINUOUS_MONITOR cm ON CM.MONITOR_ID = crm.MONITOR_ID
+			INNER JOIN %Schema%FP_CEM_COM_LIMIT lim ON lim.LIMIT_ID = crl.LIMIT_ID
+			LEFT OUTER JOIN %Schema%FP_ACTIVE_CONTINUOUS_MONITOR_EQT eqp ON eqp.MONITOR_ID = crm.MONITOR_ID
+			WHERE
+				crl.INCLUDED_FLAG = 'Y'
+				AND cr.REPORT_TYPE_CD = 'cems'
+				AND cr.REPORT_STATUS = 'sbmt'
+				AND cr.DAPC_ACCEPTED = 'yes'
+	</retrieveLimitTrendData>
+	
+	<setActiveComplianceReportsValidatedFlag>
+		UPDATE %Schema%CR_COMPLIANCE_REPORT 
+			SET VALIDATED_FLAG = ?
+			WHERE FP_ID = ?
+				AND REPORT_STATUS = 'drft'
+	</setActiveComplianceReportsValidatedFlag>
+	
+	<retrieveCRTradeSecretAttachmentInfoById>
+		SELECT document_id, trade_secret_reason
+          FROM %Schema%cr_trade_secret_attachments
+          WHERE document_id = ?
+	</retrieveCRTradeSecretAttachmentInfoById>
+  	
+	</ComplianceReportSQL>
+</root>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<StarsReportSQL>
+		<TAB1>EF_Contacts</TAB1>
+		<SQL1>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			ef_contacts.contact_type,
+			ef_contacts.first_name,
+			ef_contacts.mid_name,
+			ef_contacts.last_name,
+			ef_contacts.address_line_1,
+			ef_contacts.address_line_2,
+			ef_contacts.city,
+			ef_contacts.state,
+			ef_contacts.zip_code,
+			ef_contacts.phone_num
+			from ef_contacts, dsk_central_file
+			where ef_contacts.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL1>
+		<TAB2>EF_EU_report</TAB2>
+		<SQL2>
+			select
+			t3.facility_id,
+			t3.action_class_code,
+			t3.action_id,
+			t3.sect_id,
+			t3.int_doc_id,
+			t3.em_fee_flag,
+			t3.em_stmt_flag,
+			t3.em_inv_flag,
+			t3.rptg_period_date,
+			t3.eu_oepa_id,
+			t3.ann_op_hr,
+			ef_inventory.construct_date,
+			ef_inventory.mod_date,
+			ef_inventory.shutdown_date,
+			ef_inventory.eu_comments_desc,
+			ef_inventory.fed_enf_op_rest_desc,
+			t3.em_geo_pref,
+			t3.utm_zone,
+			t3.utm_vert,
+			t3.utm_horz,
+			t3.boiler_design_cap,
+			t3.space_heat_pct,
+			t3.thruput_dec_feb,
+			t3.thruput_mar_may,
+			t3.thruput_jun_aug,
+			t3.thruput_sep_nov,
+			t3.op_sched_hr,
+			t3.op_sched_day,
+			t3.op_sched_week,
+			t3.peak_daily_em_rate,
+			t3.peak_daily_em_rate_nox,
+			t3.auto_calc
+			from
+			(select 
+			t2.facility_id,
+			t2.action_class_code,
+			t2.action_id,
+			t2.sect_id,
+			t2.int_doc_id,
+			t2.em_fee_flag,
+			t2.em_stmt_flag,
+			t2.em_inv_flag,
+			t2.rptg_period_date,
+			t2.eu_oepa_id,
+			t2.ann_op_hr,
+			t2.em_geo_pref,
+			t2.utm_zone,
+			t2.utm_vert,
+			t2.utm_horz,
+			ef_schedule.boiler_design_cap,
+			ef_schedule.space_heat_pct,
+			ef_schedule.thruput_dec_feb,
+			ef_schedule.thruput_mar_may,
+			ef_schedule.thruput_jun_aug,
+			ef_schedule.thruput_sep_nov,
+			ef_schedule.op_sched_hr,
+			ef_schedule.op_sched_day,
+			ef_schedule.op_sched_week,
+			ef_schedule.peak_daily_em_rate,
+			ef_schedule.peak_daily_em_rate_nox,
+			ef_schedule.auto_calc
+			from 
+			(select
+			t1.int_doc_id,
+			t1.facility_id,
+			t1.action_class_code,
+			t1.action_id,
+			t1.sect_id,
+			t1.em_fee_flag,
+			t1.em_stmt_flag,
+			t1.em_inv_flag,
+			t1.rptg_period_date,
+			t1.eu_oepa_id,
+			t1.ann_op_hr,
+			ef_eu_point.em_geo_pref,
+			ef_eu_point.utm_zone,
+			ef_eu_point.utm_vert,
+			ef_eu_point.utm_horz
+			from (select
+			dsk_central_file.int_doc_id,
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			emissions_form.em_fee_flag,
+			emissions_form.em_stmt_flag,
+			emissions_form.em_inv_flag,
+			emissions_form.rptg_period_date,
+			emissions_form.eu_oepa_id,
+			emissions_form.ann_op_hr
+			from dsk_central_file, emissions_form
+			where dsk_central_file.int_doc_id = emissions_form.int_doc_id) t1
+			left outer join ef_eu_point
+			on t1.int_doc_id = ef_eu_point.int_doc_id) t2
+			left outer join ef_schedule
+			on t2.int_doc_id = ef_schedule.int_doc_id) t3
+			left outer join ef_inventory
+			on t3.int_doc_id = ef_inventory.int_doc_id
+			order by t3.facility_id,
+			 t3.action_class_code desc,
+			 t3.action_id,
+			 t3.sect_id desc,
+			 t3.int_doc_id,
+			 t3.eu_oepa_id
+		</SQL2>
+		<TAB3>EF_SCC</TAB3>
+		<SQL3>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			emissions_form.eu_oepa_id,
+			ef_scc.seq_num,
+			ef_scc.scc_id,
+			ef_scc.scc_desc,
+			ef_scc.scc_op_rate_units,
+			ef_scc.ann_op_rate,
+			ef_scc.max_hr_op_rate,
+			ef_scc.pct_ash,
+			ef_scc.pct_sulfur,
+			ef_scc.comment_desc
+			from  ef_scc, dsk_central_file, emissions_form
+			where ef_scc.int_doc_id=dsk_central_file.int_doc_id and
+			ef_scc.int_doc_id=emissions_form.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+			 emissions_form.eu_oepa_id,
+			 ef_scc.seq_num,
+			 ef_scc.scc_id
+		</SQL3>
+		<TAB4>EF_SCC_Pollutant</TAB4>
+		<SQL4>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			ef_scc_pollutant.seq_num,
+			ef_scc_pollutant.scc_id,
+			amtb_pollutant.pollutant_short,
+			ef_scc_pollutant.em_mthd_desc,
+			ef_scc_pollutant.autocalc_flag,
+			ef_scc_pollutant.pri_ce_company_id,
+			ef_scc_pollutant.pri_yr_installed,
+			ef_scc_pollutant.sec_ce_company_id,
+			ef_scc_pollutant.sec_yr_installed,
+			ef_scc_pollutant.ctrl_sys_effic,
+			ef_scc_pollutant.ctrl_device_effic,
+			ef_scc_pollutant.overall_device_effic,
+			ef_scc_pollutant.ann_adj_factor,
+			ef_scc_pollutant.overall_effic_mthd,
+			ef_scc_pollutant.em_factor,
+			ef_scc_pollutant.em_factor_units,
+			ef_scc_pollutant.factor_controlled,
+			ef_scc_pollutant.em_factor_op_rate,
+			ef_scc_pollutant.em_factor_op_rate_units,
+			ef_scc_pollutant.emissions,
+			ef_scc_pollutant.supporting_em_calc_data
+			from  ef_scc_pollutant, dsk_central_file, amtb_pollutant
+			where ef_scc_pollutant.int_doc_id=dsk_central_file.int_doc_id and
+			ef_scc_pollutant.pollutant_code = amtb_pollutant.pollutant_code
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+			 ef_scc_pollutant.seq_num,
+			 ef_scc_pollutant.scc_id
+		</SQL4>
+		<TAB5>EF_EU_Point_Detail</TAB5>
+		<SQL5>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			ef_eu_point_dtl.egress_point_id,
+			ef_eu_point_dtl.ep_type,
+			ef_eu_point_dtl.ep_geo_pref,
+			ef_eu_point_dtl.utm_zone,
+			ef_eu_point_dtl.utm_vert,
+			ef_eu_point_dtl.utm_horz,
+			ef_eu_point_dtl.cont_em_record,
+			ef_eu_point_dtl.gep_bldg_hgt,
+			ef_eu_point_dtl.gep_bldg_len,
+			ef_eu_point_dtl.gep_bldg_width,
+			ef_eu_point_dtl.ep_shape,
+			ef_eu_point_dtl.ep_cross_area,
+			ef_eu_point_dtl.ep_height,
+			ef_eu_point_dtl.ep_diameter,
+			ef_eu_point_dtl.ep_exit_gas_temp_max,
+			ef_eu_point_dtl.ep_exit_gas_temp_avg,
+			ef_eu_point_dtl.ep_exit_gas_flow_max,
+			ef_eu_point_dtl.ep_exit_gas_flow_avg,
+			ef_eu_point_dtl.ep_base_elevation,
+			ef_eu_point_dtl.ep_release_height,
+			ef_eu_point_dtl.ep_plume_temp,
+			ef_eu_point_dtl.ep_area
+			from  ef_eu_point_dtl, dsk_central_file
+			where ef_eu_point_dtl.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL5>
+		<TAB6>EF_Confid</TAB6>
+		<SQL6>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			ef_confid.confid_item,
+			ef_confid.basis_confid_desc
+			from ef_confid, dsk_central_file
+			where ef_confid.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id
+		</SQL6>
+		<TAB7>EF_Group</TAB7>
+		<!--  Should not have needed:
+			"and dsk_central_file.int_doc_id= emissions_form.int_doc_id and
+			 emissions_form.eu_oepa_id=group_dtl.group_id".
+			 However, without it, we were getting  rows coming back
+			 where the int_doc_id and group_id did not correspond. -->
+		<SQL7>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			group_dtl.group_id,
+			group_dtl.eu_oepa_id
+			from group_dtl, dsk_central_file, emissions_form
+			where group_dtl.int_doc_id=dsk_central_file.int_doc_id and
+			  dsk_central_file.int_doc_id= emissions_form.int_doc_id and
+			  emissions_form.eu_oepa_id=group_dtl.group_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+			 group_dtl.group_id,
+			 group_dtl.eu_oepa_id
+		</SQL7>
+		<TAB8>pollutant_def</TAB8>
+		<SQL8>
+			select
+			pollutant_code,
+			pollutant_desc,
+			pollutant_short,
+			pollutant_type,
+			pollutant_column,
+			fee,
+			statement,
+			inventory
+			from amtb_pollutant
+			order by pollutant_code
+		</SQL8>
+		<TAB9>END</TAB9>
+	</StarsReportSQL>
+</root>

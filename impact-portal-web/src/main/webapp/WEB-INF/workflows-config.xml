@@ -1,0 +1,104 @@
+<!DOCTYPE faces-config PUBLIC
+    "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+    "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+
+
+	<managed-bean>
+		<managed-bean-name>workFlow2DDraw</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.app.workflow.WorkFlow2DDraw
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>mapName</property-name>
+			<value>workFlow2DDraw</value>
+		</managed-property>
+		<managed-property>
+			<property-name>height</property-name>
+			<value>600</value>
+		</managed-property>
+		<managed-property>
+			<property-name>width</property-name>
+			<value>1050</value>
+		</managed-property>
+		<managed-property>
+			<property-name>url</property-name>
+			<value>/workflows/activityProfile.jsf</value>
+		</managed-property>
+		<managed-property>
+			<property-name>subFlowUrl</property-name>
+			<value>/workflows/workflowProfile.jsf</value>
+		</managed-property>
+		<managed-property>
+			<property-name>emissionsReportService</property-name>
+			<value>#{emissionsReportBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>permitService</property-name>
+			<value>#{permitBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>readWorkFlowService</property-name>
+			<value>#{readWorkFlowBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>fullComplianceEvalService</property-name>
+			<value>#{fullComplianceEvalBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>activityProfile</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.app.workflow.ActivityProfile
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>readWorkFlowService</property-name>
+			<value>#{readWorkFlowBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>/facilities/homePermits.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{permitSearch.loadWorkflowDiagram}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/workflows/workflowProfile.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/facilities/permits.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{permitSearch.loadWorkflowDiagram}</from-action>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/workflows/workflowProfile.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/facilities/homePermits.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{permitSearch.loadWorkflowDiagram}</from-action>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/facilities/homePermits.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/facilities/permits.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{permitSearch.loadWorkflowDiagram}</from-action>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/facilities/permits.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

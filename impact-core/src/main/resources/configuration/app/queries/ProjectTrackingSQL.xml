@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<ProjectTrackingSQL>
+		<ProjectColumns>
+			po.project_id
+			, po.project_nbr
+			, po.project_name
+			, po.project_dsc
+			, po.project_type_cd
+			, po.project_state_cd
+			, po.creator_id
+			, po.created_date
+			, po.project_summary
+			, po.ext_agency_website_uri
+			, po.last_modified
+		</ProjectColumns>
+		<NEPAColumns>
+			ne.project_id
+			, ne.nepa_id
+			, ne.category_cd
+			, ne.project_stage_cd
+			, ne.ext_agency_contact
+			, ne.ext_agency_contact_phone
+			, ne.modeling_required
+			, ne.shape_id
+			, ne.last_modified as nepa_lm
+		</NEPAColumns>
+		<GrantColumns>
+			gr.project_id
+			, gr.grant_id
+			, gr.outreach_category_cd
+			, gr.grant_status_cd
+			, gr.total_amount
+			, gr.last_modified as grant_lm
+		</GrantColumns>
+		<LetterColumns>
+			le.project_id
+			, le.letter_id
+			, le.letter_type_cd
+			, le.last_modified as letter_lm
+		</LetterColumns>
+		<ContractColumns>
+			co.project_id
+			, co.contract_id
+			, co.contract_type_cd
+			, co.contract_status_cd
+			, co.contract_number
+			, co.contract_expiration_date
+			, co.vendor_name
+			, co.vendor_number
+			, co.monitoring_operations_end_date
+			, co.msa_number
+			, co.ag_heat_ticket_number
+			, co.ocio_approval
+			, co.total_award
+			, co.last_modified as contract_lm
+		</ContractColumns>
+		<ProjectTrackingEventColumns>
+			e.event_id
+			, e.project_id
+			, e.event_type_cd
+			, e.event_date
+			, e.event_description
+			, e.event_status
+			, e.issues_to_address
+			, e.response_due_date
+			, e.added_by
+			, e.last_modified
+			, e.event_nbr
+		</ProjectTrackingEventColumns>
+		<ProjectTrackingAttachmentColumns>
+			a.document_id
+			, a.project_id
+			, a.event_id
+			, a.attachment_type_cd
+			, a.last_modified
+		</ProjectTrackingAttachmentColumns>
+		<BudgetColumns>
+			bgt.project_id
+			, bgt.budget_id
+			, bgt.bfy
+			, bgt.budget_function_cd
+			, bgt.amount
+			, bgt.last_modified
+		</BudgetColumns>
+		<createProject>
+			INSERT INTO %Schema%po_project (
+				project_id
+				, project_name
+				, project_dsc
+				, project_type_cd
+				, project_state_cd
+				, creator_id
+				, created_date
+				) VALUES (?, ?, ?, ?, ?, ?, ?)
+		</createProject>
+		<retrieveProject>
+			SELECT 
+				${ProjectTrackingSQL.ProjectColumns}
+				, ${ProjectTrackingSQL.NEPAColumns} 
+				, ${ProjectTrackingSQL.GrantColumns}
+				, ${ProjectTrackingSQL.LetterColumns}
+				, ${ProjectTrackingSQL.ContractColumns}
+				FROM %Schema%po_project po 
+				LEFT OUTER JOIN %Schema%po_nepa_project ne ON (po.project_id = ne.project_id)
+				LEFT OUTER JOIN %Schema%po_grant_project gr ON (po.project_id = gr.project_id)
+				LEFT OUTER JOIN %Schema%po_letter_project le ON (po.project_id = le.project_id)
+				LEFT OUTER JOIN %Schema%po_contract co ON (po.project_id = co.project_id)
+				WHERE 
+					po.project_id = ?
+		</retrieveProject>
+		<updateProject>
+			UPDATE %Schema%po_project SET
+				project_name = ?
+				, project_dsc = ?
+				, project_type_cd = ?
+				, project_state_cd = ?
+				, project_summary = ?
+				, ext_agency_website_uri = ?
+				, last_modified = ?
+				WHERE
+					project_id = ?
+					AND last_modified = ? 
+		</updateProject>
+		<deleteProject>
+			DELETE FROM %Schema%po_project
+				WHERE project_id = ?
+		</deleteProject>
+		<createProjectDivision>
+			INSERT INTO %Schema%po_project_division_xref (
+				project_id
+				, division_cd
+			) VALUES (?, ?)
+		</createProjectDivision>
+		<retrieveProjectDivisionCds>
+			SELECT division_cd 
+				FROM %Schema%po_project_division_xref pdx
+				WHERE pdx.project_id = ?
+		</retrieveProjectDivisionCds>
+		<deleteProjectDivisions>
+			DELETE FROM %Schema%po_project_division_xref
+				WHERE project_id = ?
+		</deleteProjectDivisions>
+		<createNEPAProject>
+			INSERT INTO %Schema%po_nepa_project (
+				project_id
+				, category_cd
+				, project_stage_cd
+				, ext_agency_contact
+				, ext_agency_contact_phone
+				, modeling_required
+				, shape_id
+			) VALUES (?, ?, ?, ?, ?, ?, ?)
+		</createNEPAProject>
+		<updateNEPAProject>
+			UPDATE %Schema%po_nepa_project SET
+				category_cd = ?
+				, project_stage_cd = ?
+				, ext_agency_contact = ?
+				, ext_agency_contact_phone = ?
+				, modeling_required = ?
+				, shape_id = ?
+				, last_modified = ?
+				WHERE
+					project_id = ?
+					AND last_modified = ?
+		</updateNEPAProject>
+		<deleteNEPAProject>
+			DELETE FROM %Schema%po_nepa_project
+				WHERE project_id = ?
+		</deleteNEPAProject>
+		<createNEPAProjectLevelXref>
+			INSERT INTO %Schema%po_nepa_project_level_xref
+				(project_id, level_cd) VALUES (?, ?)
+		</createNEPAProjectLevelXref>
+		<retrieveNEPAProjectLevelCds>
+			SELECT level_cd
+				FROM %Schema%po_nepa_project_level_xref
+				WHERE project_id = ?
+		</retrieveNEPAProjectLevelCds>
+		<deleteNEPAProjectLevelXrefs>
+			DELETE FROM %Schema%po_nepa_project_level_xref
+				WHERE project_id = ?
+		</deleteNEPAProjectLevelXrefs>
+		<createNEPAProjectLeadAgencyXref>
+			INSERT INTO %Schema%po_nepa_project_lead_agency_xref
+				(project_id, agency_cd) VALUES (?, ?)
+		</createNEPAProjectLeadAgencyXref>
+		<retrieveNEPAProjectLeadAgencyCds>
+			SELECT agency_cd
+				FROM %Schema%po_nepa_project_lead_agency_xref
+				WHERE project_id = ?
+		</retrieveNEPAProjectLeadAgencyCds>
+		<deleteNEPAProjectLeadAgencyXrefs>
+			DELETE FROM %Schema%po_nepa_project_lead_agency_xref
+				WHERE project_id = ?
+		</deleteNEPAProjectLeadAgencyXrefs>
+		<createNEPAProjectBLMFieldOfficeXref>
+			INSERT INTO %Schema%po_nepa_project_blm_field_office_xref
+				(project_id, field_office_cd) VALUES (?, ?)
+		</createNEPAProjectBLMFieldOfficeXref>
+		<retrieveNEPAProjectBLMFieldOfficeCds>
+			SELECT field_office_cd 
+				FROM %Schema%po_nepa_project_blm_field_office_xref
+				WHERE project_id = ?
+		</retrieveNEPAProjectBLMFieldOfficeCds>
+		<deleteNEPAProjectBLMFieldOfficeXrefs>
+			DELETE FROM %Schema%po_nepa_project_blm_field_office_xref
+				WHERE project_id = ?
+		</deleteNEPAProjectBLMFieldOfficeXrefs>
+		<createNEPAProjectNationalForestXref>
+			INSERT INTO %Schema%po_nepa_project_national_forest_xref
+				(project_id, national_forest_cd) VALUES (?, ?)
+		</createNEPAProjectNationalForestXref>
+		<retrieveNEPAProjectNationalForestCds>
+			SELECT national_forest_cd 
+				FROM %Schema%po_nepa_project_national_forest_xref
+				WHERE project_id = ?
+		</retrieveNEPAProjectNationalForestCds>
+		<deleteNEPAProjectNationalForestXrefs>
+			DELETE FROM %Schema%po_nepa_project_national_forest_xref
+				WHERE project_id = ?
+		</deleteNEPAProjectNationalForestXrefs>
+		<createNEPAProjectNationalParkXref>
+			INSERT INTO %Schema%po_nepa_project_national_park_xref
+				(project_id, national_park_cd) VALUES (?, ?)
+		</createNEPAProjectNationalParkXref>
+		<retrieveNEPAProjectNationalParkCds>
+			SELECT national_park_cd 
+				FROM %Schema%po_nepa_project_national_park_xref
+				WHERE project_id = ?
+		</retrieveNEPAProjectNationalParkCds>
+		<deleteNEPAProjectNationalParkXrefs>
+			DELETE FROM %Schema%po_nepa_project_national_park_xref
+				WHERE project_id = ?
+		</deleteNEPAProjectNationalParkXrefs>
+		<createGrantProject>
+			INSERT INTO %Schema%po_grant_project (
+				project_id
+				, outreach_category_cd
+				, grant_status_cd
+				, total_amount
+				) VALUES (?, ?, ?, ?)
+		</createGrantProject>
+		<updateGrantProject>
+			UPDATE %Schema%po_grant_project SET
+				outreach_category_cd = ?
+				, grant_status_cd = ?
+				, total_amount = ?
+				, last_modified = ?
+				WHERE
+					project_id = ?
+					AND last_modified = ?
+		</updateGrantProject>
+		<deleteGrantProject>
+			DELETE FROM %Schema%po_grant_project
+				WHERE project_id = ?
+		</deleteGrantProject>
+		<createLetterProject>
+			INSERT INTO %Schema%po_letter_project (
+				project_id
+				, letter_type_cd
+				) VALUES (?, ?)
+		</createLetterProject>
+		<updateLetterProject>
+			UPDATE %Schema%po_letter_project SET
+				letter_type_cd = ?
+				, last_modified = ?
+				WHERE
+					project_id = ?
+					AND last_modified = ?
+		</updateLetterProject>
+		<deleteLetterProject>
+			DELETE FROM %Schema%po_letter_project
+				WHERE project_id = ?
+		</deleteLetterProject>
+		<createProjectLeadXref>
+			INSERT INTO %Schema%po_project_lead_xref
+				(project_id, user_id) VALUES (?, ?)
+		</createProjectLeadXref>
+		<retrieveProjectLeadUserIds>
+			SELECT user_id
+				FROM %Schema%po_project_lead_xref
+				WHERE project_id = ?
+		</retrieveProjectLeadUserIds>
+		<deleteProjectLeadXrefs>
+			DELETE FROM %Schema%po_project_lead_xref
+				WHERE project_id = ?
+		</deleteProjectLeadXrefs>
+		<createGrantProjectAccountantXref>
+			INSERT INTO %Schema%po_grant_project_accountant_xref
+				(project_id, user_id) VALUES (?, ?)
+		</createGrantProjectAccountantXref>
+		<retrieveGrantProjectAccountantUserIds>
+			SELECT user_id
+				FROM %Schema%po_grant_project_accountant_xref
+				WHERE project_id = ?
+		</retrieveGrantProjectAccountantUserIds>
+		<deleteGrantProjectAccountantXrefs>
+			DELETE FROM %Schema%po_grant_project_accountant_xref
+				WHERE project_id = ?
+		</deleteGrantProjectAccountantXrefs>
+		<createProjectTrackingEvent>
+			INSERT INTO %Schema%po_project_tracking_event (
+				event_id
+				, project_id
+				, event_type_cd
+				, event_date
+				, event_description
+				, event_status
+				, issues_to_address
+				, response_due_date
+				, added_by
+				) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+		</createProjectTrackingEvent>
+		<retrieveProjectTrackingEvent>
+			SELECT ${ProjectTrackingSQL.ProjectTrackingEventColumns}
+				FROM %Schema%po_project_tracking_event e
+				WHERE e.event_id = ?
+		</retrieveProjectTrackingEvent>
+		<retrieveProjectTrackingEventsByProjectId>
+			SELECT ${ProjectTrackingSQL.ProjectTrackingEventColumns}
+				FROM %Schema%po_project_tracking_event e
+				WHERE e.project_id = ? ORDER by e.event_date DESC
+		</retrieveProjectTrackingEventsByProjectId>
+		<updateProjectTrackingEvent>
+			UPDATE %Schema%po_project_tracking_event SET
+				project_id = ?
+				, event_type_cd = ?
+				, event_date = ?
+				, event_description = ?
+				, event_status = ?
+				, issues_to_address = ?
+				, response_due_date = ?
+				, added_by = ?
+				, last_modified = ?
+				WHERE event_id = ?
+				AND last_modified = ?
+		</updateProjectTrackingEvent>
+		<deleteProjectTrackingEvent>
+			DELETE FROM %Schema%po_project_tracking_event
+				WHERE event_id = ?
+		</deleteProjectTrackingEvent>
+		<deleteProjectTrackingEventsByProjectId>
+			DELETE FROM %Schema%po_project_tracking_event
+				WHERE project_id = ?
+		</deleteProjectTrackingEventsByProjectId>
+		<searchProjects>
+			SELECT DISTINCT
+				${ProjectTrackingSQL.ProjectColumns}
+				, ${ProjectTrackingSQL.NEPAColumns} 
+				, ${ProjectTrackingSQL.GrantColumns}
+				, ${ProjectTrackingSQL.LetterColumns}
+				, ${ProjectTrackingSQL.ContractColumns}
+				FROM %Schema%po_project po 
+				LEFT OUTER JOIN %Schema%po_nepa_project ne ON (po.project_id = ne.project_id)
+				LEFT OUTER JOIN %Schema%po_grant_project gr ON (po.project_id = gr.project_id)
+				LEFT OUTER JOIN %Schema%po_letter_project le ON (po.project_id = le.project_id)
+				LEFT OUTER JOIN %Schema%po_project_tracking_event e ON (po.project_id = e.project_id)
+				LEFT OUTER JOIN %Schema%po_nepa_project_level_xref lv ON (po.project_id = lv.project_id)
+				LEFT OUTER JOIN %Schema%po_contract co ON (po.project_id = co.project_id)
+				LEFT OUTER JOIN %Schema%po_project_lead_xref ld ON (po.project_id = ld.project_id)
+				WHERE 1 = 1
+		</searchProjects>
+		<createProjectNote>
+			INSERT INTO %Schema%po_project_note_xref (
+				note_id
+				, project_id
+				) VALUES (?, ?)
+		</createProjectNote>
+		<retrieveProjectNotesByProjectId>
+			SELECT 
+				pnx.project_id
+				, ${InfrastructureSQL.noteColumns}
+				FROM 
+					%Schema%po_project_note_xref pnx
+					, %Schema%cm_note cn
+				WHERE 
+					pnx.note_id = cn.note_id 
+					AND pnx.project_id = ?
+		</retrieveProjectNotesByProjectId>
+		<deleteProjectNotesByProjectId>
+			DELETE FROM %Schema%po_project_note_xref
+				WHERE project_id = ?
+		</deleteProjectNotesByProjectId>
+		<createProjectTrackingAttachment>
+			INSERT INTO %Schema%po_project_tracking_attachment (
+				document_id
+				, project_id
+				, event_id
+				, attachment_type_cd
+				) VALUES (?, ?, ?, ?)
+		</createProjectTrackingAttachment>
+		<retrieveProjectTrackingAttachments>
+			SELECT 
+				${ProjectTrackingSQL.ProjectTrackingAttachmentColumns}
+				, a.last_modified as ref_lm
+				, ${DocumentSQL.documentColumns}  
+				FROM 
+					%Schema%po_project_tracking_attachment a, %Schema%dc_document dd
+					WHERE a.document_id = dd.document_id 
+					AND	a.project_id = ?
+		</retrieveProjectTrackingAttachments>
+		<updateProjectTrackingAttachment>
+			UPDATE %Schema%po_project_tracking_attachment SET
+				event_id = ?
+				, attachment_type_cd = ?
+				, last_modified = ?
+				WHERE
+					document_id = ?	
+					AND last_modified = ?
+		</updateProjectTrackingAttachment>
+		<deleteProjectTrackingAttachment>
+			DELETE FROM %Schema%po_project_tracking_attachment
+				WHERE document_id = ?
+		</deleteProjectTrackingAttachment>
+		<deleteProjectTrackingAttachments>
+			DELETE FROM %Schema%po_project_tracking_attachment
+				WHERE project_id = ?
+		</deleteProjectTrackingAttachments>
+		<retrieveProjectTrackingEventAttachmentInfo>
+			SELECT pta.document_id, dd.path FROM
+				%Schema%po_project_tracking_attachment pta
+				, %Schema%dc_document dd
+				WHERE 
+					pta.document_id = dd.document_id
+					AND pta.event_id = ?
+		</retrieveProjectTrackingEventAttachmentInfo>
+		<createContract>
+			INSERT INTO %Schema%po_contract (
+				project_id
+				, contract_type_cd
+				, contract_status_cd
+				, contract_number
+				, contract_expiration_date
+				, vendor_name
+				, vendor_number
+				, monitoring_operations_end_date
+				, msa_number
+				, ag_heat_ticket_number
+				, ocio_approval
+				, total_award
+				) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		</createContract>
+		<updateContract>
+			UPDATE %Schema%po_contract SET
+				contract_type_cd = ?
+				, contract_status_cd = ?
+				, contract_number = ?
+				, contract_expiration_date = ?
+				, vendor_name = ?
+				, vendor_number = ?
+				, monitoring_operations_end_date = ?
+				, msa_number = ?
+				, ag_heat_ticket_number = ?
+				, ocio_approval = ?
+				, total_award = ?
+				, last_modified = ?
+				WHERE
+					project_id = ?
+					AND last_modified = ?
+		</updateContract>
+		<deleteContract>
+			DELETE FROM %Schema%po_contract
+				WHERE project_id = ?
+		</deleteContract>
+		<createContractAccountantXref>
+			INSERT INTO %Schema%po_contract_accountant_xref
+				(project_id, user_id) VALUES (?, ?)
+		</createContractAccountantXref>
+		<retrieveContractAccountantUserIds>
+			SELECT user_id
+				FROM %Schema%po_contract_accountant_xref
+				WHERE project_id = ?
+		</retrieveContractAccountantUserIds>
+		<deleteContractAccountantXrefs>
+			DELETE FROM %Schema%po_contract_accountant_xref
+				WHERE project_id = ?
+		</deleteContractAccountantXrefs>
+		<CreateBudget>
+			INSERT INTO %Schema%po_budget (
+				project_id
+				, budget_id
+				, bfy
+				, budget_function_cd
+				, amount
+			) VALUES (?, ?, ?, ?, ?)
+		</CreateBudget>
+		<updateBudget>
+			UPDATE %Schema%po_budget SET
+				bfy = ?
+				, budget_function_cd = ?
+				, amount = ?
+				, last_modified = ?
+				WHERE
+					budget_id = ?
+					AND last_modified = ?
+		</updateBudget>
+		<retrieveBudget>
+			SELECT ${ProjectTrackingSQL.BudgetColumns} 
+				FROM %Schema%po_budget bgt
+				WHERE bgt.budget_id = ?
+		</retrieveBudget>
+		<retrieveBudgetByProjectId>
+			SELECT ${ProjectTrackingSQL.BudgetColumns} 
+				FROM %Schema%po_budget bgt
+				WHERE bgt.project_id = ?
+		</retrieveBudgetByProjectId>
+		<deleteBudget>
+			DELETE FROM %Schema%po_budget
+				WHERE budget_id = ?
+		</deleteBudget>
+		<deleteBudgetByProjectId>
+			DELETE FROM %Schema%po_budget
+				WHERE project_id = ?
+		</deleteBudgetByProjectId>
+	</ProjectTrackingSQL>
+</root>

@@ -1,0 +1,18 @@
+<helpConfiguration version="2.0">
+  <brandings>
+    <branding imageSource="/helpsets/stars2/images/oepa.gif" />
+  </brandings>
+
+  <locales>
+    <locale language="en">
+      <books>
+        <helpSet id="stars2" location="stars2/stars2.hs"/>
+      </books>
+    </locale>
+  </locales>
+
+  <parameters>
+    <combineBooks>false</combineBooks>
+    <useLabelInfo>true</useLabelInfo>
+  </parameters>
+</helpConfiguration>

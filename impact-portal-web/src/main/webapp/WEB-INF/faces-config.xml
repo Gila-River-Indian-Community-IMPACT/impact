@@ -1,0 +1,467 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+	"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+	"http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<!-- simple web app -->
+
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+  <application>
+    <default-render-kit-id>oracle.adf.core</default-render-kit-id>
+    <variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+    <locale-config>
+      <default-locale>en</default-locale>
+      <supported-locale>en</supported-locale>
+    </locale-config>
+    <message-bundle>messages</message-bundle>
+  </application>
+  <!-- Application scope beans -->
+
+  <!--Global Menus-->
+
+  <!-- create the menu tree -->
+  <managed-bean>
+    <managed-bean-name>menuItem_help</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_help</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>HELP</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <value>Help</value>
+    </managed-property>
+    <managed-property>
+      <property-name>icon</property-name>
+      <value>/images/globalhelp.jpg</value>
+    </managed-property>
+    <managed-property>
+      <property-name>type</property-name>
+      <value>global</value>
+    </managed-property>
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/help.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>method.userAttrs.goHelp</value>
+    </managed-property>
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>menuItem_facSelector</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_facSelector</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>Facility Selector</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <value>facilitySelector</value>
+    </managed-property>
+    <managed-property>
+      <property-name>type</property-name>
+      <value>global</value>
+    </managed-property>
+    <managed-property>
+      <property-name>rendered</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/facilitySelector.jsp</value>
+        <value>/newFacilityRequest.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>method.companyProfile.goFacilitySelector</value>
+    </managed-property>
+  </managed-bean>
+  
+    <managed-bean>
+    <managed-bean-name>menuItem_cmpSelector</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_cmpSelector</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>Company Selector</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <value>companySelector</value>
+    </managed-property>
+    <managed-property>
+      <property-name>type</property-name>
+      <value>global</value>
+    </managed-property>
+    <managed-property>
+      <property-name>rendered</property-name>
+      <value>true</value>
+    </managed-property>    
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/companySelector.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>method.companyProfile.goCompanySelector</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>menuItem_cromerrHome</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_cromerrHome</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>SCS Dashboard</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <value>cromerrHome</value>
+    </managed-property>
+    <managed-property>
+      <property-name>type</property-name>
+      <value>global</value>
+    </managed-property>
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/cromerrHome.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>method.userAttrs.goEpaPortal</value>
+    </managed-property>
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>menuModel</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuTree
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>children</property-name>
+      <list-entries>
+        <value-class>
+          us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+        </value-class>
+        <value>#{menuItem_home}</value>
+        <value>#{menuItem_facility}</value>
+        <value>#{menuItem_changeContact}</value>
+        <value>#{menuItem_applications}</value>
+        <value>#{menuItem_emissionsReport}</value>
+        <!--<value>#{menuItem_companies}</value>
+        <value>#{menuItem_createFacility}</value>
+        <value>#{menuItem_permits}</value> -->
+        <value>#{menuItem_stacktests}</value>
+        <value>#{menuItem_compliance}</value>
+        <value>#{menuItem_monitorGroupDetail}</value>
+        <!--<value>#{menuItem_help}</value>-->
+        <!-- value>#{menuItem_cmpSelector}</value-->
+        <value>#{menuItem_facSelector}</value>
+        <value>#{menuItem_cromerrHome}</value>
+      </list-entries>
+    </managed-property>
+  </managed-bean>
+  <!--End menu tree -->
+
+  <managed-bean>
+    <managed-bean-name>infraDefs</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.bean.InfrastructureDefs
+    </managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+    <managed-property>
+        <property-name>infrastructureService</property-name>
+        <value>#{infrastructureBO}</value>
+    </managed-property>
+    <managed-property>
+        <property-name>companyService</property-name>
+        <value>#{companyBO}</value>
+    </managed-property>
+  </managed-bean>
+  
+  <!-- removed workflowdefs, no portal version -->
+ 
+ <!-- //TODO spring bean instead?
+  <managed-bean>
+    <managed-bean-name>userAttrs</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.framework.userAuth.UserAttributes
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  -->
+
+  <managed-bean>
+    <managed-bean-name>applicationReference</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.bean.ApplicationReference
+    </managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+    <managed-property>
+        <property-name>applicationService</property-name>
+        <value>#{applicationBO}</value>
+    </managed-property>
+  </managed-bean>
+
+  <navigation-rule>
+    <navigation-case>
+      <from-outcome>dialog:confirm</from-outcome>
+      <to-view-id>/util/confirm.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>dialog:confirmAttestation</from-outcome>
+      <to-view-id>/util/submitTaskAttest.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>dialog:confirmSubmitTaskPin</from-outcome>
+      <to-view-id>/util/submitTaskPin.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>dialog:confirmNonROSubmission</from-outcome>
+      <to-view-id>/util/nonROSubmission.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>dialog:confirmROStatus</from-outcome>
+      <to-view-id>/util/confirmROStatus.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/loginForm.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{loginForm.login}</from-action>
+			<from-outcome>loginForm</from-outcome>
+			<to-view-id>/loginForm.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+  <managed-bean>
+    <managed-bean-name>confirmWindow</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.bean.ConfirmWindow
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>displayUtil</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.DisplayUtil
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>submitTask</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.portal.bean.SubmitTask
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>applicationService</property-name>
+            <value>#{applicationBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>complianceReportService</property-name>
+            <value>#{complianceReportBO}</value>
+        </managed-property>
+                <managed-property>
+            <property-name>emissionsReportService</property-name>
+            <value>#{emissionsReportBO}</value>
+        </managed-property>
+                <managed-property>
+            <property-name>facilityService</property-name>
+            <value>#{facilityBO}</value>
+        </managed-property>
+                <managed-property>
+            <property-name>infrastructureService</property-name>
+            <value>#{infrastructureBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>relocateRequestService</property-name>
+            <value>#{relocateRequestBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>applicationDetail</property-name>
+            <value>#{applicationDetail}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>stackTestService</property-name>
+            <value>#{stackTestBO}</value>
+        </managed-property>
+  </managed-bean>
+
+  <!-- For printing/exporting datagrids - begin -->
+  <managed-bean>
+    <managed-bean-name>tableExporter</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.TableExporter
+    </managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>permitReference</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.bean.PermitReference
+    </managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+        <managed-property>
+            <property-name>infrastructureService</property-name>
+            <value>#{infrastructureBO}</value>
+        </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>generalIssuance</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.bean.GeneralIssuance
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>facilityService</property-name>
+            <value>#{facilityBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>genericIssuanceService</property-name>
+            <value>#{genericIssuanceBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>infrastructureService</property-name>
+            <value>#{infrastructureBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>permitService</property-name>
+            <value>#{permitBO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>readWorkFlowService</property-name>
+            <value>#{readWorkFlowBO}</value>
+        </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+    <managed-bean-name>loginForm</managed-bean-name>
+    <managed-bean-class>
+      org.gricdeq.impact.webcommon.LoginForm
+    </managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  
+  <!-- For printing/exporting datagrids - end -->
+
+  <!--Global Menus-->
+
+  <!-- for Image output PoShan -->
+  <component>
+    <component-type>
+      us.oh.state.epa.stars2.webcommon.component.SelectItems
+    </component-type>
+    <component-class>
+      us.oh.state.epa.stars2.webcommon.component.SelectItems
+    </component-class>
+  </component>
+
+  <component>
+    <component-type>
+      us.oh.state.epa.stars2.webcommon.component.SetProperty
+    </component-type>
+    <component-class>
+      us.oh.state.epa.stars2.webcommon.component.SetPropertyComp
+    </component-class>
+  </component>
+
+  <component>
+    <component-type>
+      us.oh.state.epa.stars2.webcommon.component.AreaMap
+    </component-type>
+    <component-class>
+      us.oh.state.epa.stars2.webcommon.component.AreaMapUIComp
+    </component-class>
+  </component>
+
+  <component>
+    <component-type>
+      us.oh.state.epa.stars2.webcommon.component.ImageOutput
+    </component-type>
+    <component-class>javax.faces.component.UIOutput</component-class>
+  </component>
+
+  <converter>
+    <converter-id>
+      us.oh.state.epa.stars2.webcommon.converter.SigDigNumberConverter
+    </converter-id>
+    <converter-class>
+      us.oh.state.epa.stars2.webcommon.converter.SigDigNumberConverter
+    </converter-class>
+  </converter>
+
+  <render-kit>
+    <renderer>
+      <component-family>javax.faces.Output</component-family>
+      <renderer-type>
+        us.oh.state.epa.stars2.webcommon.component.ImageOutput
+      </renderer-type>
+      <renderer-class>
+        us.oh.state.epa.stars2.webcommon.component.ImageOutputRenderer
+      </renderer-class>
+    </renderer>
+  </render-kit>
+  
+  
+	<converter>
+		<converter-id>
+			us.oh.state.epa.stars2.webcommon.converter.BigDecimalConverter
+		</converter-id>
+		<converter-class>
+			us.oh.state.epa.stars2.webcommon.converter.BigDecimalConverter
+		</converter-class>
+	</converter>
+  
+  <!-- for Image output PoShan -->
+</faces-config>

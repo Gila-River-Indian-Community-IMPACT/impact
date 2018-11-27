@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+  <!-- Menu items -->
+  <managed-bean>
+    <managed-bean-name>menuItem_permits</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_permits</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>Permit Detail</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <value>permits</value>
+    </managed-property>
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/permits/permitDetail.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>children</property-name>
+      <list-entries>
+        <value-class>
+          us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+        </value-class>
+        <value>#{menuItem_permitDetails}</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>rendered</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>permits</value>
+    </managed-property>
+  </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>menuItem_permitDetails</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+      <property-name>beanName</property-name>
+      <value>menuItem_permitDetails</value>
+    </managed-property>
+    <managed-property>
+      <property-name>label</property-name>
+      <value>Permit Details</value>
+    </managed-property>
+    <managed-property>
+      <property-name>name</property-name>
+      <value>permits.permitDetails</value>
+    </managed-property>
+    <managed-property>
+      <property-name>viewIDs</property-name>
+      <list-entries>
+        <value-class>java.lang.String</value-class>
+        <value>/permits/permitDetail.jsp</value>
+      </list-entries>
+    </managed-property>
+    <managed-property>
+      <property-name>outcome</property-name>
+      <value>permitDetails</value>
+    </managed-property>
+  </managed-bean>
+  <!-- end of Menu items -->
+
+
+  <!-- Backing beans -->
+  <managed-bean>
+    <managed-bean-name>permitSearch</managed-bean-name>
+    <managed-bean-class>
+      us.oh.state.epa.stars2.portal.permit.PermitSearch
+    </managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>permitService</property-name>
+            <value>#{permitBO}</value>
+        </managed-property>
+  </managed-bean>
+
+  <navigation-rule>
+    <navigation-case>
+      <from-outcome>permits</from-outcome>
+      <to-view-id>/permits/permitDetail.jsp</to-view-id>
+      <redirect />
+    </navigation-case>
+    <navigation-case>
+		<from-outcome>homeApplicationDetail</from-outcome>
+		<to-view-id>/applications/homeApplicationDetail.jsp</to-view-id>
+		<redirect />
+	</navigation-case>
+  </navigation-rule>
+</faces-config>

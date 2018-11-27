@@ -1,0 +1,1668 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <root>
+<StarsEACSQL>
+	<TAB1>n1_0</TAB1>
+	<SQL1>
+
+    select
+        d.facility_id,
+        cp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(cp."MATERIAL_TYPE" , '|', ' '), chr(10), ' ') "MATERIAL_TYPE" ,
+        translate(translate(cp."SPRAY_MTHD_FLAG" , '|', ' '), chr(10), ' ') "SPRAY_MTHD_FLAG" ,
+        translate(translate(cp."AIR_GUN_FLAG" , '|', ' '), chr(10), ' ') "AIR_GUN_FLAG" ,
+        translate(translate(cp."AIRLESS_FLAG" , '|', ' '), chr(10), ' ') "AIRLESS_FLAG" ,
+        translate(translate(cp."ELECTROSTATIC_FLAG" , '|', ' '), chr(10), ' ') "ELECTROSTATIC_FLAG" ,
+        translate(translate(cp."HI_VOL_LOW_PRESS_FLAG" , '|', ' '), chr(10), ' ') "HI_VOL_LOW_PRESS_FLAG" ,
+        translate(translate(cp."ROTARY_DISK_FLAG" , '|', ' '), chr(10), ' ') "ROTARY_DISK_FLAG" ,
+        translate(translate(cp."BELL_DISK_FLAG" , '|', ' '), chr(10), ' ') "BELL_DISK_FLAG" ,
+        translate(translate(cp."SPRAY_OTHER_FLAG" , '|', ' '), chr(10), ' ') "SPRAY_OTHER_FLAG" ,
+        translate(translate(cp."SPRAY_OTHER_DESC" , '|', ' '), chr(10), ' ') "SPRAY_OTHER_DESC" ,
+        translate(translate(cp."EL_TANK_MTHD_FLAG" , '|', ' '), chr(10), ' ') "EL_TANK_MTHD_FLAG" ,
+        translate(translate(cp."ET_CAPACITY" , '|', ' '), chr(10), ' ') "ET_CAPACITY" ,
+        translate(translate(cp."ET_LEN" , '|', ' '), chr(10), ' ') "ET_LEN" ,
+        translate(translate(cp."ET_WID" , '|', ' '), chr(10), ' ') "ET_WID" ,
+        translate(translate(cp."ET_HGT" , '|', ' '), chr(10), ' ') "ET_HGT" ,
+        translate(translate(cp."DIP_TANK_MTHD_FLAG" , '|', ' '), chr(10), ' ') "DIP_TANK_MTHD_FLAG" ,
+        translate(translate(cp."DT_CAPACITY" , '|', ' '), chr(10), ' ') "DT_CAPACITY" ,
+        translate(translate(cp."DT_LEN" , '|', ' '), chr(10), ' ') "DT_LEN" ,
+        translate(translate(cp."DT_WID" , '|', ' '), chr(10), ' ') "DT_WID" ,
+        translate(translate(cp."DT_HGT" , '|', ' '), chr(10), ' ') "DT_HGT" ,
+        translate(translate(cp."ROLL_COAT_MTHD_FLAG" , '|', ' '), chr(10), ' ') "ROLL_COAT_MTHD_FLAG" ,
+        translate(translate(cp."RECESSED_IMAGE_FLAG" , '|', ' '), chr(10), ' ') "RECESSED_IMAGE_FLAG" ,
+        translate(translate(cp."RAISED_IMAGE_FLAG" , '|', ' '), chr(10), ' ') "RAISED_IMAGE_FLAG" ,
+        translate(translate(cp."KNIFE_FLAG" , '|', ' '), chr(10), ' ') "KNIFE_FLAG" ,
+        translate(translate(cp."ROLL_COAT_OTHER_FLAG" , '|', ' '), chr(10), ' ') "ROLL_COAT_OTHER_FLAG" ,
+        translate(translate(cp."ROLL_COAT_OTHER_DESC" , '|', ' '), chr(10), ' ') "ROLL_COAT_OTHER_DESC" ,
+        translate(translate(cp."PRINT_MTHD_FLAG" , '|', ' '), chr(10), ' ') "PRINT_MTHD_FLAG" ,
+        translate(translate(cp."ROTOGRAVURE_FLAG" , '|', ' '), chr(10), ' ') "ROTOGRAVURE_FLAG" ,
+        translate(translate(cp."FLEXOGRAPHIC_FLAG" , '|', ' '), chr(10), ' ') "FLEXOGRAPHIC_FLAG" ,
+        translate(translate(cp."HEATSET_FLAG" , '|', ' '), chr(10), ' ') "HEATSET_FLAG" ,
+        translate(translate(cp."WEB_OFFSET_FLAG" , '|', ' '), chr(10), ' ') "WEB_OFFSET_FLAG" ,
+        translate(translate(cp."LITHOGRAPHIC_FLAG" , '|', ' '), chr(10), ' ') "LITHOGRAPHIC_FLAG" ,
+        translate(translate(cp."PRINT_DESC" , '|', ' '), chr(10), ' ') "PRINT_DESC" ,
+        translate(translate(cp."POWDER_COAT_MTHD_FLAG" , '|', ' '), chr(10), ' ') "POWDER_COAT_MTHD_FLAG" ,
+        translate(translate(cp."BRUSH_MTHD_FLAG" , '|', ' '), chr(10), ' ') "BRUSH_MTHD_FLAG" ,
+        translate(translate(cp."OTHER_MTHD_FLAG" , '|', ' '), chr(10), ' ') "OTHER_MTHD_FLAG" ,
+        translate(translate(cp."OTHER_MTHD_DESC" , '|', ' '), chr(10), ' ') "OTHER_MTHD_DESC" ,
+        translate(translate(cp."AVG_COAT_PRINT_HR" , '|', ' '), chr(10), ' ') "AVG_COAT_PRINT_HR" ,
+        translate(translate(cp."AVG_COAT_PRINT_HR_UNITS" , '|', ' '), chr(10), ' ') "AVG_COAT_PRINT_HR_UNITS" ,
+        translate(translate(cp."MAX_PRINT_HR" , '|', ' '), chr(10), ' ') "MAX_PRINT_HR" ,
+        translate(translate(cp."MAX_PRINT_HR_UNITS" , '|', ' '), chr(10), ' ') "MAX_PRINT_HR_UNITS" ,
+        translate(translate(cp."TOTAL_COAT_YR" , '|', ' '), chr(10), ' ') "TOTAL_COAT_YR" ,
+        translate(translate(cp."TOTAL_COAT_YR_UNITS" , '|', ' '), chr(10), ' ') "TOTAL_COAT_YR_UNITS" ,
+        translate(translate(cp."COMPLIANCE" , '|', ' '), chr(10), ' ') "COMPLIANCE"  
+    from
+        "AIRPROD"."COATING_PRINTING" cp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = cp.int_doc_id
+        order by cp.int_doc_id, d.facility_id
+
+
+	</SQL1>
+	<TAB2>n1_1</TAB2>
+	<SQL2>
+
+    select
+        d.facility_id,
+        cp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbo."OVEN_TYPE_DESC" , '|', ' '), chr(10), ' ') "OVEN_TYPE_DESC" ,
+        translate(translate(cp."NUMBER_OVENS" , '|', ' '), chr(10), ' ') "NUMBER_OVENS" ,
+        translate(translate(cp."TEMP_RANGE" , '|', ' '), chr(10), ' ') "TEMP_RANGE" ,
+        translate(translate(cp."HEAT_XFER_SYS_FLAG" , '|', ' '), chr(10), ' ') "HEAT_XFER_SYS_FLAG" ,
+        translate(translate(cp."RECIRC_AIRFLOW_FLAG" , '|', ' '), chr(10), ' ') "RECIRC_AIRFLOW_FLAG" ,
+        translate(translate(cp."FUEL_FIRED_FLAG" , '|', ' '), chr(10), ' ') "FUEL_FIRED_FLAG" 
+    from
+        "AIRPROD"."CP_OVEN" cp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = cp.int_doc_id
+        inner join "AIRPROD"."AMTB_OVEN_TYPE" amtbo on amtbo.oven_type_code = cp.oven_type
+        order by cp.int_doc_id, d.facility_id
+
+
+	</SQL2>
+	<TAB3>n1_2</TAB3>
+	<SQL3>
+
+    select
+        d.facility_id,
+        cp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(cp."BOOTH_MFG" , '|', ' '), chr(10), ' ') "BOOTH_MFG" ,
+        translate(translate(cp."BOOTH_LEN" , '|', ' '), chr(10), ' ') "BOOTH_LEN" ,
+        translate(translate(cp."BOOTH_WID" , '|', ' '), chr(10), ' ') "BOOTH_WID" ,
+        translate(translate(cp."BOOTH_HGT" , '|', ' '), chr(10), ' ') "BOOTH_HGT" ,
+        translate(translate(cp."BOOTH_INSTALLED_DATE" , '|', ' '), chr(10), ' ') "BOOTH_INSTALLED_DATE" ,
+        translate(translate(amtbe."EXHAUST_EQUIP_DESC" , '|', ' '), chr(10), ' ') "EXHAUST_EQUIP_DESC" 
+    from
+        "AIRPROD"."CP_BOOTH_ENCL" cp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = cp.int_doc_id
+        inner join "AIRPROD"."AMTB_EXHAUST_EQUIP" amtbe on amtbe.exhaust_equip_code = cp.exhaust_equip
+        order by cp.int_doc_id, d.facility_id
+
+
+	</SQL3>
+	<TAB4>n1_3</TAB4>
+	<SQL4>
+
+    select
+        d.facility_id,
+        cp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(cp."COAT_INK_ID" , '|', ' '), chr(10), ' ') "COAT_INK_ID" ,
+        translate(translate(amtbc."COATING_TYPE_DESC" , '|', ' '), chr(10), ' ') "COATING_TYPE_DESC" ,
+        translate(translate(cp."THIN_REDUCED_FLAG" , '|', ' '), chr(10), ' ') "THIN_REDUCED_FLAG" ,
+        translate(translate(cp."DENSITY" , '|', ' '), chr(10), ' ') "DENSITY" ,
+        translate(translate(cp."SOLID_CONTENT_VOL" , '|', ' '), chr(10), ' ') "SOLID_CONTENT_VOL" ,
+        translate(translate(cp."SOLID_CONTENT_WGT" , '|', ' '), chr(10), ' ') "SOLID_CONTENT_WGT" ,
+        translate(translate(cp."ORG_SOLV_CONTENT" , '|', ' '), chr(10), ' ') "ORG_SOLV_CONTENT" ,
+        translate(translate(cp."ORG_SOLV_DENSITY" , '|', ' '), chr(10), ' ') "ORG_SOLV_DENSITY" ,
+        translate(translate(cp."WATER_CONTENT" , '|', ' '), chr(10), ' ') "WATER_CONTENT" ,
+        translate(translate(cp."VOC_CONTENT" , '|', ' '), chr(10), ' ') "VOC_CONTENT" ,
+        translate(translate(cp."MAX_HR_USAGE" , '|', ' '), chr(10), ' ') "MAX_HR_USAGE" ,
+        translate(translate(cp."MAX_ANN_USAGE" , '|', ' '), chr(10), ' ') "MAX_ANN_USAGE" ,
+        translate(translate(cp."USEPA_MTHD_FLAG" , '|', ' '), chr(10), ' ') "USEPA_MTHD_FLAG" 
+    from
+        "AIRPROD"."CP_COAT_INK" cp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = cp.int_doc_id
+        left outer join "AIRPROD"."AMTB_COATING_TYPE" amtbc on amtbc.coating_type_code = cp.coating_type
+        order by cp.int_doc_id, d.facility_id, coat_ink_id
+
+
+	</SQL4>
+	<TAB5>n1_4</TAB5>
+	<SQL5>
+
+    select
+        d.facility_id,
+        cp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(cp."COAT_INK_NAME" , '|', ' '), chr(10), ' ') "COAT_INK_NAME" ,
+        translate(translate(cp."SOLV_COMPONENT" , '|', ' '), chr(10), ' ') "SOLV_COMPONENT" ,
+        translate(translate(cp."PHOTOCHEM_FLAG" , '|', ' '), chr(10), ' ') "PHOTOCHEM_FLAG" ,
+        translate(translate(cp."PCT_BY_VOL" , '|', ' '), chr(10), ' ') "PCT_BY_VOL" 
+    from
+        "AIRPROD"."CP_COAT_INK_SOLVENT" cp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = cp.int_doc_id
+        order by cp.int_doc_id, d.facility_id, coat_ink_name
+	</SQL5>
+	<TAB6>n1_5</TAB6>
+	<SQL6>
+
+    select
+        d.facility_id,
+        cp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(cp."MATERIAL_ID" , '|', ' '), chr(10), ' ') "MATERIAL_ID" ,
+        translate(translate(cp."SOLV_COMPONENT" , '|', ' '), chr(10), ' ') "SOLV_COMPONENT" ,
+        translate(translate(cp."MAX_MONTH_USE" , '|', ' '), chr(10), ' ') "MAX_MONTH_USE" ,
+        translate(translate(cp."MAX_ANN_USE" , '|', ' '), chr(10), ' ') "MAX_ANN_USE" ,
+        translate(translate(cp."PHOTOCHEM_FLAG" , '|', ' '), chr(10), ' ') "PHOTOCHEM_FLAG" 
+    from
+        "AIRPROD"."CP_CLEANUP" cp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = cp.int_doc_id
+        order by cp.int_doc_id, d.facility_id, material_id
+
+
+	</SQL6>
+	<TAB7>n1_6</TAB7>
+	<SQL7>
+
+    select
+        d.facility_id,
+        cp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(cp."MATERIAL_ID" , '|', ' '), chr(10), ' ') "MATERIAL_ID" ,
+        translate(translate(cp."MIN_RECOV_RATE" , '|', ' '), chr(10), ' ') "MIN_RECOV_RATE" ,
+        translate(translate(cp."MIN_SOLID_CONTENT" , '|', ' '), chr(10), ' ') "MIN_SOLID_CONTENT" ,
+        translate(translate(cp."MAX_ORG_CONTENT" , '|', ' '), chr(10), ' ') "MAX_ORG_CONTENT" 
+    from
+        "AIRPROD"."CP_RECOVERED" cp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = cp.int_doc_id
+        order by cp.int_doc_id, d.facility_id, material_id
+	</SQL7>
+	<TAB8>n2_0</TAB8>
+	<SQL8>
+
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."PERCHLOR_FLAG" , '|', ' '), chr(10), ' ') "PERCHLOR_FLAG" ,
+        translate(translate(dc."TRICHLOR_FLAG" , '|', ' '), chr(10), ' ') "TRICHLOR_FLAG" ,
+        translate(translate(dc."PETROLEUM_FLAG" , '|', ' '), chr(10), ' ') "PETROLEUM_FLAG" ,
+        translate(translate(dc."GENERAL_FABRIC_FLAG" , '|', ' '), chr(10), ' ') "GENERAL_FABRIC_FLAG" ,
+        translate(translate(dc."UNIFORMS_FLAG" , '|', ' '), chr(10), ' ') "UNIFORMS_FLAG" ,
+        translate(translate(dc."HOSPITAL_UNIFORMS_FLAG" , '|', ' '), chr(10), ' ') "HOSPITAL_UNIFORMS_FLAG" ,
+        translate(translate(dc."RUGS_FLAG" , '|', ' '), chr(10), ' ') "RUGS_FLAG" ,
+        translate(translate(dc."SHOP_TOWELS_FLAG" , '|', ' '), chr(10), ' ') "SHOP_TOWELS_FLAG" ,
+        translate(translate(dc."LEATHER_FLAG" , '|', ' '), chr(10), ' ') "LEATHER_FLAG" ,
+        translate(translate(dc."OTHER_FABRIC_FLAG" , '|', ' '), chr(10), ' ') "OTHER_FABRIC_FLAG"  
+    from
+        "AIRPROD"."DRY_CLEANING" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        order by dc.int_doc_id, d.facility_id
+	</SQL8>
+	<TAB9>n2_1</TAB9>
+	<SQL9>
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."WD_EQUIP_DESC" , '|', ' '), chr(10), ' ') "WD_EQUIP_DESC" ,
+        translate(translate(dc."WD_MANUFACTURER" , '|', ' '), chr(10), ' ') "WD_MANUFACTURER" ,
+        translate(translate(dc."WD_MODEL_NU" , '|', ' '), chr(10), ' ') "WD_MODEL_NU" ,
+        translate(translate(amtbw."WD_TYPE_DESC" , '|', ' '), chr(10), ' ') "WD_TYPE_DESC" ,
+        translate(translate(dc."MFG_CAP" , '|', ' '), chr(10), ' ') "MFG_CAP" ,
+        translate(translate(dc."AVG_LOAD" , '|', ' '), chr(10), ' ') "AVG_LOAD" ,
+        translate(translate(dc."COOLANT_SOURCE" , '|', ' '), chr(10), ' ') "COOLANT_SOURCE" 
+    from
+        "AIRPROD"."DC_WD_EQUIP" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        left outer join "AIRPROD"."AMTB_WD_TYPE" amtbw on amtbw.wd_type_code = dc.wd_type_desc
+        order by dc.int_doc_id, d.facility_id
+	</SQL9>
+	<TAB10>n2_2</TAB10>
+	<SQL10>
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."WD_EQUIP_DESC" , '|', ' '), chr(10), ' ') "WD_EQUIP_DESC" ,
+        translate(translate(dc."CE_COMPANY_ID" , '|', ' '), chr(10), ' ') "CE_COMPANY_ID" ,
+        translate(translate(dc."CAPTURE_POINTS" , '|', ' '), chr(10), ' ') "CAPTURE POINTS" 
+    from
+        "AIRPROD"."DC_CTRL_EQUIP" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        order by dc.int_doc_id, d.facility_id, ce_company_id
+	</SQL10>
+	<TAB11>n2_3</TAB11>
+	<SQL11>
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."SOLV_FILTER_EQUIP" , '|', ' '), chr(10), ' ') "SOLV_FILTER_EQUIP" ,
+        translate(translate(dc."WD_MANUFACTURER" , '|', ' '), chr(10), ' ') "WD_MANUFACTURER" ,
+        translate(translate(dc."WD_MODEL_NU" , '|', ' '), chr(10), ' ') "WD_MODEL_NU" ,
+        translate(translate(amtbw."WD_FILTER_DESC" , '|', ' '), chr(10), ' ') "WD_FILTER_DESC" ,
+        translate(translate(dc."CAPACITY" , '|', ' '), chr(10), ' ') "CAPACITY" 
+    from
+        "AIRPROD"."DC_SOLV_FILTER" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        left outer join "AIRPROD"."AMTB_WD_FILTER" amtbw on amtbw.wd_filter_code = dc.filter_type_desc
+        order by dc.int_doc_id, d.facility_id
+	</SQL11>
+	<TAB12>n2_4</TAB12>
+	<SQL12>
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."SOLV_FILTER_EQUIP" , '|', ' '), chr(10), ' ') "SOLV_FILTER_EQUIP" ,
+        translate(translate(dc."SOLV_RECOVERY_EQUIP" , '|', ' '), chr(10), ' ') "SOLV_RECOVERY_EQUIP" 
+    from
+        "AIRPROD"."DC_SOLV_CTRL_EQUIP" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        order by dc.int_doc_id, d.facility_id, solv_filter_equip
+	</SQL12>
+	<TAB13>n2_5</TAB13>
+	<SQL13>
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."REPLACE_FREQUENCY" , '|', ' '), chr(10), ' ') "REPLACE_FREQUENCY" ,
+        translate(translate(dc."STORAGE_55_GAL_FLAG" , '|', ' '), chr(10), ' ') "STORAGE_55_GAL_FLAG" ,
+        translate(translate(dc."SEPARATE_STORAGE_FLAG" , '|', ' '), chr(10), ' ') "SEPARATE_STORAGE_FLAG" ,
+        translate(translate(dc."OTHER_STORAGE_FLAG" , '|', ' '), chr(10), ' ') "OTHER_STORAGE_FLAG" ,
+        translate(translate(dc."SEP_STORAGE_CAP" , '|', ' '), chr(10), ' ') "SEP_STORAGE_CAP" ,
+        translate(translate(dc."OTHER_STORAGE_DESC" , '|', ' '), chr(10), ' ') "OTHER_STORAGE_DESC" ,
+        translate(translate(dc."CONDENSER_TEMP" , '|', ' '), chr(10), ' ') "CONDENSER_TEMP" ,
+        translate(translate(dc."TEMP_DIFF" , '|', ' '), chr(10), ' ') "TEMP_DIFF" ,
+        translate(translate(dc."MIN_DRAIN_TIME" , '|', ' '), chr(10), ' ') "MIN_DRAIN_TIME" ,
+        translate(translate(dc."TEST_DESC" , '|', ' '), chr(10), ' ') "TEST_DESC" ,
+        translate(translate(dc."CE_COMPANY_ID" , '|', ' '), chr(10), ' ') "CE_COMPANY_ID" 
+    from
+        "AIRPROD"."DC_DTL" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        order by dc.int_doc_id, d.facility_id
+	</SQL13>
+	<TAB14>n2_6</TAB14>
+	<SQL14>
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."EQUIP_DESC" , '|', ' '), chr(10), ' ') "EQUIP_DESC" ,
+        translate(translate(dc."WD_MANUFACTURER" , '|', ' '), chr(10), ' ') "WD_MANUFACTURER" ,
+        translate(translate(dc."WD_MODEL_NU" , '|', ' '), chr(10), ' ') "WD_MODEL_NU" ,
+        translate(translate(dc."CAPACITY" , '|', ' '), chr(10), ' ') "CAPACITY" ,
+        translate(translate(dc."OP_FREQUENCY" , '|', ' '), chr(10), ' ') "OP_FREQUENCY" 
+    from
+        "AIRPROD"."DC_DISTILLATION" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        order by dc.int_doc_id, d.facility_id
+	</SQL14>
+	<TAB15>n2_7</TAB15>
+	<SQL15>
+    select
+        d.facility_id,
+        dc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(dc."SOLVENT_DESC" , '|', ' '), chr(10), ' ') "SOLVENT_DESC" ,
+        translate(translate(dc."MAX_ANN_SOLV_USAGE" , '|', ' '), chr(10), ' ') "MAX_ANN_SOLV_USAGE" ,
+        translate(translate(dc."MAX_TOTAL_USAGE" , '|', ' '), chr(10), ' ') "MAX_TOTAL_USAGE" ,
+        translate(translate(dc."MAX_DAY_USAGE" , '|', ' '), chr(10), ' ') "MAX_DAY_USAGE" ,
+        translate(translate(dc."AVG_DAY_USAGE" , '|', ' '), chr(10), ' ') "AVG_DAY_USAGE" 
+    from
+        "AIRPROD"."DC_SOLV_USAGE" dc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = dc.int_doc_id
+        order by dc.int_doc_id, d.facility_id
+	</SQL15>
+	<TAB16>n3_0</TAB16>
+	<SQL16>
+
+    select
+        d.facility_id,
+        fb."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(fb."INPUT_CAP_RATED" , '|', ' '), chr(10), ' ') "INPUT_CAP_RATED" ,
+        translate(translate(fb."INPUT_CAP_MAX" , '|', ' '), chr(10), ' ') "INPUT_CAP_MAX" ,
+        translate(translate(fb."INPUT_CAP_NORMAL" , '|', ' '), chr(10), ' ') "INPUT_CAP_NORMAL" ,
+        translate(translate(fb."OUTPUT_CAP_RATED" , '|', ' '), chr(10), ' ') "OUTPUT_CAP_RATED" ,
+        translate(translate(fb."OUTPUT_CAP_MAX" , '|', ' '), chr(10), ' ') "OUTPUT_CAP_MAX" ,
+        translate(translate(fb."OUTPUT_CAP_NORMAL" , '|', ' '), chr(10), ' ') "OUTPUT_CAP_NORMAL" ,
+        translate(translate(fb."SPACE_HEAT_PCT" , '|', ' '), chr(10), ' ') "SPACE_HEAT_PCT" ,
+        translate(translate(fb."PROCESS_PCT" , '|', ' '), chr(10), ' ') "PROCESS_PCT" ,
+        translate(translate(fb."POWER_PCT" , '|', ' '), chr(10), ' ') "POWER_PCT" ,
+        translate(translate(fb."COAL_FIRED_FLAG" , '|', ' '), chr(10), ' ') "COAL_FIRED_FLAG" ,
+        translate(translate(fb."OIL_FIRED_FLAG" , '|', ' '), chr(10), ' ') "OIL_FIRED_FLAG" ,
+        translate(translate(fb."NATURAL_GAS_FIRED_FLAG" , '|', ' '), chr(10), ' ') "NATURAL_GAS_FIRED_FLAG" ,
+        translate(translate(fb."WOOD_FIRED_FLAG" , '|', ' '), chr(10), ' ') "WOOD_FIRED_FLAG" ,
+        translate(translate(fb."LPG_FIRED_FLAG" , '|', ' '), chr(10), ' ') "LPG_FIRED_FLAG" ,
+        translate(translate(fb."OTHER_FIRED_FLAG" , '|', ' '), chr(10), ' ') "OTHER_FIRED_FLAG" ,
+        translate(translate(fb."OTHER_FIRED_DESC" , '|', ' '), chr(10), ' ') "OTHER_FIRED_DESC" ,
+        translate(translate(fb."DRAFT_TYPE" , '|', ' '), chr(10), ' ') "DRAFT_TYPE" ,
+        translate(translate(fb."FUEL_AIR_FLAG" , '|', ' '), chr(10), ' ') "FUEL_AIR_FLAG" ,
+        translate(translate(fb."O2_FLAG" , '|', ' '), chr(10), ' ') "O2_FLAG" ,
+        translate(translate(fb."CAPACITY_FLAG" , '|', ' '), chr(10), ' ') "CAPACITY_FLAG" ,
+        translate(translate(fb."OTHER_FLAG" , '|', ' '), chr(10), ' ') "OTHER_FLAG" ,
+        translate(translate(fb."OTHER_DESC" , '|', ' '), chr(10), ' ') "OTHER_DESC" ,
+        translate(translate(fb."FIRING_TYPE" , '|', ' '), chr(10), ' ') "FIRING_TYPE" ,
+        translate(translate(fb."OTHER_FIRING_DESC" , '|', ' '), chr(10), ' ') "OTHER_FIRING_DESC" ,
+        translate(translate(fb."FLY_ASH_REINJECTION" , '|', ' '), chr(10), ' ') "FLY_ASH_REINJECTION" ,
+        translate(translate(fb."OIL_TYPE_NO2_FLAG" , '|', ' '), chr(10), ' ') "OIL_TYPE_NO2_FLAG" ,
+        translate(translate(fb."OIL_TYPE_NO6_FLAG" , '|', ' '), chr(10), ' ') "OIL_TYPE_NO6_FLAG" ,
+        translate(translate(fb."OIL_TYPE_OTHER_FLAG" , '|', ' '), chr(10), ' ') "OIL_TYPE_OTHER_FLAG" ,
+        translate(translate(fb."OIL_TYPE_OTHER_DESC" , '|', ' '), chr(10), ' ') "OIL_TYPE_OTHER_DESC" ,
+        translate(translate(fb."ATOMIZATION_TYPE" , '|', ' '), chr(10), ' ') "ATOMIZATION_TYPE" ,
+        translate(translate(fb."OTHER_ATOMIZATION_DESC" , '|', ' '), chr(10), ' ') "OTHER_ATOMIZATION_DESC" ,
+        translate(translate(fb."OIL_PREHEATER_FLAG" , '|', ' '), chr(10), ' ') "OIL_PREHEATER_FLAG" ,
+        translate(translate(fb."OIL_PREHEATER_TEMP" , '|', ' '), chr(10), ' ') "OIL_PREHEATER_TEMP" 
+    from
+        "AIRPROD"."FUEL_BURNING" fb
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = fb.int_doc_id
+        order by fb.int_doc_id, d.facility_id
+	</SQL16>
+	<TAB17>n3_1</TAB17>
+	<SQL17>
+    select
+        d.facility_id,
+        fb."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbf."FUEL_TYPE_DESC" , '|', ' '), chr(10), ' ') "FUEL_TYPE_DESC" ,
+        translate(translate(amtbfs."FUEL_DESC" , '|', ' '), chr(10), ' ') "FUEL_SUBTYPE" ,
+        translate(translate(fb."HEAT_CONTENT" , '|', ' '), chr(10), ' ') "HEAT_CONTENT" ,
+        translate(translate(fb."BTU_UNIT" , '|', ' '), chr(10), ' ') "BTU_UNIT" ,
+        translate(translate(fb."PCT_ASH" , '|', ' '), chr(10), ' ') "PCT_ASH" ,
+        translate(translate(fb."PCT_SULFUR" , '|', ' '), chr(10), ' ') "PCT_SULFUR" ,
+        translate(translate(fb."FUEL_USED_YR" , '|', ' '), chr(10), ' ') "FUEL_USED_YR" ,
+        translate(translate(fb."FUEL_USED_YR_UNITS" , '|', ' '), chr(10), ' ') "FUEL_USED_YR_UNITS" ,
+        translate(translate(fb."FUEL_USED_HR" , '|', ' '), chr(10), ' ') "FUEL_USED_HR" ,
+        translate(translate(fb."FUEL_USED_HR_UNITS" , '|', ' '), chr(10), ' ') "FUEL_USED_HR_UNITS" ,
+        translate(translate(fb."MAX_FUEL_USED_HR" , '|', ' '), chr(10), ' ') "MAX_FUEL_USED_HR" ,
+        translate(translate(fb."MAX_FUEL_USED_HR_UNITS" , '|', ' '), chr(10), ' ') "MAX_FUEL_USED_HR_UNITS"
+    from
+        "AIRPROD"."FUEL_BURN_DTL" fb
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = fb.int_doc_id
+        inner join "AIRPROD"."AMTB_FUEL_TYPE" amtbf on amtbf.fuel_type_code = fb.fuel_type
+        inner join "AIRPROD"."AMTB_FUEL_SUBTYPE" amtbfs on amtbfs.fuel_code = fb.fuel_subtype
+        order by fb.int_doc_id, d.facility_id, fuel_type_desc
+	</SQL17>
+	<TAB18>n4_0</TAB18>
+	<SQL18>
+
+    select
+        d.facility_id,
+        fad."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(fad."COAL_FLAG" , '|', ' '), chr(10), ' ') "COAL_FLAG" ,
+        translate(translate(fad."REFUSE_FLAG" , '|', ' '), chr(10), ' ') "REFUSE_FLAG" ,
+        translate(translate(fad."WOOD_FLAG" , '|', ' '), chr(10), ' ') "WOOD_FLAG" ,
+        translate(translate(fad."OTHER_FUEL_FLAG" , '|', ' '), chr(10), ' ') "OTHER_FUEL_FLAG" ,
+        translate(translate(fad."OTHER_FUEL_DESC" , '|', ' '), chr(10), ' ') "OTHER_FUEL_DESC" ,
+        translate(translate(fad."QTY_REFUSE" , '|', ' '), chr(10), ' ') "QTY_REFUSE" ,
+        translate(translate(fad."QTY_WOOD" , '|', ' '), chr(10), ' ') "QTY_WOOD" ,
+        translate(translate(fad."QTY_OTHER" , '|', ' '), chr(10), ' ') "QTY_OTHER" ,
+        translate(translate(fad."QTY_COAL" , '|', ' '), chr(10), ' ') "QTY_COAL" ,
+        translate(translate(fad."DISP_SLURRED_FLAG" , '|', ' '), chr(10), ' ') "DISP_SLURRED_FLAG" ,
+        translate(translate(fad."DISP_COLLECTED_DRY_FLAG" , '|', ' '), chr(10), ' ') "DISP_COLLECTED_DRY_FLAG" ,
+        translate(translate(fad."DISP_OTHER_FLAG" , '|', ' '), chr(10), ' ') "DISP_OTHER_FLAG" ,
+        translate(translate(fad."DISP_OTHER_DESC" , '|', ' '), chr(10), ' ') "DISP_OTHER_DESC" ,
+        translate(translate(fad."QTY_ASH" , '|', ' '), chr(10), ' ') "QTY_ASH"
+    from
+        "AIRPROD"."FLY_ASH_DISPOSAL" fad
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = fad.int_doc_id
+        order by fad.int_doc_id, d.facility_id
+	</SQL18>
+	<TAB19>n4_1</TAB19>
+	<SQL19>
+    select
+        d.facility_id,
+        pc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbpa."PPFA_ACTIVITY_DESC" , '|', ' '), chr(10), ' ') "PPFA_ACTIVITY_DESC" ,
+        translate(translate(amtbcmp."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(pc."YEAR_IMPLEMENTED" , '|', ' '), chr(10), ' ') "YEAR_IMPLEMENTED" ,
+        translate(translate(pc."DESCRIPTION" , '|', ' '), chr(10), ' ') "DESCRIPTION" ,
+        translate(translate(pc."APPLICATION_RATE" , '|', ' '), chr(10), ' ') "APPLICATION_RATE" ,
+        translate(translate(pc."METH_APPLICATION" , '|', ' '), chr(10), ' ') "METH_APPLICATION" ,
+        translate(translate(pc."FREQ_APPLICATION" , '|', ' '), chr(10), ' ') "FREQ_APPLICATION" ,
+        translate(translate(pc."APPLICATION_POINTS" , '|', ' '), chr(10), ' ') "APPLICATION_POINTS" ,
+        translate(translate(pc."EST_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "EST_CTRL_EFFIC" ,
+        translate(translate(amtbeb."BASIS_DESC" , '|', ' '), chr(10), ' ') "BASIS_DESC"
+    from
+        "AIRPROD"."PPFA_CONTROL" pc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = pc.int_doc_id
+        inner join "AIRPROD"."AMTB_CONTROL_METH_PPFA" amtbcmp on amtbcmp.meth_code = pc.control_meth
+        left outer join "AIRPROD"."AMTB_EFFIC_BASIS" amtbeb on amtbeb.basis_code = pc.effic_est_basis
+        inner join "AIRPROD"."AMTB_PPFA_ACTIVITY" amtbpa on amtbpa.ppfa_activity_code = pc.activity
+        order by pc.int_doc_id, d.facility_id, ppfa_activity_desc
+	</SQL19>
+	<TAB20>n5_0</TAB20>
+	<SQL20>
+    select
+        d.facility_id,
+        gfm."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gfm."FURNACE_ID" , '|', ' '), chr(10), ' ') "FURNACE_ID" ,
+        translate(translate(gfm."GLASS_MFG_DESC" , '|', ' '), chr(10), ' ') "GLASS_MFG_DESC" ,
+        translate(translate(gfm."FURNACE_DESC" , '|', ' '), chr(10), ' ') "FURNACE_DESC" ,
+        translate(translate(gfm."FUEL_DESC" , '|', ' '), chr(10), ' ') "FUEL_DESC" ,
+        translate(translate(gfm."MAX_PROD_CAP" , '|', ' '), chr(10), ' ') "MAX_PROD_CAP" ,
+        translate(translate(gfm."MAX_HR_RATE" , '|', ' '), chr(10), ' ') "MAX_HR_RATE" ,
+        translate(translate(gfm."ANN_PROD_RATE" , '|', ' '), chr(10), ' ') "ANN_PROD_RATE" ,
+        translate(translate(gfm."FUG_DUST_EU_TYPE" , '|', ' '), chr(10), ' ') "FUG_DUST_EU_TYPE" ,
+        translate(translate(gfm."FUG_DUST_EU_TYPE_DESC" , '|', ' '), chr(10), ' ') "FUG_DUST_EU_TYPE_DESC" 
+    from
+        "AIRPROD"."GLASS_FIBERGLASS_MFG" gfm
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gfm.int_doc_id
+        order by gfm.int_doc_id, d.facility_id
+	</SQL20>
+	<TAB21>n5_1</TAB21>
+	<SQL21>
+    select
+        d.facility_id,
+        gc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbga."GFM_ACTIVITY_DESC" , '|', ' '), chr(10), ' ') "GFM_ACTIVITY_DESC" ,
+        translate(translate(amtbcmg."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(gc."YEAR" , '|', ' '), chr(10), ' ') "YEAR" ,
+        translate(translate(gc."CONTROL_DESC" , '|', ' '), chr(10), ' ') "CONTROL_DESC" ,
+        translate(translate(gc."EST_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "EST_CTRL_EFFIC" ,
+        translate(translate(amtbeb."BASIS_DESC" , '|', ' '), chr(10), ' ') "BASIS_DESC"
+    from
+        "AIRPROD"."GFM_CONTROL" gc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gc.int_doc_id
+        inner join "AIRPROD"."AMTB_CONTROL_METH_GFM" amtbcmg on amtbcmg.meth_code = gc.control_mthd
+        left outer join "AIRPROD"."AMTB_EFFIC_BASIS" amtbeb on amtbeb.basis_code = gc.effic_est_basis
+        inner join "AIRPROD"."AMTB_GFM_ACTIVITY" amtbga on amtbga.gfm_activity_code = gc.activity
+        order by gc.int_doc_id, d.facility_id, gfm_activity_desc
+	</SQL21>
+	<TAB22>n6_0</TAB22>
+	<SQL22>
+    select
+        d.facility_id,
+        mh."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(mh."MEAN_WIND_SPEED" , '|', ' '), chr(10), ' ') "MEAN_WIND_SPEED" 
+    from
+        "AIRPROD"."MATERIAL_HANDLING" mh
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = mh.int_doc_id
+        order by mh.int_doc_id, d.facility_id
+	</SQL22>
+	<TAB23>n6_1</TAB23>
+	<SQL23>
+    select
+        d.facility_id,
+        mh."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbmt."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC",
+        translate(translate(mh."MATERIAL_UNLOADED" , '|', ' '), chr(10), ' ') "MATERIAL_UNLOADED",
+        translate(translate(mh."MAX_QTY_UNLOADED" , '|', ' '), chr(10), ' ') "MAX_QTY_UNLOADED",
+        translate(translate(mh."AVG_MOISTURE_CONTENT" , '|', ' '), chr(10), ' ') "AVG_MOISTURE_CONTENT",
+        translate(translate(mh."MAX_ATY_UNLOADED_YR" , '|', ' '), chr(10), ' ') "MAX_ATY_UNLOADED_YR"
+    from
+        "AIRPROD"."MH_UNLOADING" mh
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = mh.int_doc_id
+        inner join "AIRPROD"."AMTB_MH_TYPE" amtbmt on amtbmt.meth_code = mh.unload_desc
+        order by mh.int_doc_id, d.facility_id
+	</SQL23>
+	<TAB24>n6_2</TAB24>
+	<SQL24>
+    select
+        d.facility_id,
+        mh."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbmt."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC",
+        translate(translate(mh."MATERIAL_LOADED" , '|', ' '), chr(10), ' ') "MATERIAL_LOADED",
+        translate(translate(mh."MAX_QTY_LOADED_HR" , '|', ' '), chr(10), ' ') "MAX_QTY_LOADED_HR",
+        translate(translate(mh."AVG_MOISTURE_CONTENT" , '|', ' '), chr(10), ' ') "AVG_MOISTURE_CONTENT",
+        translate(translate(mh."MAX_QTY_LOADED_YR" , '|', ' '), chr(10), ' ') "MAX_QTY_LOADED_YR"
+    from
+        "AIRPROD"."MH_LOADING" mh
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = mh.int_doc_id
+        inner join "AIRPROD"."AMTB_MH_TYPE" amtbmt on amtbmt.meth_code = mh.load_desc
+        order by mh.int_doc_id, d.facility_id
+	</SQL24>
+	<TAB25>n6_3</TAB25>
+	<SQL25>
+    select
+        d.facility_id,
+        mh."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbmt."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC",
+        translate(translate(mh."QUANTITY" , '|', ' '), chr(10), ' ') "QUANTITY"
+    from
+        "AIRPROD"."MH_CONVEYING" mh
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = mh.int_doc_id
+        inner join "AIRPROD"."AMTB_MH_TYPE" amtbmt on amtbmt.meth_code = mh.conveyer_desc
+        order by mh.int_doc_id, d.facility_id
+	</SQL25>
+	<TAB26>n6_4</TAB26>
+	<SQL26>
+    select
+        d.facility_id,
+        mh."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbmt."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC",
+        translate(translate(mh."QUANTITY" , '|', ' '), chr(10), ' ') "QUANTITY",
+        translate(translate(mh."MAX_QTY_HR" , '|', ' '), chr(10), ' ') "MAX_QTY_HR",
+        translate(translate(mh."MAX_QTY_YR" , '|', ' '), chr(10), ' ') "MAX_QTY_YR",
+        translate(translate(mh."MATERIAL_HANDLED" , '|', ' '), chr(10), ' ') "MATERIAL_HANDLED"
+    from
+        "AIRPROD"."MH_TRANSFER" mh
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = mh.int_doc_id
+        inner join "AIRPROD"."AMTB_MH_TYPE" amtbmt on amtbmt.meth_code = mh.xfer_point_desc
+        order by mh.int_doc_id, d.facility_id
+	</SQL26>
+	<TAB27>n6_5</TAB27>
+	<SQL27>
+    select
+        d.facility_id,
+        mh."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtbma."MH_ACTIVITY_DESC" , '|', ' '), chr(10), ' ') "MH_ACTIVITY_DESC" ,
+        translate(translate(amtbmt."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(amtbcmm."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(mh."TRADE_NAME" , '|', ' '), chr(10), ' ') "TRADE_NAME" ,
+        translate(translate(mh."YR_IMPLEMENTED" , '|', ' '), chr(10), ' ') "YR_IMPLEMENTED" ,
+        translate(translate(mh."APP_FREQUENCY" , '|', ' '), chr(10), ' ') "APP_FREQUENCY" ,
+        translate(translate(mh."DILUTION" , '|', ' '), chr(10), ' ') "DILUTION" ,
+        translate(translate(mh."APP_RATE" , '|', ' '), chr(10), ' ') "APP_RATE" ,
+        translate(translate(mh."APP_POINTS" , '|', ' '), chr(10), ' ') "APP_POINTS" ,
+        translate(translate(mh."CE_COMPANY_ID" , '|', ' '), chr(10), ' ') "CE_COMPANY_ID" ,
+        translate(translate(mh."EST_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "EST_CTRL_EFFIC" ,
+        translate(translate(amtbeb."BASIS_DESC" , '|', ' '), chr(10), ' ') "BASIS_DESC"
+    from
+        "AIRPROD"."MH_CM" mh
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = mh.int_doc_id
+        left outer join "AIRPROD"."AMTB_EFFIC_BASIS" amtbeb on amtbeb.basis_code = mh.effic_est_basis
+        inner join "AIRPROD"."AMTB_MH_ACTIVITY" amtbma on amtbma.mh_activity_code = mh.handling_desc
+        inner join "AIRPROD"."AMTB_MH_TYPE" amtbmt on amtbmt.meth_code = mh.spec_handling_desc
+        inner join "AIRPROD"."AMTB_CONTROL_METH_MH" amtbcmm on amtbcmm.meth_code = mh.ctrl_mthd
+        order by mh.int_doc_id, d.facility_id, mh_activity_desc
+	</SQL27>
+	<TAB28>n7_0</TAB28>
+	<SQL28>
+    select
+        d.facility_id,
+        prs."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(prs."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(amtbst."SURFACE_TYPE_DESC" , '|', ' '), chr(10), ' ') "SURFACE_TYPE_DESC" ,
+        translate(translate(prs."INSTALL_YR" , '|', ' '), chr(10), ' ') "INSTALL_YR" ,
+        translate(translate(amtbsc."SURFACE_COMP_DESC" , '|', ' '), chr(10), ' ') "SURFACE_COMP_DESC" ,
+        translate(translate(prs."SURFACE_AREA" , '|', ' '), chr(10), ' ') "SURFACE_AREA" ,
+        translate(translate(prs."SILT_CONTENT" , '|', ' '), chr(10), ' ') "SILT_CONTENT" ,
+        translate(translate(prs."SEGMENT_LEN" , '|', ' '), chr(10), ' ') "SEGMENT_LEN" ,
+        translate(translate(prs."SURFACE_DUST_LOAD" , '|', ' '), chr(10), ' ') "SURFACE_DUST_LOAD" ,
+        translate(translate(prs."SURFACE_SILT_LOAD" , '|', ' '), chr(10), ' ') "SURFACE_SILT_LOAD"
+    from
+        "AIRPROD"."PRP_ROAD_SEGMENT" prs
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = prs.int_doc_id
+        left outer join "AIRPROD"."AMTB_SURFACE_COMP" amtbsc on amtbsc.surface_comp_code = prs.surface_composition
+        left outer join "AIRPROD"."AMTB_SURFACE_TYPE" amtbst on amtbst.surface_type_code = prs.surface_desc
+        order by prs.int_doc_id, d.facility_id, road_segment_id
+	</SQL28>
+	<TAB29>n7_1</TAB29>
+	<SQL29>
+    select
+        d.facility_id,
+        prpv."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(xref."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(prpv."VEHICLE_DESC" , '|', ' '), chr(10), ' ') "VEHICLE_DESC" ,
+        translate(translate(prpv."NUM_WHEELS" , '|', ' '), chr(10), ' ') "NUM_WHEELS" ,
+        translate(translate(prpv."AVG_WGT" , '|', ' '), chr(10), ' ') "AVG_WGT" ,
+        translate(translate(prpv."MAX_SPPED" , '|', ' '), chr(10), ' ') "MAX_SPPED" ,
+        translate(translate(prpv."AVG_SPEED" , '|', ' '), chr(10), ' ') "AVG_SPEED" 
+    from
+        "AIRPROD"."PRP_VEHICLE" prpv
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = prpv.int_doc_id
+        inner join "AIRPROD"."PRP_XREF" xref on xref.group_id = prpv.road_segment_id and xref.int_doc_id = prpv.int_doc_id
+        order by prpv.int_doc_id, d.facility_id, road_segment_id
+	</SQL29>
+	<TAB30>n7_2</TAB30>
+	<SQL30>
+    select
+        d.facility_id,
+        psfc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(xref."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(amtbcmp."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(amtbcmp."SUB_METH_DESC" , '|', ' '), chr(10), ' ') "SUB_METH_DESC" ,
+        translate(translate(psfc."CTRL_MTHD_USAGE_SCHED" , '|', ' '), chr(10), ' ') "CTRL_MTHD_USAGE_SCHED" ,
+        translate(translate(psfc."EST_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "EST_CTRL_EFFIC" ,
+        translate(translate(amtbeb."BASIS_DESC" , '|', ' '), chr(10), ' ') "BASIS_DESC"
+    from
+        "AIRPROD"."PRP_SWP_FLUSH_CM" psfc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = psfc.int_doc_id
+        left outer join "AIRPROD"."AMTB_EFFIC_BASIS" amtbeb on amtbeb.basis_code = psfc.effic_est_basis
+        inner join "AIRPROD"."PRP_XREF" xref on xref.group_id = psfc.group_id and xref.int_doc_id = psfc.int_doc_id
+        inner join "AIRPROD"."AMTB_CONTROL_METH_PR" amtbcmp on amtbcmp.meth_code = psfc.ctrl_mthd and
+                                                amtbcmp.sub_meth_code = psfc.ctrl_mthd_sub
+        order by psfc.int_doc_id, d.facility_id, road_segment_id
+	</SQL30>
+	<TAB31>n7_3</TAB31>
+	<SQL31>
+    select
+        d.facility_id,
+        pwcc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(xref."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(amtbcmp."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(amtbcmp."SUB_METH_DESC" , '|', ' '), chr(10), ' ') "SUB_METH_DESC" ,
+        translate(translate(pwcc."APP_FREQUENCY" , '|', ' '), chr(10), ' ') "APP_FREQUENCY" ,
+        translate(translate(pwcc."TRADE_NAME" , '|', ' '), chr(10), ' ') "TRADE_NAME" ,
+        translate(translate(pwcc."APP_RATE" , '|', ' '), chr(10), ' ') "APP_RATE" ,
+        translate(translate(pwcc."HAZ_WASTE_FLAG" , '|', ' '), chr(10), ' ') "HAZ_WASTE_FLAG" ,
+        translate(translate(pwcc."PCB_LIMIT_FLAG" , '|', ' '), chr(10), ' ') "PCB_LIMIT_FLAG" ,
+        translate(translate(pwcc."EST_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "EST_CTRL_EFFIC" ,
+        translate(translate(amtbeb."BASIS_DESC" , '|', ' '), chr(10), ' ') "BASIS_DESC"
+    from
+        "AIRPROD"."PRP_WTR_CHEM_CM" pwcc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = pwcc.int_doc_id
+        left outer join "AIRPROD"."AMTB_EFFIC_BASIS" amtbeb on amtbeb.basis_code = pwcc.effic_est_basis
+        inner join "AIRPROD"."PRP_XREF" xref on xref.group_id = pwcc.group_id and xref.int_doc_id = pwcc.int_doc_id
+        inner join "AIRPROD"."AMTB_CONTROL_METH_PR" amtbcmp on amtbcmp.meth_code = pwcc.ctrl_mthd and
+                                                amtbcmp.sub_meth_code = pwcc.ctrl_mthd_sub
+        order by pwcc.int_doc_id, d.facility_id, road_segment_id
+	</SQL31>
+	<TAB32>n7_4</TAB32>
+	<SQL32>
+    select
+        d.facility_id,
+        psic."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(xref."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(amtbcmp."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(amtbcmp."SUB_METH_DESC" , '|', ' '), chr(10), ' ') "SUB_METH_DESC" ,
+        translate(translate(psic."SILT_CONTENT" , '|', ' '), chr(10), ' ') "SILT_CONTENT" ,
+        translate(translate(psic."RESURFACE_FREQUENCY" , '|', ' '), chr(10), ' ') "RESURFACE_FREQUENCY" ,
+        translate(translate(psic."RESURFACE_DATE" , '|', ' '), chr(10), ' ') "RESURFACE_DATE" ,
+        translate(translate(psic."EST_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "EST_CTRL_EFFIC" ,
+        translate(translate(amtbeb."BASIS_DESC" , '|', ' '), chr(10), ' ') "BASIS_DESC"
+    from
+        "AIRPROD"."PRP_SUR_IMP_CM" psic
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = psic.int_doc_id
+        left outer join "AIRPROD"."AMTB_EFFIC_BASIS" amtbeb on amtbeb.basis_code = psic.effic_est_basis
+        inner join "AIRPROD"."PRP_XREF" xref on xref.group_id = psic.group_id and xref.int_doc_id = psic.int_doc_id
+        inner join "AIRPROD"."AMTB_CONTROL_METH_PR" amtbcmp on amtbcmp.meth_code = psic.ctrl_mthd and
+                                                amtbcmp.sub_meth_code = psic.ctrl_mthd_sub
+        order by psic.int_doc_id, d.facility_id, road_segment_id
+	</SQL32>
+	<TAB33>n7_5</TAB33>
+	<SQL33>
+    select
+        d.facility_id,
+        prpv."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(xref."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(amtbcmp."SUB_METH_DESC" , '|', ' '), chr(10), ' ') "SUB_METH_DESC" ,
+        translate(translate(prpv."YR_IMPLEMENTED" , '|', ' '), chr(10), ' ') "YR_IMPLEMENTED" ,
+        translate(translate(prpv."PREV_MAX_SPEED" , '|', ' '), chr(10), ' ') "PREV_MAX_SPEED" ,
+        translate(translate(prpv."CURR_SPEED" , '|', ' '), chr(10), ' ') "CURR_SPEED" 
+    from
+        "AIRPROD"."PRP_SPEED_RED_CM" prpv
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = prpv.int_doc_id
+        inner join "AIRPROD"."PRP_XREF" xref on xref.group_id = prpv.group_id and xref.int_doc_id = prpv.int_doc_id
+        inner join "AIRPROD"."AMTB_CONTROL_METH_PR" amtbcmp on amtbcmp.meth_code = 'RE' and
+                                                amtbcmp.sub_meth_code = prpv.ctrl_mthd_sub
+        order by prpv.int_doc_id, d.facility_id, road_segment_id
+	</SQL33>
+	<TAB34>n7_6</TAB34>
+	<SQL34>
+    select
+        d.facility_id,
+        pghc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(xref."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(amtbcmp."SUB_METH_DESC" , '|', ' '), chr(10), ' ') "SUB_METH_DESC" ,
+        translate(translate(pghc."YR_IMPLEMENTED" , '|', ' '), chr(10), ' ') "YR_IMPLEMENTED" 
+    from
+        "AIRPROD"."PRP_GOOD_HSKP_CM" pghc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = pghc.int_doc_id
+        inner join "AIRPROD"."PRP_XREF" xref on xref.group_id = pghc.group_id and xref.int_doc_id = pghc.int_doc_id
+        inner join "AIRPROD"."AMTB_CONTROL_METH_PR" amtbcmp on amtbcmp.meth_code = 'GH' and
+                                                amtbcmp.sub_meth_code = pghc.practice_used
+        order by pghc.int_doc_id, d.facility_id, road_segment_id
+	</SQL34>
+	<TAB35>n7_7</TAB35>
+	<SQL35>
+    select
+        d.facility_id,
+        pmc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(pmc."VEHICLE_DESC" , '|', ' '), chr(10), ' ') "VEHICLE_DESC" ,
+        translate(translate(pmc."ROAD_SEGMENT_ID" , '|', ' '), chr(10), ' ') "ROAD_SEGMENT_ID" ,
+        translate(translate(pmc."TOTAL_MILES" , '|', ' '), chr(10), ' ') "TOTAL_MILES" ,
+        translate(translate(pmc."SWEEP_CM_MILES" , '|', ' '), chr(10), ' ') "SWEEP_CM_MILES" ,
+        translate(translate(pmc."FLUSH_CM_MILES" , '|', ' '), chr(10), ' ') "FLUSH_CM_MILES" ,
+        translate(translate(pmc."WATER_CM_MILES" , '|', ' '), chr(10), ' ') "WATER_CM_MILES" ,
+        translate(translate(pmc."CHEM_CM_MILES" , '|', ' '), chr(10), ' ') "CHEM_CM_MILES" ,
+        translate(translate(pmc."OIL_CM_MILES" , '|', ' '), chr(10), ' ') "OIL_CM_MILES" ,
+        translate(translate(pmc."SURFACE_CM_MILES" , '|', ' '), chr(10), ' ') "SURFACE_CM_MILES" ,
+        translate(translate(pmc."SPEED_RED_CM_MILES" , '|', ' '), chr(10), ' ') "SPEED_RED_CM_MILES" ,
+        translate(translate(pmc."GOOD_HSKP_CM_MILES" , '|', ' '), chr(10), ' ') "GOOD_HSKP_CM_MILES" ,
+        translate(translate(pmc."NO_CM_MILES" , '|', ' '), chr(10), ' ') "NO_CM_MILES" 
+    from
+        "AIRPROD"."PRP_MILES_CM" pmc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = pmc.int_doc_id
+        order by pmc.int_doc_id, d.facility_id, road_segment_id
+	</SQL35>
+	<TAB36>n8_0</TAB36>
+	<SQL36>
+    select
+        d.facility_id,
+        spiles."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(spiles."DRY_DAYS_YR" , '|', ' '), chr(10), ' ') "DRY_DAYS_YR" ,
+        translate(translate(spiles."WIND_SPEED_PCT" , '|', ' '), chr(10), ' ') "WIND_SPEED_PCT" ,
+        translate(translate(spiles."MEAN_WIND_SPEED" , '|', ' '), chr(10), ' ') "MEAN_WIND_SPEED" ,
+        translate(translate(spiles."METEOR_DATA_SOURCE" , '|', ' '), chr(10), ' ') "METEOR_DATA_SOURCE" ,
+        translate(translate(spiles."SPRAY_DESC" , '|', ' '), chr(10), ' ') "SPRAY_DESC"
+    from
+        "AIRPROD"."STORAGE_PILES" spiles
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = spiles.int_doc_id
+        order by spiles.int_doc_id, d.facility_id
+	</SQL36>
+	<TAB37>n8_1</TAB37>
+	<SQL37>
+    select
+        d.facility_id,
+        stps."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(stps."MATERIAL_STORED" , '|', ' '), chr(10), ' ') "MATERIAL_STORED" ,
+        translate(translate(stps."NUM_SEP_PILES" , '|', ' '), chr(10), ' ') "NUM_SEP_PILES" ,
+        translate(translate(stps."AVG_SILT_CONTENT" , '|', ' '), chr(10), ' ') "AVG_SILT_CONTENT" ,
+        translate(translate(stps."AVG_MOISTURE_CONTENT" , '|', ' '), chr(10), ' ') "AVG_MOISTURE_CONTENT" ,
+        translate(translate(stps."AVG_SURFACE_AREA" , '|', ' '), chr(10), ' ') "AVG_SURFACE_AREA"
+    from
+        "AIRPROD"."STP_STORED" stps
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = stps.int_doc_id
+        order by stps.int_doc_id, d.facility_id
+	</SQL37>
+	<TAB38>n8_2</TAB38>
+	<SQL38>
+    select
+        d.facility_id,
+        stpl."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(stpl."ACTIVITY" , '|', ' '), chr(10), ' ') "ACTIVITY" ,
+        translate(translate(amtbsa."STP_ACTIVITY_DESC" , '|', ' '), chr(10), ' ') "STP_ACTIVITY_DESC" ,
+        translate(translate(stpl."MATERIAL_STORED" , '|', ' '), chr(10), ' ') "MATERIAL_STORED" ,
+        translate(translate(stpl."LOAD_IN_RATE" , '|', ' '), chr(10), ' ') "LOAD_IN_RATE" ,
+        translate(translate(stpl."MAX_LOAD_IN_RATE" , '|', ' '), chr(10), ' ') "MAX_LOAD_IN_RATE"
+    from
+        "AIRPROD"."STP_LOAD" stpl
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = stpl.int_doc_id
+        inner join "AIRPROD"."AMTB_STP_ACTIVITY" amtbsa on amtbsa.stp_activity_code = stpl.load_method
+        order by stpl.int_doc_id, d.facility_id
+	</SQL38>
+	<TAB39>n8_3</TAB39>
+	<SQL39>
+    select
+        d.facility_id,
+        stpcm."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(stpcm."ACTIVITY" , '|', ' '), chr(10), ' ') "ACTIVITY" ,
+        translate(translate(amtbsa."STP_ACTIVITY_DESC" , '|', ' '), chr(10), ' ') "STP_ACTIVITY_DESC" ,
+        translate(translate(amtbcm."METH_DESC" , '|', ' '), chr(10), ' ') "METH_DESC" ,
+        translate(translate(amtbcm."SUB_METH_DESC" , '|', ' '), chr(10), ' ') "SUB_METH_DESC" ,
+        translate(translate(stpcm."CTRL_MTHD_DESC" , '|', ' '), chr(10), ' ') "CTRL_MTHD_DESC" ,
+        translate(translate(stpcm."TRADE_NAME" , '|', ' '), chr(10), ' ') "TRADE_NAME" ,
+        translate(translate(stpcm."APP_FREQUENCY" , '|', ' '), chr(10), ' ') "APP_FREQUENCY" ,
+        translate(translate(stpcm."DILUTION" , '|', ' '), chr(10), ' ') "DILUTION" ,
+        translate(translate(stpcm."APP_RATE" , '|', ' '), chr(10), ' ') "APP_RATE" ,
+        translate(translate(stpcm."APP_POINTS" , '|', ' '), chr(10), ' ') "APP_POINTS" ,
+        translate(translate(stpcm."EST_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "EST_CTRL_EFFIC" ,
+        translate(translate(amtbeb."BASIS_DESC" , '|', ' '), chr(10), ' ') "BASIS_DESC"
+    from
+        "AIRPROD"."STP_CM" stpcm
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = stpcm.int_doc_id
+        left outer join "AIRPROD"."AMTB_EFFIC_BASIS" amtbeb on amtbeb.basis_code = stpcm.effic_est_basis
+        inner join "AIRPROD"."AMTB_STP_ACTIVITY" amtbsa on amtbsa.stp_activity_code = stpcm.load_method
+        inner join "AIRPROD"."AMTB_CONTROL_METH_STP" amtbcm on amtbcm.meth_code = stpcm.ctrl_mthd and
+                                                amtbcm.sub_meth_code = stpcm.ctrl_mthd_sub
+        order by stpcm.int_doc_id, d.facility_id, activity
+	</SQL39>
+	<TAB40>n9_0</TAB40>
+	<SQL40>
+    select
+        d.facility_id,
+        gdk."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gdk."TANK_ID" , '|', ' '), chr(10), ' ') "TANK_ID" ,
+        translate(translate(gdk."TANK_CAP" , '|', ' '), chr(10), ' ') "TANK_CAP" ,
+        translate(translate(gdk."INSTALL_DATE" , '|', ' '), chr(10), ' ') "INSTALL_DATE" ,
+        translate(translate(gdk."VC_TYPE" , '|', ' '), chr(10), ' ') "VC_TYPE" ,
+        translate(translate(gdk."FILL_PIPE_FLAG" , '|', ' '), chr(10), ' ') "FILL_PIPE_FLAG"
+    from
+        "AIRPROD"."GAS_DSL_KERO" gdk
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gdk.int_doc_id
+        order by gdk.int_doc_id, d.facility_id
+	</SQL40>
+	<TAB41>n9_1</TAB41>
+	<SQL41>
+    select
+        d.facility_id,
+        gdkt."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gdkt."TANK_ID" , '|', ' '), chr(10), ' ') "TANK_ID" ,
+        translate(translate(amtbfs."FUEL_STORED_DESC" , '|', ' '), chr(10), ' ') "FUEL_STORED_DESC"
+    from
+        "AIRPROD"."GDK_TANK" gdkt
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gdkt.int_doc_id
+        inner join "AIRPROD"."AMTB_FUEL_STORED" amtbfs on amtbfs.fuel_stored_code = gdkt.material_stored
+        order by gdkt.int_doc_id, d.facility_id
+	</SQL41>
+	<TAB42>n9_2</TAB42>
+	<SQL42>
+    select
+        d.facility_id,
+        gdkgi."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gdkgi."GAS_NOZZLES" , '|', ' '), chr(10), ' ') "GAS_NOZZLES" ,
+        translate(translate(gdkgi."DIESEL_NOZZLES" , '|', ' '), chr(10), ' ') "DIESEL_NOZZLES" ,
+        translate(translate(gdkgi."KEROSENE_NOZZLES" , '|', ' '), chr(10), ' ') "KEROSENE_NOZZLES"
+    from
+        "AIRPROD"."GDK_GENERAL_INFO" gdkgi
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gdkgi.int_doc_id
+        order by gdkgi.int_doc_id, d.facility_id
+	</SQL42>
+	<TAB43>n9_3</TAB43>
+	<SQL43>
+    select
+        d.facility_id,
+        gdkp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gdkp."YR_DISPENSED" , '|', ' '), chr(10), ' ') "YR_DISPENSED" ,
+        translate(translate(gdkp."GAS_DISPENSED" , '|', ' '), chr(10), ' ') "GAS_DISPENSED" ,
+        translate(translate(gdkp."DIESEL_DISPENSED" , '|', ' '), chr(10), ' ') "DIESEL_DISPENSED" ,
+        translate(translate(gdkp."KEROSENE_DISPENSED" , '|', ' '), chr(10), ' ') "KEROSENE_DISPENSED"
+    from
+        "AIRPROD"."GDK_PETRO" gdkp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gdkp.int_doc_id
+        order by gdkp.int_doc_id, d.facility_id
+	</SQL43>
+	<TAB44>n9_4</TAB44>
+	<SQL44>
+    select
+        d.facility_id,
+        gdkge."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gdkge."EQUIP_TYPE" , '|', ' '), chr(10), ' ') "EQUIP_TYPE" ,
+        translate(translate(gdkge."NUMBER_ITEMS" , '|', ' '), chr(10), ' ') "NUMBER_ITEMS" ,
+        translate(translate(gdkge."MFG_NAME" , '|', ' '), chr(10), ' ') "MFG_NAME" ,
+        translate(translate(gdkge."MODEL_NUM" , '|', ' '), chr(10), ' ') "MODEL_NUM" ,
+        translate(translate(gdkge."CARB_NUM" , '|', ' '), chr(10), ' ') "CARB_NUM"
+    from
+        "AIRPROD"."GDK_GAS_EQUIP" gdkge
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gdkge.int_doc_id
+        order by gdkge.int_doc_id, d.facility_id
+	</SQL44>
+	<TAB45>n9_5</TAB45>
+	<SQL45>
+    select
+        d.facility_id,
+        gdkei."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gdkei."AVG_GAS_MONTH" , '|', ' '), chr(10), ' ') "AVG_GAS_MONTH" ,
+        translate(translate(gdkei."BASIS_TYPE" , '|', ' '), chr(10), ' ') "BASIS_TYPE" ,
+        translate(translate(gdkei."SUB_PAPER_FLAG" , '|', ' '), chr(10), ' ') "SUB_PAPER_FLAG" ,
+        translate(translate(gdkei."SUB_ELECTRONIC_FLAG" , '|', ' '), chr(10), ' ') "SUB_ELECTRONIC_FLAG" ,
+        translate(translate(gdkei."EXEMPTION_LT_10_FLAG" , '|', ' '), chr(10), ' ') "EXEMPTION_LT_10_FLAG" ,
+        translate(translate(gdkei."EXEMPTION_LT_50_FLAG" , '|', ' '), chr(10), ' ') "EXEMPTION_LT_50_FLAG" ,
+        translate(translate(gdkei."REFINER_FLAG" , '|', ' '), chr(10), ' ') "REFINER_FLAG" ,
+        translate(translate(gdkei."ASSOCIATED_REFINER_FLAG" , '|', ' '), chr(10), ' ') "ASSOCIATED_REFINER_FLAG" ,
+        translate(translate(gdkei."AFFILIATED_REFINER_FLAG" , '|', ' '), chr(10), ' ') "AFFILIATED_REFINER_FLAG" ,
+        translate(translate(gdkei."INCOME_LT_50_PCT_FLAG" , '|', ' '), chr(10), ' ') "INCOME_LT_50_PCT_FLAG" ,
+        translate(translate(gdkei."ITEM6_PAPER_FLAG" , '|', ' '), chr(10), ' ') "ITEM6_PAPER_FLAG" ,
+        translate(translate(gdkei."ITEM6_ELEC_FLAG" , '|', ' '), chr(10), ' ') "ITEM6_ELEC_FLAG" ,
+        translate(translate(gdkei."ITEM7_PAPER_FLAG" , '|', ' '), chr(10), ' ') "ITEM7_PAPER_FLAG" ,
+        translate(translate(gdkei."ITEM7_ELEC_FLAG" , '|', ' '), chr(10), ' ') "ITEM7_ELEC_FLAG" ,
+        translate(translate(gdkei."COMP_DATE_STAGE_1" , '|', ' '), chr(10), ' ') "COMP_DATE_STAGE_1" ,
+        translate(translate(gdkei."COMP_DATE_STAGE_2" , '|', ' '), chr(10), ' ') "COMP_DATE_STAGE_2"
+    from
+        "AIRPROD"."GDK_EXEMPT_ISBM" gdkei
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gdkei.int_doc_id
+        order by gdkei.int_doc_id, d.facility_id
+	</SQL45>
+	<TAB46>n9_6</TAB46>
+	<SQL46>
+    select
+        d.facility_id,
+        gdkgv."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gdkgv."VAPOR_CTRL_SYS_TYPE" , '|', ' '), chr(10), ' ') "VAPOR_CTRL_SYS_TYPE" ,
+        translate(translate(gdkgv."VAPOR_CTRL_OTHER_DESC" , '|', ' '), chr(10), ' ') "VAPOR_CTRL_OTHER_DESC"
+    from
+        "AIRPROD"."GDK_GAS_VAPOR" gdkgv
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gdkgv.int_doc_id
+        order by gdkgv.int_doc_id, d.facility_id
+	</SQL46>
+	<TAB47>n10_0</TAB47>
+	<SQL47>
+    select
+        d.facility_id,
+        incin."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(incin."LOCATION" , '|', ' '), chr(10), ' ') "LOCATION" ,
+        translate(translate(incin."CHUTE_FED_FLAG" , '|', ' '), chr(10), ' ') "CHUTE_FED_FLAG" ,
+        translate(translate(incin."FLUE_FED_FLAG" , '|', ' '), chr(10), ' ') "FLUE_FED_FLAG" ,
+        translate(translate(incin."MECHANICAL_LOADER_FLAG" , '|', ' '), chr(10), ' ') "MECHANICAL_LOADER_FLAG" ,
+        translate(translate(incin."HAND_FEED_FLAG" , '|', ' '), chr(10), ' ') "HAND_FEED_FLAG" ,
+        translate(translate(incin."OTHER_FLAG" , '|', ' '), chr(10), ' ') "OTHER_FLAG" ,
+        translate(translate(incin."OTHER_CHARGING_DESC" , '|', ' '), chr(10), ' ') "OTHER_CHARGING_DESC" ,
+        translate(translate(incin."CHARGING_TYPE" , '|', ' '), chr(10), ' ') "CHARGING_TYPE" ,
+        translate(translate(incin."NATURAL_FLAG" , '|', ' '), chr(10), ' ') "NATURAL_FLAG" ,
+        translate(translate(incin."INDUCED_FLAG" , '|', ' '), chr(10), ' ') "INDUCED_FLAG" ,
+        translate(translate(incin."FORCED_FLAG" , '|', ' '), chr(10), ' ') "FORCED_FLAG" ,
+        translate(translate(incin."FLUE_DAMPER_TYPE" , '|', ' '), chr(10), ' ') "FLUE_DAMPER_TYPE" ,
+        translate(translate(incin."ADJ_AIR_PORTS_FLAG" , '|', ' '), chr(10), ' ') "ADJ_AIR_PORTS_FLAG" ,
+        translate(translate(incin."NATURAL_GAS_FLAG" , '|', ' '), chr(10), ' ') "NATURAL_GAS_FLAG" ,
+        translate(translate(incin."OIL_FLAG" , '|', ' '), chr(10), ' ') "OIL_FLAG" ,
+        translate(translate(incin."LPG_FLAG" , '|', ' '), chr(10), ' ') "LPG_FLAG" ,
+        translate(translate(incin."NO_FUEL_FLAG" , '|', ' '), chr(10), ' ') "NO_FUEL_FLAG" ,
+        translate(translate(incin."SEC_IGNITION_TYPE" , '|', ' '), chr(10), ' ') "SEC_IGNITION_TYPE" ,
+        translate(translate(incin."SEC_TEMP_CTRL_FLAG" , '|', ' '), chr(10), ' ') "SEC_TEMP_CTRL_FLAG" ,
+        translate(translate(incin."LOWER_LIMIT" , '|', ' '), chr(10), ' ') "LOWER_LIMIT" ,
+        translate(translate(incin."REFRACTORY_TYPE" , '|', ' '), chr(10), ' ') "REFRACTORY_TYPE",
+        translate(translate(incin."HOSPITAL_FLAG" , '|', ' '), chr(10), ' ') "HOSPITAL_FLAG",
+        translate(translate(incin."APARTMENT_FLAG" , '|', ' '), chr(10), ' ') "APARTMENT_FLAG",
+        translate(translate(incin."INSTITUTION_FLAG" , '|', ' '), chr(10), ' ') "INSTITUTION_FLAG",
+        translate(translate(incin."INDUSTRIAL_PROCESS_FLAG" , '|', ' '), chr(10), ' ') "INDUSTRIAL_PROCESS_FLAG",
+        translate(translate(incin."RESTAURANT_FLAG" , '|', ' '), chr(10), ' ') "RESTAURANT_FLAG",
+        translate(translate(incin."SCHOOL_FLAG" , '|', ' '), chr(10), ' ') "SCHOOL_FLAG",
+        translate(translate(incin."COMMERCIAL_FLAG" , '|', ' '), chr(10), ' ') "COMMERCIAL_FLAG",
+        translate(translate(incin."OTHER_TYPE_FLAG" , '|', ' '), chr(10), ' ') "OTHER_TYPE_FLAG",
+        translate(translate(incin."HOSPITAL_BED_NUM" , '|', ' '), chr(10), ' ') "HOSPITAL_BED_NUM",
+        translate(translate(incin."APT_UNIT_NUM" , '|', ' '), chr(10), ' ') "APT_UNIT_NUM",
+        translate(translate(incin."INST_ROOMS_NUM" , '|', ' '), chr(10), ' ') "INST_ROOMS_NUM",
+        translate(translate(incin."INDUST_PROCESS_DESC" , '|', ' '), chr(10), ' ') "INDUST_PROCESS_DESC",
+        translate(translate(incin."MEALS_NUM" , '|', ' '), chr(10), ' ') "MEALS_NUM",
+        translate(translate(incin."SCHOOL_ROOMS_NUM" , '|', ' '), chr(10), ' ') "SCHOOL_ROOMS_NUM",
+        translate(translate(incin."PUPILS_NUM" , '|', ' '), chr(10), ' ') "PUPILS_NUM",
+        translate(translate(incin."BUILDING_AREA" , '|', ' '), chr(10), ' ') "BUILDING_AREA",
+        translate(translate(incin."OTHER_SOURCE_DESC" , '|', ' '), chr(10), ' ') "OTHER_SOURCE_DESC",
+        translate(translate(incin."PAPER_FLAG" , '|', ' '), chr(10), ' ') "PAPER_FLAG",
+        translate(translate(incin."CARDBOARD_FLAG" , '|', ' '), chr(10), ' ') "CARDBOARD_FLAG",
+        translate(translate(incin."SWEEPINGS_FLAG" , '|', ' '), chr(10), ' ') "SWEEPINGS_FLAG",
+        translate(translate(incin."RAGS_FLAG" , '|', ' '), chr(10), ' ') "RAGS_FLAG",
+        translate(translate(incin."WOOD_FLAG" , '|', ' '), chr(10), ' ') "WOOD_FLAG",
+        translate(translate(incin."KITCHEN_FLAG" , '|', ' '), chr(10), ' ') "KITCHEN_FLAG",
+        translate(translate(incin."HUMAN_ANIMAL_FLAG" , '|', ' '), chr(10), ' ') "HUMAN_ANIMAL_FLAG",
+        translate(translate(incin."RESIDENTIAL_FLAG" , '|', ' '), chr(10), ' ') "RESIDENTIAL_FLAG",
+        translate(translate(incin."INFECTIOUS_FLAG" , '|', ' '), chr(10), ' ') "INFECTIOUS_FLAG",
+        translate(translate(incin."INDUSTRIAL_FLAG" , '|', ' '), chr(10), ' ') "INDUSTRIAL_FLAG",
+        translate(translate(incin."INDUSTRIAL_DESC" , '|', ' '), chr(10), ' ') "INDUSTRIAL_DESC",
+        translate(translate(incin."PLASTICS_FLAG" , '|', ' '), chr(10), ' ') "PLASTICS_FLAG",
+        translate(translate(incin."PLASTICS_DESC" , '|', ' '), chr(10), ' ') "PLASTICS_DESC",
+        translate(translate(incin."AVG_QTY_BURNED" , '|', ' '), chr(10), ' ') "AVG_QTY_BURNED",
+        translate(translate(incin."MAX_QTY_BURNED" , '|', ' '), chr(10), ' ') "MAX_QTY_BURNED",
+        translate(translate(incin."INCIN_RATED_CAP" , '|', ' '), chr(10), ' ') "INCIN_RATED_CAP",
+        translate(translate(incin."WASTE_DESC" , '|', ' '), chr(10), ' ') "WASTE_DESC",
+        translate(translate(incin."AUX_PRI_BURNER_SIZE" , '|', ' '), chr(10), ' ') "AUX_PRI_BURNER_SIZE",
+        translate(translate(incin."AUX_SEC_BURNER_SIZE" , '|', ' '), chr(10), ' ') "AUX_SEC_BURNER_SIZE",
+        translate(translate(incin."PRI_CHAMBER_LEN" , '|', ' '), chr(10), ' ') "PRI_CHAMBER_LEN",
+        translate(translate(incin."PRI_CHAMBER_WID" , '|', ' '), chr(10), ' ') "PRI_CHAMBER_WID",
+        translate(translate(incin."PRI_CHAMBER_HGT" , '|', ' '), chr(10), ' ') "PRI_CHAMBER_HGT",
+        translate(translate(incin."SEC_CHAMBER_LEN" , '|', ' '), chr(10), ' ') "SEC_CHAMBER_LEN",
+        translate(translate(incin."SEC_CHAMBER_WID" , '|', ' '), chr(10), ' ') "SEC_CHAMBER_WID",
+        translate(translate(incin."SEC_CHAMBER_HGT" , '|', ' '), chr(10), ' ') "SEC_CHAMBER_HGT"
+    from
+        "AIRPROD"."INCINERATOR" incin
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = incin.int_doc_id
+        order by incin.int_doc_id, d.facility_id
+	</SQL47>
+	<TAB48>n11_0</TAB48>
+	<SQL48>
+    select
+        d.facility_id,
+        oilf."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(oilf."TANK_TYPE" , '|', ' '), chr(10), ' ') "TANK_TYPE" ,
+        translate(translate(oilf."LOCATION_TYPE" , '|', ' '), chr(10), ' ') "LOCATION_TYPE" ,
+        translate(translate(oilf."CAPACITY_GALLONS" , '|', ' '), chr(10), ' ') "CAPACITY_GALLONS" ,
+        translate(translate(oilf."SHAPE_TYPE" , '|', ' '), chr(10), ' ') "SHAPE_TYPE" ,
+        translate(translate(oilf."HORIZONTAL_LEN" , '|', ' '), chr(10), ' ') "HORIZONTAL_LEN" ,
+        translate(translate(oilf."HORIZONTAL_WID" , '|', ' '), chr(10), ' ') "HORIZONTAL_WID" ,
+        translate(translate(oilf."VERTICAL_WID" , '|', ' '), chr(10), ' ') "VERTICAL_WID" ,
+        translate(translate(oilf."VERTICAL_HGT" , '|', ' '), chr(10), ' ') "VERTICAL_HGT" ,
+        translate(translate(oilf."OTHER_SHAPE_DESC" , '|', ' '), chr(10), ' ') "OTHER_SHAPE_DESC" ,
+        translate(translate(oilf."SHELL_MATERIAL_TYPE" , '|', ' '), chr(10), ' ') "SHELL_MATERIAL_TYPE" ,
+        translate(translate(oilf."OTHER_SHELL_MATERIAL_DESC" , '|', ' '), chr(10), ' ') "OTHER_SHELL_MATERIAL_DESC" ,
+        translate(translate(oilf."TANK_SHELL_TYPE" , '|', ' '), chr(10), ' ') "TANK_SHELL_TYPE" ,
+        translate(translate(oilf."TANK_SHELL_DESC" , '|', ' '), chr(10), ' ') "TANK_SHELL_DESC" ,
+        translate(translate(oilf."SHELL_PAINT_COND" , '|', ' '), chr(10), ' ') "SHELL_PAINT_COND" ,
+        translate(translate(oilf."TANK_ROOF_TYPE" , '|', ' '), chr(10), ' ') "TANK_ROOF_TYPE" ,
+        translate(translate(oilf."TANK_ROOF_COLOR" , '|', ' '), chr(10), ' ') "TANK_ROOF_COLOR" ,
+        translate(translate(oilf."ROOF_PAINT_COND" , '|', ' '), chr(10), ' ') "ROOF_PAINT_COND"
+    from
+        "AIRPROD"."ORG_INORG_LT_40000" oilf
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = oilf.int_doc_id
+        order by oilf.int_doc_id, d.facility_id
+	</SQL48>
+	<TAB49>n11_1</TAB49>
+	<SQL49>
+    select
+        d.facility_id,
+        lvv."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(lvv."VENT_VALVE_TYPE" , '|', ' '), chr(10), ' ') "VENT_VALVE_TYPE" ,
+        translate(translate(lvv."PRESSURE_SETTING" , '|', ' '), chr(10), ' ') "PRESSURE_SETTING" ,
+        translate(translate(lvv."VACUUM_SETTING" , '|', ' '), chr(10), ' ') "VACUUM_SETTING"
+    from
+        "AIRPROD"."LT_VENT_VALVE" lvv
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = lvv.int_doc_id
+        order by lvv.int_doc_id, d.facility_id
+	</SQL49>
+	<TAB50>n11_2</TAB50>
+	<SQL50>
+    select
+        d.facility_id,
+        lvvv."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(lvvv."VENT_VALVE_TYPE" , '|', ' '), chr(10), ' ') "VENT_VALVE_TYPE" ,
+        translate(translate(lvvv."VAPOR_CONTROL" , '|', ' '), chr(10), ' ') "VAPOR_CONTROL"
+    from
+        "AIRPROD"."LT_VC_VENT_VALVE" lvvv
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = lvvv.int_doc_id
+        order by lvvv.int_doc_id, d.facility_id
+	</SQL50>
+	<TAB51>n11_3</TAB51>
+	<SQL51>
+    select
+        d.facility_id,
+        stored."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(stored."MATERIAL_STORED" , '|', ' '), chr(10), ' ') "MATERIAL_STORED" ,
+        translate(translate(stored."TRADE_NAME" , '|', ' '), chr(10), ' ') "TRADE_NAME" ,
+        translate(translate(stored."DENSITY" , '|', ' '), chr(10), ' ') "DENSITY" ,
+        translate(translate(stored."PRODUCER" , '|', ' '), chr(10), ' ') "PRODUCER" ,
+        translate(translate(stored."AVG_STORAGE_TEMP" , '|', ' '), chr(10), ' ') "AVG_STORAGE_TEMP" ,
+        translate(translate(stored."MAX_STORAGE_TEMP" , '|', ' '), chr(10), ' ') "MAX_STORAGE_TEMP" ,
+        translate(translate(stored."AVG_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "AVG_VAPOR_PRESS" ,
+        translate(translate(stored."MAX_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "MAX_VAPOR_PRESS" ,
+        translate(translate(stored."GAS_PRESS" , '|', ' '), chr(10), ' ') "GAS_PRESS" ,
+        translate(translate(stored."VAPOR_MOLE_WGT" , '|', ' '), chr(10), ' ') "VAPOR_MOLE_WGT" ,
+        translate(translate(stored."PHOTOCHEM_FLAG" , '|', ' '), chr(10), ' ') "PHOTOCHEM_FLAG" ,
+        translate(translate(stored."HAZ_WASTE_DESC" , '|', ' '), chr(10), ' ') "HAZ_WASTE_DESC" ,
+        translate(translate(stored."FILLING_TYPE_DESC" , '|', ' '), chr(10), ' ') "FILLING_TYPE_DESC" ,
+        translate(translate(stored."MAX_DAILY_THRUPUT" , '|', ' '), chr(10), ' ') "MAX_DAILY_THRUPUT" ,
+        translate(translate(stored."MAX_ANN_THRUPUT" , '|', ' '), chr(10), ' ') "MAX_ANN_THRUPUT"
+    from
+        "AIRPROD"."LT_STORED" stored
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = stored.int_doc_id
+        order by stored.int_doc_id, d.facility_id
+	</SQL51>
+	<TAB52>n11_4</TAB52>
+	<SQL52>
+    select
+        d.facility_id,
+        lvt."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(lvt."VAPOR_CTRL_CODE" , '|', ' '), chr(10), ' ') "VAPOR_CTRL_CODE"
+    from
+        "AIRPROD"."LT_VC_TANK" lvt
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = lvt.int_doc_id
+        order by lvt.int_doc_id, d.facility_id
+	</SQL52>
+	<TAB53>n11_5</TAB53>
+	<SQL53>
+    select
+        d.facility_id,
+        lfvt."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(lfvt."ROOF_TYPE" , '|', ' '), chr(10), ' ') "ROOF_TYPE" ,
+        translate(translate(lfvt."ROOF_SLOPE_RADIUS" , '|', ' '), chr(10), ' ') "ROOF_SLOPE_RADIUS" ,
+        translate(translate(lfvt."AVG_HGT_LIQUID_MATERIAL" , '|', ' '), chr(10), ' ') "AVG_HGT_LIQUID_MATERIAL" ,
+        translate(translate(lfvt."AVG_LIQUID_TEMP" , '|', ' '), chr(10), ' ') "AVG_LIQUID_TEMP" ,
+        translate(translate(lfvt."BOLTED_RIVETED_FLAG" , '|', ' '), chr(10), ' ') "BOLTED_RIVETED_FLAG"
+    from
+        "AIRPROD"."LT_FIX_VAR_TANK" lfvt
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = lfvt.int_doc_id
+        order by lfvt.int_doc_id, d.facility_id
+	</SQL53>
+	<TAB54>n12_0</TAB54>
+	<SQL54>
+    select
+        d.facility_id,
+        lr."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(lr."BAY_ID" , '|', ' '), chr(10), ' ') "BAY_ID" ,
+        translate(translate(lr."LOADING_ARMS_NUM" , '|', ' '), chr(10), ' ') "LOADING_ARMS_NUM" ,
+        translate(translate(amtblv."LOAD_VEHICLE_DESC" , '|', ' '), chr(10), ' ') "LOAD_VEHICLE_DESC" ,
+        translate(translate(amtbla."LOAD_ACTIVITY_DESC" , '|', ' '), chr(10), ' ') "LOAD_ACTIVITY_DESC" 
+    from
+        "AIRPROD"."LOADING_RACK" lr
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = lr.int_doc_id
+        inner join "AIRPROD"."AMTB_LOAD_ACTIVITY" amtbla on amtbla.load_activity_code = lr.load_desc
+        inner join "AIRPROD"."AMTB_LOAD_VEHICLE" amtblv on amtblv.load_vehicle_code = lr.vehicle_desc
+        order by lr.int_doc_id, d.facility_id, bay_id
+	</SQL54>
+	<TAB55>n12_1</TAB55>
+	<SQL55>
+    select
+        d.facility_id,
+        lrl."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(amtblm."LOAD_MATERIAL_DESC" , '|', ' '), chr(10), ' ') "LOAD_MATERIAL_DESC" ,
+        translate(translate(lrl."AVG_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "AVG_VAPOR_PRESS" ,
+        translate(translate(lrl."BAY_ID" , '|', ' '), chr(10), ' ') "BAY_ID" ,
+        translate(translate(lrl."MAX_ANN_THRUPUT" , '|', ' '), chr(10), ' ') "MAX_ANN_THRUPUT" ,
+        translate(translate(lrl."MAX_DAILY_THRUPUT" , '|', ' '), chr(10), ' ') "MAX_DAILY_THRUPUT" ,
+        translate(translate(lrl."VC_TYPE" , '|', ' '), chr(10), ' ') "VC_TYPE" ,
+        translate(translate(lrl."MIN_PCT_CTRL_EFFIC" , '|', ' '), chr(10), ' ') "MIN_PCT_CTRL_EFFIC" ,
+        translate(translate(lrl."CTRL_MASS_EM_RATE" , '|', ' '), chr(10), ' ') "CTRL_MASS_EM_RATE" ,
+        translate(translate(amtblb."LOAD_BASIS_DESC" , '|', ' '), chr(10), ' ') "LOAD_BASIS_DESC" 
+    from
+        "AIRPROD"."LR_LOADED" lrl
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = lrl.int_doc_id
+        left outer join "AIRPROD"."AMTB_LOAD_BASIS" amtblb on amtblb.load_basis_code = lrl.ctrl_sys_basis
+        inner join "AIRPROD"."AMTB_LOAD_MATERIAL" amtblm on amtblm.load_material_code = lrl.liquid_material
+        order by lrl.int_doc_id, d.facility_id, bay_id
+	</SQL55>
+	<TAB56>n13_0</TAB56>
+	<SQL56>
+    select
+        d.facility_id,
+        ogf."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(ogf."TANK_TYPE" , '|', ' '), chr(10), ' ') "TANK_TYPE" ,
+        translate(translate(ogf."LOCATION_TYPE" , '|', ' '), chr(10), ' ') "LOCATION_TYPE" ,
+        translate(translate(ogf."CAPACITY_GALLONS" , '|', ' '), chr(10), ' ') "CAPACITY_GALLONS" ,
+        translate(translate(ogf."CAPACITY_BARRELS" , '|', ' '), chr(10), ' ') "CAPACITY_BARRELS" ,
+        translate(translate(ogf."SHAPE_TYPE" , '|', ' '), chr(10), ' ') "SHAPE_TYPE" ,
+        translate(translate(ogf."HORIZONTAL_LEN" , '|', ' '), chr(10), ' ') "HORIZONTAL_LEN" ,
+        translate(translate(ogf."HORIZONTAL_WID" , '|', ' '), chr(10), ' ') "HORIZONTAL_WID" ,
+        translate(translate(ogf."VERTICAL_WID" , '|', ' '), chr(10), ' ') "VERTICAL_WID" ,
+        translate(translate(ogf."VERTICAL_HGT" , '|', ' '), chr(10), ' ') "VERTICAL_HGT" ,
+        translate(translate(ogf."OTHER_SHAPE_DESC" , '|', ' '), chr(10), ' ') "OTHER_SHAPE_DESC" ,
+        translate(translate(ogf."SHELL_MATERIAL_TYPE" , '|', ' '), chr(10), ' ') "SHELL_MATERIAL_TYPE" ,
+        translate(translate(ogf."OTHER_SHELL_MATERIAL_DESC" , '|', ' '), chr(10), ' ') "OTHER_SHELL_MATERIAL_DESC" ,
+        translate(translate(ogf."TANK_SHELL_TYPE" , '|', ' '), chr(10), ' ') "TANK_SHELL_TYPE" ,
+        translate(translate(ogf."TANK_SHELL_DESC" , '|', ' '), chr(10), ' ') "TANK_SHELL_DESC" ,
+        translate(translate(ogf."SHELL_PAINT_COND" , '|', ' '), chr(10), ' ') "SHELL_PAINT_COND" ,
+        translate(translate(ogf."TANK_ROOF_TYPE" , '|', ' '), chr(10), ' ') "TANK_ROOF_TYPE" ,
+        translate(translate(ogf."TANK_ROOF_COLOR" , '|', ' '), chr(10), ' ') "TANK_ROOF_COLOR" ,
+        translate(translate(ogf."ROOF_PAINT_COND" , '|', ' '), chr(10), ' ') "ROOF_PAINT_COND" ,
+        translate(translate(ogf."VES_CAPACITY_GALLONS" , '|', ' '), chr(10), ' ') "VES_CAPACITY_GALLONS" ,
+        translate(translate(ogf."VES_CAPACITY_BARRELS" , '|', ' '), chr(10), ' ') "VES_CAPACITY_BARRELS" ,
+        translate(translate(ogf."VES_TANK_DESC" , '|', ' '), chr(10), ' ') "VES_TANK_DESC" ,
+        translate(translate(ogf."INIT_FILL_DATE" , '|', ' '), chr(10), ' ') "INIT_FILL_DATE" ,
+        translate(translate(ogf."OUT_OF_SERVICE_FLAG" , '|', ' '), chr(10), ' ') "OUT_OF_SERVICE_FLAG" ,
+        translate(translate(ogf."REFILLING_DATE" , '|', ' '), chr(10), ' ') "REFILLING_DATE" ,
+        translate(translate(ogf."CONVERTED_TANK_FLAG" , '|', ' '), chr(10), ' ') "CONVERTED_TANK_FLAG" ,
+        translate(translate(ogf."CONVERSION_TYPE" , '|', ' '), chr(10), ' ') "CONVERSION_TYPE" ,
+        translate(translate(ogf."CONVERSION_DATE" , '|', ' '), chr(10), ' ') "CONVERSION_DATE" ,
+        translate(translate(ogf."CUSTODY_XFER_FLAG" , '|', ' '), chr(10), ' ') "CUSTODY_XFER_FLAG" ,
+        translate(translate(ogf."INSULATED_FLAG" , '|', ' '), chr(10), ' ') "INSULATED_FLAG" ,
+        translate(translate(ogf."INSULATED_DESC" , '|', ' '), chr(10), ' ') "INSULATED_DESC" ,
+        translate(translate(ogf."HEATED_FLAG" , '|', ' '), chr(10), ' ') "HEATED_FLAG" ,
+        translate(translate(ogf."HEATED_TEMP" , '|', ' '), chr(10), ' ') "HEATED_TEMP"
+    from
+        "AIRPROD"."ORG_GT_40000" ogf
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = ogf.int_doc_id
+        order by ogf.int_doc_id, d.facility_id
+	</SQL56>
+	<TAB57>n13_1</TAB57>
+	<SQL57>
+    select
+        d.facility_id,
+        gts."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gts."MATERIAL_STORED" , '|', ' '), chr(10), ' ') "MATERIAL_STORED" ,
+        translate(translate(gts."TRADE_NAME" , '|', ' '), chr(10), ' ') "TRADE_NAME" ,
+        translate(translate(gts."DENSITY" , '|', ' '), chr(10), ' ') "DENSITY" ,
+        translate(translate(gts."PRODUCER" , '|', ' '), chr(10), ' ') "PRODUCER" ,
+        translate(translate(gts."AVG_STORAGE_TEMP" , '|', ' '), chr(10), ' ') "AVG_STORAGE_TEMP" ,
+        translate(translate(gts."MAX_STORAGE_TEMP" , '|', ' '), chr(10), ' ') "MAX_STORAGE_TEMP" ,
+        translate(translate(gts."AVG_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "AVG_VAPOR_PRESS" ,
+        translate(translate(gts."MAX_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "MAX_VAPOR_PRESS" ,
+        translate(translate(gts."AVG_REID_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "AVG_REID_VAPOR_PRESS" ,
+        translate(translate(gts."MAX_REID_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "MAX_REID_VAPOR_PRESS" ,
+        translate(translate(gts."MIN_REID_VAPOR_PRESS" , '|', ' '), chr(10), ' ') "MIN_REID_VAPOR_PRESS" ,
+        translate(translate(gts."GAS_PRESS" , '|', ' '), chr(10), ' ') "GAS_PRESS" ,
+        translate(translate(gts."VAPOR_MOLE_WGT" , '|', ' '), chr(10), ' ') "VAPOR_MOLE_WGT" ,
+        translate(translate(gts."PHOTOCHEM_FLAG" , '|', ' '), chr(10), ' ') "PHOTOCHEM_FLAG" ,
+        translate(translate(gts."HAZ_WASTE_DESC" , '|', ' '), chr(10), ' ') "HAZ_WASTE_DESC" ,
+        translate(translate(gts."FILLING_TYPE_DESC" , '|', ' '), chr(10), ' ') "FILLING_TYPE_DESC" ,
+        translate(translate(gts."MAX_DAILY_THRUPUT" , '|', ' '), chr(10), ' ') "MAX_DAILY_THRUPUT" ,
+        translate(translate(gts."MAX_ANN_THRUPUT" , '|', ' '), chr(10), ' ') "MAX_ANN_THRUPUT"
+    from
+        "AIRPROD"."GT_STORED" gts
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gts.int_doc_id
+        order by gts.int_doc_id, d.facility_id, material_stored
+	</SQL57>
+	<TAB58>n13_2</TAB58>
+	<SQL58>
+    select
+        d.facility_id,
+        gtvv."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gtvv."VENT_VALVE_TYPE" , '|', ' '), chr(10), ' ') "VENT_VALVE_TYPE" ,
+        translate(translate(gtvv."PRESSURE_SETTING" , '|', ' '), chr(10), ' ') "PRESSURE_SETTING" ,
+        translate(translate(gtvv."VACUUM_SETTING" , '|', ' '), chr(10), ' ') "VACUUM_SETTING"
+    from
+        "AIRPROD"."GT_VENT_VALVE" gtvv
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gtvv.int_doc_id
+        order by gtvv.int_doc_id, d.facility_id
+	</SQL58>
+	<TAB59>n13_3</TAB59>
+	<SQL59>
+    select
+        d.facility_id,
+        gtvvv."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gtvvv."VENT_VALVE_TYPE" , '|', ' '), chr(10), ' ') "VENT_VALVE_TYPE" ,
+        translate(translate(gtvvv."VAPOR_CONTROL" , '|', ' '), chr(10), ' ') "VAPOR_CONTROL"
+    from
+        "AIRPROD"."GT_VC_VENT_VALVE" gtvvv
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gtvvv.int_doc_id
+        order by gtvvv.int_doc_id, d.facility_id
+	</SQL59>
+	<TAB60>n13_4</TAB60>
+	<SQL60>
+    select
+        d.facility_id,
+        gtvt."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gtvt."VAPOR_CTRL_CODE" , '|', ' '), chr(10), ' ') "VAPOR_CTRL_CODE"
+    from
+        "AIRPROD"."GT_VC_TANK" gtvt
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gtvt.int_doc_id
+        order by gtvt.int_doc_id, d.facility_id
+	</SQL60>
+	<TAB61>n13_5</TAB61>
+	<SQL61>
+    select
+        d.facility_id,
+        gtfvp."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gtfvp."ROOF_TYPE" , '|', ' '), chr(10), ' ') "ROOF_TYPE" ,
+        translate(translate(gtfvp."ROOF_SLOPE_RADIUS" , '|', ' '), chr(10), ' ') "ROOF_SLOPE_RADIUS" ,
+        translate(translate(gtfvp."AVG_HGT" , '|', ' '), chr(10), ' ') "AVG_HGT" ,
+        translate(translate(gtfvp."AVG_LIQUID_TEMP" , '|', ' '), chr(10), ' ') "AVG_LIQUID_TEMP" ,
+        translate(translate(gtfvp."BOLTED_RIVETED_FLAG" , '|', ' '), chr(10), ' ') "BOLTED_RIVETED_FLAG"
+    from
+        "AIRPROD"."GT_FIXED_VAR_PRESS" gtfvp
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gtfvp.int_doc_id
+        order by gtfvp.int_doc_id, d.facility_id
+	</SQL61>
+	<TAB62>n13_6</TAB62>
+	<SQL62>
+    select
+        d.facility_id,
+        gtefr."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gtefr."NUM_ROOF_TYPE" , '|', ' '), chr(10), ' ') "NUM_ROOF_TYPE" ,
+        translate(translate(gtefr."NUM_ROOF_DESC" , '|', ' '), chr(10), ' ') "NUM_ROOF_DESC" ,
+        translate(translate(gtefr."SHELL_TYPE" , '|', ' '), chr(10), ' ') "SHELL_TYPE" ,
+        translate(translate(gtefr."EQUIPPED_FLAG" , '|', ' '), chr(10), ' ') "EQUIPPED_FLAG" ,
+        translate(translate(gtefr."NON_EQUIPPED_DESC" , '|', ' '), chr(10), ' ') "NON_EQUIPPED_DESC" ,
+        translate(translate(gtefr."EMERGENCY_DRAINS" , '|', ' '), chr(10), ' ') "EMERGENCY_DRAINS" ,
+        translate(translate(gtefr."EQUIPPED_DRAIN_FLAG" , '|', ' '), chr(10), ' ') "EQUIPPED_DRAIN_FLAG" ,
+        translate(translate(gtefr."SLOTTED_WELL_FLAG" , '|', ' '), chr(10), ' ') "SLOTTED_WELL_FLAG" ,
+        translate(translate(gtefr."FLOATING_OBJECT_FLAG" , '|', ' '), chr(10), ' ') "FLOATING_OBJECT_FLAG" ,
+        translate(translate(gtefr."AH_BOLTED" , '|', ' '), chr(10), ' ') "AH_BOLTED" ,
+        translate(translate(gtefr."AH_UNBOLT_GASKET" , '|', ' '), chr(10), ' ') "AH_UNBOLT_GASKET" ,
+        translate(translate(gtefr."AH_UNBOLT_UNGASKET" , '|', ' '), chr(10), ' ') "AH_UNBOLT_UNGASKET" ,
+        translate(translate(gtefr."VB_GASKET" , '|', ' '), chr(10), ' ') "VB_GASKET" ,
+        translate(translate(gtefr."VB_UNGASKET" , '|', ' '), chr(10), ' ') "VB_UNGASKET" ,
+        translate(translate(gtefr."UW_UNGASKET" , '|', ' '), chr(10), ' ') "UW_UNGASKET" ,
+        translate(translate(gtefr."UW_GASKET" , '|', ' '), chr(10), ' ') "UW_GASKET" ,
+        translate(translate(gtefr."SW_UNGASKET" , '|', ' '), chr(10), ' ') "SW_UNGASKET" ,
+        translate(translate(gtefr."SW_GASKET_WO_FLOAT" , '|', ' '), chr(10), ' ') "SW_GASKET_WO_FLOAT" ,
+        translate(translate(gtefr."SW_GASKET_W_FLOAT" , '|', ' '), chr(10), ' ') "SW_GASKET_W_FLOAT" ,
+        translate(translate(gtefr."GW_UNBOLT_UNGASKET" , '|', ' '), chr(10), ' ') "GW_UNBOLT_UNGASKET" ,
+        translate(translate(gtefr."GW_UNBOLT_GASKET" , '|', ' '), chr(10), ' ') "GW_UNBOLT_GASKET" ,
+        translate(translate(gtefr."GW_BOLT_GASKET" , '|', ' '), chr(10), ' ') "GW_BOLT_GASKET" ,
+        translate(translate(gtefr."GH_GASKET" , '|', ' '), chr(10), ' ') "GH_GASKET" ,
+        translate(translate(gtefr."GH_UNGASKET" , '|', ' '), chr(10), ' ') "GH_UNGASKET" ,
+        translate(translate(gtefr."RL3_ADJ_PONTOON" , '|', ' '), chr(10), ' ') "RL3_ADJ_PONTOON" ,
+        translate(translate(gtefr."RL3_ADJ_CENTER" , '|', ' '), chr(10), ' ') "RL3_ADJ_CENTER" ,
+        translate(translate(gtefr."RL3_ADJ_DOUBLE_ROOF" , '|', ' '), chr(10), ' ') "RL3_ADJ_DOUBLE_ROOF" ,
+        translate(translate(gtefr."RL3_FIXED" , '|', ' '), chr(10), ' ') "RL3_FIXED" ,
+        translate(translate(gtefr."RL2_ADJ_PONTOON" , '|', ' '), chr(10), ' ') "RL2_ADJ_PONTOON" ,
+        translate(translate(gtefr."RL2_ADJ_CENTER" , '|', ' '), chr(10), ' ') "RL2_ADJ_CENTER" ,
+        translate(translate(gtefr."RL2_ADJ_DOUBLE_ROOF" , '|', ' '), chr(10), ' ') "RL2_ADJ_DOUBLE_ROOF" ,
+        translate(translate(gtefr."RL2_FIXED" , '|', ' '), chr(10), ' ') "RL2_FIXED" ,
+        translate(translate(gtefr."ROOF_DRAIN_OPEN" , '|', ' '), chr(10), ' ') "ROOF_DRAIN_OPEN" ,
+        translate(translate(gtefr."ROOF_DRAIN_CLOSED" , '|', ' '), chr(10), ' ') "ROOF_DRAIN_CLOSED" ,
+        translate(translate(gtefr."RIM_VENT_GASKET" , '|', ' '), chr(10), ' ') "RIM_VENT_GASKET" ,
+        translate(translate(gtefr."RIM_VENT_UNGASKET" , '|', ' '), chr(10), ' ') "RIM_VENT_UNGASKET" ,
+        translate(translate(gtefr."AVG_WIND_SPEED" , '|', ' '), chr(10), ' ') "AVG_WIND_SPEED" 
+    from
+        "AIRPROD"."GT_EXT_FLT_ROOF" gtefr
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gtefr.int_doc_id
+        order by gtefr.int_doc_id, d.facility_id
+	</SQL62>
+	<TAB63>n13_7</TAB63>
+	<SQL63>
+    select
+        d.facility_id,
+        gtifr."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gtifr."FLOAT_DECK_TYPE" , '|', ' '), chr(10), ' ') "FLOAT_DECK_TYPE" ,
+        translate(translate(gtifr."ABOVE_FLOAT_TYPE" , '|', ' '), chr(10), ' ') "ABOVE_FLOAT_TYPE" ,
+        translate(translate(gtifr."CONSTRUCT_TYPE" , '|', ' '), chr(10), ' ') "CONSTRUCT_TYPE" ,
+        translate(translate(gtifr."OTHER_CONSTRUCT_DESC" , '|', ' '), chr(10), ' ') "OTHER_CONSTRUCT_DESC" ,
+        translate(translate(gtifr."SEAM_CONSTRUCT_TYPE" , '|', ' '), chr(10), ' ') "SEAM_CONSTRUCT_TYPE" ,
+        translate(translate(gtifr."OTHER_SEAM_DESC" , '|', ' '), chr(10), ' ') "OTHER_SEAM_DESC" ,
+        translate(translate(gtifr."SHEET_PANEL_TYPE" , '|', ' '), chr(10), ' ') "SHEET_PANEL_TYPE" ,
+        translate(translate(gtifr."WIDTH_SIZE" , '|', ' '), chr(10), ' ') "WIDTH_SIZE" ,
+        translate(translate(gtifr."SEAMS_LENGTH" , '|', ' '), chr(10), ' ') "SEAMS_LENGTH" ,
+        translate(translate(gtifr."DECK_AREA" , '|', ' '), chr(10), ' ') "DECK_AREA" ,
+        translate(translate(gtifr."AH_BOLTED" , '|', ' '), chr(10), ' ') "AH_BOLTED" ,
+        translate(translate(gtifr."AH_UNBOLT_GASKET" , '|', ' '), chr(10), ' ') "AH_UNBOLT_GASKET" ,
+        translate(translate(gtifr."AH_UNBOLT_UNGASKET" , '|', ' '), chr(10), ' ') "AH_UNBOLT_UNGASKET" ,
+        translate(translate(gtifr."AG_BOLTED" , '|', ' '), chr(10), ' ') "AG_BOLTED" ,
+        translate(translate(gtifr."AG_UNBOLT_UNGASKET" , '|', ' '), chr(10), ' ') "AG_UNBOLT_UNGASKET" ,
+        translate(translate(gtifr."AG_UNBOLT_GASKET" , '|', ' '), chr(10), ' ') "AG_UNBOLT_GASKET" ,
+        translate(translate(gtifr."DECK_SUPP_ADJ" , '|', ' '), chr(10), ' ') "DECK_SUPP_ADJ" ,
+        translate(translate(gtifr."DECK_SUPP_FIXED" , '|', ' '), chr(10), ' ') "DECK_SUPP_FIXED" ,
+        translate(translate(gtifr."DECK_SUPP_SUB_DRAIN" , '|', ' '), chr(10), ' ') "DECK_SUPP_SUB_DRAIN" ,
+        translate(translate(gtifr."LW_GASKET" , '|', ' '), chr(10), ' ') "LW_GASKET" ,
+        translate(translate(gtifr."LW_UNGASKET" , '|', ' '), chr(10), ' ') "LW_UNGASKET" ,
+        translate(translate(gtifr."CW_BUILT_UP_GASKET" , '|', ' '), chr(10), ' ') "CW_BUILT_UP_GASKET" ,
+        translate(translate(gtifr."CW_BUILT_UP_UNGASKET" , '|', ' '), chr(10), ' ') "CW_BUILT_UP_UNGASKET" ,
+        translate(translate(gtifr."CW_PIPE_FLEXIBLE" , '|', ' '), chr(10), ' ') "CW_PIPE_FLEXIBLE" ,
+        translate(translate(gtifr."CW_PIPE_GASKET" , '|', ' '), chr(10), ' ') "CW_PIPE_GASKET" ,
+        translate(translate(gtifr."CW_PIPE_UNGASKET" , '|', ' '), chr(10), ' ') "CW_PIPE_UNGASKET" ,
+        translate(translate(gtifr."SAMPLE_PIPE_GASKET" , '|', ' '), chr(10), ' ') "SAMPLE_PIPE_GASKET" ,
+        translate(translate(gtifr."SAMPLE_PIPE_UNGASKET" , '|', ' '), chr(10), ' ') "SAMPLE_PIPE_UNGASKET" ,
+        translate(translate(gtifr."SAMPLE_PIPE_SLIT" , '|', ' '), chr(10), ' ') "SAMPLE_PIPE_SLIT" ,
+        translate(translate(gtifr."VB_GASKET" , '|', ' '), chr(10), ' ') "VB_GASKET" ,
+        translate(translate(gtifr."VB_UNGASKET" , '|', ' '), chr(10), ' ') "VB_UNGASKET" ,
+        translate(translate(gtifr."EQUIP_OPENING_FLAG" , '|', ' '), chr(10), ' ') "EQUIP_OPENING_FLAG" ,
+        translate(translate(gtifr."OTHER_DESC" , '|', ' '), chr(10), ' ') "OTHER_DESC" 
+    from
+        "AIRPROD"."GT_INT_FLT_ROOF" gtifr
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gtifr.int_doc_id
+        order by gtifr.int_doc_id, d.facility_id
+	</SQL63>
+	<TAB64>n13_8</TAB64>
+	<SQL64>
+    select
+        d.facility_id,
+        gtiefr."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(gtiefr."SEAL_TYPE" , '|', ' '), chr(10), ' ') "SEAL_TYPE" ,
+        translate(translate(gtiefr."PRI_MFG_NAME" , '|', ' '), chr(10), ' ') "PRI_MFG_NAME" ,
+        translate(translate(gtiefr."PRI_MODEL_NUM" , '|', ' '), chr(10), ' ') "PRI_MODEL_NUM" ,
+        translate(translate(gtiefr."PRI_INSTALL_DATE" , '|', ' '), chr(10), ' ') "PRI_INSTALL_DATE" ,
+        translate(translate(gtiefr."PRI_SEAL_TYPE" , '|', ' '), chr(10), ' ') "PRI_SEAL_TYPE" ,
+        translate(translate(gtiefr."PRI_OTHER_SEAL_DESC" , '|', ' '), chr(10), ' ') "PRI_OTHER_SEAL_DESC" ,
+        translate(translate(gtiefr."VERT_LENGTH" , '|', ' '), chr(10), ' ') "VERT_LENGTH" ,
+        translate(translate(gtiefr."VERT_LENGTH_ABOVE" , '|', ' '), chr(10), ' ') "VERT_LENGTH_ABOVE" ,
+        translate(translate(gtiefr."SEC_MFG_NAME" , '|', ' '), chr(10), ' ') "SEC_MFG_NAME" ,
+        translate(translate(gtiefr."SEC_MODEL_NUM" , '|', ' '), chr(10), ' ') "SEC_MODEL_NUM" ,
+        translate(translate(gtiefr."SEC_INSTALL_DATE" , '|', ' '), chr(10), ' ') "SEC_INSTALL_DATE" ,
+        translate(translate(gtiefr."SEC_SEAL_TYPE" , '|', ' '), chr(10), ' ') "SEC_SEAL_TYPE" ,
+        translate(translate(gtiefr."SEC_OTHER_SEAL_DESC" , '|', ' '), chr(10), ' ') "SEC_OTHER_SEAL_DESC" ,
+        translate(translate(gtiefr."SEALS_INSPECTED" , '|', ' '), chr(10), ' ') "SEALS_INSPECTED" ,
+        translate(translate(gtiefr."INSPECTED_DATE" , '|', ' '), chr(10), ' ') "INSPECTED_DATE" ,
+        translate(translate(gtiefr."INSPECTOR" , '|', ' '), chr(10), ' ') "INSPECTOR" ,
+        translate(translate(gtiefr."INSPECTOR_CO" , '|', ' '), chr(10), ' ') "INSPECTOR_CO" ,
+        translate(translate(gtiefr."SEAL_CONDITION_TYPE" , '|', ' '), chr(10), ' ') "SEAL_CONDITION_TYPE" ,
+        translate(translate(gtiefr."CORRECTIVE_ACTION" , '|', ' '), chr(10), ' ') "CORRECTIVE_ACTION" ,
+        translate(translate(gtiefr."CORRECTION_DATE" , '|', ' '), chr(10), ' ') "CORRECTION_DATE" ,
+        translate(translate(gtiefr."PRI_MEAS_DATE" , '|', ' '), chr(10), ' ') "PRI_MEAS_DATE" ,
+        translate(translate(gtiefr."PRI_INSPECTOR" , '|', ' '), chr(10), ' ') "PRI_INSPECTOR" ,
+        translate(translate(gtiefr."PRI_INSPECTOR_CO" , '|', ' '), chr(10), ' ') "PRI_INSPECTOR_CO" ,
+        translate(translate(gtiefr."PRI_GAP_WID" , '|', ' '), chr(10), ' ') "PRI_GAP_WID" ,
+        translate(translate(gtiefr."PRI_GAP_AREA" , '|', ' '), chr(10), ' ') "PRI_GAP_AREA" ,
+        translate(translate(gtiefr."PRI_GAP_AREA_DIA" , '|', ' '), chr(10), ' ') "PRI_GAP_AREA_DIA" ,
+        translate(translate(gtiefr."SEC_MEAS_DATE" , '|', ' '), chr(10), ' ') "SEC_MEAS_DATE" ,
+        translate(translate(gtiefr."SEC_INSPECTOR" , '|', ' '), chr(10), ' ') "SEC_INSPECTOR" ,
+        translate(translate(gtiefr."SEC_INSPECTOR_CO" , '|', ' '), chr(10), ' ') "SEC_INSPECTOR_CO" ,
+        translate(translate(gtiefr."SEC_GAP_WID" , '|', ' '), chr(10), ' ') "SEC_GAP_WID" ,
+        translate(translate(gtiefr."SEC_GAP_AREA" , '|', ' '), chr(10), ' ') "SEC_GAP_AREA" ,
+        translate(translate(gtiefr."SEC_GAP_AREA_DIA" , '|', ' '), chr(10), ' ') "SEC_GAP_AREA_DIA" ,
+        translate(translate(gtiefr."INTERIOR_COND_TYPE" , '|', ' '), chr(10), ' ') "INTERIOR_COND_TYPE" 
+    from
+        "AIRPROD"."GT_INT_EXT_FLT_ROOF" gtiefr
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = gtiefr.int_doc_id
+        order by gtiefr.int_doc_id, d.facility_id
+	</SQL64>
+	<TAB65>n14_0</TAB65>
+	<SQL65>
+    select
+    d.facility_id,
+        p."INT_DOC_ID",
+    translate (translate (d.title, '|', ' '), chr(10), ' ') title,
+    translate (translate (p."END_PRODUCT", '|', ' '), chr(10), ' ') end_product,
+        translate (translate (p."AVG_PROD", '|', ' '), chr(10), ' ') avg_prod,
+        translate (translate (p."AVG_PROD_UNIT", '|', ' '), chr(10), ' ') avg_prod_unit,
+        translate (translate (p."MAX_PROD", '|', ' '), chr(10), ' ') max_prod,
+        translate (translate (p."MAX_PROD_UNIT", '|', ' '), chr(10), ' ') max_prod_unit,
+        translate (translate (p."MAX_ANN_PROD", '|', ' '), chr(10), ' ')  max_ann_prod,
+        translate (translate (p."MAX_ANN_PROD_UNIT", '|', ' '), chr(10), ' ') max_ann_prod_unit,
+        translate (translate (p."ACTUAL_PROD", '|', ' '), chr(10), ' ')  actual_prod,
+        translate (translate (p."ACTUAL_PROD_UNIT", '|', ' '), chr(10), ' ') actual_prod_unit, 
+        translate (translate (p."OP_TYPE", '|', ' '), chr(10), ' ') op_type
+    from
+        "AIRPROD"."PROCESS" p
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = p.int_doc_id
+        order by p.int_doc_id, d.facility_id
+	</SQL65>
+	<TAB66>n14_1</TAB66>
+	<SQL66>
+    select
+    d.facility_id,
+        p."INT_DOC_ID",
+    translate(translate (d.title, '|', ' '), chr(10), ' ') title,
+       translate (translate (p.PRODUCT, '|', ' '), chr(10), ' ') product,
+        translate (translate (p."MIN_CYCLE_TEIM", '|', ' '), chr(10), ' ') min_cycle_teim,
+        translate (translate (p."MIN_BETWEEN_TIME",  '|', ' '), chr(10), ' ') min_between_time
+    from
+        "AIRPROD"."PROCESS_CYCLE" p
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = p.int_doc_id
+        order by p.int_doc_id, d.facility_id
+
+	</SQL66>
+	<TAB67>n14_2</TAB67>
+	<SQL67>
+    select
+        d.facility_id,
+        p."INT_DOC_ID",
+        translate (translate (d.title, '|', ' '), chr(10), ' ') title,
+        translate (translate (p.PRODUCT, '|', ' '), chr(10), ' ') product,
+        translate (translate (p.RAW_MATERIAL, '|', ' '), chr(10), ' ') raw_material,
+        translate (translate(aps.proc_state_desc, '|', ' '), chr(10), ' ') proc_state_desc,
+        translate (translate (p.PRINCIPAL_USE, '|', ' '), chr(10), ' ') principal_use,
+        translate (translate (p."AMOUNT", '|', ' '), chr(10), ' ') amount
+    from
+        "AIRPROD"."PO_MAX_PROD" p
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = p.int_doc_id
+        left outer join "AIRPROD"."AMTB_PROC_STATE" aps on aps.proc_state_code = p.state_std_cond
+        order by p.int_doc_id, d.facility_id
+	</SQL67>
+	<TAB68>n15_0</TAB68>
+	<SQL68>
+    select
+        d.facility_id,
+        solvm."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(solvm."EQUIP_TYPE" , '|', ' '), chr(10), ' ') "EQUIP_TYPE" ,
+        translate(translate(solvm."MIN_SOLV_WASTE" , '|', ' '), chr(10), ' ') "MIN_SOLV_WASTE" ,
+        translate(translate(solvm."MIN_SOLV_CONTENT" , '|', ' '), chr(10), ' ') "MIN_SOLV_CONTENT" ,
+        translate(translate(solvm."OP_TRAIN_DESC" , '|', ' '), chr(10), ' ') "OP_TRAIN_DESC" ,
+        translate(translate(solvm."OP_INSTRUCT_DESC" , '|', ' '), chr(10), ' ') "OP_INSTRUCT_DESC" ,
+        translate(translate(solvm."IND_COLLECT_FLAG" , '|', ' '), chr(10), ' ') "IND_COLLECT_FLAG" ,
+        translate(translate(solvm."RECLAMATION_FLAG" , '|', ' '), chr(10), ' ') "RECLAMATION_FLAG" ,
+        translate(translate(solvm."IN_HOUSE_FLAG" , '|', ' '), chr(10), ' ') "IN_HOUSE_FLAG" ,
+        translate(translate(solvm."DEEP_WELL_FLAG" , '|', ' '), chr(10), ' ') "DEEP_WELL_FLAG" ,
+        translate(translate(solvm."WASTE_SOLV_FLAG" , '|', ' '), chr(10), ' ') "WASTE_SOLV_FLAG" ,
+        translate(translate(solvm."WASTE_SOLV_CO" , '|', ' '), chr(10), ' ') "WASTE_SOLV_CO" ,
+        translate(translate(solvm."OTHER_DISPOSAL_FLAG" , '|', ' '), chr(10), ' ') "OTHER_DISPOSAL_FLAG" ,
+        translate(translate(solvm."OTHER_DISPOSAL_DESC" , '|', ' '), chr(10), ' ') "OTHER_DISPOSAL_DESC"
+    from
+        "AIRPROD"."SOLVENT_METAL" solvm
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = solvm.int_doc_id
+        order by solvm.int_doc_id, d.facility_id
+	</SQL68>
+	<TAB69>n15_1</TAB69>
+	<SQL69>
+    select
+        d.facility_id,
+        smpc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(smpc."PARTS_DESC" , '|', ' '), chr(10), ' ') "PARTS_DESC" ,
+        translate(translate(smpc."AVG_CLEANED_HR" , '|', ' '), chr(10), ' ') "AVG_CLEANED_HR" ,
+        translate(translate(smpc."MAX_CLEANED_HR" , '|', ' '), chr(10), ' ') "MAX_CLEANED_HR"
+    from
+        "AIRPROD"."SM_PARTS_CLEANED" smpc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = smpc.int_doc_id
+        order by smpc.int_doc_id, d.facility_id
+	</SQL69>
+	<TAB70>n15_2</TAB70>
+	<SQL70>
+    select
+        d.facility_id,
+        smsu."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(smsu."SOLVENT" , '|', ' '), chr(10), ' ') "SOLVENT" ,
+        translate(translate(smsu."MAX_GALLONS" , '|', ' '), chr(10), ' ') "MAX_GALLONS" ,
+        translate(translate(smsu."WINTER_PCT" , '|', ' '), chr(10), ' ') "WINTER_PCT",
+        translate(translate(smsu."SPRING_PCT" , '|', ' '), chr(10), ' ') "SPRING_PCT",
+        translate(translate(smsu."SUMMER_PCT" , '|', ' '), chr(10), ' ') "SUMMER_PCT",
+        translate(translate(smsu."FALL_PCT" , '|', ' '), chr(10), ' ') "FALL_PCT",
+        translate(translate(smsu."PSIA_AT_100" , '|', ' '), chr(10), ' ') "PSIA_AT_100"
+    from
+        "AIRPROD"."SM_SOLV_USAGE" smsu
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = smsu.int_doc_id
+        order by smsu.int_doc_id, d.facility_id
+	</SQL70>
+	<TAB71>n15_3</TAB71>
+	<SQL71>
+    select
+        d.facility_id,
+        smcc."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(smcc."COLD_CLEANER_DESC" , '|', ' '), chr(10), ' ') "COLD_CLEANER_DESC" ,
+        translate(translate(smcc."COVER_EQUIPPED_FLAG" , '|', ' '), chr(10), ' ') "COVER_EQUIPPED_FLAG" ,
+        translate(translate(smcc."EASILY_OP_FLAG" , '|', ' '), chr(10), ' ') "EASILY_OP_FLAG" ,
+        translate(translate(smcc."COVER_DESC" , '|', ' '), chr(10), ' ') "COVER_DESC",
+        translate(translate(smcc."WATER_COVER_FLAG" , '|', ' '), chr(10), ' ') "WATER_COVER_FLAG",
+        translate(translate(smcc."REFRIG_CHILLER_FLAG" , '|', ' '), chr(10), ' ') "REFRIG_CHILLER_FLAG",
+        translate(translate(smcc."REFRIG_CHILLER_TEMP" , '|', ' '), chr(10), ' ') "REFRIG_CHILLER_TEMP",
+        translate(translate(smcc."CARBON_ABSORB_FLAG" , '|', ' '), chr(10), ' ') "CARBON_ABSORB_FLAG",
+        translate(translate(smcc."OTHER_SYSTEM_FLAG" , '|', ' '), chr(10), ' ') "OTHER_SYSTEM_FLAG",
+        translate(translate(smcc."OTHER_SYSTEM_DESC" , '|', ' '), chr(10), ' ') "OTHER_SYSTEM_DESC",
+        translate(translate(smcc."NO_SYSTEM_FLAG" , '|', ' '), chr(10), ' ') "NO_SYSTEM_FLAG",
+        translate(translate(smcc."SPRAYED_FLAG" , '|', ' '), chr(10), ' ') "SPRAYED_FLAG",
+        translate(translate(smcc."HEATED_FLAG" , '|', ' '), chr(10), ' ') "HEATED_FLAG",
+        translate(translate(smcc."SOLV_TEMP" , '|', ' '), chr(10), ' ') "SOLV_TEMP",
+        translate(translate(smcc."PUMPING_FLAG" , '|', ' '), chr(10), ' ') "PUMPING_FLAG",
+        translate(translate(smcc."COMPRESSED_AIR_FLAG" , '|', ' '), chr(10), ' ') "COMPRESSED_AIR_FLAG",
+        translate(translate(smcc."NOT_LISTED_FLAG" , '|', ' '), chr(10), ' ') "NOT_LISTED_FLAG",
+        translate(translate(smcc."VERTICAL_MOTION_FLAG" , '|', ' '), chr(10), ' ') "VERTICAL_MOTION_FLAG",
+        translate(translate(smcc."ULTRASONICS_FLAG" , '|', ' '), chr(10), ' ') "ULTRASONICS_FLAG",
+        translate(translate(smcc."DRAINING_SOLV_DESC" , '|', ' '), chr(10), ' ') "DRAINING_SOLV_DESC",
+        translate(translate(smcc."TANK_LEN" , '|', ' '), chr(10), ' ') "TANK_LEN",
+        translate(translate(smcc."TANK_WID" , '|', ' '), chr(10), ' ') "TANK_WID",
+        translate(translate(smcc."TANK_HGT" , '|', ' '), chr(10), ' ') "TANK_HGT",
+        translate(translate(smcc."TANK_CAP" , '|', ' '), chr(10), ' ') "TANK_CAP",
+        translate(translate(smcc."FREEBOARD_HGT" , '|', ' '), chr(10), ' ') "FREEBOARD_HGT",
+        translate(translate(smcc."FREEBOARD_WID" , '|', ' '), chr(10), ' ') "FREEBOARD_WID"
+    from
+        "AIRPROD"."SM_COLD_CLEANER" smcc
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = smcc.int_doc_id
+        order by smcc.int_doc_id, d.facility_id
+	</SQL71>
+	<TAB72>n15_4</TAB72>
+	<SQL72>
+    select
+        d.facility_id,
+        smotd."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(smotd."VAPOR_DEG_DESC" , '|', ' '), chr(10), ' ') "VAPOR_DEG_DESC" ,
+        translate(translate(smotd."COVER_EQUIPPED_FLAG" , '|', ' '), chr(10), ' ') "COVER_EQUIPPED_FLAG" ,
+        translate(translate(smotd."POWER_COVER_FLAG" , '|', ' '), chr(10), ' ') "POWER_COVER_FLAG" ,
+        translate(translate(smotd."WHEN_COVERED_DESC" , '|', ' '), chr(10), ' ') "WHEN_COVERED_DESC",
+        translate(translate(smotd."FIXED_NOZZLES_FLAG" , '|', ' '), chr(10), ' ') "FIXED_NOZZLES_FLAG",
+        translate(translate(smotd."TOP_OPENING_LEN" , '|', ' '), chr(10), ' ') "TOP_OPENING_LEN",
+        translate(translate(smotd."TOP_OPENING_WID" , '|', ' '), chr(10), ' ') "TOP_OPENING_WID",
+        translate(translate(smotd."FREEBOARD_HGT" , '|', ' '), chr(10), ' ') "FREEBOARD_HGT",
+        translate(translate(smotd."FREEBOARD_WID" , '|', ' '), chr(10), ' ') "FREEBOARD_WID",
+        translate(translate(smotd."NO_CE_FLAG" , '|', ' '), chr(10), ' ') "NO_CE_FLAG",
+        translate(translate(smotd."REFRIG_FREEBOARD_FLAG" , '|', ' '), chr(10), ' ') "REFRIG_FREEBOARD_FLAG",
+        translate(translate(smotd."REFRIG_FREEBOARD_TEMP" , '|', ' '), chr(10), ' ') "REFRIG_FREEBOARD_TEMP",
+        translate(translate(smotd."REFRIG_CONDENS_FLAG" , '|', ' '), chr(10), ' ') "REFRIG_CONDENS_FLAG",
+        translate(translate(smotd."REFRIG_CONDENS_TEMP" , '|', ' '), chr(10), ' ') "REFRIG_CONDENS_TEMP",
+        translate(translate(smotd."ENCLOSED_DESIGN_FLAG" , '|', ' '), chr(10), ' ') "ENCLOSED_DESIGN_FLAG",
+        translate(translate(smotd."CARBON_ABSORB_FLAG" , '|', ' '), chr(10), ' ') "CARBON_ABSORB_FLAG",
+        translate(translate(smotd."OTHER_CTRL_SYS_FLAG" , '|', ' '), chr(10), ' ') "OTHER_CTRL_SYS_FLAG",
+        translate(translate(smotd."OTHER_CTRL_SYS_DESC" , '|', ' '), chr(10), ' ') "OTHER_CTRL_SYS_DESC",
+        translate(translate(smotd."NO_SAFETY_SWITCH_FLAG" , '|', ' '), chr(10), ' ') "NO_SAFETY_SWITCH_FLAG",
+        translate(translate(smotd."CONDENSER_FLOW_FLAG" , '|', ' '), chr(10), ' ') "CONDENSER_FLOW_FLAG",
+        translate(translate(smotd."DEVICE_ACTIVATED_FLAG" , '|', ' '), chr(10), ' ') "DEVICE_ACTIVATED_FLAG",
+        translate(translate(smotd."COOLANT_DEVICE_DESC" , '|', ' '), chr(10), ' ') "COOLANT_DEVICE_DESC",
+        translate(translate(smotd."SPRAY_SAFETY_FLAG" , '|', ' '), chr(10), ' ') "SPRAY_SAFETY_FLAG",
+        translate(translate(smotd."VAPOR_LEVEL_FLAG" , '|', ' '), chr(10), ' ') "VAPOR_LEVEL_FLAG",
+        translate(translate(smotd."ACTIVATED_VAPOR_FLAG" , '|', ' '), chr(10), ' ') "ACTIVATED_VAPOR_FLAG",
+        translate(translate(smotd."VAPOR_LEVEL_DESC" , '|', ' '), chr(10), ' ') "VAPOR_LEVEL_DESC"
+    from
+        "AIRPROD"."SM_OVEN_TOP_DEG" smotd
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = smotd.int_doc_id
+        order by smotd.int_doc_id, d.facility_id
+	</SQL72>
+	<TAB73>n15_5</TAB73>
+	<SQL73>
+    select
+        d.facility_id,
+        smcd."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(smcd."CONVEY_DEG_DESC" , '|', ' '), chr(10), ' ') "CONVEY_DEG_DESC" ,
+        translate(translate(smcd."CONVEY_DEG_VAPOR_FLAG" , '|', ' '), chr(10), ' ') "CONVEY_DEG_VAPOR_FLAG" ,
+        translate(translate(smcd."FIXED_NOZZLES_FLAG" , '|', ' '), chr(10), ' ') "FIXED_NOZZLES_FLAG",
+        translate(translate(smcd."MAX_OP_TEMP" , '|', ' '), chr(10), ' ') "MAX_OP_TEMP",
+        translate(translate(smcd."COVER_EQUIPPED_FLAG" , '|', ' '), chr(10), ' ') "COVER_EQUIPPED_FLAG",
+        translate(translate(smcd."COVER_SHUTDOWN_FLAG" , '|', ' '), chr(10), ' ') "COVER_SHUTDOWN_FLAG",
+        translate(translate(smcd."NOT_EQUIPPED_FLAG" , '|', ' '), chr(10), ' ') "NOT_EQUIPPED_FLAG",
+        translate(translate(smcd."ROTATING_BASKET_FLAG" , '|', ' '), chr(10), ' ') "ROTATING_BASKET_FLAG",
+        translate(translate(smcd."DRYING_TUNNEL_FLAG" , '|', ' '), chr(10), ' ') "DRYING_TUNNEL_FLAG",
+        translate(translate(smcd."OTHER_EQUIP_FLAG" , '|', ' '), chr(10), ' ') "OTHER_EQUIP_FLAG",
+        translate(translate(smcd."OTHER_EQUIP_DESC" , '|', ' '), chr(10), ' ') "OTHER_EQUIP_DESC",
+        translate(translate(smcd."AIR_VAPOR_CALC" , '|', ' '), chr(10), ' ') "AIR_VAPOR_CALC",
+        translate(translate(smcd."AIR_VAPOR_CALC_DESC" , '|', ' '), chr(10), ' ') "AIR_VAPOR_CALC_DESC",
+        translate(translate(smcd."NO_SAFETY_SWITCH_FLAG" , '|', ' '), chr(10), ' ') "NO_SAFETY_SWITCH_FLAG",
+        translate(translate(smcd."CONDENSER_FLOW_FLAG" , '|', ' '), chr(10), ' ') "CONDENSER_FLOW_FLAG",
+        translate(translate(smcd."DEVICE_ACTIVATED_FLAG" , '|', ' '), chr(10), ' ') "DEVICE_ACTIVATED_FLAG",
+        translate(translate(smcd."COOLANT_DEVICE_DESC" , '|', ' '), chr(10), ' ') "COOLANT_DEVICE_DESC",
+        translate(translate(smcd."SPRAY_SAFETY_FLAG" , '|', ' '), chr(10), ' ') "SPRAY_SAFETY_FLAG",
+        translate(translate(smcd."VAPOR_LEVEL_FLAG" , '|', ' '), chr(10), ' ') "VAPOR_LEVEL_FLAG",
+        translate(translate(smcd."ACTIVATED_VAPOR_FLAG" , '|', ' '), chr(10), ' ') "ACTIVATED_VAPOR_FLAG",
+        translate(translate(smcd."VAPOR_LEVEL_DESC" , '|', ' '), chr(10), ' ') "VAPOR_LEVEL_DESC",
+        translate(translate(smcd."NO_CE_FLAG" , '|', ' '), chr(10), ' ') "NO_CE_FLAG",
+        translate(translate(smcd."REFRIG_CHILLER_FLAG" , '|', ' '), chr(10), ' ') "REFRIG_CHILLER_FLAG",
+        translate(translate(smcd."REFRIG_CONDENS_FLAG" , '|', ' '), chr(10), ' ') "REFRIG_CONDENS_FLAG",
+        translate(translate(smcd."CARBON_ABSORB_FLAG" , '|', ' '), chr(10), ' ') "CARBON_ABSORB_FLAG",
+        translate(translate(smcd."OTHER_CTRL_SYS_FLAG" , '|', ' '), chr(10), ' ') "OTHER_CTRL_SYS_FLAG",
+        translate(translate(smcd."OTHER_CTRL_SYS_DESC" , '|', ' '), chr(10), ' ') "OTHER_CTRL_SYS_DESC"
+    from
+        "AIRPROD"."SM_CONVEY_DEG" smcd
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = smcd.int_doc_id
+        order by smcd.int_doc_id, d.facility_id
+	</SQL73>
+	<TAB74>n15_6</TAB74>
+	<SQL74>
+    select
+        d.facility_id,
+        smca."INT_DOC_ID",
+        translate(translate(d."TITLE" , '|', ' '), chr(10), ' ') "TITLE" ,
+        translate(translate(smca."CARBON_ABSORB_SYS" , '|', ' '), chr(10), ' ') "CARBON_ABSORB_SYS" ,
+        translate(translate(smca."VENT_RATE" , '|', ' '), chr(10), ' ') "VENT_RATE" ,
+        translate(translate(smca."AVG_EM_RATE" , '|', ' '), chr(10), ' ') "AVG_EM_RATE"
+    from
+        "AIRPROD"."SM_CARBON_ABSORPTION" smca
+        inner join "AIRPROD"."DSK_CENTRAL_FILE" d on d.int_doc_id = smca.int_doc_id
+        order by smca.int_doc_id, d.facility_id
+	</SQL74>
+
+ 	<TAB75>end</TAB75>
+</StarsEACSQL>
+</root>

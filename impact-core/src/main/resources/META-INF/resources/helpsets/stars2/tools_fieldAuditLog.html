@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!-- ********** HEAD ************ -->
+
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- !!! THIS LINE DEFINES THE STRING THAT APPEARS AS THE WINDOW TITLE !!! -->
+
+
+  
+
+
+  
+  <title>IMPACT System Help - Tools -&gt; Field Audit Log</title>
+  <link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+
+
+  
+  <link rel="STYLESHEET" type="text/css" href="stars2.css">
+<!-- **Uncomment** this STYLE element to hide TOC button --><!-- **Comment out** this STYLE element to display TOC button -->
+
+
+  
+  <script language="JavaScript" type="text/javascript" src="browvers.js"></script>
+  
+  <style type="text/css"> .hide {display : none}
+  </style><!-- END HEAD --><!-- ********** BODY ************ -->
+</head>
+
+
+<body>
+
+
+<noscript>Script to detect browser version</noscript>
+
+
+<!-- ********** TOP [BOOKMARK] ************ -->
+<a name="top"></a>
+<div class="zz-skip-header"><a href="#start">Skip
+navigation header</a></div>
+
+
+<table summary="Document information and navigation controls" border="0" width="97%">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+<!-- !!! THIS LINE DEFINES THE STRING THAT APPEARS ABOVE THE HELP TOPIC TITLE !!! -->
+<!-- !!! This 'Chapter Title' should be the TOC entry one level higher than the !!! --><!-- !!! Help Topic Title specified in the Level 1 heading (h1) below !!! --><td class="zz-nav-header-cell" scope="col"><strong>Tools</strong></td>
+
+
+      <td class="zz-nav-button-cell" scope="col"> <a class="zz-nav-button-link" href="prev_placeholder.html">
+      <img src="images/leftnav.gif" alt="Previous Topic" border="0" height="24" width="23"> <br>
+
+
+Previous Topic</a></td>
+
+
+      <td class="zz-nav-button-cell" scope="col"> <a class="zz-nav-button-link" href="next_placeholder.html">
+      <img src="images/rightnav.gif" alt="Next Topic" border="0" height="24" width="23"> <br>
+
+
+Next Topic</a></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<!-- !!! THIS IS THE BEGINNING OF THE HELP TOPIC CONTENT. IT SHOULD BE !!! --><!-- !!! REPLACED BY THE CONTENT OF THE HELP TOPIC. !!! --><!-- ********** START [BOOKMARK] ************ -->
+<a name="start"></a><!-- !!! This Level 1 HEADING (h1) is the Help Topic Title. It should !!! --><!-- !!! 'MATCH' the HELP topic as listed in the TOC. If the page has a direct !!! --><!-- !!! HELP button/link, then both the HELP topic title and the TOC !!! --><!-- !!! listing should match the menu item for the last component in the !!! --><!-- !!! navigation path linked to the page/topic. !!! -->
+<h1>Field Audit log</h1>
+
+
+<h2>Overview</h2>
+
+
+<p>The system&#8217;s second-level menu, <font face="Courier New, Courier, monospace">Field Audit Log</font>,
+of the <font face="Courier New, Courier, monospace">Tools</font>
+tab
+allows you to select a different <font face="Courier New, Courier, monospace">Category</font>
+of data for a specific data
+field (<font face="Courier New, Courier, monospace">Attribute</font>)
+to find out the history of changes made to that
+<font face="Courier New, Courier, monospace">Attribute</font>
+in the system. The <font face="Courier New, Courier, monospace">Field
+Audit Log</font> is only tracked for
+specific fields pre-defined in the system, for example, <font face="Courier New, Courier, monospace">Emissions Units</font>
+or <font face="Courier New, Courier, monospace">Permits</font>,
+rather than an audit of changes to all fields in the
+system.</p>
+
+
+<p>This topic contains the following sections:</p>
+
+
+<ul>
+
+
+  <li><a href="#criteria">Field Audit Log Search
+Criteria</a></li>
+
+
+  <li><a href="#results">Field Audit Log Search
+Results</a></li>
+
+
+  <li><a href="#rel_help_topics">Related Help Topics</a></li>
+
+
+</ul>
+
+
+<a name="criteria"></a>
+<h2>Field Audit Log Search Criteria</h2>
+
+
+<p>You may search for a history of changes on the basis of any or
+all of
+the criteria listed below. You can fill in or choose a value for
+whichever fields you want to use to restrict your search.</p>
+
+
+<ul>
+
+
+  <li><b>Facility
+ID</b>: enter a FAC ID or a partial FAC ID and * or % in any
+position as a
+    <a class="glossary-link" href="glossary.html/#wildcard" target="_blank">wildcard</a>
+(example: 012*, %012504, or *0125*, etc.) to filter for
+changes for an individual facility or group of facilities.
+  </li>
+
+
+  <li><b>Category</b>: select from a pick list of <font face="Courier New, Courier, monospace">Category</font>
+values: for
+example <font face="Courier New, Courier, monospace">Emissions
+Units</font>
+or <font face="Courier New, Courier, monospace">Permits</font>.
+  </li>
+
+
+  <li><b>Attribute</b>: select from a pick list of <font face="Courier New, Courier, monospace">Attribute</font>
+values
+which are populated specifically for a given <font face="Courier New, Courier, monospace">Category</font>:
+for example,
+when the <font face="Courier New, Courier, monospace">Category
+Permits</font> is selected, <font face="Courier New, Courier, monospace">Final issue date</font>
+or <font face="Courier New, Courier, monospace">Permit
+Number</font> are possible <font face="Courier New, Courier, monospace">Attributes</font>
+to filter for changes.</li>
+
+
+</ul>
+
+
+<p><a href="#top">Back to Top</a>
+<a name="results"></a></p>
+
+
+<h2>Field Audit Log Search Results</h2>
+
+
+<p>After you complete the criteria for the search you want, and
+click <img alt="Submit Button" src="images/btn_submit.jpg" height="21" width="59">,
+the system searches all of the records for all the changes stored in
+its database, selects the ones that meet <u>ALL</u> of the
+criteria you have
+specified, and returns summary information about that change(s) in a
+datagrid. The datagrid below is the result of a search submitted with
+search criteria specified to select all <font face="Courier New, Courier, monospace">AQD Emissions Unit ID</font>
+(<font face="Courier New, Courier, monospace">Attribute</font>)
+changes for <font face="Courier New, Courier, monospace">Facility
+ID 0616000000</font> for the <font face="Courier New, Courier, monospace">Category,
+Emissions Unit</font>:</p>
+
+
+<div align="center">
+<p><img alt="Field Audit Log List" src="images/fieldAuditLog_datagrid.jpg" title="Field Audit Log List" style="border: 1px solid ;" vspace="4"></p>
+
+
+<p><b>Field Audit Log Search Results Datagrid</b></p>
+
+
+</div>
+
+
+<p>The summary data returned includes columns providing <font face="Courier New, Courier, monospace">Facility
+ID,
+Facility Name, Category, Attribute, Unique Id, Old Value, New Value</font>
+and
+<font face="Courier New, Courier, monospace">Date</font>
+for all the changes that match your search criteria. The
+following summary data is further explained:</p>
+
+
+<ul>
+
+
+  <li><font face="Courier New, Courier, monospace">Facility ID</font>: the unique
+ID number assigned to the facility. The <font face="Courier New, Courier, monospace">Facility Id</font>
+is a hyperlink for
+accessing the associated <font face="Courier New, Courier, monospace">Facility Detail</font>.
+  </li>
+
+
+  <li><font face="Courier New, Courier, monospace">Old Value</font>: the value of
+the <font face="Courier New, Courier, monospace">Attribute</font>
+before the change occurred.
+  </li>
+
+
+  <li><font face="Courier New, Courier, monospace">New Value</font>: the value of the <font face="Courier New, Courier, monospace">Attribute</font>
+after the change
+occurred.
+  </li>
+
+
+  <li><font face="Courier New, Courier, monospace">User Name</font>: the name of the person whom
+initiated the change
+in the
+system.
+  </li>
+
+
+  <li><font face="Courier New, Courier, monospace">Date</font>: the date the change was initiated
+in the system.</li>
+
+
+</ul>
+
+
+<p>For more information about functionalities of search, input
+fields and
+datagrids, see the specific Help pages below.</p>
+
+
+<p><a href="#top">Back to Top</a>
+<a name="rel_help_topics"></a></p>
+
+
+<h2>Related Help Topics</h2>
+
+
+<ul>
+
+
+  <li><a href="common_ui_searchParadigm.html">Common
+Search Paradigm</a></li>
+
+
+  <li><a href="common_ui_inputFields.html">Common
+User Interface Elements - Input Fields</a></li>
+
+
+  <li><a href="common_ui_datagrids.html">Common User
+Interface Elements - Datagrids</a></li>
+
+
+</ul>
+
+
+<p><a href="#top">Back to Top</a></p>
+
+
+<!-- !!! THIS IS THE END OF THE HELP TOPIC CONTENT !!! --><!-- !!! BELOW IS THE FOOTER SECTION. IT SHOULD REMAIN IN ALL HELP PAGES THAT !!! --><!-- !!! APPEAR IN THE TABLE OF CONTENTS. PREVIOUS TOPIC AND NEXT TOPICS !!! -->
+<!-- !!! ARE MODIFIED HERE FOR THE FOOTER. !!! -->
+<p class="horizontal-rule">&nbsp;<br>
+
+
+</p>
+
+
+<div class="zz-nav-footer-menu"><a href="prev_placeholder.html" target="_blank">Previous
+Topic</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="next_placeholder.html">Next Topic</a> </div>
+
+
+<!-- no legal notice in Stars2 system help; command remains for potential future use -->
+<p class="zz-legal-notice"><a class="zz-legal-notice-link" href="cpyr.html">Copyright
+© 1996, 2004, Oracle.</a> All rights reserved.</p>
+
+
+</body>
+</html>

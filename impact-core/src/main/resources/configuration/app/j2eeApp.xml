@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+<!-- 
+  <JNDIContext name="Stars2" factory="weblogic.jndi.WLInitialContextFactory">
+  </JNDIContext>
+  <GatewayLocation>http://devapps/gateway/services/</GatewayLocation>
+ -->
+</root>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<projectTracking-definitions>
+		<category label="P&amp;O Project Tracking" description="">
+			<definition-set table="PO_PROJECT_TYPE_DEF"
+				contentType="custom" label="Project Type" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="PROJECT_TYPE_CD"
+				description="Planning and Outreach Project Types"
+				importClass="us.oh.state.epa.stars2.def.ProjectTypeDef">
+				<field column="PROJECT_TYPE_CD" label="Code" update="F" />
+				<field column="PROJECT_TYPE_DSC" label="Description" update="T" />
+				<field column="SECURITY_GROUP_ID" label="Access Role" update="T"
+					pickListTable="CM_SECURITY_GROUP" pickListColumn="SECURITY_GROUP_ID"
+					pickListDisplay="SECURITY_GROUP_NM" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="PO_PROJECT_STATE_DEF"
+				contentType="CD" label="Project Status" columnPrefix="PROJECT_STATE"
+				deprecateModel="flag" create="T" update="T" orderBy="PROJECT_STATE_CD"
+				description="Planning and Outreach Project Statuses"
+				importClass="us.oh.state.epa.stars2.def.ProjectStateDef">
+			</definition-set>
+			<definition-set table="PO_ATTACHMENT_TYPE_DEF"
+				contentType="custom" label="Attachment Type" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="PROJECT_TYPE_CD, ATTACHMENT_TYPE_DSC"
+				description="Project type specific attachments"
+				importClass="us.oh.state.epa.stars2.def.ProjectAttachmentTypeDef">
+				<field column="ATTACHMENT_TYPE_CD" label="Code" update="F" />
+				<field column="PROJECT_TYPE_CD" label="Project Type" update="T"
+					pickListTable="PO_PROJECT_TYPE_DEF" pickListColumn="PROJECT_TYPE_CD"
+					pickListDisplay="PROJECT_TYPE_DSC" />
+				<filed column="ATTACHMENT_TYPE_DSC" label="Description" update="T" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="PO_TRACKING_EVENT_TYPE_DEF"
+				contentType="custom" label="Tracking Event Type" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="PROJECT_TYPE_CD, SORT_ORDER"
+				description="Project tracking event types"
+				importClass="us.oh.state.epa.stars2.def.ProjectTrackingEventTypeDef">
+				<field column="TRACKING_EVENT_TYPE_CD" label="Code" update="F" />
+				<field column="PROJECT_TYPE_CD" label="Project Type" update="T"
+					pickListTable="PO_PROJECT_TYPE_DEF" pickListColumn="PROJECT_TYPE_CD"
+					pickListDisplay="PROJECT_TYPE_DSC" />
+				<filed column="TRACKING_EVENT_TYPE_DSC" label="Description" update="T" />
+				<field column="ALLOW_MULTIPLE" label="Allow Multiple" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+				<field column="SORT_ORDER" label="Sort Order" update="T" />	
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="PO_TRACKING_EVENT_DEPENDENCIES_DEF"
+				contentType="custom" label="Tracking Event Dependencies" columnPrefix="xx"
+				deprecateModel="flag" create="T" update="T" orderBy="CODE"
+				description="Project tracking event dependencies"
+				importClass="us.oh.state.epa.stars2.def.ProjectTrackingEventDependenciesDef">
+				<field column="CODE" label="Code" update="F" />
+				<field column="EVENT_TYPE_CD" label="Event" update="T"
+					pickListTable="PO_TRACKING_EVENT_TYPE_DEF" pickListColumn="TRACKING_EVENT_TYPE_CD"
+					pickListDisplay="TRACKING_EVENT_TYPE_CD" />
+				<field column="PREDECESSOR_EVENT_TYPE_CD" label="Predecessor Event" update="T"
+					pickListTable="PO_TRACKING_EVENT_TYPE_DEF" pickListColumn="TRACKING_EVENT_TYPE_CD"
+					pickListDisplay="TRACKING_EVENT_TYPE_CD" />
+				<field column="DEPRECATED" label="Inactive" update="T"
+					pickListTable="CM_DEPRECATED_DEF" pickListColumn="DEPRECATED_CD"
+					pickListDisplay="DEPRECATED_DSC" />
+			</definition-set>
+			<definition-set table="PO_DIVISION_DEF"
+				contentType="CD" label="Division" columnPrefix="DIVISION"
+				deprecateModel="flag" create="T" update="T" orderBy="DIVISION_CD"
+				description="WYDEQ Divisions"
+				importClass="us.oh.state.epa.stars2.def.DivisionDef">
+			</definition-set>
+			<definition-set table="PO_AGENCY_DEF"
+				contentType="CD" label="Agency" columnPrefix="AGENCY"
+				deprecateModel="flag" create="T" update="T" orderBy="AGENCY_CD"
+				description="Agencies"
+				importClass="us.oh.state.epa.stars2.def.AgencyDef">
+			</definition-set>
+			<definition-set table="PO_NEPA_CATEGORY_DEF"
+				contentType="CD" label="NEPA Category" columnPrefix="CATEGORY"
+				deprecateModel="flag" create="T" update="T" orderBy="CATEGORY_DSC"
+				description="NEPA Project Categories"
+				importClass="us.oh.state.epa.stars2.def.NEPACateogryTypeDef">
+			</definition-set>
+			<definition-set table="PO_NEPA_LEVEL_DEF"
+				contentType="CD" label="NEPA Level" columnPrefix="LEVEL"
+				deprecateModel="flag" create="T" update="T" orderBy="LEVEL_DSC"
+				description="NEPA Project Levels"
+				importClass="us.oh.state.epa.stars2.def.NEPALevelTypeDef">
+			</definition-set>
+			<definition-set table="PO_PROJECT_STAGE_DEF"
+				contentType="CD" label="Project Stage" columnPrefix="PROJECT_STAGE"
+				deprecateModel="flag" create="T" update="T" orderBy="PROJECT_STAGE_DSC"
+				description="Project Stages (NEPA Only)"
+				importClass="us.oh.state.epa.stars2.def.ProjectStageDef">
+			</definition-set>
+			<definition-set table="PO_MODELING_PROTOCOL_STATUS_DEF"
+				contentType="CD" label="Modeling Protocol Status" columnPrefix="STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="STATUS_DSC"
+				description="Modeling Protocol Statuses (NEPA Only)"
+				importClass="us.oh.state.epa.stars2.def.ModelingProtocolStatusTypeDef">
+			</definition-set>
+			<definition-set table="PO_PROJECT_EI_STATUS_DEF"
+				contentType="CD" label="Project EI Status" columnPrefix="STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="STATUS_CD"
+				description="Project EI Statuses (NEPA Only)"
+				importClass="us.oh.state.epa.stars2.def.ProjectEIStatusTypeDef">
+			</definition-set>
+			<definition-set table="PO_BLM_FIELD_OFFICE_DEF"
+				contentType="CD" label="BLM Field Office" columnPrefix="FIELD_OFFICE"
+				deprecateModel="flag" create="T" update="T" orderBy="FIELD_OFFICE_DSC"
+				description="BLM Filed Offices (NEPA Only)"
+				importClass="us.oh.state.epa.stars2.def.BLMFieldOfficeDef">
+			</definition-set>
+			<definition-set table="PO_NATIONAL_FOREST_DEF"
+				contentType="CD" label="National Forest" columnPrefix="NATIONAL_FOREST"
+				deprecateModel="flag" create="T" update="T" orderBy="NATIONAL_FOREST_DSC"
+				description="National Forests"
+				importClass="us.oh.state.epa.stars2.def.NationalForestDef">
+			</definition-set>
+			<definition-set table="PO_NATIONAL_PARK_DEF"
+				contentType="CD" label="National Park" columnPrefix="NATIONAL_PARK"
+				deprecateModel="flag" create="T" update="T" orderBy="NATIONAL_PARK_DSC"
+				description="National Parks"
+				importClass="us.oh.state.epa.stars2.def.NationalParkDef">
+			</definition-set>
+			<definition-set table="PO_OUTREACH_CATEGORY_DEF"
+				contentType="CD" label="Outreach Category" columnPrefix="OUTREACH_CATEGORY"
+				deprecateModel="flag" create="T" update="T" orderBy="OUTREACH_CATEGORY_DSC"
+				description="Outreach Categories"
+				importClass="us.oh.state.epa.stars2.def.ProjectOutreachCategoryDef">
+			</definition-set>
+			<definition-set table="PO_GRANT_STATUS_DEF"
+				contentType="CD" label="Grant Status" columnPrefix="GRANT_STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="GRANT_STATUS_DSC"
+				description="Outreach Categories"
+				importClass="us.oh.state.epa.stars2.def.ProjectGrantStatusDef">
+			</definition-set>
+			<definition-set table="PO_LETTER_TYPE_DEF"
+				contentType="CD" label="Letter Type" columnPrefix="LETTER_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="LETTER_TYPE_DSC"
+				description="Letter Types"
+				importClass="us.oh.state.epa.stars2.def.ProjectLetterTypeDef">
+			</definition-set>
+			<definition-set table="PO_CONTRACT_STATUS_DEF"
+				contentType="CD" label="Contract Status" columnPrefix="CONTRACT_STATUS"
+				deprecateModel="flag" create="T" update="T" orderBy="CONTRACT_STATUS_DSC"
+				description="Contract status"
+				importClass="us.oh.state.epa.stars2.def.ContractStatusDef">
+			</definition-set>
+			<definition-set table="PO_CONTRACT_TYPE_DEF"
+				contentType="CD" label="Contract Type" columnPrefix="CONTRACT_TYPE"
+				deprecateModel="flag" create="T" update="T" orderBy="CONTRACT_TYPE_DSC"
+				description="Contract types"
+				importClass="us.oh.state.epa.stars2.def.ContractTypeDef">
+			</definition-set>
+			<definition-set table="PO_BUDGET_FUNCTION_DEF"
+				contentType="CD" label="Budget Function" columnPrefix="BUDGET_FUNCTION"
+				deprecateModel="flag" create="T" update="T" orderBy="BUDGET_FUNCTION_DSC"
+				description="Budget functions"
+				importClass="us.oh.state.epa.stars2.def.BudgetFunctionDef">
+			</definition-set>
+		</category>			
+	</projectTracking-definitions>
+</root>

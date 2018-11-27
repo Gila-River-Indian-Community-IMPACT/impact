@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RY: all *Base* will be removed later -->
+<root>
+	<InvoiceSQL>
+		<invoiceColumns>
+			ii.invoice_id, ii.permit_id, ii.emissions_rpt_id,
+			ii.invoice_state_cd, ii.revenue_type_cd, ii.contact_id,
+			ii.revenue_id, ii.creation_dt, ii.orig_amount, ii.document_id,
+			ii.facility_id, ii.due_dt, ii.adjustment_num, ii.last_modified AS invoice_lm
+		</invoiceColumns>
+		<invoiceDetailColumns>
+			iid.invoice_detail_id, iid.invoice_id, iid.description AS
+			invoice_dtl_desc, iid.amount, iid.last_modified AS
+			invoice_dtl_lm
+		</invoiceDetailColumns>
+		<retrieveInvoice>
+			SELECT ${InvoiceSQL.invoiceColumns}, ${InvoiceSQL.invoiceDetailColumns}, ff.facility_nm,
+			       ff.fp_id, ${ContactSQL.contactColumns}, ${InfrastructureSQL.addressColumns},
+ 			       ${DocumentSQL.documentColumns}, ${PermitSQL.permitDocumentColumns} 
+                          FROM %Schema%iv_invoice ii
+			    LEFT OUTER JOIN %Schema%iv_invoice_detail iid
+                              ON (ii.invoice_id = iid.invoice_id)
+                            LEFT OUTER JOIN %Schema%cm_contact cc 
+                              ON (ii.contact_id = cc.contact_id)
+			    LEFT OUTER JOIN %Schema%cm_address ca 
+                              ON (cc.address_id = ca.address_id)
+                            LEFT OUTER JOIN %Schema%dc_document dd 
+                              ON (ii.document_id = dd.document_id) 
+                            LEFT OUTER JOIN %Schema%pt_permit_document ppd 
+                              ON (dd.document_id = ppd.document_id),
+                            %Schema%fp_facility ff
+			  WHERE ii.facility_id = ff.facility_id AND ff.version_id = -1
+		</retrieveInvoice>		
+		<createInvoice>
+			INSERT INTO %Schema%iv_invoice (invoice_id, permit_id,
+			emissions_rpt_id, invoice_state_cd, revenue_id,
+			revenue_type_cd, creation_dt, orig_amount, facility_id,
+			due_dt, adjustment_num) VALUES(?,?,?,?,?,?,?,?,?,?,?)
+		</createInvoice>
+		<modifyInvoice>
+			UPDATE %Schema%iv_invoice SET orig_amount = ?,
+			invoice_state_cd = ?, revenue_id = ?, document_id = ?, due_dt = ?,
+			adjustment_num = ?, last_modified = ? WHERE invoice_id = ? AND last_modified = ?
+		</modifyInvoice>
+		<modifyInvoiceDetail>
+			UPDATE %Schema%iv_invoice_detail SET amount = ?,
+			last_modified = ? WHERE invoice_detail_id = ? AND last_modified = ?
+		</modifyInvoiceDetail>
+		<createInvoiceDetail>
+			INSERT INTO %Schema%iv_invoice_detail (invoice_detail_id,
+			invoice_id, description, amount) VALUES(?,?,?,?)
+		</createInvoiceDetail>
+		<addInvoiceNote>
+			INSERT INTO %Schema%iv_invoice_note_xref (invoice_id, note_id) 
+			VALUES(?,?)
+		</addInvoiceNote>
+		<retrieveInvoiceNotes>
+			SELECT ${InfrastructureSQL.noteColumns}, ivx.invoice_id 
+  			FROM %Schema%iv_invoice_note_xref ivx, %Schema%cm_note cn
+			WHERE ivx.invoice_id = ?
+			AND ivx.note_id = cn.note_id			
+			ORDER BY note_id DESC
+		</retrieveInvoiceNotes>
+		<searchInvoices>
+			SELECT ${InvoiceSQL.invoiceColumns}, ff.fp_id,
+			ff.facility_nm, ff.do_laa_cd, (SELECT iisd.invoice_state_dsc
+			FROM %Schema%iv_invoice_state_def iisd WHERE
+			iisd.invoice_state_cd = ii.invoice_state_cd) AS
+			invoice_state_dsc, irtd.emissions_rpt_cd,
+			${DocumentSQL.documentColumns}, ${PermitSQL.permitDocumentColumns}
+			FROM %Schema%iv_invoice ii
+			LEFT OUTER JOIN %Schema%dc_document dd 
+                              ON (ii.document_id = dd.document_id) 
+            LEFT OUTER JOIN %Schema%pt_permit_document ppd 
+                              ON (dd.document_id = ppd.document_id),
+            %Schema%fp_facility ff,
+			%Schema%iv_revenue_type_def irtd 
+			
+			WHERE ii.facility_id =
+			ff.facility_id AND ff.version_id = -1
+			AND ii.revenue_type_cd = irtd.revenue_type_cd
+		</searchInvoices>
+		<modifyInvoiceDocument>
+			UPDATE %Schema%iv_invoice SET document_id = ?, last_modified = ? 
+			WHERE invoice_id = ? AND last_modified = ?
+		</modifyInvoiceDocument>
+		<retrieveOtherInvoices>
+			select invoice_id, invoice_state_cd, orig_amount, creation_dt, permit_id, emissions_rpt_id,
+			FROM %Schema%iv_invoice 
+			WHERE revenue_id = ? AND invoice_id	&lt;&gt; ?
+		</retrieveOtherInvoices>
+		<retrieveRevenueTypes>
+			SELECT revenue_type_cd AS code, revenue_type_dsc AS description,
+			deprecated, emissions_rpt_cd, year,
+			last_modified FROM %Schema%iv_revenue_type_def
+		</retrieveRevenueTypes>
+		<retrieveInvoiceByPermitID>
+			SELECT ${InvoiceSQL.invoiceColumns},
+			${InvoiceSQL.invoiceDetailColumns}, ff.facility_nm,
+			ff.fp_id, ${ContactSQL.contactColumns},
+			${InfrastructureSQL.addressColumns}, ${PermitSQL.permitDocumentColumns},
+			${DocumentSQL.documentColumns} 
+            FROM %Schema%iv_invoice ii
+            INNER JOIN %Schema%fp_facility ff ON (ii.facility_id = ff.facility_id AND ff.version_id = -1)
+			LEFT OUTER JOIN %Schema%iv_invoice_detail iid ON (ii.invoice_id = iid.invoice_id) 
+            LEFT OUTER JOIN %Schema%cm_contact cc ON (ii.contact_id = cc.contact_id)
+			LEFT OUTER JOIN %Schema%cm_address ca ON (cc.address_id = ca.address_id) 
+            LEFT OUTER JOIN %Schema%pt_permit_document ppd ON (ii.document_id = ppd.document_id) 
+            LEFT OUTER JOIN %Schema%dc_document dd ON (ppd.document_id = dd.document_id) 
+			WHERE 1 = 1
+		</retrieveInvoiceByPermitID>
+	</InvoiceSQL>
+</root>

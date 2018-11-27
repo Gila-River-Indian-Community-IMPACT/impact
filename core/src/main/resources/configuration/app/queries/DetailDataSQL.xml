@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <DetailDataSQL>
+  <dataDetailColumns>dd.data_detail_id, dd.data_detail_dsc, dd.data_detail_lbl,
+      dd.unit_cd, dd.enum_cd, dd.data_type_id, dd.default_val, dd.min_val, 
+      dd.max_val, dd.read_only, dd.required, dd.visible, dd.format_mask, 
+      dt.data_type_nm, ddud.unit_lbl, dd.last_modified
+  </dataDetailColumns>
+  <enumColumns>ed.enum_dsc, edd.enum_detail_id, edd.enum_value, 
+  edd.last_modified AS edd_lm 
+  </enumColumns>
+  <dataTypeColumns>d.data_type_id, d.data_type_nm, d.data_type_panel, 
+  d.last_modified
+  </dataTypeColumns>
+    <retrieveAllDataTypes>
+      SELECT ${DetailDataSQL.dataTypeColumns} 
+      FROM %Schema%dd_data_type_def d
+      WHERE d.data_type_nm &lt;&gt; 'None'
+      ORDER BY data_type_nm
+    </retrieveAllDataTypes>
+    <retrieveDataTypeDef>
+      SELECT ${DetailDataSQL.dataTypeColumns}
+      FROM %Schema%dd_data_type_def d 
+      WHERE d.data_type_id = ?
+    </retrieveDataTypeDef>
+    <retrieveDataDetail> SELECT ${DetailDataSQL.dataDetailColumns},
+      ${DetailDataSQL.enumColumns} 
+      FROM %Schema%dd_data_type_def dt, %Schema%dd_data_detail dd 
+      LEFT OUTER JOIN %Schema%DD_UNIT_DEF ddud on ( dd.UNIT_CD = ddud.UNIT_CD) 
+      LEFT OUTER JOIN %Schema%dd_enum_def ed ON (dd.enum_cd = ed.enum_cd) 
+      LEFT OUTER JOIN %Schema%dd_enum_detail_def edd ON (dd.enum_cd = edd.enum_cd) 
+      WHERE dd.data_detail_id = ? 
+      AND dd.data_type_id = dt.data_type_id
+      </retrieveDataDetail>
+    <retrieveDataDetailForWorkFlow> SELECT ${DetailDataSQL.dataDetailColumns},
+      pd.data_val, dt.data_type_nm,
+      ${DetailDataSQL.enumColumns} FROM %Schema%wf_process_data pd,%Schema% dd_data_type_def dt,
+      %Schema%dd_data_detail dd LEFT OUTER JOIN %Schema%DD_UNIT_DEF ddud on ( dd.UNIT_CD = ddud.UNIT_CD)
+      LEFT OUTER JOIN %Schema%dd_enum_def ed ON (dd.enum_cd = ed.enum_cd) LEFT OUTER JOIN
+      %Schema%dd_enum_detail_def edd ON (dd.enum_cd = edd.enum_cd) WHERE pd.process_id=? AND
+      pd.data_template_id=? AND pd.data_detail_id=dd.data_detail_id AND
+      dd.data_type_id = dt.data_type_id AND pd.data_val=edd.enum_value
+      </retrieveDataDetailForWorkFlow>
+    <retrieveDataDetails> SELECT ${DetailDataSQL.dataDetailColumns} FROM
+      %Schema%dd_data_type_def dt, %Schema%dd_data_detail dd LEFT OUTER JOIN %Schema%DD_UNIT_DEF ddud on (
+      dd.UNIT_CD = ddud.UNIT_CD) WHERE dd.data_type_id = dt.data_type_id
+      </retrieveDataDetails>
+    <retrieveUnitDefs>
+      SELECT unit_cd AS code, unit_dsc AS description, last_modified
+      FROM %Schema%dd_unit_def
+    </retrieveUnitDefs>
+    <retrieveUnitDef>
+      SELECT unit_cd AS code, unit_dsc AS description, last_modified
+      FROM %Schema%dd_unit_def
+      WHERE unit_cd = ?
+    </retrieveUnitDef>
+    <createDataDetail>INSERT INTO %Schema%dd_data_detail 
+    (data_detail_id, data_detail_dsc, data_detail_lbl, unit_cd, enum_cd, 
+    data_type_id, default_val, min_val, max_val, read_only, required, 
+    visible, format_mask) 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)</createDataDetail>
+    <createDataTypeDef>INSERT INTO dd_data_type_def 
+    (data_type_id, data_type_nm) 
+    VALUES (?,?)</createDataTypeDef>
+    <modifyDataDetail>
+      UPDATE %Schema%dd_data_detail SET data_detail_lbl = ?, data_detail_dsc = ?, 
+      unit_cd = ?, enum_cd = ?, data_type_id = ?, default_val = ?, 
+      min_val = ?, max_val = ?, read_only = ?, required = ?, visible = ?, 
+      format_mask = ?, 
+      last_modified = ?
+      WHERE data_detail_id = ?
+      AND last_modified = ?
+    </modifyDataDetail>
+    <modifyDataTypeDef>
+      UPDATE %Schema%dd_data_type_def SET data_type_nm=?, 
+      last_modified = ? 
+      WHERE data_type_id = ?
+      AND last_modified = ?
+    </modifyDataTypeDef>
+    <removeDataTypeDef>DELETE FROM %Schema%dd_data_type_def 
+    WHERE data_type_id = ?</removeDataTypeDef>
+    <removeDataDetail>DELETE FROM dd_data_detail 
+    WHERE data_detail_id = ?</removeDataDetail>
+    <retrieveAllEnumDefs>SELECT enum_cd AS code, enum_dsc AS description, 
+    DEPRECATED, last_modified 
+    FROM %Schema%DD_Enum_Def 
+    ORDER BY enum_cd</retrieveAllEnumDefs>
+    <retrieveEnumDetails>
+      SELECT edd.enum_detail_id, ed.enum_cd, edd.enum_label, edd.enum_value, 
+      ed.enum_dsc, edd.last_modified 
+      FROM %Schema%DD_Enum_Def ed LEFT OUTER JOIN %Schema%DD_Enum_Detail_Def edd 
+      ON ed.enum_cd = edd.enum_cd 
+      WHERE ed.enum_cd=? 
+      ORDER BY edd.enum_detail_id
+    </retrieveEnumDetails>
+    <retrieveEnumDetailById>SELECT edd.enum_detail_id, ed.enum_cd, 
+    edd.enum_label, edd.enum_value, ed.enum_dsc, edd.last_modified 
+    FROM %Schema%DD_Enum_Def ed LEFT OUTER JOIN %Schema%DD_Enum_Detail_Def edd 
+    ON ed.enum_cd = edd.enum_cd 
+    WHERE edd.enum_detail_id=?</retrieveEnumDetailById>
+    <retrieveAllEnumDetails>
+      SELECT edd.enum_detail_id, ed.enum_cd, edd.enum_label, edd.enum_value, 
+      ed.enum_dsc, edd.last_modified
+      FROM %Schema%DD_Enum_Def ed LEFT OUTER JOIN %Schema%DD_Enum_Detail_Def edd 
+      ON ed.enum_cd = edd.enum_cd 
+      ORDER BY ed.enum_cd, edd.enum_detail_id
+    </retrieveAllEnumDetails>
+    <createEnumDetail>INSERT INTO %Schema%DD_Enum_Detail_Def 
+    (enum_detail_id, enum_cd, enum_label, enum_value) 
+    VALUES (?, ?, ?, ?)</createEnumDetail>
+    <createEnumDef>INSERT INTO %Schema%DD_Enum_Def 
+    (enum_cd, enum_dsc) 
+    VALUES (?, ?)</createEnumDef>
+    <modifyEnumDetail>UPDATE %Schema%DD_Enum_Detail_Def 
+      SET enum_label = ?, enum_value = ?, last_modified = ? 
+       WHERE enum_detail_id = ?
+    </modifyEnumDetail>
+    <removeEnumDetailsForCd>
+      DELETE FROM %Schema%DD_Enum_Detail_Def WHERE enum_cd = ?
+    </removeEnumDetailsForCd>
+    <addEquipmentDetailData>
+	  INSERT INTO %Schema%fp_equipment_data_xref (equipment_type_cd, data_detail_id)
+	  VALUES (?,?)
+    </addEquipmentDetailData>	
+  </DetailDataSQL>
+</root>

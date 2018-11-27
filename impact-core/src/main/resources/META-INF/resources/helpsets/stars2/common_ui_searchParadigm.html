@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+<title>Help: Common User Interface Elements --&gt; Common Search Paradigm</title><link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+<link rel="STYLESHEET" type="text/css" href="stars2.css">
+
+<script language="JavaScript" type="text/javascript" src="browvers.js"></script></head>
+
+
+<body>
+
+<noscript>Script to detect browser version</noscript>
+<a name="top"></a>
+<div class="zz-skip-header"><a href="#start">Skip navigation header</a></div>
+
+<table summary="Document information and navigation controls" border="0" width="97%">
+	<tbody><tr>
+    <td class="zz-nav-header-cell" width="97%">
+    <strong>Common User Interface Elements</strong></td>
+	  <td class="zz-nav-button-cell"><a class="zz-nav-button-link" href="common_ui_menuStructure.html"><img src="images/leftnav.gif" alt="Go to previous page" border="0" height="24" width="24"><br>Previous Topic</a></td>
+	<td class="zz-nav-button-cell"><a class="zz-nav-button-link" href="common_ui_datagrids.html"><img src="images/rightnav.gif" alt="Go to next page" border="0" height="24" width="24"><br>Next Topic</a></td>
+	</tr>
+</tbody></table>
+
+<a name="start"></a>
+<h1>Common Search Paradigm</h1>
+<font color="#ff0000"><b><i></i></b></font>
+<h2> Overview </h2>
+<p>Navigation within most tabs in the IMPACT System begins at a Search screen. The screen allows    
+you to access a set of objects based on criteria you specify in the Search Criteria    
+region of the screen.  Different search criteria apply to different searches according to     
+the tab you are in, and     
+therefore the objects you will be searching.   The system provides operations buttons that allow you to     
+execute your search when you are ready.  An executed search returns a table of data    
+known as a <a href="common_ui_datagrids.html">datagrid</a>.
+</p><p>This help topic contains the following sections:
+</p><ul vspace="">
+<li><a href="#criteria_basics">Search Criteria Basics</a></li>
+<li><a href="#wildcards">Using Wildcards</a></li>
+<li><a href="#buttons">Search Button Operations</a></li>
+<li><a href="#results">Search Results</a></li>
+<li><a href="#rel_topics">Related Help Topics</a></li>
+</ul>
+<p>Some of the information discussed here, in particular input fields, also apply 
+elsewhere in the system.  Therefore, 
+ they are   
+covered in greater depth in other help topics within the  
+<a href="common_ui_elements.html">Common User Interface Elements</a> chapter of 
+On-line Help. </p>
+<p><a href="#top"><br>Back to Top</a></p>
+
+<!-- ********** 'SEARCH CRITERIA BASICS' BOOKMARK************ -->
+<h2><a name="criteria_basics"></a><br>Search Criteria Basics</h2>
+<p>Most often, you specify the search criteria that define the set of objects you are looking for 
+in a Search Criteria window that the system presents when you select 
+the tab for any searchable objects, such as <font font-face="Courier New">Facilitites</font> 
+or <font font-face="Courier New">Invoices</font> (Figure 1).&nbsp;
+Some search criteria fields have default values; that is,
+when the window first appears, some of the fields have values
+already in them.
+</p><div align="center">
+<img src="images/search_criteria.jpg" alt="Sample Search Criteria window">
+<br><br>
+<b>Figure 1: Example Search Criteria Window</b>
+</div>
+<p>You can, of course, change any of the default
+values that you want.  
+You may complete none, one, several or all input fields for a particular search.   
+If you leave 
+any criterion input field blank, the system assumes you want items that match <i>any</i>   
+value for   
+that criterion.  
+Searches apply  
+the criteria you specify cumulatively, so that if you specify, for example a  
+<font font-face="Courier New">County</font> and an <font font-face="Courier New">Operating   
+Status</font> for a Facility Search, the search will return only the <font face="Courier New">Operating</font>  
+facilities within  
+the specified county.  
+</p><p>There are several types of
+input fields that may appear in a Search Criteria window.  
+Each possible input field type is described in great detail on
+the <a href="common_ui_inputFields.html">Input Fields</a>
+Help page.  For searches, you will most frequently encounter
+the types listed below:
+</p><ul>
+<li><b>Text input fields</b> - A text input field consists of a label, identifying the information that the system 
+expects you to type in, and a field into which you can type.  
+Certain fields such as <font face="Courier New">Facility ID</font> and <font face="Courier New">
+Facility Name</font> shown above support the use of wildcard
+characters within the input you type. 
+(See <a href="wildcards.html">Using Wildcards)</a> 
+</li>
+<li><b>Fields offering pick lists</b> - you select one value from the list  
+list of the choices you have for values in that field.  You access the list of choices by  
+clicking <img src="images/icon_dropDownArrow.jpg" alt="Drop Down Arrow"> at the end of the input field.&nbsp; 
+</li>
+<li><b>Date fields</b> - you can type in a date string in
+nearly any format or select the date you want from the calendar 
+that pops up when you select the icon <img src="images/calendar.jpg" alt="calendar icon"> 
+that the system offers at the end of
+the input field.
+</li></ul> 
+<p><a href="#top">Back to Top</a></p>
+
+<!-- ********** 'WILDCARDS' BOOKMARK************ -->
+<h2><a name="wildcards"><br></a>Using wildcards</h2>
+<p>
+The system supports the use of two wildcard characters, asterisk 
+(<img src="images/required.gif" alt="asterisk">)
+and percent sign (<b>%</b>).
+You may use either of these characters at any location within a
+string in any text input field that supports them. Either wildcard
+character, at any point in a string you type, represents zero or
+more other characters, no matter what those characters are.  All Facility ID
+and Facility Name fields in the system, as well as select other fields,
+support this functionality.  For example,
+in a Facility Name field,
+</p><p>Uni*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+matches 272 facilities,
+including&nbsp;&nbsp;United Dairy Farmers, Union Tools Inc, University of Dayton
+Unicoy Alloys and Metal&nbsp; 
+</p><p>*Metal*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matches 150 facilities,
+including&nbsp;&nbsp;Unicoy Alloys and Metal, National Metal Finishing, 
+Metal Coatings Intl, Metaldyne
+</p><p>U*Metal% &nbsp;&nbsp;&nbsp; matches 6 facilities, including Unicoy Alloys and Metal,  
+Universal Metal Products, U S Metalcraft, USG Interiors - American Metals Corp. 
+</p><p>Unico* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matches 2 facilities, 2 locations of Unico Alloys and Metal
+</p><p>In a Facility ID field,
+</p><p>*01*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+matches 5919 facilities, 
+including facilities with IDs of 0120001226, 0141000234, 02100090560&nbsp;  
+</p><p>01*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;matches 1866 facilities, 
+including facilities with IDs of 0120001226, 0120000222, 0125040590
+</p><p>
+</p><p>012%6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+matches 140 facilities, including facilities with IDs of 0120001226, 0121000126, 0121000226, 01250040026</p>
+<p>012%00*26&nbsp;&nbsp;&nbsp;matches 12 facilities,  
+including facilities with IDs of 0121000126, 0121000226 
+ 
+</p><p>
+Use of wildcards does not, of course, preclude specifying other
+criteria for your search.  For example if you specify a
+Facility Name and/or Facility ID that contains wildcards,
+and you also select 'Franklin' for the County field,
+then your search will return all the facilities that match
+your wildcarded criteria that are in Franklin County.  As 
+you can see, wildcards give you considerable
+flexibility in the way you construct your search criteria, and
+thus control the set of records that your search returns.</p>
+
+<p><a href="#top"><br>Back to Top</a></p>
+<!-- ********** 'BUTTON OPERATIONS' BOOKMARK************ -->
+<h2><a name="buttons"><br></a>Search Button Operations</h2>
+Every search window includes two buttons,
+ <img src="images/btn_submit.jpg" alt="Submit button"> and
+<img src="images/btn_reset.jpg" alt="Reset button">.
+<p>
+After completing all the search criteria you choose to specify, click 
+<img src="images/btn_submit.jpg" alt="Submit button">, which
+instructs the system to execute your search;
+it applies 
+criteria you specify cumulatively.  That is, 
+the system only returns items that match <i>all</i> the values you 
+specify.  
+
+</p><p>You can modify your search criteria and re-execute
+your search, which you will often want to do to
+narrow the search to return fewer records  
+and/or to conduct a search on a different
+set of criteria.
+You can, of course change just one or two criteria before
+you re-execute the search. (Click.
+<img src="images/btn_submit.jpg" alt="Submit button">
+after the criteria you want to change.)
+Somestimes, however, you may want to 
+start your search all over again
+with a completely new set of criteria.  Click 
+<img src="images/btn_reset.jpg" alt="Reset button"> to clear
+all the values you have entered and return all the
+search criteria input fields to the default criteria
+values.
+</p><p>
+<!-- ********** 'Search Results' BOOKMARK************ -->
+</p><h2><a name="results"><br></a>Search Results</h2>
+No matter what you are searching for (Facilities, Permits,
+Emissions Inventories, etc.), when you execute a search, the
+system returns a table, each row of which represents one
+of the objects.  The table is also known as a datagrid.
+Figure 2 illustrates the datagrid the system returns when you
+search for the facilities in Franklin County, serviced by the
+Central District Office which have names beginning with 'A'.
+<div align="center">
+<img src="images/datagrid.gif" alt="Sample Search Results: Facilities">
+<br><br>
+<b>Figure 2: Example Search Results Datagrid</b>
+</div>
+
+Datagrids provide you with significant functionality.  They can
+help you locate detailed data about any one object listed in
+the table, and more.  The <a href="common_ui_datagrid.jpg">Datagrid</a><a> Help 
+page provides more information on the capabilities that datagrids give you. 
+
+</a><p><a href="#top"><br>Back to Top</a></p>
+<!-- ********** 'Related Topics' BOOKMARK************ -->
+<h2><a name="rel_topics"><br></a>Related Help Topics</h2>
+<ul>
+<li><a href="common_ui_elements.html"></a>Common User Interface Elements</li>
+  <li><a href="common_ui_inputFields.html">Input Fields</a></li>
+  <li><a href="common_ui_datagrids.html">Datagrids</a></li>
+</ul>
+<p class="horizontal-rule">&nbsp;</p>
+<div class="zz-nav-footer-menu">
+<a href="common_ui_menuStructure.html">Previous</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="common_ui_datagrids.html">Next</a>
+</div>
+
+<p class="zz-legal-notice"><a class="zz-legal-notice-link" href="#">Copyright © 
+2008 Ohio EPA Division of Air Pollution Control.</a> All rights reserved.</p>
+</body></html>

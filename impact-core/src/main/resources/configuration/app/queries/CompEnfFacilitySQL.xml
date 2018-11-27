@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<CompEnfFacilitySQL>
+		<FacilityHistColumns>
+			fh.facility_hist_id, fh.air_program_comp_cd, fh.sip_comp_cd, 
+			fh.mact_ind, fh.mact_comp_cd, fh.neshaps_ind, fh.nsps_ind, fh.psd_ind, 
+			fh.nsr_nonattainment_ind, fh.start_date, fh.end_date, air_program_cd,
+			fh.last_modified as fac_hist_lm
+		</FacilityHistColumns>
+		
+		<retrieveFacilityHistory>
+			SELECT ${CompEnfFacilitySQL.FacilityHistColumns}
+			FROM %Schema%ce_facility_hist fh
+			WHERE fh.facility_hist_id = ?
+		</retrieveFacilityHistory>
+		
+		<createFacilityHistory>
+			INSERT INTO %Schema%ce_facility_hist(facility_hist_id, air_program_cd, air_program_comp_cd, 
+				sip_comp_cd, mact_ind, mact_comp_cd, neshaps_ind, nsps_ind, psd_ind, 
+				nsr_nonattainment_ind, start_date, end_date)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
+		</createFacilityHistory>
+		
+		<modifyFacilityHistory>
+			UPDATE %Schema%ce_facility_hist 
+			SET air_program_cd = ?, air_program_comp_cd = ?, 
+				sip_comp_cd = ?, mact_ind = ?, mact_comp_cd = ?, neshaps_ind = ?, nsps_ind = ?, psd_ind = ?, 
+				nsr_nonattainment_ind = ?, start_date = ?, end_date = ?, last_modified = ?
+			WHERE facility_hist_id = ? AND last_modified = ?
+		</modifyFacilityHistory>
+		
+		<deleteFacilityHistory>
+			DELETE FROM %Schema%ce_facility_hist 
+			WHERE facility_hist_id = ?
+		</deleteFacilityHistory>
+		
+		<retrieveFacHistNeshaps>
+			SELECT facility_hist_id, neshaps_subpart_cd as pollutant_cd, 
+				neshaps_comp_cd as comp_cd, last_modified
+			FROM %Schema%ce_facility_neshaps_xref
+			WHERE facility_hist_id = ?
+		</retrieveFacHistNeshaps>
+		
+		<retrieveFacHistNsps>
+			SELECT facility_hist_id, pollutant_cd, 
+				neshaps_comp_cd as comp_cd, last_modified
+			FROM %Schema%ce_facility_nsps_subparts
+			WHERE facility_hist_id = ?
+		</retrieveFacHistNsps>
+		
+		<retrieveFacHistNsr>
+			SELECT facility_hist_id, pollutant_cd, 
+				neshaps_comp_cd as comp_cd, last_modified
+			FROM %Schema%ce_facility_nsr_pollutants
+			WHERE facility_hist_id = ?
+		</retrieveFacHistNsr>
+		
+		<retrieveFacHistPsd>
+			SELECT facility_hist_id, pollutant_cd, 
+				neshaps_comp_cd as comp_cd, last_modified
+			FROM %Schema%ce_facility_psd_pollutants
+			WHERE facility_hist_id = ?
+		</retrieveFacHistPsd>
+		
+		<createFacHistNeshaps>
+			INSERT INTO %Schema%ce_facility_neshaps_xref (facility_hist_id, neshaps_subpart_cd,
+			 	neshaps_comp_cd)
+			VALUES (?,?,?)
+		</createFacHistNeshaps>
+		
+		<createFacHistNsps>
+			INSERT INTO %Schema%ce_facility_nsps_subparts (facility_hist_id, pollutant_cd, 
+				neshaps_comp_cd)
+			VALUES (?,?,?)
+		</createFacHistNsps>
+		
+		<createFacHistNsr>
+			INSERT INTO %Schema%ce_facility_nsr_pollutants (facility_hist_id, pollutant_cd, 
+				neshaps_comp_cd)
+			VALUES (?,?,?)
+		</createFacHistNsr>
+		
+		<createFacHistPsd>
+			INSERT INTO %Schema%ce_facility_psd_pollutants (facility_hist_id, pollutant_cd, 
+				neshaps_comp_cd)
+			VALUES (?,?,?)
+		</createFacHistPsd>
+		
+		<modifyFacHistNeshaps>
+			UPDATE %Schema%ce_facility_neshaps_xref
+			SET neshaps_subpart_cd = ?, neshaps_comp_cd = ?, last_modified = ?
+			WHERE facility_hist_id = ? AND last_modified = ?
+		</modifyFacHistNeshaps>
+		
+		<modifyFacHistNsps>
+			UPDATE %Schema%ce_facility_nsps_subparts
+			SET pollutant_cd = ?, neshaps_comp_cd = ?, last_modified = ?
+			WHERE facility_hist_id = ? AND last_modified = ?
+		</modifyFacHistNsps>
+		
+		<modifyFacHistNsr>
+			UPDATE %Schema%ce_facility_nsr_pollutants
+			SET pollutant_cd = ?, neshaps_comp_cd = ?, last_modified = ?
+			WHERE facility_hist_id = ? AND last_modified = ?
+		</modifyFacHistNsr>
+		
+		<modifyFacHistPsd>
+			UPDATE %Schema%ce_facility_psd_pollutants
+			SET pollutant_cd = ?, neshaps_comp_cd = ?, last_modified = ?
+			WHERE facility_hist_id = ? AND last_modified = ?
+		</modifyFacHistPsd>
+		
+		<deleteFacHistNeshaps>
+			DELETE FROM %Schema%ce_facility_neshaps_xref
+			WHERE facility_hist_id = ?
+		</deleteFacHistNeshaps>
+		
+		<deleteFacHistNsps>
+			DELETE FROM %Schema%ce_facility_nsps_subparts
+			WHERE facility_hist_id = ?
+		</deleteFacHistNsps>
+		
+		<deleteFacHistNsr>
+			DELETE FROM %Schema%ce_facility_nsr_pollutants
+			WHERE facility_hist_id = ?
+		</deleteFacHistNsr>
+		
+		<deleteFacHistPsd>
+			DELETE FROM %Schema%ce_facility_psd_pollutants
+			WHERE facility_hist_id = ?
+		</deleteFacHistPsd>
+		
+	</CompEnfFacilitySQL>
+</root>

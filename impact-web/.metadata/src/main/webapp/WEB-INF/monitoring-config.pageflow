@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14376774637462" configfile="/impact-web/src/main/webapp/WEB-INF/monitoring-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1233" id="pf14376778215303" outlinks="pf14411306037512 pf14411306037513 pf14411306037514 pf14411306037515 pf14411306037516 pf14411306037517 pf14411306037518 pf14411306037519 pf144113060375110 pf14424380018360 pf14425114095810" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorGroup" x="554" y="764" id="pf143767782153012" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14406041667821" inlinks="pf14411306037512 pf144113060375111 pf144113060375112" path="/monitoring/monitorGroup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorSite" x="554" y="1937" id="pf143767782153019" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf14426015950592" inlinks="pf14406041667821 pf14411306037516 pf144113060375113" path="/monitoring/monitorSite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorSiteSearch" x="338" y="1735" id="pf143767782153021" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf143767782153022 pf143767782153023 pf144113060375113 pf144113060375112" inlinks="pf143767782153022 pf143767782153023 pf14411306037517" path="/monitoring/monitorSiteSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorGroupSearch" id="pf144113060375114" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf144113060375115 pf144113060375116 pf144113060375111" inlinks="pf14411306037513 pf144113060375115 pf144113060375116" path="/monitoring/monitorGroupSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/createMonitorGroup" id="pf144113060375117" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14411306037514" path="/monitoring/createMonitorGroup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/deleteMonitorGroup" id="pf144113060375118" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf14411306037515" path="/monitoring/deleteMonitorGroup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/deleteMonitorSite" id="pf144113060375119" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf14411306037518" path="/monitoring/deleteMonitorSite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/deleteMonitor" id="pf144113060375120" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf14411306037519" path="/monitoring/deleteMonitor.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/createMonitorSite" id="pf144113060375121" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf144113060375110" path="/monitoring/createMonitorSite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/createMonitor" id="pf14424380018361" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf14424380018360" path="/monitoring/createMonitor.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitor" id="pf14425114095811" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf14425114095810 pf14426015950592" path="/monitoring/monitor.jsp"/>
+  <links id="pf143767782153022" target="pf143767782153021" source="pf143767782153021" outcome="Success" fromaction="#{monitoring.monitorSiteSearch.submitSearch}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf143767782153023" target="pf143767782153021" source="pf143767782153021" outcome="Success" redirect="true" fromaction="#{monitoring.monitorSiteSearch.reset}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf14406041667821" target="pf143767782153019" source="pf143767782153012" outcome="Success" fromaction="#{monitorSiteDetail.submitFromJsp}"/>
+  <links id="pf14411306037512" target="pf143767782153012" source="pf14376778215303" outcome="monitoring.monitorGroupDetail" redirect="true"/>
+  <links id="pf14411306037513" target="pf144113060375114" source="pf14376778215303" outcome="monitoring.monitorGroupSearch" redirect="true"/>
+  <links id="pf14411306037514" target="pf144113060375117" source="pf14376778215303" outcome="monitoring.createMonitorGroup" redirect="true"/>
+  <links id="pf144113060375115" target="pf144113060375114" source="pf144113060375114" outcome="Success" fromaction="#{monitoring.monitorGroupSearch.submitSearch}"/>
+  <links id="pf144113060375116" target="pf144113060375114" source="pf144113060375114" outcome="Success" redirect="true" fromaction="#{monitoring.monitorGroupSearch.reset}"/>
+  <links id="pf14411306037515" target="pf144113060375118" source="pf14376778215303" outcome="dialog:deleteMonitorGroup"/>
+  <links id="pf14411306037516" target="pf143767782153019" source="pf14376778215303" outcome="monitoring.monitorSiteDetail" redirect="true"/>
+  <links id="pf14411306037517" target="pf143767782153021" source="pf14376778215303" outcome="monitoring.monitorSiteSearch" redirect="true"/>
+  <links id="pf14411306037518" target="pf144113060375119" source="pf14376778215303" outcome="dialog:deleteMonitorSite"/>
+  <links id="pf14411306037519" target="pf144113060375120" source="pf14376778215303" outcome="dialog:deleteMonitor"/>
+  <links id="pf144113060375110" target="pf144113060375121" source="pf14376778215303" outcome="dialog:createMonitorSite"/>
+  <links id="pf144113060375111" target="pf143767782153012" source="pf144113060375114" outcome="Success" fromaction="#{monitorGroupDetail.submitFromJsp}"/>
+  <links id="pf144113060375113" target="pf143767782153019" source="pf143767782153021" outcome="Success" fromaction="#{monitorSiteDetail.submitFromJsp}"/>
+  <links id="pf144113060375112" target="pf143767782153012" source="pf143767782153021" outcome="Success" fromaction="#{monitorGroupDetail.submitFromJsp}"/>
+  <links id="pf14424380018360" target="pf14424380018361" source="pf14376778215303" outcome="dialog:createMonitor"/>
+  <links id="pf14425114095810" target="pf14425114095811" source="pf14376778215303" outcome="monitoring.monitorDetail" redirect="true"/>
+  <links id="pf14426015950592" target="pf14425114095811" source="pf143767782153019" outcome="Success" fromaction="#{monitorDetail.submitFromJsp}"/>
+</pageflow:Pageflow>

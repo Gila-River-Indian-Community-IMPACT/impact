@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf1368562863329160" configfile="/impact-web/src/main/webapp/WEB-INF/mgmt_reports-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/mgmtReports" x="338" y="178" id="pf1368562935772161" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf1368562935772162 pf1368562935772163 pf1368562935772164 pf1368562935772165 pf1368562935772166 pf1368562935772167" inlinks="pf1368562935772162 pf1368562935772163 pf1368562935772164 pf1368562935772165 pf1368562935772166 pf1368562935772167 pf1368562935772168" path="/mgmt/mgmtReports.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="4786" id="pf1368562935772169" outlinks="pf1368562935772168 pf1368562935773170 pf1368562935773171 pf1368562935773172 pf1368562935773173 pf1368562935773174 pf1368562935773175 pf1368562935773176 pf1368562935773177 pf1368562935773178 pf1368562935773179 pf1368562935773180 pf1368562935773181 pf1368562935773182 pf1368562935773183 pf1368562935773184 pf1368562935773185 pf1368562935773186 pf1368562935773187 pf1368562935773188 pf1368562935773189 pf1368562935773190 pf154101265387434 pf154101265387435 pf154101265387436" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/customReports" x="338" y="562" id="pf1368562935773191" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf1368562935773170" path="/mgmt/customReports.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/monthlyTotals" x="338" y="946" id="pf1368562935773192" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf1368562935773171" path="/mgmt/monthlyTotals.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/issuanceReport" x="338" y="1330" id="pf1368562935773193" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf1368562935773194" inlinks="pf1368562935773172 pf1368562935773194" path="/mgmt/issuanceReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/permitExpirationReport" x="338" y="1714" id="pf1368562935773195" referenceLink="//@navigationRule.1/@navigationCase.4/@toViewId|" inlinks="pf1368562935773173" path="/mgmt/permitExpirationReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/workloadReport" x="338" y="2098" id="pf1368562935773196" referenceLink="//@navigationRule.1/@navigationCase.5/@toViewId|" inlinks="pf1368562935773174" path="/mgmt/workloadReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/permitSOP" x="338" y="2482" id="pf1368562935773197" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf1368562935773198" inlinks="pf1368562935773175 pf1368562935773198" path="/mgmt/permitSOP.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/latePermits" x="338" y="2866" id="pf1368562935773199" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" outlinks="pf1368562935773200 pf1368562935773201 pf1368562935773202" inlinks="pf1368562935773176 pf1368562935773200 pf1368562935773201 pf1368562935773202" path="/mgmt/latePermits.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/preliminaryCompleted" x="338" y="3250" id="pf1368562935773203" referenceLink="//@navigationRule.1/@navigationCase.8/@toViewId|" inlinks="pf1368562935773177" path="/mgmt/preliminaryCompleted.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/issuedMetrics" x="338" y="3634" id="pf1368562935773204" referenceLink="//@navigationRule.1/@navigationCase.9/@toViewId|" inlinks="pf1368562935773178" path="/mgmt/issuedMetrics.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/reportReviewAnalysis" x="338" y="4018" id="pf1368562935773205" referenceLink="//@navigationRule.1/@navigationCase.10/@toViewId|" inlinks="pf1368562935773179" path="/mgmt/reportReviewAnalysis.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/euStatusSearch" x="338" y="4402" id="pf1368562935773206" referenceLink="//@navigationRule.1/@navigationCase.11/@toViewId|" inlinks="pf1368562935773180" path="/facilities/euStatusSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/workloadTrend" x="338" y="4786" id="pf1368562935773207" referenceLink="//@navigationRule.1/@navigationCase.12/@toViewId|" inlinks="pf1368562935773181" path="/mgmt/workloadTrend.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/pbrTable" x="338" y="5170" id="pf1368562935773208" referenceLink="//@navigationRule.1/@navigationCase.13/@toViewId|" inlinks="pf1368562935773182" path="/mgmt/pbrTable.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/genericIssuanceCountTable" x="338" y="5554" id="pf1368562935773209" referenceLink="//@navigationRule.1/@navigationCase.14/@toViewId|" inlinks="pf1368562935773183" path="/mgmt/genericIssuanceCountTable.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/facilityPermitTable" x="338" y="5938" id="pf1368562935773210" referenceLink="//@navigationRule.1/@navigationCase.15/@toViewId|" inlinks="pf1368562935773184" path="/mgmt/facilityPermitTable.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/topsReport" x="338" y="6322" id="pf1368562935773211" referenceLink="//@navigationRule.1/@navigationCase.16/@toViewId|" inlinks="pf1368562935773185" path="/mgmt/topsReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/invoiceReport" x="338" y="6706" id="pf1368562935773212" referenceLink="//@navigationRule.1/@navigationCase.17/@toViewId|" inlinks="pf1368562935773186" path="/mgmt/invoiceReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/perOverdueReport" x="338" y="7090" id="pf1368562935773213" referenceLink="//@navigationRule.1/@navigationCase.18/@toViewId|" inlinks="pf1368562935773187" path="/mgmt/perOverdueReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/facilityProfile" x="338" y="7474" id="pf1368562935773214" referenceLink="//@navigationRule.1/@navigationCase.19/@toViewId|" inlinks="pf1368562935773188" path="/facilities/facilityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/activityProfile" x="338" y="7858" id="pf1368562935773215" referenceLink="//@navigationRule.1/@navigationCase.20/@toViewId|" inlinks="pf1368562935773189" path="/workflows/activityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="workflows/workflowProfile" x="338" y="8242" id="pf1368562935773216" referenceLink="//@navigationRule.1/@navigationCase.21/@toViewId|" inlinks="pf1368562935773190" path="/workflows/workflowProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="mgmt/offsetsSummary" x="338" y="8626" id="pf154101265387437" referenceLink="//@navigationRule.7/@navigationCase.2/@toViewId|" inlinks="pf154101265387434 pf154101265387435 pf154101265387436" path="/mgmt/offsetsSummary.jsp"/>
+  <links id="pf1368562935772168" target="pf1368562935772161" source="pf1368562935772169" outcome="mgmt_reports.reportTree" redirect="true"/>
+  <links id="pf1368562935773170" target="pf1368562935773191" source="pf1368562935772169" outcome="customReports" redirect="true"/>
+  <links id="pf1368562935773171" target="pf1368562935773192" source="pf1368562935772169" outcome="monthlyTotals" redirect="true"/>
+  <links id="pf1368562935773172" target="pf1368562935773193" source="pf1368562935772169" outcome="mgmt_reports.issuanceReport" redirect="true"/>
+  <links id="pf1368562935773173" target="pf1368562935773195" source="pf1368562935772169" outcome="mgmt_reports.permitExpirationReport" redirect="true"/>
+  <links id="pf1368562935773174" target="pf1368562935773196" source="pf1368562935772169" outcome="mgmt_reports.permitWorkload" redirect="true"/>
+  <links id="pf1368562935773175" target="pf1368562935773197" source="pf1368562935772169" outcome="mgmt_reports.permitSOP" redirect="true"/>
+  <links id="pf1368562935773176" target="pf1368562935773199" source="pf1368562935772169" outcome="mgmt_reports.latePermits" redirect="true"/>
+  <links id="pf1368562935773177" target="pf1368562935773203" source="pf1368562935772169" outcome="prelimCompleted" redirect="true"/>
+  <links id="pf1368562935773178" target="pf1368562935773204" source="pf1368562935772169" outcome="issuedMetrics" redirect="true"/>
+  <links id="pf1368562935773179" target="pf1368562935773205" source="pf1368562935772169" outcome="reportReviewAnalysis" redirect="true"/>
+  <links id="pf1368562935773180" target="pf1368562935773206" source="pf1368562935772169" outcome="euStatusSearch" redirect="true"/>
+  <links id="pf1368562935773181" target="pf1368562935773207" source="pf1368562935772169" outcome="workloadTrend" redirect="true"/>
+  <links id="pf1368562935773182" target="pf1368562935773208" source="pf1368562935772169" outcome="mgmt_reports.pbrCount" redirect="true"/>
+  <links id="pf1368562935773183" target="pf1368562935773209" source="pf1368562935772169" outcome="mgmt_reports.genericIssuanceCount" redirect="true"/>
+  <links id="pf1368562935773184" target="pf1368562935773210" source="pf1368562935772169" outcome="mgmt_reports.facilityPermitCount" redirect="true"/>
+  <links id="pf1368562935773185" target="pf1368562935773211" source="pf1368562935772169" outcome="mgmt_reports.topsReport" redirect="true"/>
+  <links id="pf1368562935773186" target="pf1368562935773212" source="pf1368562935772169" outcome="mgmt_reports.invoiceReport" redirect="true"/>
+  <links id="pf1368562935773187" target="pf1368562935773213" source="pf1368562935772169" outcome="mgmt_reports.perOverdueReport" redirect="true"/>
+  <links id="pf1368562935773188" target="pf1368562935773214" source="pf1368562935772169" outcome="Success" redirect="true" fromaction="#{facilityProfile.submitProfile}"/>
+  <links id="pf1368562935773189" target="pf1368562935773215" source="pf1368562935772169" outcome="Profile" redirect="true" fromaction="#{activityProfile.submitProfile}"/>
+  <links id="pf1368562935773190" target="pf1368562935773216" source="pf1368562935772169" outcome="Success" redirect="true" fromaction="#{workFlow2DDraw.submitProfile}"/>
+  <links id="pf154101265387434" target="pf154101265387437" source="pf1368562935772169" outcome="mgmt_reports.offsetsSummary" redirect="true"/>
+  <links id="pf154101265387435" target="pf154101265387437" source="pf1368562935772169" outcome="Success" fromaction="#{offsetSummaryReport.generateOffsetSummaryReport}"/>
+  <links id="pf154101265387436" target="pf154101265387437" source="pf1368562935772169" outcome="Success" fromaction="#{offsetSummaryReport.reset}"/>
+  <links id="pf1368562935772162" target="pf1368562935772161" source="pf1368562935772161" outcome="ReportGenerated" fromaction="#{reportTree.generateReport}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368562935772163" target="pf1368562935772161" source="pf1368562935772161" outcome="ReportError" fromaction="#{reportTree.generateReport}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf1368562935772164" target="pf1368562935772161" source="pf1368562935772161" outcome="Cancelled" fromaction="#{reportTree.reset}">
+    <bendPoints d1Height="-96" d2Height="-96"/>
+    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
+    <bendPoints d1Width="-124" d2Width="-124"/>
+  </links>
+  <links id="pf1368562935772165" target="pf1368562935772161" source="pf1368562935772161" outcome="ReportAdded" fromaction="#{reportTree.addReport}">
+    <bendPoints d1Height="-126" d2Height="-126"/>
+    <bendPoints d1Width="-154" d1Height="-126" d2Width="-154" d2Height="-126"/>
+    <bendPoints d1Width="-154" d2Width="-154"/>
+  </links>
+  <links id="pf1368562935772166" target="pf1368562935772161" source="pf1368562935772161" outcome="ReportCloned" fromaction="#{reportTree.cloneReport}">
+    <bendPoints d1Height="-156" d2Height="-156"/>
+    <bendPoints d1Width="-184" d1Height="-156" d2Width="-184" d2Height="-156"/>
+    <bendPoints d1Width="-184" d2Width="-184"/>
+  </links>
+  <links id="pf1368562935772167" target="pf1368562935772161" source="pf1368562935772161" outcome="ReportEditable" fromaction="#{reportTree.editReport}">
+    <bendPoints d1Height="-186" d2Height="-186"/>
+    <bendPoints d1Width="-214" d1Height="-186" d2Width="-214" d2Height="-186"/>
+    <bendPoints d1Width="-214" d2Width="-214"/>
+  </links>
+  <links id="pf1368562935773194" target="pf1368562935773193" source="pf1368562935773193" outcome="Success" redirect="true" fromaction="#{dolaaSummary.submitProfile}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368562935773198" target="pf1368562935773197" source="pf1368562935773197" outcome="Success" redirect="true" fromaction="#{sopDolaaSummary.submitProfile}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368562935773200" target="pf1368562935773199" source="pf1368562935773199" outcome="Success" redirect="true" fromaction="#{latePermitsDolaaSummary.submitProfile}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf1368562935773201" target="pf1368562935773199" source="pf1368562935773199" outcome="Success" redirect="true" fromaction="#{latePermitsPermitTypeSummary.submitProfile}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf1368562935773202" target="pf1368562935773199" source="pf1368562935773199" outcome="Success" redirect="true" fromaction="#{latePermitsPermitStatusSummary.submitProfile}">
+    <bendPoints d1Height="-96" d2Height="-96"/>
+    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
+    <bendPoints d1Width="-124" d2Width="-124"/>
+  </links>
+</pageflow:Pageflow>

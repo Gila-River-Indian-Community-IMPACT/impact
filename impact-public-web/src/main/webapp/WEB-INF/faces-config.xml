@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+	"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+	"http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<!-- simple web app -->
+
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<application>
+		<default-render-kit-id>oracle.adf.core</default-render-kit-id>
+		<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+		<message-bundle>messages</message-bundle>
+	</application>
+	<!-- Application scope beans -->
+
+	<!--Global Menus -->
+
+	<!-- create the menu tree -->
+	<managed-bean>
+		<managed-bean-name>menuModel</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.menu.SimpleMenuTree
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>children</property-name>
+			<list-entries>
+				<value-class>
+					us.oh.state.epa.stars2.webcommon.menu.SimpleMenuItem
+				</value-class>
+				<value>#{menuItem_home}</value>
+				<value>#{menuItem_tools}</value>
+				<value>#{menuItem_monitors}</value>
+			</list-entries>
+		</managed-property>
+	</managed-bean>
+	<!--End menu tree -->
+
+	<managed-bean>
+		<managed-bean-name>infraDefs</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.bean.InfrastructureDefs
+		</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+		<managed-property>
+			<property-name>infrastructureService</property-name>
+			<value>#{infrastructureBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>companyService</property-name>
+			<value>#{companyBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>displayUtil</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.DisplayUtil
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>permitReference</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.bean.PermitReference
+		</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+		<managed-property>
+			<property-name>infrastructureService</property-name>
+			<value>#{infrastructureBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<!-- For printing/exporting datagrids - begin -->
+	<managed-bean>
+		<managed-bean-name>tableExporter</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.webcommon.TableExporter
+		</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	<!-- For printing/exporting datagrids - end -->
+
+	<!--End Global Menus -->
+
+	<!-- for Image output PoShan -->
+	<component>
+		<component-type>
+			us.oh.state.epa.stars2.webcommon.component.SelectItems
+		</component-type>
+		<component-class>
+			us.oh.state.epa.stars2.webcommon.component.SelectItems
+		</component-class>
+	</component>
+
+	<component>
+		<component-type>
+			us.oh.state.epa.stars2.webcommon.component.SetProperty
+		</component-type>
+		<component-class>
+			us.oh.state.epa.stars2.webcommon.component.SetPropertyComp
+		</component-class>
+	</component>
+
+	<component>
+		<component-type>
+			us.oh.state.epa.stars2.webcommon.component.AreaMap
+		</component-type>
+		<component-class>
+			us.oh.state.epa.stars2.webcommon.component.AreaMapUIComp
+		</component-class>
+	</component>
+
+	<component>
+		<component-type>
+			us.oh.state.epa.stars2.webcommon.component.ImageOutput
+		</component-type>
+		<component-class>javax.faces.component.UIOutput</component-class>
+	</component>
+
+	<converter>
+		<converter-id>
+			us.oh.state.epa.stars2.webcommon.converter.SigDigNumberConverter
+		</converter-id>
+		<converter-class>
+			us.oh.state.epa.stars2.webcommon.converter.SigDigNumberConverter
+		</converter-class>
+	</converter>
+
+	<render-kit>
+		<renderer>
+			<component-family>javax.faces.Output</component-family>
+			<renderer-type>
+				us.oh.state.epa.stars2.webcommon.component.ImageOutput
+			</renderer-type>
+			<renderer-class>
+				us.oh.state.epa.stars2.webcommon.component.ImageOutputRenderer
+			</renderer-class>
+		</renderer>
+	</render-kit>
+	
+	
+	<converter>
+		<converter-id>
+			us.oh.state.epa.stars2.webcommon.converter.BigDecimalConverter
+		</converter-id>
+		<converter-class>
+			us.oh.state.epa.stars2.webcommon.converter.BigDecimalConverter
+		</converter-class>
+	</converter>
+	<!-- for Image output PoShan -->
+</faces-config>

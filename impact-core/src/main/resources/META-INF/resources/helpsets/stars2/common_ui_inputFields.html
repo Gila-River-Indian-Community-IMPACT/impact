@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<!-- PORTAL HELP: Common User Interface Elements --&gt; Entering & Editing Data -->
+<html>
+
+
+<!-- ********** HEAD ************ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Help: Common User Interface Elements --> Input Fields</title>
+
+<link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+<link rel="STYLESHEET" type="text/css" href="stars2.css">
+
+<!-- **Uncomment** this STYLE element to hide TOC button -->
+<!-- **Comment out** this STYLE element to display TOC button -->
+<script language="JavaScript" type="text/javascript" src="browvers.js"></script>
+
+<style type="text/css"> .hide {display : none}
+</style>
+</head> <!--  END HEAD -->
+
+<!-- ********** BODY ************ -->
+<body>
+<noscript>Script to detect browser version</noscript>
+<!-- ********** TOP [BOOKMARK] ************ -->
+<a name="top"></a>
+
+<div class="zz-skip-header"><a href="#start">Skip navigation header</a></div>
+
+<table summary="Document information and navigation controls" border="0" width="97%">
+<tbody>
+  <tr>
+    <td class="zz-nav-header-cell" scope="col"><strong>Common User Interface Elements
+<img src="images/grn_rt_arrow.gif" alt="green right arrow"> Entering &amp;
+Editing Data</strong></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="common_ui_editMode.html">
+       <img src="images/leftnav.gif" alt="Previous Topic" border="0" height="24" width="23">
+       <br>Previous Topic</a></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="common_ui_editButtons.html">
+       <img src="images/rightnav.gif" alt="Next Topic" border="0" height="24" width="23">
+       <br>Next Topic</a></td>
+  </tr>
+</tbody>
+</table>
+
+
+<!-- ********** START Bookmark; also used to mark the Overview section ************ -->
+<a name="start"></a>
+<h1>Input Fields</h1>
+<h2>Overview </h2>
+<p>
+Input fields provide a mechanism for
+you to enter data into the system.  You will commonly find input fields
+in windows in which
+you fill in or update data about your facility, including when you
+apply for a permit or submit an emissions or compliance report.  You will
+also encounter input fields in <a href="common_ui_popupWin.html">pop-up windows</a> 
+that appear
+when you invoke particular operations.  
+Each instance of an input field type looks the same and works the same way 
+throughout 
+the system, no matter where it appears.   
+This 
+topic covers the various input types, illustrating their 
+appearance and describing their
+operation.  These include simple data input field types, 
+such as   
+<ul>
+<li><a href="#text" target="">Text Fields</a></li>
+<li><a href="#picklist" target="">Fields with Pick Lists</a></li>
+<li><a href="#date" target="">Date Fields</a></li>
+<li><a href="#checkbox">Check Boxes</a></li>
+<li><a href="#radio">Radio Buttons</a></li>
+</ul> 
+as well as more complex mechanisms such as 
+<ul>
+<li><a href="#inputTable" target="">Entries in Lists</a></li>
+<li><a href="#shuttle" target="">Data Shuttles</a></li>
+</ul>
+The input mechanisms are listed above in approximate order of the frequency with 
+which you will encounter them in the system. 
+<p>Although clearly related to the process of entering and editing data, 
+edit 
+operations buttons and data validation</a> are covered in more detail on
+other Help topic pages (see 
+<a href="#rel_topics">Related Help Topics</a> below).
+<!-- In addition, the  
+topic covers some special capabilities, such as wildcarding and required fields,  
+which apply only to certain types of input fields, as well as input data validation, which the 
+system does in several ways, depending on the context. 
+-->
+<br></p>
+<!-- ********** Text Input Fields Section************ --> 
+ 
+<h2><a name="text"></a><br>Text Fields</h2>
+Text input fields provide a label identifying the information the 
+field contains and a short box into which you type the information you
+want to enter into the system.   Text fields may be short, where you
+will enter just a word or two, such as when you want to add someone as a
+contact for your facility, as shown in <a href="#shortText">Figure 1</a>. 
+<p> 
+<a name="shortText"></a>
+<div align="center">
+<img src="images/input_shortText.jpg" alt="Short text input field">
+<br><br>
+<b>Figure 1: Short Text Input Fields</b>
+</div>
+</p> 
+
+Or, the field may be longer, and may even provide
+scrolling if the information you are entering is likely to be long. You might see the example shown
+in <a href="#longText">Figure 2</a> when you enter a Compliance Report, to
+provide corrective action in response to a deviation you are reporting.
+<p>
+<a name="longText"></a>
+<div align="center">
+<img src="images/input_longText.jpg" alt="Long text input field (w/scrolling)">
+<br><br>
+<b>Figure 2: Long Text Input Field (with Scrolling)</b>
+</div>
+</p>
+<p>
+In either of these cases, you simply place the cursor in the field, type the information you wish to enter
+and then select <font face="Courier New">Enter</font> on the keyboard or move to a different
+field on the screen. 
+</p>
+<p> 
+Some, but not all, short text input fields, most notably Facility ID and Facility Name in 
+Search Criteria windows, support 
+the concept of wildcards.  This means that you can use a wildcard character, either '*' or 
+'%' to match any number of other characters in that position.  For example, 
+if you enter &quot;Univ*&quot; in a Facility Name will match all of the following facility names:  
+University of Dayton, University of Toledo, Univar, USA, Universal Metal Products,
+etc.  However, if you are looking for Miami University, you should put a
+wildcard character at the <u>beginning</u> of the string as well.  If you want to
+limit your search to universities, the you would want to use the string *University*
+to retrieve them all.  
+<p>You may use either wildcard character in any position in
+a string and you may use both characters in the same string.  For example,
+the string *univ*l* will retrieve all the facilities with the word Universal
+anywhere in their name.  It will also, however, retrieve The Ohio State University
+at Lima and Kent State University - Fleet Services, among others. Most of the
+fields that take wildcards have a 'hint' below the field that shows you examples of
+some search strings that use wildcards.
+
+
+
+
+<br><p><a href="#top">Back to Top</a></p>
+
+<!-- ********** Pick List section************ -->
+<h2><a name="picklist"></a><br>Fields with Pick Lists</h2>
+Pick Lists are fields for which you may choose a value from a list
+of options that the system presents to you.  
+<h3>Standard Pick Lists</h3>
+Most pick lists are of
+the 'fixed' variety --- you can select exactly one value from the list
+to populate the field. If the list has a default value,
+then that value will appear in the field, otherwise the field is blank until
+you make a selection.  In some cases, for example the
+contact <font face="Courier New">Type</font> field shown in 
+Figure 3, the choices are pre-defined in the system.
+In others, the contents of the drop down list depends on the window
+and the field. 
+<p>
+<a name="picklistDef"></a>
+<div align="center">
+<img src="images/picklistDef.jpg" alt="Picklist with values from def table">
+<br><br>
+<b>Figure 3: Pick List Offering Pre-defined Values</b>
+</div>
+</p>
+
+Figure 4 shows a field for information
+you must enter if you are preparing a modification for a submitted 
+permit application. 
+<p>
+<a name="picklistVar"></a>
+<div align="center">
+<img src="images/picklistVariable.jpg" alt="Variable pick list)">
+<br><br>
+<b>Figure 4: Pick List Offering Context-sensitive Values</b>
+</div>
+</p>
+In this case, the drop down will contain the identification numbers of 
+applications you submitted, but for which you have not 
+yet been received a permit. (These are the only applications for which you can submit
+this type of modification request.) In either case, though, 
+you can see the options available to you by clicking on 
+the small blue arrow at the right of the field 
+(<img src="images/icon_dropDownArrow.jpg" alt="Drop down arrow">).  This will
+bring up the list of available choices.  Select a value 
+by clicking
+on that entry in the option list. </p> 
+<h3>Multi-Select Pick Lists</h3>
+In rare instances, a pick list that allows you to pick
+more than one value.  For example, the filter offered when you generate
+a Workload Report is a multi-select pick list, as illustrated in Figure 5 below.
+<a name="multi_picklist"></a>
+<p>
+<div align="center">
+<img src="images/workloadReportFilter.jpg" alt="Multi-select pick list)">
+<br><br>
+<b>Figure 5: Multi-Select Pick List</b>
+</div>
+<br>To select all the values between two values in the list, click on the
+first value, hold down the Shift key on the keyboard and then move to and
+click the last value in the sequence you are interested in.  To select more
+than one non-adjacent values from the list, hold down the Ctrl when you click
+each selection after the first one.  The values don't actually populate
+a separate field as do fixed pick list values but they remain visible in
+the list until you modify them, or navigate away from the window.
+<br><br><a href="#top">Back to Top</a> 
+
+
+<!-- ********** Date Fields ************ -->
+<h2><a name="date"></a><br>Date Fields</h2>
+<p>
+
+
+Some pages ask you to enter a date.  You may, of course, simply type in the 
+date you wish to specify.  
+The system accepts nearly all formats for your 
+date input:  one or two digits for month and day; two or four digits for 
+year; '-' or '/' 
+to separate the date components. You cannot, however, mix the separator
+characters in the same date string.  For example, 1-6/07 is not a 
+valid input for a date field! 
+Alternatively, you may select a date from a calendar.  Every date input field
+shows a calendar icon (<img src="images/calendar.jpg" alt="calendar icon">)
+next to it on the right.  When you click on this icon, it opens to a
+calendar that allows you to select a date.  
+<p>
+<div align="center">&nbsp; 
+<img src="images/calendar-open.jpg" alt="move calendar to 
+next year">
+<br>
+<b>Figure 6: Open Calendar from Calendar Icon</b>
+<br>
+</div>
+<p/>
+<p>
+The calendar initially comes up with today's date highlighted.  You may, however,
+navigate within the calendar, using the month and year pick lists or the 
+left (<img src="images/icon_movePrevious.jpg" alt="move calendar to 
+previous month">)
+and right (<img src="images/icon_moveNext.jpg" alt="move calendar to 
+next year">) 
+arrows next to the pick lists to move either date component backward or
+forward.  Once the calendar shows the month you want, then
+click on the day-of-the-month to select the date.</p>
+<a href="#top">Back to Top</a>
+
+<!-- ********** Check Boxes ************ -->
+<h2><a name="checkbox"></a><br>Check Boxes</h2>
+<p>
+You will see check boxes on input pages when you, for example,
+<font face="Courier New">Change Facility Detail</font> or
+Create or Edit a <font face="Courier New">PTI/PTIO Application</font>.  
+Check boxes display indicators for whether or not your facility is 
+<font face="Courier New">Portable</font>, and to indicate which
+federal rules apply to your facility. 
+<p>
+<a name="checkBoxFigure"></a>
+<div align="center">
+<img src="images/input_checkboxesPortable.jpg" alt="Check box input field">
+<br><b>Figure 7: Check boxes for Data Display and Data Entry </b>
+</div>
+<p> 
+The check box field shown in <a href="images/ext_inputFieldCheckBox.jpg"></a>
+is essentially a Yes/No or True/False indicator.  If the box is checked, 
+as on the right,
+then the item is Yes/True; if
+it is not checked, as on the left, then the item is No/False.  
+When you are entering or modifying data, you can change a check box
+simply by clicking in the box.
+</p>
+<p>
+Each check box is independent of any other check boxes that may be
+appear to be displayed in a group.  Whether a check box is marked or
+does not affect whether any other check box is marked.</p>
+<a href="#top">Back to Top</a>
+
+<!-- ********** Radio Buttons ************ -->
+<h2><a name="radio"></a><br>Radio Buttons</h2> 
+Some data in the Stars2 is represented by one or more 
+radio buttons.  Radio buttons are used, for example, 
+when you select an application which you would like 
+to copy as the base for another application. 
+ 
+Radio buttons allow you to select one of a set or group 
+of items or values.  A set of radio buttons may have no 
+item selected, or it may have one item selected, but it can never 
+have more than one item selected.  Like check boxes, you select a radio 
+button by clicking inside the circle.  If you click on another 
+radio button in the set, then the first one you picked will 
+be un-selected.   
+<p>
+<a name="radioFigure"></a>
+<div align="center">
+<img src="images/inputFieldRadioButtons.jpg" alt="Radio button(s) 
+portal input field">
+<br><b><br>Figure 8: Radio Buttons</b>
+</div>
+<p> 
+The check box field shown in <a href="#radioFigure"></a>
+is essentially a Yes/No or True/False indicator.  If the box is checked, 
+as on the right,
+then the item is Yes/True; if
+it is not checked, as on the left, then the item is No/False.  
+When you are entering or modifying data, you can change a check box
+simply by clicking in the box.
+</p>
+<a href="#top">Back to Top</a>
+
+
+<!-- ********** Entries in Lists ************ -->
+<h2><a name="inputTable"></a><br>Entries in Lists</h2> 
+You will encounter lists in which you wish to enter additional entries, 
+or delete entries that the system displays in many location.&nbsp; 
+You can see one example in <a href="#checkBoxFigure">Figure 7</a> 
+You will also see longer examples of such lists wherever a list of pollutants is
+displayed for edit.  <a href="#figure9">Figure 9</a> offers an example of a pollutant
+list taken from the Emissions Inventory input page where you will enter the emissions for various
+pollutants for the year on which you are reporting.
+<p>
+<a name="figure9"></a>
+<div align="center">
+<img src="images/erpt_pollutantInput.jpg" alt="Pollutant List for Edit">
+<b><br>Figure 9: Pollutant List for Edit</b>
+</div>
+<p> 
+This figure actually illustrates several user interface concepts.  Check boxes are used here
+for several purposes,
+including selecting pollutants that you have already added to the table and may now wish to delete,
+indicating whether a there are charges associated with each pollutant in the table (you may not edit
+this one; it's only there for your information), and any information in your report that
+you wish to remain Trade Secret.  The Pollutant, Method, and Unit columns illustrate
+pick lists, while the data used to report or compute emissions are text input fields,
+where the required text input is numeric.
+<p>At the  bottom of the list, you will find the <img src="images/btn_addEmission.jpg"> button 
+which gives you the capability to add pollutants to the list of pollutants for which
+you are reporting emissions.&nbsp; 
+When you select this button, the system opens a new row in the table with a pick list 
+of the possible values for
+the key field of the row you are adding (in this case, pollutants).  Entering items in a 
+list or table is covered in more detail 
+in the discussion of <a href="common_ui_editButtons.jpg">Edit Button Operations</a>.
+</p>
+<a href="#top">Back to Top</a>
+
+<!-- ********** Data Shuttle ************ -->
+<h2><a name="shuttle"></a><br>Data Shuttle</h2>
+The data shuttle is an element that appears infrequently in the IMPACT system.  
+You will use such an element to control which emissions units are included
+when you enter the data to apply for an air permit.   
+<p>
+<a name="figure10"></a>
+<div align="center">
+<img src="images/input_dataShuttle.jpg" alt="Pollutant List for Edit">
+<b><br>Figure 10: Data Shuttle for Adding Emissions Units to a Permit Application</b>
+</div>
+<p> You may select one or more EUs on either side of the shuttle. (To select 
+more than one, hold down the CTRL key while you select the EUs.)  Then, select the 
+appropriate button to move the selected EUs in the direction you wish to move them. 
+In this example, the user has selected EUs B011, B012 and B013 from among the 
+currently-excluded EUs.  Upon clicking on the right arrow (img src="images/right_arrow.jpg") 
+between the two sides 
+of the shuttle, the system will move these EUs from the Excluded EUs list to
+the IncludedEUs list.
+Note that, rather than selecting individual EUs, you may Include ALL the EUs in  
+a facility that are eligible to be included in the target application. 
+ </p><a href="#top">Back to Top</a>
+
+<!-- ********** Related Help Topics BOOKMARK************ -->
+<a name="#rel_topics"></a><br><br>
+<h2>Related Help Topics</h2>
+<ul>
+<li><a href="common_ui_editButtons.html">Edit Button Operations</a></li>
+<li><a href="common_ui_exceptionReporting.html">Exception Reporting</a></li>
+<li><a href="common_ui_detailData.html">Detail Data</a></li>
+</ul>
+<div class="zz-nav-footer-menu"><a href="common_ui_editMode.html" target="_blank">Previous
+Topic</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="common_ui_editButtons.html">Next Topic</a> </div>
+<!-- no legal notice in Stars2 system help; command remains for potential future use -->
+<p class="zz-legal-notice"><a class="zz-legal-notice-link" href="cpyr.html">Copyright
+© 1996, 2004, Oracle.</a> All rights reserved.</p>
+</body></html>

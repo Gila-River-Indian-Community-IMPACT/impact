@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<StarsPermitSQL>
+		<TAB1>permit_classification</TAB1>
+		<SQL1>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			dsk_central_file.effective_start,
+			dsk_central_file.effective_end,
+			dsk_central_file.tmsp_created,
+			permit_classification.eu_oepa_id,
+			permit_classification.classification,
+			permit_classification.used_in_permit
+			from  permit_classification, dsk_central_file
+			where permit_classification.int_doc_id=dsk_central_file.int_doc_id
+			order by 
+			 dsk_central_file.int_doc_id,
+			 permit_classification.eu_oepa_id
+		</SQL1>
+		<TAB2>permit_1a</TAB2>
+		<SQL2>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			permit_1a.eu_oepa_id,
+			permit_1a.section,
+			permit_1a.seq_num,
+			permit_1a.ops_props_equip,
+			permit_1a.reqt_text,
+			permit_1a.limit_ctrl
+			from permit_1a, dsk_central_file
+			where permit_1a.int_doc_id=dsk_central_file.int_doc_id
+			order by 
+			 dsk_central_file.int_doc_id,
+			 permit_1a.eu_oepa_id,
+			 permit_1a.section, seq_num
+		</SQL2>
+		<TAB3>permit_dtl</TAB3>
+		<SQL3>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			permit_dtl.eu_oepa_id,
+			permit_dtl.section,
+			permit_dtl.seq_num,
+			permit_dtl.row_num,
+			permit_dtl.sub_part,
+			permit_dtl.reqt_text,
+			permit_dtl.permit_type
+			from permit_dtl, dsk_central_file
+			where permit_dtl.int_doc_id=dsk_central_file.int_doc_id
+			order by 
+			 dsk_central_file.int_doc_id,
+			 permit_dtl.eu_oepa_id,
+			 permit_dtl.section,
+			 permit_dtl.row_num,
+			 permit_dtl.sub_part nulls first,
+			 permit_dtl.seq_num
+		</SQL3>
+		<TAB4>permit_classification2</TAB4>
+		<SQL4>
+			select
+			dsk_central_file.facility_id,
+			dsk_central_file.action_class_code,
+			dsk_central_file.action_id,
+			dsk_central_file.sect_id,
+			dsk_central_file.int_doc_id,
+			dsk_central_file.effective_start,
+			dsk_central_file.effective_end,
+			dsk_central_file.tmsp_created,
+			permit_classification.eu_oepa_id,
+			permit_classification.classification,
+			permit_classification.used_in_permit
+			from  permit_classification, dsk_central_file
+			where permit_classification.int_doc_id=dsk_central_file.int_doc_id
+			order by dsk_central_file.facility_id,
+			 dsk_central_file.action_class_code desc,
+			 dsk_central_file.action_id,
+			 dsk_central_file.int_doc_id,
+			 permit_classification.eu_oepa_id
+		</SQL4>
+		<TAB5>END</TAB5>
+	</StarsPermitSQL>
+</root>

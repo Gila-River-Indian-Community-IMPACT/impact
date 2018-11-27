@@ -1,0 +1,2011 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<CetaSQL>
+		<getUserId>
+			SELECT cud.user_id CNT FROM %Schema%cm_user_def cud
+			where lower(?) = lower(((cud.first_nm + ' ') + cud.last_nm))
+		</getUserId>
+		<fceColumns>
+			cf.fce_id, cf.staff_assigned_id, cf.evaluator_id,
+			cf.fp_id,
+			ff2.facility_id, ff2.facility_nm, ff2.do_laa_cd,
+			ff2.federal_scsc_id,
+			ff2.federal_scsc_id as scsc_id, ff2.portable,
+			ff1.version_id, ff2.operating_status_cd,
+			ff2.last_shutdown_date,
+			ff2.facility_type_cd, ff2.permit_classification_cd,
+			ff1.facility_registry_no AS facility_afs_num,
+			cf.scheduled_dt,
+			cf.evaluated_dt, cf.reported_dt, cf.afs_dt, cf.afs_id,
+			cf.afsSched_dt, cf.afsSched_id, cf.memo,
+			cf.us_epa_committed,
+			cf.last_modified, cf.facility_hist_id,
+			cf.FROZEN_INSPECTION_CLASS_CD,
+			cf.created_dt, cf.insp_id, cf.sent_to_epa_dt,
+			cf.inspection_type_id,
+			cf.is_legacy_inspection, cf.last_fce_id,
+			cf.facility_staff_present,
+			cf.inspection_rpt_state_cd,
+			cf.private_property_access, cf.announced_inspection, cf.concerns,
+			cf.file_review_records_request, cf.regulatory_discussion,
+			cf.physical_inspection, cf.ambient_monitoring, cf.other_information,
+			cf.pre10_legacy, cf.inspection_compliance_status_cd, cf.reference_review_start_date
+		</fceColumns>
+		<fcePlainColumns>
+			fce_id, staff_assigned_id, evaluator_id, fp_id,
+			facility_id, facility_nm, do_laa_cd, federal_scsc_id, scsc_id,
+			portable,
+			version_id, operating_status_cd,
+			last_shutdown_date,
+			facility_type_cd, permit_classification_cd, facility_afs_num,
+			scheduled_dt, evaluated_dt, reported_dt, afs_dt, afs_id,
+			afsSched_dt,
+			afsSched_id, memo,
+			us_epa_committed, last_modified, facility_hist_id,
+			created_dt, portable, insp_id,
+			sent_to_epa_dt, inspection_type_id,
+			is_legacy_inspection, last_fce_id, cmp_id, company_nm,
+			facility_staff_present,
+			inspection_rpt_state_cd,
+			private_property_access,
+			announced_inspection, concerns,
+			file_review_records_request,
+			regulatory_discussion,
+			physical_inspection, ambient_monitoring,
+			other_information, pre10_legacy, inspection_compliance_status_cd, reference_review_start_date
+		</fcePlainColumns>
+		<visitColumns>
+			csv.visit_id, csv.fce_id, csv.fp_id, csv.visit_dt,
+			csv.site_visit_type_cd, csv.announced, csv.memo,
+			csv.afsSched_id
+			afs_id, csv.afsSched_dt afs_dt,
+			ff2.facility_id, ff2.facility_nm,
+			ff2.federal_scsc_id, ff2.federal_scsc_id as scsc_id, ff2.do_laa_cd,
+			ff2.operating_status_cd,
+			ff2.last_shutdown_date,
+			ff2.permit_classification_cd, ff2.facility_type_cd,
+			csv.last_modified, csv.facility_hist_id, csv.site_visit_ve_cd,
+			csv.created_dt, csv.site_id, cf.insp_id, ccm.cmp_id, ccm.name as
+			company_nm, csv.compliance_issued
+		</visitColumns>
+		<visitColumns2fp>
+			csv.visit_id, csv.fce_id, csv.fp_id, csv.visit_dt,
+			csv.site_visit_type_cd, csv.announced, csv.memo,
+			csv.afsSched_id
+			afs_id, csv.afsSched_dt afs_dt,
+			ff2.facility_id, ff2.facility_nm,
+			ff2.federal_scsc_id as scsc_id, ff2.do_laa_cd,
+			ff1.version_id,
+			ff2.operating_status_cd,
+			ff2.last_shutdown_date,
+			ff2.permit_classification_cd, ff2.facility_type_cd,
+			csv.last_modified, csv.facility_hist_id, csv.site_visit_ve_cd,
+			csv.created_dt, csv.site_id, csv.compliance_issued
+		</visitColumns2fp>
+		<visitPlainColumns>
+			visit_id, fce_id, fp_id, visit_dt,
+			site_visit_type_cd, announced, memo,
+			afs_id, afs_dt,
+			facility_id,
+			facility_nm, federal_scsc_id, scsc_id, do_laa_cd,
+			version_id,
+			operating_status_cd,
+			last_shutdown_date, permit_classification_cd,
+			facility_type_cd,
+			last_modified, facility_hist_id, site_visit_ve_cd,
+			created_dt, site_id, compliance_issued
+		</visitPlainColumns>
+		<evaluatorColumns>cvex.user_id</evaluatorColumns>
+		<pollutantTestColumns>
+			stpx.stack_test_id, stpx.pollutant_cd,
+			stpx.afs_date, stpx.afs_id,
+			stpx.stack_test_result_cd,
+			stpx.permitted_allow_emission_rate,
+			stpx.permitted_max_operating_rate, stpx.tested_emission_rate,
+			stpx.tested_operating_rate, stpx.tested_eu, stpx.scc_id
+		</pollutantTestColumns>
+		<stackTestColumns>
+			cst.stack_test_id, cst.fce_id, cst.fp_id,
+			cst.date_scheduled, cst.reviewer_id, cst.date_evaluated,
+			cst.date_received, cst.stack_test_method_cd, cst.conformed,
+			cst.control_equip_used,
+			cst.monitoring_equip, cst.memo, cst.company,
+			cst.audit_result_cd, cst.legacy_flag, cst.for_pti,
+			cst.for_ptio,
+			cst.for_pto, cst.for_tv, cst.for_feptio, cst.for_nsps ,
+			cst.for_mact,
+			cst.for_bif, cst.for_tiv, cst.for_other,
+			cst.last_modified,
+			cst.emission_test_state,
+			cst.reminder_date, ff2.facility_id,
+			ff2.facility_nm, ff2.federal_scsc_id as scsc_id,
+			ff2.do_laa_cd, ff2.permit_classification_cd, ff2.facility_type_cd, cst.created_dt,
+			cst.stck_id, cst.submitted_date, cst.category_cd,
+			cst.testing_method_cd, cst.validated_flag,
+			cst.created_by_id,
+			ff.facility_registry_no AS facility_afs_num
+		</stackTestColumns>
+		<visitDateColumns>
+			cstvdx.stack_test_id, cstvdx.test_date
+		</visitDateColumns>
+		<fceAmbientConditionColumns>
+			cfac.fce_id, cfac.inspection_day,
+			cfac.inspection_date, cfac.arrival_time,
+			cfac.departure_time,
+			cfac.ambient_temperature,
+			cfac.wind_speed, cfac.wind_direction_cd,
+			cfac.sky_conditions_cd
+		</fceAmbientConditionColumns>
+
+		<retrieveFceBySearch>
+			SELECT ${CetaSQL.fceColumns}, ca.county_cd,
+			CONCAT(CONCAT(cud.last_nm,', '), cud.first_nm) full_name,
+			cud.active_ind full_name_inact,
+			CONCAT(CONCAT(cud_eval.last_nm,', '), cud_eval.first_nm)
+			eval_full_name, cud_eval.active_ind eval_full_name_inact,ccm.cmp_id, ccm.name as
+			company_nm
+			FROM %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2 LEFT JOIN %Schema%fp_facility_company_xref ffcx ON
+			(ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL) LEFT
+			JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr, %Schema%ce_fce cf
+			LEFT OUTER JOIN %Schema%cm_user_def cud on (
+			cf.staff_assigned_id = cud.user_id),
+			%Schema%ce_fce cf_eval LEFT OUTER JOIN %Schema%cm_user_def
+			cud_eval on ( cf_eval.evaluator_id = cud_eval.user_id) WHERE cf.fce_id =
+			cf_eval.fce_id AND cf.fp_id = ff1.fp_id AND ff1.facility_id
+			= ff2.facility_id AND ff2.version_id = -1 AND ff2.fp_id =
+			faxr.fp_id AND faxr.address_id = ca.address_id AND ca.end_dt
+			is null
+		</retrieveFceBySearch>
+		<retrieveByFceId>
+			SELECT ${CetaSQL.fceColumns},
+			CONCAT(CONCAT(cud.last_nm,', '), cud.first_nm) full_name,
+			cud.active_ind full_name_inact,
+			CONCAT(CONCAT(cud_eval.last_nm,', '),
+			cud_eval.first_nm) eval_full_name ,
+			cud_eval.active_ind
+			eval_full_name_inact , ccm.cmp_id, ccm.name as company_nm,
+			lastcf.insp_id as last_insp_id, lastcf.evaluated_dt as last_insp_date
+			FROM
+			%Schema%fp_facility ff1, %Schema%fp_facility ff2 LEFT JOIN
+			%Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL) LEFT JOIN
+			%Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%ce_fce cf LEFT OUTER JOIN %Schema%cm_user_def cud on
+			(cf.staff_assigned_id = cud.user_id) 
+			LEFT JOIN %Schema%ce_fce lastcf ON (cf.last_fce_id = lastcf.fce_id),
+			%Schema%ce_fce cf_eval LEFT OUTER
+			JOIN %Schema%cm_user_def
+			cud_eval on ( cf_eval.staff_assigned_id =
+			cud_eval.user_id)
+			WHERE cf.fce_id =
+			cf_eval.fce_id AND cf.fp_id =
+			ff1.fp_id AND ff1.facility_id
+			= ff2.facility_id AND ff2.version_id =
+			-1 AND cf.fce_id = ?
+		</retrieveByFceId>
+		<retrieveByInspId>
+			SELECT ${CetaSQL.fceColumns},
+			CONCAT(CONCAT(cud.last_nm,', '), cud.first_nm) full_name,
+			cud.active_ind full_name_inact,
+			CONCAT(CONCAT(cud_eval.last_nm,', '),
+			cud_eval.first_nm) eval_full_name ,
+			cud_eval.active_ind
+			eval_full_name_inact , ccm.cmp_id, ccm.name as company_nm,
+			lastcf.insp_id as last_insp_id, lastcf.evaluated_dt as last_insp_date
+			FROM
+			%Schema%fp_facility ff1, %Schema%fp_facility ff2 LEFT JOIN
+			%Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL) LEFT JOIN
+			%Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%ce_fce cf LEFT OUTER JOIN %Schema%cm_user_def cud on
+			(cf.staff_assigned_id = cud.user_id)
+			LEFT JOIN %Schema%ce_fce lastcf ON (cf.last_fce_id = lastcf.fce_id),
+			%Schema%ce_fce cf_eval LEFT OUTER
+			JOIN %Schema%cm_user_def
+			cud_eval on ( cf_eval.staff_assigned_id =
+			cud_eval.user_id)
+			WHERE cf.fce_id =
+			cf_eval.fce_id AND cf.fp_id =
+			ff1.fp_id AND ff1.facility_id
+			= ff2.facility_id AND ff2.version_id =
+			-1 AND cf.insp_id = ?
+		</retrieveByInspId>
+		<createFce>
+			INSERT INTO %Schema%ce_fce (fce_id, staff_assigned_id,
+			evaluator_id, fp_id, scheduled_dt, evaluated_dt, reported_dt, afs_dt,
+			afs_id, us_epa_committed, afsSched_dt, afsSched_id, memo,
+			facility_hist_id, created_by_id,
+			created_dt, sent_to_epa_dt,
+			inspection_type_id, is_legacy_inspection,
+			facility_staff_present, inspection_rpt_state_cd, private_property_access,
+			announced_inspection, pre10_legacy)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createFce>
+		<createFceGetFpId>
+			INSERT INTO %Schema%ce_fce (fce_id,
+			staff_assigned_id,
+			evaluator_id, fp_id, scheduled_dt, evaluated_dt,
+			afs_dt,
+			afs_id, us_epa_committed, afsSched_dt, afsSched_id, memo,
+			facility_hist_id, created_by_id,
+			created_dt, sent_to_epa_dt,
+			inspection_type_id, is_legacy_inspection, pre10_legacy) VALUES (?,?,?, (select
+			fp_id from
+			%Schema%fp_facility where facility_id = ? AND version_id =
+			-1), ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createFceGetFpId>
+		<modifyFceR>
+			UPDATE %Schema%ce_fce SET staff_assigned_id = ?,
+			evaluator_id = ?, scheduled_dt = ?, us_epa_committed = ?,
+			last_modified = ? WHERE fce_id = ? AND last_modified = ?
+		</modifyFceR>
+		<modifyFce>
+			UPDATE %Schema%ce_fce SET staff_assigned_id = ?,
+			evaluator_id = ?, fp_id = ?, scheduled_dt = ?, evaluated_dt
+			= ?,
+			reported_dt = ?, afs_dt = ?, afs_id = ?, us_epa_committed = ?,
+			afsSched_dt = ?, afsSched_id = ?, memo = ?, facility_hist_id
+			= ?,
+			sent_to_epa_dt = ?, inspection_type_id = ?,
+			is_legacy_inspection = ?,
+			facility_staff_present= ?,
+			inspection_rpt_state_cd = ?, private_property_access = ?, 
+			announced_inspection = ?, inspection_compliance_status_cd = ?,
+			last_modified = ? WHERE
+			fce_id = ? AND last_modified = ?
+		</modifyFce>
+		<removeFce>
+			DELETE FROM %Schema%ce_fce WHERE fce_id = ?
+		</removeFce>
+		<removeFceNotes>
+			DELETE FROM %Schema%CE_FCE_NOTE_XREF WHERE fce_id = ?
+		</removeFceNotes>
+		<retrieveFceAttachments>
+			SELECT fa.fce_id, fa.fce_attachment_type_cd as
+			attachment_type_cd, fa.last_modified AS ref_lm,
+			def.fce_attachment_type_dsc, def.document_id as template_doc_type_cd, 
+			${DocumentSQL.documentColumns}
+			FROM
+			%Schema%ce_fce_attachment fa, %Schema%dc_document dd,
+			%Schema%ce_fce_attachment_type_def def WHERE fa.fce_id = ?
+			AND
+			fa.document_id = dd.document_id AND
+			fa.fce_attachment_type_cd =
+			def.fce_attachment_type_cd
+		</retrieveFceAttachments>
+		<modifyFceAttachment>
+			UPDATE %Schema%CE_FCE_ATTACHMENT SET
+			fce_attachment_type_cd
+			= ?, last_modified = ? WHERE document_id = ?
+			AND fce_id = ?
+			AND last_modified = ?
+		</modifyFceAttachment>
+		<createFceAttachment>
+			INSERT INTO
+			%Schema%ce_fce_attachment(DOCUMENT_ID, FCE_ID,
+			FCE_ATTACHMENT_TYPE_CD) VALUES (?,?,?)
+		</createFceAttachment>
+		<deleteFceAttachment>
+			DELETE FROM %Schema%ce_fce_attachment where
+			fce_id = ? and
+			document_id = ?
+		</deleteFceAttachment>
+		<retrieveSvAttachments>
+			SELECT fa.visit_id, fa.sv_attachment_type_cd as
+			attachment_type_cd, fa.last_modified AS ref_lm,
+			def.sv_attachment_type_dsc, ${DocumentSQL.documentColumns}
+			FROM
+			%Schema%ce_sv_attachment fa, %Schema%dc_document dd,
+			%Schema%ce_sv_attachment_type_def def WHERE fa.visit_id = ?
+			AND
+			fa.document_id = dd.document_id AND
+			fa.sv_attachment_type_cd =
+			def.sv_attachment_type_cd
+		</retrieveSvAttachments>
+		<modifySvAttachment>
+			UPDATE %Schema%ce_sv_attachment SET
+			sv_attachment_type_cd
+			= ?, last_modified = ? WHERE document_id = ? AND
+			visit_id = ?
+			AND last_modified = ?
+		</modifySvAttachment>
+		<createSvAttachment>
+			INSERT INTO %Schema%ce_sv_attachment(DOCUMENT_ID,
+			VISIT_ID,
+			SV_ATTACHMENT_TYPE_CD) VALUES (?,?,?)
+		</createSvAttachment>
+		<deleteSvAttachment>
+			DELETE FROM %Schema%ce_sv_attachment where
+			visit_id = ? and
+			document_id = ?
+		</deleteSvAttachment>
+		<retrieveVisitBySearchP1>
+			SELECT ${CetaSQL.visitColumns2fp},
+			ca.county_cd,
+			${CetaSQL.evaluatorColumns}, cf.insp_id, ccm.cmp_id,
+			ccm.name as company_nm FROM %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2 LEFT JOIN %Schema%fp_facility_company_xref
+			ffcx ON (ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+			, %Schema%cm_address ca, %Schema%fp_facility_address_xref faxr,
+			%Schema%ce_site_visit
+			csv LEFT OUTER JOIN %Schema%ce_visit_eval_xref cvex ON
+			(cvex.visit_id =
+			csv.visit_id) LEFT OUTER JOIN %Schema%ce_fce cf ON (csv.fce_id =
+			cf.fce_id) WHERE csv.fp_id = ff1.fp_id
+			AND ff1.facility_id =
+			ff2.facility_id AND ff2.version_id =
+			-1 AND ff2.fp_id = faxr.fp_id AND
+			faxr.address_id =
+			ca.address_id AND ca.end_dt is null
+		</retrieveVisitBySearchP1>
+		<retrieveStVisitBySearchWithUser>
+			SELECT distinct csv.visit_id FROM
+			%Schema%fp_facility ff1,
+			%Schema%fp_facility ff3,
+			%Schema%ce_stack_test cst,
+			%Schema%fp_facility ff2 LEFT JOIN
+			%Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%ce_site_visit
+			csv LEFT OUTER JOIN %Schema%ce_fce cf ON
+			(csv.fce_id = cf.fce_id), %Schema%ce_stack_test_witness_xref cstwx,
+			%Schema%ce_stack_test_visit_date_xref cstvdx WHERE csv.fp_id
+			=
+			ff1.fp_id AND ff1.facility_id = ff2.facility_id AND
+			ff3.facility_id =
+			ff1.facility_id AND ff3.fp_id = cst.fp_id
+			AND ff2.version_id = -1 AND
+			ff2.fp_id = faxr.fp_id AND
+			faxr.address_id = ca.address_id AND
+			ca.end_dt is null AND
+			cstwx.user_id = ? AND cstvdx.test_date =
+			csv.visit_dt AND
+			cstwx.stack_test_id = cst.stack_test_id AND
+			cstwx.stack_test_id = cstvdx.stack_test_id AND
+			csv.site_visit_type_cd
+			= 'ST'
+		</retrieveStVisitBySearchWithUser>
+		<retrieveOtherVisitBySearchWithUser>
+			SELECT distinct csv.visit_id FROM
+			%Schema%ce_visit_eval_xref
+			cvex, %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2 LEFT JOIN %Schema%fp_facility_company_xref
+			ffcx ON (ffcx.facility_id = ff2.facility_id AND ffcx.end_date IS
+			NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id,
+			%Schema%cm_address ca, %Schema%fp_facility_address_xref
+			faxr,
+			%Schema%ce_site_visit csv LEFT OUTER JOIN %Schema%ce_fce cf ON
+			(csv.fce_id = cf.fce_id) WHERE csv.fp_id = ff1.fp_id
+			AND
+			ff1.facility_id = ff2.facility_id AND ff2.version_id =
+			-1 AND
+			ff2.fp_id = faxr.fp_id AND faxr.address_id =
+			ca.address_id AND
+			ca.end_dt is null AND cvex.user_id = ? AND
+			cvex.visit_id =
+			csv.visit_id AND csv.site_visit_type_cd
+			&lt;> 'ST'
+		</retrieveOtherVisitBySearchWithUser>
+		<retrieveEmissionsTestWitnesses>
+			SELECT distinct cstwx.user_id FROM
+			%Schema%ce_stack_test
+			cst, %Schema%ce_stack_test_visit_date_xref
+			cstvdx,
+			%Schema%ce_stack_test_witness_xref cstwx,
+			%Schema%fp_facility
+			ff WHERE ? = ff.facility_id and ff.fp_id
+			= cst.fp_id and
+			cst.stack_test_id = cstvdx.stack_test_id and
+			cstvdx.test_date = ? and
+			cst.stack_test_id =
+			cstwx.stack_test_id
+		</retrieveEmissionsTestWitnesses>
+		<retrieveByVisitId>
+			SELECT ${CetaSQL.visitColumns}, ff2.version_id,
+			${CetaSQL.evaluatorColumns}
+			FROM %Schema%fp_facility ff2 LEFT JOIN
+			%Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%ce_site_visit csv LEFT OUTER JOIN %Schema%ce_visit_eval_xref
+			cvex ON (cvex.visit_id
+			= csv.visit_id) LEFT OUTER JOIN %Schema%ce_fce
+			cf ON (csv.fce_id = cf.fce_id) WHERE csv.fp_id = ff2.fp_id AND
+			csv.visit_id
+			= ? ORDER BY csv.visit_dt DESC, ff2.facility_id,
+			csv.site_visit_type_cd
+		</retrieveByVisitId>
+		<retrieveStackTestVisitByDate>
+			SELECT ${CetaSQL.visitColumns},
+			ff2.version_id, ${CetaSQL.evaluatorColumns}
+			FROM %Schema%fp_facility ff2 LEFT JOIN %Schema%fp_facility_company_xref
+			ffcx ON (ffcx.facility_id = ff2.facility_id AND ffcx.end_date IS
+			NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%ce_site_visit csv LEFT
+			OUTER JOIN %Schema%ce_visit_eval_xref
+			cvex ON (cvex.visit_id
+			= csv.visit_id) LEFT OUTER JOIN %Schema%ce_fce
+			cf ON (csv.fce_id = cf.fce_id) WHERE csv.fp_id = ff2.fp_id AND
+			csv.visit_dt
+			= ? AND site_visit_type_cd = 'ST' AND ff2.facility_id = ?
+		</retrieveStackTestVisitByDate>
+		<retrieveSiteVisitsByFce>
+			SELECT ${CetaSQL.visitColumns},
+			ff2.version_id, ${CetaSQL.evaluatorColumns}
+			FROM %Schema%fp_facility
+			ff2 LEFT JOIN %Schema%fp_facility_company_xref ffcx ON
+			(ffcx.facility_id = ff2.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%ce_site_visit csv LEFT OUTER JOIN %Schema%ce_visit_eval_xref
+			cvex ON (cvex.visit_id
+			= csv.visit_id) LEFT OUTER JOIN %Schema%ce_fce
+			cf ON (csv.fce_id = cf.fce_id) WHERE csv.fp_id = ff2.fp_id AND
+			csv.fce_id = ?
+			ORDER BY csv.visit_dt DESC, ff2.facility_id,
+			csv.site_visit_type_cd
+		</retrieveSiteVisitsByFce>
+		<retrieveVisitsUnassigned>
+			SELECT ${CetaSQL.visitColumns},
+			ff2.version_id, ${CetaSQL.evaluatorColumns}
+			FROM %Schema%fp_facility
+			ff2 LEFT JOIN %Schema%fp_facility_company_xref ffcx ON
+			(ffcx.facility_id = ff2.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%ce_site_visit csv LEFT OUTER JOIN %Schema%ce_visit_eval_xref
+			cvex ON (cvex.visit_id
+			= csv.visit_id) LEFT OUTER JOIN %Schema%ce_fce
+			cf ON (csv.fce_id = cf.fce_id) WHERE csv.fp_id = ff2.fp_id AND
+			csv.fce_id is
+			null AND ff2.facility_id = ? ORDER BY csv.visit_dt DESC,
+			ff2.facility_id, csv.site_visit_type_cd
+		</retrieveVisitsUnassigned>
+		<createSiteVisit>
+			INSERT INTO %Schema%ce_site_visit (visit_id, fce_id,
+			fp_id,
+			visit_dt, site_visit_type_cd, announced, memo, afsSched_id,
+			afsSched_dt, facility_hist_id, created_by_id, created_dt,
+			site_visit_ve_cd, compliance_issued)
+			VALUES
+			(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createSiteVisit>
+		<modifySiteVisit>
+			UPDATE %Schema%ce_site_visit SET fce_id = ?, fp_id =
+			?,
+			visit_dt = ?, site_visit_type_cd = ?, announced = ?, memo =
+			?,
+			afsSched_id = ?, afsSched_dt = ?, facility_hist_id = ?,
+			site_visit_ve_cd = ?, compliance_issued = ?,
+			last_modified = ? WHERE visit_id = ? AND last_modified = ?
+		</modifySiteVisit>
+		<removeSiteVisit>
+			DELETE FROM %Schema%ce_site_visit WHERE visit_id = ?
+		</removeSiteVisit>
+		<removeSiteVisitNotes>
+			DELETE FROM %Schema%CE_SITE_VISIT_NOTE_XREF
+			WHERE visit_id = ?
+		</removeSiteVisitNotes>
+		<removeStackTestSiteVisit>
+			DELETE %Schema%ce_site_visit WHERE visit_id
+			in (SELECT csv.visit_id FROM %Schema%ce_site_visit csv,
+			%Schema%fp_facility ff WHERE csv.visit_dt = ? AND
+			csv.site_visit_type_cd = 'ST' AND csv.fp_id = ff.fp_id
+			AND
+			ff.facility_id = ?)
+		</removeStackTestSiteVisit>
+		<lockedStackTestSiteVisitCnt>
+			SELECT COUNT(*) as cnt FROM
+			%Schema%ce_site_visit csv, %Schema%fp_facility ff WHERE csv.visit_dt
+			= ? AND
+			csv.afssched_id is not null AND
+			csv.site_visit_type_cd = 'ST'
+			AND csv.fp_id = ff.fp_id
+			AND ff.facility_id = ?
+		</lockedStackTestSiteVisitCnt>
+		<isVisitDup>
+			SELECT ${CetaSQL.visitColumns}, ff2.version_id FROM
+			%Schema%ce_site_visit
+			csv LEFT OUTER JOIN %Schema%ce_fce cf ON
+			(csv.fce_id = cf.fce_id),
+			%Schema%fp_facility ff2 LEFT JOIN
+			%Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+			WHERE csv.fp_id = ff2.fp_id AND
+			csv.site_visit_type_cd = ? AND
+			ff2.facility_id = ? AND
+			csv.visit_dt &gt;= ? AND csv.visit_dt &lt;= ?
+		</isVisitDup>
+		<createVisitEvaluator>
+			INSERT INTO %Schema%ce_visit_eval_xref
+			(visit_id, user_id)
+			VALUES (?,?)
+		</createVisitEvaluator>
+		<removeVisitEvaluators>
+			DELETE FROM %Schema%ce_visit_eval_xref WHERE
+			visit_id = ?
+		</removeVisitEvaluators>
+
+		<needToSchedFce>
+			SELECT ca.county_cd, ff2.operating_status_cd,
+			${CetaSQL.fceColumns}, ccm.name as company_nm, ccm.cmp_id FROM
+			%Schema%fp_facility ff1 INNER
+			JOIN %Schema%ce_fce cf on (ff1.fp_id =
+			cf.fp_id)
+			LEFT JOIN %Schema%fp_facility_company_xref fc on
+			(ff1.facility_id = fc.facility_id AND fc.end_date is null)
+			LEFT JOIN %Schema%cm_company ccm on (fc.company_id = ccm.company_id),
+			%Schema%fp_facility ff2, %Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr, %Schema%cm_county_def
+			ccd WHERE
+			ff1.facility_id = ff2.facility_id AND
+			ff2.version_id = -1 AND
+			ff2.fp_id = faxr.fp_id AND
+			faxr.address_id = ca.address_id AND
+			ca.end_dt is null AND
+			ca.county_cd = ccd.county_cd AND
+			ff2.operating_status_cd in
+			('op', 'ni', 'nop')  and (cf.scheduled_dt is not null or cf.evaluated_dt is not null)
+		</needToSchedFce>
+
+		<needToSchedFirstFce>
+			SELECT ff.facility_id, ff.facility_nm,
+			ff.facility_type_cd, ff.permit_classification_cd,
+			ff.federal_scsc_id as scsc_id, ff.do_laa_cd, ca.county_cd,
+			ff.operating_status_cd, null
+			as fce_id, ccm.name as company_nm, ccm.cmp_id FROM
+			%Schema%fp_facility ff
+			LEFT JOIN %Schema%fp_facility_company_xref fc
+			on (ff.facility_id = fc.facility_id AND fc.end_date is null)
+			LEFT JOIN %Schema%cm_company ccm on (fc.company_id = ccm.company_id),
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%cm_county_def
+			ccd WHERE ff.version_id = -1 AND ff.fp_id =
+			faxr.fp_id AND
+			faxr.address_id = ca.address_id AND ca.end_dt is null
+			AND
+			ca.county_cd = ccd.county_cd AND ff.operating_status_cd in
+			('op',
+			'ni', 'nop')
+			AND ff.facility_id NOT IN (SELECT
+			ff2.facility_id FROM
+			%Schema%fp_facility ff2, %Schema%ce_fce
+			cf WHERE ff2.fp_id = cf.fp_id and (cf.scheduled_dt is not null or cf.evaluated_dt is not null))
+		</needToSchedFirstFce>
+
+		<retrieveStackTest>
+			SELECT ${CetaSQL.stackTestColumns}, ff2.version_id,
+			${CetaSQL.visitDateColumns},
+			CONCAT(CONCAT(cud_eval.last_nm,', '),
+			cud_eval.first_nm)
+			reviewer_full_name,
+			cud_eval.active_ind
+			reviewer_full_name_inact, cf.insp_id,
+			ccm.cmp_id, ccm.name as
+			company_nm
+			FROM %Schema%fp_facility ff2,
+			%Schema%ce_stack_test cst LEFT
+			OUTER JOIN
+			%Schema%ce_stack_test_visit_date_xref cstvdx ON
+			(cstvdx.stack_test_id = cst.stack_test_id) LEFT OUTER JOIN
+			dbo.cm_user_def cud_eval on ( cst.reviewer_id =
+			cud_eval.user_id) LEFT
+			OUTER JOIN dbo.ce_fce cf ON (cst.fce_id = cf.fce_id)
+			LEFT JOIN
+			%Schema%fp_facility ff ON (ff.fp_id = cst.fp_id)
+			LEFT JOIN
+			dbo.fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN dbo.cm_company ccm ON ccm.company_id = ffcx.company_id
+			WHERE
+			cst.stack_test_id = ? AND cst.fp_id = ff2.fp_id
+		</retrieveStackTest>
+		<retrieveStackTestsByFacilityNOTUSED>
+			SELECT
+			${CetaSQL.stackTestColumns}, ${CetaSQL.pollutantTestColumns},
+			ff2.version_id,
+			${CetaSQL.visitDateColumns},
+			CONCAT(CONCAT(cud_eval.last_nm,', '),
+			cud_eval.first_nm)
+			reviewer_full_name,
+			cud_eval.active_ind reviewer_full_name_inact
+			FROM
+			%Schema%fp_facility ff2, %Schema%ce_stack_test cst LEFT
+			OUTER JOIN
+			%Schema%ce_stack_test_visit_date_xref cstvdx ON
+			(cstvdx.stack_test_id
+			= cst.stack_test_id) LEFT OUTER JOIN
+			%Schema%cm_user_def cud_eval on (
+			cst.reviewer_id =
+			cud_eval.user_id) LEFT OUTER
+			JOIN
+			%Schema%CE_STACK_TEST_POLLUTANT_XREF stpx on (
+			stpx.stack_test_id =
+			cst.stack_test_id) WHERE
+			ff2.facility_id = ? AND cst.fp_id = ff2.fp_id
+			ORDER BY
+			cst.stack_test_id desc, cst.reviewer_id
+		</retrieveStackTestsByFacilityNOTUSED>
+		<retrieveStacktestByFceNOTUSED>
+			SELECT ${CetaSQL.stackTestColumns},
+			ff2.version_id,
+			stpx.afs_date, ${CetaSQL.visitDateColumns},
+			CONCAT(CONCAT(cud_eval.last_nm,', '), cud_eval.first_nm)
+			reviewer_full_name,
+			cud_eval.active_ind reviewer_full_name_inact
+			FROM
+			%Schema%fp_facility ff2,
+			%Schema%ce_stack_test cst LEFT OUTER JOIN
+			%Schema%ce_stack_test_visit_date_xref cstvdx ON
+			(cstvdx.stack_test_id
+			= cst.stack_test_id) LEFT OUTER JOIN
+			%Schema%cm_user_def cud_eval on (
+			cst.reviewer_id =
+			cud_eval.user_id) LEFT OUTER
+			JOIN
+			%Schema%CE_STACK_TEST_POLLUTANT_XREF stpx on (
+			stpx.stack_test_id =
+			cst.stack_test_id) WHERE cst.fce_id =
+			? AND cst.fp_id = ff2.fp_id
+			ORDER BY cst.stack_test_id desc,
+			cst.reviewer_id
+		</retrieveStacktestByFceNOTUSED>
+		<retrieveStacktestsUnassignedNOTUSED>
+			SELECT
+			${CetaSQL.stackTestColumns}, ff2.version_id,
+			stpx.afs_date,
+			${CetaSQL.visitDateColumns},
+			CONCAT(CONCAT(cud_eval.last_nm,', '),
+			cud_eval.first_nm)
+			reviewer_full_name,
+			cud_eval.active_ind
+			reviewer_full_name_inact
+			FROM %Schema%fp_facility ff2,
+			%Schema%ce_stack_test cst LEFT OUTER JOIN
+			%Schema%ce_stack_test_visit_date_xref cstvdx ON
+			(cstvdx.stack_test_id
+			= cst.stack_test_id) LEFT OUTER JOIN
+			%Schema%cm_user_def cud_eval on (
+			cst.reviewer_id =
+			cud_eval.user_id) LEFT OUTER
+			JOIN
+			%Schema%CE_STACK_TEST_POLLUTANT_XREF stpx on (
+			stpx.stack_test_id =
+			cst.stack_test_id) WHERE
+			ff2.facility_id = ? AND cst.fce_id is null
+			AND cst.fp_id =
+			ff2.fp_id ORDER BY cst.stack_test_id desc,
+			cst.reviewer_id
+		</retrieveStacktestsUnassignedNOTUSED>
+		<createStackTest>
+			INSERT INTO %Schema%ce_stack_test (stack_test_id,
+			fce_id,
+			fp_id, date_scheduled, date_received,
+			reviewer_id,
+			date_evaluated, reminder_date,
+			stack_test_method_cd, conformed,
+			control_equip_used, monitoring_equip, memo, company,
+			audit_result_cd,
+			emission_test_state, legacy_flag, for_pti,
+			for_ptio, for_pto, for_tv,
+			for_feptio, for_nsps, for_mact, for_bif,
+			for_tiv, for_other,
+			created_by_id, created_dt, submitted_date,
+			category_cd,
+			testing_method_cd, validated_flag) VALUES (?, ?,
+			?, ?, ?, ?, ?, ?, ?,
+			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+			?)
+		</createStackTest>
+		<createTestVisitDate>
+			INSERT INTO %Schema%ce_stack_test_visit_date_xref
+			(stack_test_id, test_date) VALUES (?,?)
+		</createTestVisitDate>
+		<removeTestVisitDates>
+			DELETE FROM
+			%Schema%ce_stack_test_visit_date_xref WHERE
+			stack_test_id = ?
+		</removeTestVisitDates>
+		<createTestPollutant>
+			INSERT INTO %Schema%ce_stack_test_pollutant_xref
+			(stack_test_id, pollutant_cd, afs_date, afs_id,
+			stack_test_result_cd,
+			permitted_allow_emission_rate,
+			permitted_max_operating_rate, tested_emission_rate,
+			tested_operating_rate, tested_eu, scc_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+		</createTestPollutant>
+		<removeTestPollutants>
+			DELETE FROM %Schema%ce_stack_test_pollutant_xref
+			WHERE
+			stack_test_id = ?
+		</removeTestPollutants>
+		<retrieveTestPollutants>
+			SELECT ${CetaSQL.pollutantTestColumns}, 0 as
+			last_modified FROM %Schema%ce_stack_test_pollutant_xref stpx
+			WHERE
+			stack_test_id = ?
+		</retrieveTestPollutants>
+		<retrieveMethodPollutants>
+			SELECT pollutant_cd, deprecated FROM
+			%Schema%ce_stack_test_method_poll_xref WHERE
+			stack_test_method_cd = ?
+		</retrieveMethodPollutants>
+
+		<createStackTestWitness>
+			INSERT INTO %Schema%ce_stack_test_witness_xref
+			(stack_test_id, user_id) VALUES (?,?)
+		</createStackTestWitness>
+		<removeStackTestWitnesses>
+			DELETE FROM
+			%Schema%ce_stack_test_witness_xref WHERE
+			stack_test_id = ?
+		</removeStackTestWitnesses>
+		<retrieveStackTestWitnesses>
+			SELECT cstwx.user_id FROM
+			%Schema%ce_stack_test_witness_xref cstwx
+			JOIN dbo.cm_user_def cud on
+			cud.user_id=cstwx.user_id WHERE
+			stack_test_id = ? ORDER BY last_nm
+		</retrieveStackTestWitnesses>
+
+		<modifyStackTest>
+			UPDATE %Schema%ce_stack_test SET fce_id = ?, fp_id =
+			?,
+			date_scheduled = ?, date_received = ?,
+			reviewer_id = ?,
+			date_evaluated = ?, reminder_date = ?,
+			stack_test_method_cd = ?,
+			conformed = ?,
+			control_equip_used = ?,
+			monitoring_equip = ?, memo = ?,
+			company = ?, audit_result_cd
+			= ?, emission_test_state = ?, legacy_flag
+			= ?, for_pti = ?,
+			for_ptio = ?, for_pto = ?, for_tv = ?, for_feptio =
+			?, for_nsps = ?,
+			for_mact = ?, for_bif = ?, for_tiv = ?, for_other =
+			?, submitted_date = ?,
+			last_modified = ?, category_cd = ?,
+			testing_method_cd = ?, validated_flag = ?
+			WHERE stack_test_id = ? AND
+			last_modified = ?
+		</modifyStackTest>
+		<removeStackTest>
+			DELETE FROM %Schema%ce_stack_test WHERE stack_test_id
+			= ?
+		</removeStackTest>
+		<removeStackTestNotes>
+			DELETE FROM %Schema%CE_STACK_TEST_NOTE_XREF WHERE stack_test_id = ?
+		</removeStackTestNotes>
+
+
+		<cntStackTestsWithDate>
+			SELECT COUNT(*) as cnt FROM
+			%Schema%ce_stack_test cst,
+			%Schema%fp_facility ff,
+			%Schema%ce_stack_test_visit_date_xref cstvdx WHERE
+			cstvdx.stack_test_id = cst.stack_test_id AND
+			cstvdx.test_date = ? AND
+			cst.stack_test_id &lt;&gt; ? AND
+			(SELECT COUNT(*) from
+			%Schema%ce_stack_test_witness_xref cstwx
+			WHERE cstwx.stack_test_id = cst.stack_test_id) > 0 AND
+			cst.fp_id = ff.fp_id
+			AND ff.facility_id = ?
+		</cntStackTestsWithDate>
+
+		<retrieveStackTestsBySearch>
+			SELECT distinct
+			${CetaSQL.stackTestColumns}, ${CetaSQL.pollutantTestColumns},
+			ff.version_id, feu.epa_emu_id, feu.corr_epa_emu_id,
+			${CetaSQL.visitDateColumns}, ca.county_cd,
+			CONCAT(CONCAT(cud_eval.last_nm,', '), cud_eval.first_nm)
+			reviewer_full_name,
+			cud_eval.active_ind reviewer_full_name_inact,
+			cf.insp_id,
+			ccm.cmp_id, ccm.name as company_nm
+			FROM %Schema%fp_facility
+			ff2, %Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%ce_stack_test
+			cst LEFT OUTER JOIN
+			%Schema%ce_stack_test_visit_date_xref
+			cstvdx ON (cstvdx.stack_test_id
+			= cst.stack_test_id) LEFT
+			OUTER JOIN %Schema%cm_user_def cud_eval on (
+			cst.reviewer_id
+			= cud_eval.user_id) LEFT OUTER JOIN %Schema%ce_fce cf
+			ON (cst.fce_id = cf.fce_id) LEFT
+			OUTER JOIN
+			%Schema%CE_STACK_TEST_POLLUTANT_XREF stpx on (
+			stpx.stack_test_id =
+			cst.stack_test_id)
+			LEFT OUTER JOIN %Schema%fp_facility ff on
+			(cst.fp_id = ff.fp_id)
+			LEFT OUTER JOIN %Schema%fp_emissions_unit feu
+			on (feu.fp_id = ff.fp_id
+			and feu.corr_epa_emu_id = stpx.tested_eu)
+			LEFT JOIN
+			%Schema%fp_facility_company_xref ffcx ON (ffcx.facility_id =
+			ff.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+			WHERE ff.facility_id = ff2.facility_id AND
+			ff2.version_id =
+			ff.version_id AND cst.fp_id = faxr.fp_id AND
+			faxr.address_id =
+			ca.address_id AND ca.end_dt is null
+		</retrieveStackTestsBySearch>
+		<duplicateStackTestPart1>
+			SELECT cst.stack_test_id FROM
+			%Schema%fp_facility ff,
+			%Schema%ce_stack_test cst WHERE ff.facility_id
+			= ? AND
+			cst.fp_id = ff.fp_id AND cst.stack_test_id &lt;&gt; ? AND
+			cst.tested_eu = ? AND cst.stack_test_method_cd = ? AND
+		</duplicateStackTestPart1>
+		<duplicateStackTestPart1Null>
+			SELECT cst.stack_test_id FROM
+			%Schema%fp_facility ff,
+			%Schema%ce_stack_test cst WHERE ff.facility_id
+			= ? AND
+			cst.fp_id = ff.fp_id AND cst.tested_eu = ? AND
+			cst.stack_test_method_cd = ? AND
+		</duplicateStackTestPart1Null>
+		<duplicateStackTestPart2>
+			? in (SELECT test_date FROM
+			%Schema%ce_stack_test_visit_date_xref cstvdx WHERE
+			cstvdx.stack_test_id = cst.stack_test_id)
+		</duplicateStackTestPart2>
+		<retrieveStTradeSecretAttachmentInfo>
+			SELECT DOCUMENT_ID, TRADE_SECRET_REASON
+			FROM %Schema%CE_ST_TRADE_SECRET_ATTACHMENTS
+			WHERE STACK_TEST_ID = ? AND PUBLIC_DOC_ID = ?
+		</retrieveStTradeSecretAttachmentInfo>
+		<retrieveStAttachments>
+			SELECT sa.stack_test_id,
+			sa.st_attachment_type_cd as
+			attachment_type_cd, sa.last_modified AS
+			ref_lm,
+			def.st_attachment_type_dsc, ${DocumentSQL.documentColumns}
+			FROM %Schema%ce_st_attachment sa, %Schema%dc_document dd,
+			dbo.ce_st_attachment_type_def def WHERE sa.stack_test_id
+			= ? AND
+			sa.document_id = dd.document_id AND
+			sa.st_attachment_type_cd =
+			def.st_attachment_type_cd
+		</retrieveStAttachments>
+		<retrieveStAttachmentTypes>
+			SELECT st_attachment_type_cd AS code,
+			st_attachment_type_dsc AS description, deprecated,
+			last_modified,
+			trade_secret_allowed FROM %Schema%ce_st_attachment_type_def
+			ORDER BY
+			st_attachment_type_dsc
+		</retrieveStAttachmentTypes>
+		<createStTradeSecretAttachment>
+			INSERT INTO %Schema%CE_ST_TRADE_SECRET_ATTACHMENTS(DOCUMENT_ID,
+			STACK_TEST_ID, PUBLIC_DOC_ID, TRADE_SECRET_REASON)
+			VALUES (?, ?, ?, ?)
+		</createStTradeSecretAttachment>
+		<createStAttachment>
+			INSERT INTO %Schema%ce_st_attachment(DOCUMENT_ID,
+			STACK_TEST_ID, ST_ATTACHMENT_TYPE_CD) VALUES (?,?,?)
+		</createStAttachment>
+		<modifyStTradeSecretAttachment>
+			UPDATE %Schema%CE_ST_TRADE_SECRET_ATTACHMENTS
+			SET trade_secret_reason = ?, last_modified = ?
+			WHERE document_id = ? AND last_modified = ?
+		</modifyStTradeSecretAttachment>
+		<modifyStAttachment>
+			UPDATE %Schema%CE_ST_ATTACHMENT SET
+			st_attachment_type_cd =
+			?, last_modified = ? WHERE document_id = ? AND
+			stack_test_id
+			= ? AND last_modified = ?
+		</modifyStAttachment>
+		<deleteStTradeSecretAttachment>
+			DELETE FROM %Schema%CE_ST_TRADE_SECRET_ATTACHMENTS
+			WHERE document_id = ?
+		</deleteStTradeSecretAttachment>
+		<deleteStAttachment>
+			DELETE FROM %Schema%ce_st_attachment where
+			stack_test_id = ?
+			and document_id = ?
+		</deleteStAttachment>
+		<siteVisitAfsLockedId>
+			SELECT afsSched_id FROM %Schema%ce_site_visit
+			WHERE afsSched_dt is not null AND visit_id = ?
+		</siteVisitAfsLockedId>
+		<offSiteVisitAfsLockedId>
+			SELECT afs_id FROM %Schema%ce_offsite_pce
+			WHERE afs_dt is not null AND offsite_pce_id = ?
+		</offSiteVisitAfsLockedId>
+		<newAfsSiteVisits>
+			SELECT ${CetaSQL.visitColumns}, ff1.version_id,
+			ca.county_cd,
+			${CetaSQL.evaluatorColumns} FROM %Schema%fp_facility
+			ff1, %Schema%fp_facility ff2,
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref
+			faxr, %Schema%ce_site_visit csv LEFT
+			OUTER JOIN
+			%Schema%ce_visit_eval_xref cvex ON (cvex.visit_id =
+			csv.visit_id) WHERE csv.fp_id = ff1.fp_id AND
+			ff1.facility_id =
+			ff2.facility_id AND ff2.version_id = -1
+			AND ff1.facility_id &lt;> '0125204001' AND
+			ff2.fp_id = faxr.fp_id AND faxr.address_id = ca.address_id AND ca.end_dt
+			is
+			null AND csv.afsSched_dt is null ORDER BY ff2.federal_scsc_id,
+			ff2.facility_id,csv.visit_id
+		</newAfsSiteVisits>
+		<newAfsFCEs>
+			SELECT ${CetaSQL.fceColumns}, ca.county_cd,
+			CONCAT(CONCAT(cud.last_nm,', '), cud.first_nm) full_name,
+			cud.active_ind full_name_inact,
+			cud_eval.active_ind
+			eval_full_name_inact,
+			CONCAT(CONCAT(cud_eval.last_nm,', '),
+			cud_eval.first_nm)
+			eval_full_name FROM %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2, %Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr, %Schema%ce_fce cf
+			LEFT OUTER
+			JOIN %Schema%cm_user_def cud on (
+			cf.staff_assigned_id = cud.user_id),
+			%Schema%ce_fce cf_eval LEFT OUTER JOIN %Schema%cm_user_def
+			cud_eval on
+			( cf_eval.evaluator_id = cud_eval.user_id) WHERE
+			cf.evaluated_dt is
+			not null AND cf.fce_id = cf_eval.fce_id
+			AND cf.fp_id = ff1.fp_id AND
+			ff1.facility_id =
+			ff2.facility_id AND ff2.version_id = -1 AND
+			ff2.fp_id =
+			faxr.fp_id AND ff1.facility_id &lt;> '0125204001'
+			AND
+			faxr.address_id = ca.address_id AND ca.end_dt
+			is null AND cf.afs_dt is
+			null ORDER BY ff2.federal_scsc_id, ff2.facility_id,
+			cf.evaluated_dt
+		</newAfsFCEs>
+		<fceAfsLockedId>
+			SELECT afs_id FROM %Schema%ce_fce WHERE afs_dt is not
+			null AND fce_id = ?
+		</fceAfsLockedId>
+		<newAfsScheduledFCEs>
+			SELECT ${CetaSQL.fceColumns}, ca.county_cd,
+			CONCAT(CONCAT(cud.last_nm,', '), cud.first_nm) full_name,
+			cud.active_ind full_name_inact,
+			cud_eval.active_ind
+			eval_full_name_inact,
+			CONCAT(CONCAT(cud_eval.last_nm,', '),
+			cud_eval.first_nm)
+			eval_full_name FROM %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2, %Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr, %Schema%ce_fce cf
+			LEFT OUTER
+			JOIN %Schema%cm_user_def cud on (
+			cf.staff_assigned_id = cud.user_id)
+			LEFT OUTER JOIN %Schema%cm_user_def
+			cud_eval on ( cf_eval.evaluator_id
+			= cud_eval.user_id)
+			WHERE cf.fce_id = cf_eval.fce_id AND cf.us_epa_committed = 'Y'
+			AND cf.fp_id = ff1.fp_id AND cf.scheduled_dt
+			&gt;= ? AND cf.scheduled_dt
+			&lt; ? AND ff1.facility_id =
+			ff2.facility_id AND ff2.version_id = -1
+			AND ff2.fp_id =
+			faxr.fp_id AND ff1.facility_id &lt;> '0125204001'
+			AND
+			faxr.address_id = ca.address_id AND ca.end_dt
+			is null AND
+			cf.afsSched_dt is null ORDER BY ff2.federal_scsc_id, ff2.facility_id
+		</newAfsScheduledFCEs>
+		<stackTestAfsLockedId>
+			SELECT afs_id FROM
+			%Schema%ce_stack_test_pollutant_xref
+			WHERE afs_date is not null AND stack_test_result_cd = 'FF' AND
+			stack_test_id = ?
+		</stackTestAfsLockedId>
+		<newAfsStackTests>
+			SELECT
+			cst.stack_test_id, cst.fce_id, cst.fp_id, cst.date_evaluated,
+			cst.reviewer_id,
+			cst.date_evaluated, cst.stack_test_method_cd,
+			ff.facility_id,
+			ff2.facility_nm, ff.version_id, ff2.federal_scsc_id as scsc_id,
+			feu.epa_emu_id, ${CetaSQL.pollutantTestColumns}, cst.last_modified,
+			cstvdx.test_date
+			FROM %Schema%fp_facility ff2,
+			%Schema%CE_STACK_TEST_POLLUTANT_XREF stpx
+			JOIN %Schema%ce_stack_test
+			cst ON (cst.stack_test_id = stpx.stack_test_id)
+			JOIN
+			%Schema%fp_facility ff ON (ff.fp_id = cst.fp_id)
+			LEFT OUTER JOIN
+			%Schema%fp_emissions_unit feu ON (feu.fp_id = ff.fp_id
+			AND feu.corr_epa_emu_id = stpx.tested_eu)
+			LEFT OUTER JOIN
+			%Schema%ce_stack_test_visit_date_xref cstvdx ON (cstvdx.stack_test_id
+			= cst.stack_test_id)
+			WHERE
+			cst.emission_test_state = 'sbmt' AND
+			(stpx.stack_test_result_cd = 'PP' OR
+			stpx.stack_test_result_cd = 'FF') AND stpx.afs_date is
+			null AND
+			ff.facility_id = ff2.facility_id AND ff2.version_id = -1
+			AND
+			ff.facility_id &lt;> '0125204001'
+			ORDER BY ff2.federal_scsc_id,
+			ff2.FACILITY_ID, cst.stack_test_id, feu.epa_emu_id,
+			stpx.scc_id, stpx.pollutant_cd, cstvdx.test_date
+		</newAfsStackTests>
+		<tvCcAfsLockedId>
+			SELECT tvcc_afs_id FROM %Schema%cr_compliance_report
+			WHERE tvcc_afs_sent_date is not null AND report_id = ?
+		</tvCcAfsLockedId>
+		<newAfsTvCc>
+			SELECT fp.FACILITY_ID, fp2.FEDERAL_SCSC_ID as scsc_id,
+			fp2.FACILITY_NM,
+			fp2.OPERATING_STATUS_CD, fp2.LAST_SHUTDOWN_DATE,
+			fp.DO_LAA_CD,
+			ca.ADDRESS1, ca.ADDRESS2, ca.CITY, ca.ZIP5, ca.ZIP4,
+			${ComplianceReportSQL.complianceReportColumns}
+			FROM %Schema%CM_ADDRESS
+			ca, %Schema%FP_FACILITY fp, %Schema%FP_FACILITY fp2,
+			%Schema%FP_FACILITY_ADDRESS_XREF
+			ffax, %Schema%CR_COMPLIANCE_REPORT cr
+			WHERE ffax.ADDRESS_ID =
+			ca.ADDRESS_ID and fp.FP_ID = ffax.FP_ID and
+			fp.FACILITY_ID =
+			cr.FACILITY_ID and
+			cr.REPORT_TYPE_CD = 'tvcc' AND
+			fp.VERSION_ID = -1 AND
+			ca.END_DT is NULL AND cr.DAPC_ACCEPTED = 'yes'
+			AND
+			compliance_status_cd IS NOT NULL AND compliance_status_cd &lt;>
+			'PEND' AND
+			cr.TVCC_REPORTING_YEAR > 2007 AND cr.tvcc_afs_sent_date is
+			NULL AND cr.DAPC_REVIEWED_DATE is not NULL
+			AND fp.facility_id = fp2.facility_id AND fp2.version_id = -1
+			AND
+			fp.facility_id &lt;> '0125204001'
+			ORDER BY
+			fp2.federal_scsc_id,
+			fp2.FACILITY_ID, cr.TVCC_REPORTING_YEAR
+		</newAfsTvCc>
+		<isStackTestSubmitted>
+			SELECT cst.stack_test_id as cnt FROM
+			%Schema%ce_stack_test
+			cst, %Schema%ce_stack_test_visit_date_xref
+			cstvdx WHERE
+			cstvdx.stack_test_id = cst.stack_test_id AND
+			cstvdx.test_date = ? AND cst.emission_test_state = 'sbmt'
+		</isStackTestSubmitted>
+		<afsLockEnfAction>
+			UPDATE %Schema%ce_enforcement_action SET afs_id = ?,
+			last_modified = ? WHERE
+			action_id = ? AND last_modified = ?
+		</afsLockEnfAction>
+		<setZeroAfsIdEnf>
+			UPDATE %Schema%ce_enforcement SET day_zero_afs_id =
+			?, last_modified = ? WHERE
+			enforcement_id = ? AND last_modified = ?
+		</setZeroAfsIdEnf>
+		<setZeroAfsDateEnf>
+			UPDATE %Schema%ce_enforcement SET afs_date = ?,
+			last_modified = ? WHERE
+			day_zero_afs_id = ? AND last_modified = ?
+		</setZeroAfsDateEnf>
+		<afsSetDateEnfAction>
+			UPDATE %Schema%ce_enforcement_action SET
+			afs_sent_date = ?, last_modified = ? WHERE
+			action_id = ? AND
+			last_modified = ?
+		</afsSetDateEnfAction>
+		<afsLockFceSched>
+			UPDATE %Schema%ce_fce SET afsSched_id = ?,
+			last_modified = ? WHERE fce_id = ? AND last_modified = ?
+		</afsLockFceSched>
+		<afsSetDateFceSched>
+			UPDATE %Schema%ce_fce SET afsSched_dt = ?,
+			last_modified = ? WHERE fce_id = ? AND last_modified = ?
+		</afsSetDateFceSched>
+		<afsLockFceComp>
+			UPDATE %Schema%ce_fce SET afs_id = ?, last_modified =
+			? WHERE fce_id = ? AND last_modified = ?
+		</afsLockFceComp>
+		<afsSetDateFceComp>
+			UPDATE %Schema%ce_fce SET afs_dt = ?, last_modified
+			= ? WHERE fce_id = ? AND last_modified = ?
+		</afsSetDateFceComp>
+		<afsLockOffSiteVisit>
+			UPDATE %Schema%ce_offSite_pce SET afs_id = ?,
+			last_modified = ? WHERE
+			offSite_pce_id = ? AND last_modified = ?
+		</afsLockOffSiteVisit>
+		<afsSetDateOffsitePCE>
+			UPDATE %Schema%ce_offSite_pce SET afs_dt = ?,
+			last_modified = ? WHERE
+			offSite_pce_id = ? AND last_modified = ?
+		</afsSetDateOffsitePCE>
+		<afsLockSiteVisit>
+			UPDATE %Schema%ce_site_visit SET afsSched_id = ?,
+			last_modified = ? WHERE
+			visit_id = ? AND last_modified = ?
+		</afsLockSiteVisit>
+		<afsSetDateSiteVisit>
+			UPDATE %Schema%ce_site_visit SET afsSched_dt = ?,
+			last_modified = ? WHERE
+			visit_id = ? AND last_modified = ?
+		</afsSetDateSiteVisit>
+		<afsLockStackTestPollutant>
+			UPDATE %Schema%ce_stack_test_pollutant_xref
+			SET afs_id = ?
+			WHERE stack_test_id = ? AND tested_eu = ? AND
+			pollutant_cd = ?
+		</afsLockStackTestPollutant>
+		<afsSetDateStackTestPollutant>
+			UPDATE
+			%Schema%ce_stack_test_pollutant_xref
+			SET afs_date = ?
+			WHERE stack_test_id = ? AND afs_id = ?
+		</afsSetDateStackTestPollutant>
+		<afsLockTvCc>
+			UPDATE %Schema%cr_compliance_report SET tvcc_afs_id = ?,
+			last_modified = ?
+			WHERE report_id = ? AND last_modified = ?
+		</afsLockTvCc>
+		<createNewAfsId>
+			INSERT INTO %Schema%next_afs_id (scsc_id, next_afs_id)
+			VALUES (?, 1)
+		</createNewAfsId>
+		<getAfsId>
+			SELECT next_afs_id FROM %Schema%ce_next_afs_id where
+			scsc_id
+			= ?
+		</getAfsId>
+		<updateAfsId>
+			UPDATE %Schema%ce_next_afs_id SET next_afs_id = ? WHERE
+			scsc_id = ? AND next_afs_id = ?
+		</updateAfsId>
+		<retrieveLastCompletedFce>
+			SELECT top 1 ${CetaSQL.fcePlainColumns},
+			'notUsed' as full_name, 'notUsed' as eval_full_name,
+			'notUsed' as
+			eval_full_name_inact, 'notUsed' as full_name_inact
+			FROM (SELECT
+			${CetaSQL.fceColumns}, ccm.cmp_id as cmp_id, ccm.name as company_nm FROM %Schema%ce_fce cf,
+			%Schema%fp_facility ff1, %Schema%fp_facility ff2
+			LEFT JOIN %Schema%fp_facility_company_xref fc on ff2.facility_id =
+			fc.facility_id
+			LEFT JOIN %Schema%cm_company ccm on fc.company_id =
+			ccm.company_id
+			WHERE cf.evaluated_dt IS NOT NULL AND
+			cf.fp_id =
+			ff1.fp_id AND ff1.facility_id = ff2.facility_id AND
+			ff1.facility_id = ? AND ff2.version_id = -1) a
+			ORDER BY a.evaluated_dt DESC
+		</retrieveLastCompletedFce>
+		<retrieveLastScheduledFce>
+			SELECT top 1 ${CetaSQL.fcePlainColumns},
+			'notUsed' as full_name, 'notUsed' as eval_full_name,
+			'notUsed' as
+			eval_full_name_inact, 'notUsed' as full_name_inact
+			FROM (SELECT
+			${CetaSQL.fceColumns}, ccm.cmp_id as cmp_id, ccm.name as company_nm
+			FROM %Schema%ce_fce cf,
+			%Schema%fp_facility ff1, %Schema%fp_facility
+			ff2
+			LEFT JOIN %Schema%fp_facility_company_xref fc on ff2.facility_id =
+			fc.facility_id
+			LEFT JOIN %Schema%cm_company ccm on fc.company_id =
+			ccm.company_id
+			WHERE cf.evaluated_dt IS NULL AND
+			cf.scheduled_dt IS NOT
+			NULL AND cf.fp_id = ff1.fp_id AND
+			ff1.facility_id = ff2.facility_id AND
+			ff1.facility_id = ? AND ff2.version_id = -1) a
+			ORDER BY a.scheduled_dt
+		</retrieveLastScheduledFce>
+		<retrieveLastSiteVisit>
+			SELECT top 1 ${CetaSQL.visitPlainColumns},
+			insp_id, cmp_id, company_nm FROM (SELECT
+			${CetaSQL.visitColumns},
+			ff2.version_id FROM %Schema%ce_site_visit csv LEFT OUTER JOIN
+			%Schema%ce_fce cf ON (csv.fce_id = cf.fce_id),
+			%Schema%fp_facility ff2
+			LEFT JOIN %Schema%fp_facility_company_xref fc on ff2.facility_id =
+			fc.facility_id
+			LEFT JOIN %Schema%cm_company ccm on fc.company_id =
+			ccm.company_id
+			WHERE csv.visit_dt IS NOT NULL AND
+			csv.fp_id = ff2.fp_id
+			AND ff2.facility_id = ? ) a ORDER BY a.visit_dt DESC
+		</retrieveLastSiteVisit>
+		<retrieveLastStackTestDate>
+			SELECT top 1 test_date FROM ( SELECT
+			cstvdx.test_date FROM %Schema%fp_facility ff,
+			%Schema%ce_stack_test
+			cst,
+			%Schema%ce_stack_test_visit_date_xref cstvdx WHERE
+			cstvdx.stack_test_id = cst.stack_test_id AND cst.fp_id =
+			ff.fp_id AND
+			ff.facility_id = ? ) a ORDER BY a.test_date DESC
+		</retrieveLastStackTestDate>
+		<retrieveLastStackTestDateById>
+			SELECT test_date FROM ( SELECT
+			cstvdx.test_date FROM %Schema%ce_stack_test cst,
+			%Schema%ce_stack_test_visit_date_xref cstvdx WHERE
+			cstvdx.stack_test_id = ? ORDER
+			BY cstvdx.test_date DESC) WHERE rownum
+			= 1
+		</retrieveLastStackTestDateById>
+		<retrievePollutantTestByAfsId>
+			SELECT ${CetaSQL.pollutantTestColumns},
+			st.last_modified
+			FROM %Schema%ce_stack_test_pollutant_xref stpx, %Schema%ce_stack_test st,
+			%Schema%fp_facility ff, %Schema%fp_facility ff2
+			WHERE ff2.federal_scsc_id = ? AND stpx.afs_id = ? AND ff2.version_id = -1
+			AND ff.fp_id = st.fp_id AND st.stack_test_id = stpx.stack_test_id AND
+			ff.facility_id = ff2.facility_id
+		</retrievePollutantTestByAfsId>
+		<retrieveSchedFceByAfsId>
+			SELECT ${CetaSQL.fceColumns}, 'notUsed' as
+			full_name, 'notUsed' as eval_full_name,
+			'notUsed' as eval_full_name_inact, 'notUsed' as full_name_inact
+			FROM %Schema%ce_fce cf, %Schema%fp_facility ff1, %Schema%fp_facility ff2
+			WHERE ff2.federal_scsc_id = ? AND afsSched_id = ? AND ff2.version_id
+			= -1
+			AND ff.fp_id = cf.fp_id AND ff.facility_id = ff2.facility_id
+		</retrieveSchedFceByAfsId>
+		<retrieveEvalFceByAfsId>
+			SELECT ${CetaSQL.fceColumns}, 'notUsed' as
+			full_name, 'notUsed' as eval_full_name,
+			'notUsed' as eval_full_name_inact, 'notUsed' as full_name_inact
+			FROM %Schema%ce_fce cf, %Schema%fp_facility ff1, %Schema%fp_facility ff2
+			WHERE ff2.federal_scsc_id = ? AND cf.afs_id = ? AND ff2.version_id =
+			-1
+			AND ff1.fp_id = cf.fp_id AND ff1.facility_id = ff2.facility_id
+		</retrieveEvalFceByAfsId>
+		<retrieveSiteVisitByAfsId>
+			SELECT ${CetaSQL.visitColumns},
+			ff2.version_id
+			FROM %Schema%ce_site_visit csv, %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2
+			WHERE ff2.federal_scsc_id = ? AND csv.afsSched_id = ? AND ff2.version_id =
+			-1
+			AND ff1.fp_id = csv.fp_id AND ff1.facility_id = ff2.facility_id
+		</retrieveSiteVisitByAfsId>
+		<updateStackTestLastModifiedOnly>
+			UPDATE %Schema%ce_stack_test SET
+			last_modified = ?
+			WHERE last_modified = ?
+		</updateStackTestLastModifiedOnly>
+		<orderEvaluators>
+			SELECT cud.user_id from %Schema%cm_user_def cud where
+			cud.user_id in
+		</orderEvaluators>
+		<fceNeedReminders>
+			SELECT fce_id, staff_assigned_id, evaluator_id,
+			fp_id, null as facility_id, null as permit_classification_cd, 
+			null as facility_type_cd, null as facility_nm, null as do_laa_cd, 
+			null as federal_scsc_id, null as scsc_id,
+			null as version_id, null as
+			operating_status_cd, cast (null as dateTime) last_shutdown_date,
+			scheduled_dt, evaluated_dt, reported_dt, cast (null as dateTime)
+			afs_dt, null as afs_id, cast (null as dateTime) afsSched_dt, null as
+			afsSched_id, null as memo, null as us_epa_committed, null as
+			last_modified, null as facility_hist_id,
+			null as FROZEN_INSPECTION_CLASS_CD, cast (null as dateTime) created_dt, 
+			null as portable, null as eval_full_name_inact, null as full_name, 
+			null as fullName, null as eval_full_name_inact,
+			null as eval_full_name, null as insp_id, null as cmp_id, null as company_nm, 
+			cast (null as dateTime) sent_to_epa_dt,
+			null as inspection_type_id, null as is_legacy_inspection, null as facility_afs_num,
+			last_fce_id, facility_staff_present, inspection_rpt_state_cd, private_property_access,
+			announced_inspection, concerns, file_review_records_request, regulatory_discussion,
+			physical_inspection, ambient_monitoring, other_information, pre10_legacy, 
+			reference_review_start_date, inspection_compliance_status_cd
+			FROM %Schema%ce_fce cf
+			WHERE cf.scheduled_dt is not null AND cf.evaluated_dt is null AND
+			cf.scheduled_dt &gt;= ?
+			AND cf.scheduled_dt &lt;= ?
+			AND cf.fce_id not in
+			(SELECT wp.external_id FROM %Schema%wf_process wp, %Schema%ce_fce cf
+			WHERE wp.process_template_id = 10
+			AND wp.external_id = cf.fce_id
+			AND cf.scheduled_dt is not null AND cf.evaluated_dt is null)
+		</fceNeedReminders>
+		<retrieveInspectionNotes>
+			SELECT ${InfrastructureSQL.noteColumns}, cfnx.FCE_ID
+			FROM %Schema%CE_FCE_NOTE_XREF cfnx, %Schema%cm_note cn
+			WHERE cfnx.FCE_ID = ?
+			AND cfnx.note_id = cn.note_id
+			ORDER BY note_id DESC
+		</retrieveInspectionNotes>
+		<createInspectionNote>
+			INSERT INTO %Schema%CE_FCE_NOTE_XREF (FCE_ID, NOTE_ID) VALUES (?, ?)
+		</createInspectionNote>
+		<retrieveSiteVisitNotes>
+			SELECT ${InfrastructureSQL.noteColumns}, csvnx.VISIT_ID
+			FROM %Schema%CE_SITE_VISIT_NOTE_XREF csvnx, %Schema%cm_note cn
+			WHERE csvnx.VISIT_ID = ?
+			AND csvnx.note_id = cn.note_id
+			ORDER BY note_id DESC
+		</retrieveSiteVisitNotes>
+		<createSiteVisitNote>
+			INSERT INTO %Schema%CE_SITE_VISIT_NOTE_XREF (VISIT_ID, NOTE_ID) VALUES (?,
+			?)
+		</createSiteVisitNote>
+		<retrieveStackTestNotes>
+			SELECT ${InfrastructureSQL.noteColumns}, cstnx.STACK_TEST_ID
+			FROM %Schema%CE_STACK_TEST_NOTE_XREF cstnx, %Schema%cm_note cn
+			WHERE cstnx.STACK_TEST_ID = ?
+			AND cstnx.note_id = cn.note_id
+			ORDER BY note_id DESC
+		</retrieveStackTestNotes>
+		<createStackTestNote>
+			INSERT INTO %Schema%CE_STACK_TEST_NOTE_XREF (STACK_TEST_ID, NOTE_ID) VALUES
+			(?, ?)
+		</createStackTestNote>
+		<getInspectionId>
+			SELECT FCE_ID from %Schema%CE_FCE where INSP_ID=?
+		</getInspectionId>
+		<createInspectionAssociation>
+			UPDATE %Schema%CE_STACK_TEST SET FCE_ID = ?
+			WHERE STACk_TEST_ID = ?
+		</createInspectionAssociation>
+		<retrieveFceWithoutSVsOrSTs>
+			SELECT ${CetaSQL.fceColumns}, ca.county_cd,
+			CONCAT(CONCAT(cud.last_nm,', '), cud.first_nm) full_name,
+			cud.active_ind full_name_inact,
+			CONCAT(CONCAT(cud_eval.last_nm,', '), cud_eval.first_nm)
+			eval_full_name, cud_eval.active_ind eval_full_name_inact,ccm.cmp_id, ccm.name as
+			company_nm
+			FROM %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2 LEFT JOIN %Schema%fp_facility_company_xref ffcx ON
+			(ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL) LEFT
+			JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id ,
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr, %Schema%ce_fce cf
+			LEFT OUTER JOIN %Schema%cm_user_def cud on (
+			cf.staff_assigned_id = cud.user_id),
+			%Schema%ce_fce cf_eval LEFT OUTER JOIN %Schema%cm_user_def
+			cud_eval on ( cf_eval.evaluator_id = cud_eval.user_id)
+			LEFT OUTER JOIN %Schema%ce_stack_test cst on (cf_eval.fce_id = cst.fce_id
+			)
+			LEFT OUTER JOIN %Schema%ce_site_visit csv on (cf_eval.fce_id = csv.fce_id
+			) WHERE cf.fce_id =
+			cf_eval.fce_id AND cf.fp_id = ff1.fp_id AND ff1.facility_id
+			= ff2.facility_id AND ff2.version_id = -1 AND ff2.fp_id =
+			faxr.fp_id AND faxr.address_id = ca.address_id AND ca.end_dt
+			is null AND cst.fce_id is NULL AND csv.fce_id is NULL
+			AND ff2.facility_id = ?
+			AND cf.evaluated_dt is null
+		</retrieveFceWithoutSVsOrSTs>
+		<setStackTestValidatedFlag>
+			UPDATE %Schema%ce_stack_test SET
+			validated_flag = ?
+			WHERE stack_test_id = ?
+		</setStackTestValidatedFlag>
+		<setComplianceReportValidatedFlag>
+			UPDATE %Schema%CR_COMPLIANCE_REPORT
+			SET validated_flag = ?
+			WHERE report_id = ?
+		</setComplianceReportValidatedFlag>
+
+		<retrieveStTradeSecretAttachmentInfoById>
+			SELECT DOCUMENT_ID, TRADE_SECRET_REASON
+			FROM %Schema%CE_ST_TRADE_SECRET_ATTACHMENTS
+			WHERE DOCUMENT_ID = ?
+		</retrieveStTradeSecretAttachmentInfoById>
+
+		<retrieveLastPriorCompletedFce>
+			SELECT top 1
+			${CetaSQL.fcePlainColumns},
+			'notUsed' as full_name, 'notUsed' as
+			eval_full_name,
+			'notUsed' as eval_full_name_inact, 'notUsed' as full_name_inact
+			FROM (SELECT
+			${CetaSQL.fceColumns}, ccm.cmp_id as cmp_id, ccm.name as company_nm FROM %Schema%ce_fce cf,
+			%Schema%fp_facility ff1, %Schema%fp_facility ff2
+			LEFT JOIN %Schema%fp_facility_company_xref fc on ff2.facility_id =
+			fc.facility_id
+			LEFT JOIN %Schema%cm_company ccm on fc.company_id =
+			ccm.company_id
+			WHERE cf.evaluated_dt IS NOT NULL AND
+			cf.fp_id =
+			ff1.fp_id AND ff1.facility_id = ff2.facility_id AND
+			ff1.facility_id = ? AND ff2.version_id = -1 AND fc.END_DATE is null) a
+			WHERE fce_id
+			!= ?
+			ORDER BY a.evaluated_dt DESC, a.fce_id DESC
+		</retrieveLastPriorCompletedFce>
+
+		<createAdditionalAQDStaff>
+			INSERT INTO %Schema%ce_fce_additional_aqd_staff_xref
+			(fce_id, user_id)
+			VALUES (?, ?)
+		</createAdditionalAQDStaff>
+		<deleteAdditionalAQDStaffByFceId>
+			DELETE FROM %Schema%ce_fce_additional_aqd_staff_xref WHERE fce_id = ?
+		</deleteAdditionalAQDStaffByFceId>
+		<retrieveAdditionalAQDStaffByFceId>
+			SELECT user_id FROM %Schema%ce_fce_additional_aqd_staff_xref
+			WHERE fce_id =
+			?
+		</retrieveAdditionalAQDStaffByFceId>
+
+		<updateFcePrepare>
+			UPDATE %Schema%ce_fce SET fp_id = ?, inspection_rpt_state_cd = ?, last_fce_id = ?, last_modified = ?
+			WHERE fce_id = ? AND last_modified = ?
+		</updateFcePrepare>
+
+		<updateFceComplete>
+			UPDATE %Schema%ce_fce SET fp_id = ?, inspection_rpt_state_cd = ?, reported_dt = ?,
+			evaluator_id = ?, last_modified = ?
+			WHERE fce_id = ? AND last_modified = ?
+		</updateFceComplete>
+
+		<updateFceReportState>
+			UPDATE %Schema%ce_fce SET inspection_rpt_state_cd = ?, last_modified = ?
+			WHERE fce_id = ? AND last_modified = ?
+		</updateFceReportState>
+
+		<createFceAmbientCondition>
+			INSERT INTO
+			%Schema%ce_fce_ambient_conditions
+			(fce_id, inspection_day,
+			inspection_date, arrival_time, departure_time,
+			ambient_temperature,
+			wind_speed, wind_direction_cd, sky_conditions_cd)
+			VALUES
+			(?,?,?,?,?,?,?,?,?)
+		</createFceAmbientCondition>
+
+		<modifyFceAmbientCondition>
+			UPDATE %Schema%ce_fce_ambient_conditions
+			SET inspection_date = ?,
+			arrival_time = ?, departure_time = ?,
+			ambient_temperature = ?,
+			wind_speed = ?, wind_direction_cd = ?,
+			sky_conditions_cd = ?
+			WHERE fce_id = ? AND inspection_day = ?
+		</modifyFceAmbientCondition>
+
+		<retrieveFceAmbientConditions>
+			SELECT
+			${CetaSQL.fceAmbientConditionColumns}
+			FROM
+			%Schema%ce_fce_ambient_conditions cfac
+			WHERE fce_id = ?
+		</retrieveFceAmbientConditions>
+
+		<deleteFceAmbientConditionsByFceId>
+			DELETE FROM
+			%Schema%ce_fce_ambient_conditions WHERE fce_id = ?
+		</deleteFceAmbientConditionsByFceId>
+
+		<updateFceObservationsAndConcerns>
+			UPDATE %Schema%ce_fce SET concerns =
+			?,
+			file_review_records_request = ?, regulatory_discussion = ?,
+			physical_inspection = ?,
+			ambient_monitoring = ?, other_information =
+			?, last_modified = ?
+			WHERE fce_id = ? AND last_modified = ?
+		</updateFceObservationsAndConcerns>
+
+		<retrieveFceApplicationsBySearch>
+			SELECT pa.application_id,
+			pa.application_nbr, pa.application_desc,
+			pa.application_type_cd, pa.received_date, pa.submitted_date,
+			pa.previous_application_nbr, ff.facility_id, pt.permit_nbr,
+			ptax.permit_id, ppi.issuance_date as
+			final_issuance_date
+			FROM %Schema%pa_application pa
+			INNER JOIN
+			%Schema%fp_facility ff on (pa.fp_id = ff.fp_id)
+			LEFT JOIN %Schema%pt_permit_application_xref ptax ON (pa.application_id =
+			ptax.application_id)
+			LEFT JOIN %Schema%pt_permit pt ON
+			(ptax.permit_id = pt.permit_id)
+			LEFT JOIN %Schema%pt_permit_issuance
+			ppi on (ppi.permit_id = ptax.permit_id and ppi.issuance_type_cd =
+			'F')
+			WHERE ff.facility_id = ?
+		</retrieveFceApplicationsBySearch>
+
+		<retrieveFceApplicationListPreservedByFceId>
+			SELECT
+			cfpax.application_id, pa.application_nbr, pa.application_desc,
+			pa.application_type_cd, pa.received_date, pa.submitted_date,
+			pa.previous_application_nbr, pt.permit_nbr,
+			ptax.permit_id,
+			ppi.issuance_date as final_issuance_date
+			FROM
+			%Schema%ce_fce_pre_application_xref cfpax
+			INNER JOIN
+			%Schema%pa_application pa ON (cfpax.application_id =
+			pa.application_id)
+			LEFT JOIN %Schema%pt_permit_application_xref ptax
+			ON (pa.application_id = ptax.application_id)
+			LEFT JOIN
+			%Schema%pt_permit pt ON (ptax.permit_id = pt.permit_id)
+			LEFT JOIN
+			%Schema%pt_permit_issuance ppi on (ppi.permit_id = ptax.permit_id and
+			ppi.issuance_type_cd = 'F')
+			where cfpax.fce_id = ? ORDER BY pa.application_nbr
+		</retrieveFceApplicationListPreservedByFceId>
+
+		<addFceApplicationSnapshotList>
+			INSERT INTO
+			%Schema%ce_fce_pre_application_xref (fce_id, application_id)
+			VALUES
+			(?, ?)
+		</addFceApplicationSnapshotList>
+
+		<deleteFceApplicationPreservedList>
+			DELETE FROM
+			%Schema%ce_fce_pre_application_xref WHERE fce_id = ?
+		</deleteFceApplicationPreservedList>
+
+
+		<retrieveFcePreservedSearchDateRange>
+			SELECT start_date, end_date FROM
+			%Schema%ce_fce_pre_date_range_xref WHERE fce_id = ? AND
+			snapshot_type_cd = ?
+		</retrieveFcePreservedSearchDateRange>
+
+		<deleteFcePreservedSearchDateRange>
+			DELETE FROM
+			%Schema%ce_fce_pre_date_range_xref WHERE fce_id = ? AND
+			snapshot_type_cd = ?
+		</deleteFcePreservedSearchDateRange>
+
+		<addFceSnapshotSearchDateRange>
+			INSERT INTO
+			%Schema%ce_fce_pre_date_range_xref (fce_id, snapshot_type_cd,
+			start_date, end_date)
+			VALUES (?, ?, ?, ?)
+		</addFceSnapshotSearchDateRange>
+
+		<createAssociatedPermitIdRef>
+			INSERT INTO
+			%Schema%ce_fce_included_permits_xref (fce_id, permit_id)
+			VALUES (?, ?)
+		</createAssociatedPermitIdRef>
+		<deleteAssociatedPermitIdRef>
+			DELETE FROM
+			%Schema%ce_fce_included_permits_xref WHERE fce_id = ? AND permit_id =
+			?
+		</deleteAssociatedPermitIdRef>
+		<retrieveAssociatedPermitIdsByFceId>
+			SELECT permit_id FROM
+			%Schema%ce_fce_included_permits_xref WHERE fce_id = ?
+		</retrieveAssociatedPermitIdsByFceId>
+		<deleteAssociatedPermitIdRefsByFceId>
+			DELETE FROM
+			%Schema%ce_fce_included_permits_xref WHERE fce_id = ?
+		</deleteAssociatedPermitIdRefsByFceId>
+		
+		
+		<deleteFcePermitPreservedList>
+			DELETE FROM %Schema%ce_fce_pre_permit_xref WHERE fce_id = ?
+		</deleteFcePermitPreservedList>
+		
+		<addFcePermitSnapshotList>
+			INSERT INTO %Schema%ce_fce_pre_permit_xref (fce_id, permit_id)
+			VALUES (?, ?)
+		</addFcePermitSnapshotList>
+		
+		<retrieveFcePermitListPreservedByFceId>
+			SELECT cfppx.permit_id, p.legacy_permit_nbr, p.permit_nbr, p.permit_type_cd, p.permit_global_status_cd, p.permit_level_status_cd, 
+			pnsr.action_type, p.primary_reason_cd, 
+			p.expiration_date, pif.issuance_date AS final_issuance_date, ptv.permit_basis_date,
+			ptv.recission_date as ptv_recission_date, pnsr.recission_date as pnsr_recission_date,
+			p.description, %Schema%f_all_reasons(p.permit_id) AS all_reasons
+			FROM %Schema%ce_fce_pre_permit_xref cfppx
+			INNER JOIN %Schema%pt_permit p ON (cfppx.permit_id = p.permit_id)
+			LEFT JOIN %Schema%pt_ptio_permit pnsr ON (p.permit_id = pnsr.permit_id)
+			LEFT JOIN %Schema%pt_tv_permit ptv ON (p.permit_id = ptv.permit_id)
+			INNER JOIN %Schema%pt_permit_issuance pif ON (p.permit_id = pif.permit_id AND pif.issuance_type_cd = 'F')
+			WHERE cfppx.fce_id = ? ORDER BY p.permit_nbr
+		</retrieveFcePermitListPreservedByFceId>
+
+		<createAssociatedPermitConditionIdRef>
+			INSERT INTO
+			%Schema%ce_fce_included_permit_conditions_xref (fce_id,
+			permit_condition_id)
+			VALUES (?, ?)
+		</createAssociatedPermitConditionIdRef>
+		<deleteAssociatedPermitConditionIdRef>
+			DELETE FROM
+			%Schema%ce_fce_included_permit_conditions_xref WHERE fce_id = ?
+			AND
+			permit_condition_id = ?
+		</deleteAssociatedPermitConditionIdRef>
+		<modifyAssociatedPermitConditionIdRef>
+			UPDATE
+			%Schema%ce_fce_included_permit_conditions_xref
+			SET
+			compliance_status_cd = ? , comments = ?, last_modified = ?
+			WHERE
+			fce_id = ? and permit_condition_id = ? and last_modified = ?
+		</modifyAssociatedPermitConditionIdRef>
+		<deleteAssociatedPermitConditionIdRefsByFceId>
+			DELETE FROM
+			%Schema%ce_fce_included_permit_conditions_xref WHERE fce_id = ?
+		</deleteAssociatedPermitConditionIdRefsByFceId>
+		<deleteAssociatedPermitConditionIdRefByPermitId>
+			DELETE pcRef FROM
+			%Schema%ce_fce_included_permit_conditions_xref pcRef
+			inner join %Schema%pt_permit_condition pc on (pc.permit_condition_id =
+			pcRef.permit_condition_id)
+			WHERE 1=1
+		</deleteAssociatedPermitConditionIdRefByPermitId>
+		<associatePermitConditionIdsByPermitIds>
+			INSERT INTO
+			%Schema%ce_fce_included_permit_conditions_xref (fce_id,
+			permit_condition_id)
+			select ?, pc.permit_condition_id FROM %Schema%pt_permit_condition pc
+			where
+			1=1
+		</associatePermitConditionIdsByPermitIds>
+		<retrieveAssociatedPermitConditionsByFceId>
+			SELECT ${PermitSQL.permitConditionColumns}, pcRef.fce_id,
+			pt.permit_level_status_cd, pcRef.compliance_status_cd, pcRef.comments, 
+			pt.permit_nbr, pt.legacy_permit_nbr, pt.permit_type_cd, 
+			pcRef.last_modified, pif.issuance_date, ptv.permit_basis_date
+			FROM
+			%Schema%ce_fce_included_permit_conditions_xref pcRef
+			INNER JOIN %Schema%pt_permit_condition pc ON (pc.permit_condition_id = pcRef.permit_condition_id)
+			INNER JOIN %Schema%pt_permit pt ON (pc.permit_id = pt.permit_id)
+			LEFT JOIN %Schema%pt_permit_issuance pif ON (pif.permit_id = pt.permit_id AND pif.issuance_type_cd = 'F' AND pif.issuance_status_cd = 'I')
+			LEFT JOIN %Schema%pt_tv_permit ptv ON (ptv.permit_id = pt.permit_id)
+			WHERE pcRef.fce_id = ?
+		</retrieveAssociatedPermitConditionsByFceId>
+		<retrieveExcludedPermitConditionsByFceId>
+			SELECT ${PermitSQL.permitConditionColumns}, pt.permit_nbr, pt.legacy_permit_nbr, 
+			pt.permit_type_cd, pt.permit_level_status_cd, pif.issuance_date, ptv.permit_basis_date
+			FROM %Schema%pt_permit_condition pc
+			INNER JOIN %Schema%ce_fce_included_permits_xref perRef ON (perRef.permit_id = pc.permit_id)
+			INNER JOIN %Schema%pt_permit pt ON (perRef.permit_id = pt.permit_id)
+			LEFT JOIN %Schema%ce_fce_included_permit_conditions_xref pcRef on (perRef.fce_id = pcRef.fce_id  and pc.permit_condition_id = pcRef.permit_condition_id)
+			LEFT JOIN %Schema%pt_permit_issuance pif ON (pif.permit_id = pt.permit_id AND pif.issuance_type_cd = 'F' AND pif.issuance_status_cd = 'I')
+			LEFT JOIN %Schema%pt_tv_permit ptv ON (ptv.permit_id = pt.permit_id)
+			WHERE perRef.fce_id = ?
+			and pcRef.permit_condition_id is null
+		</retrieveExcludedPermitConditionsByFceId>
+		
+		<retrieveFceStackTestsBySearch>
+			SELECT cst.stack_test_id, cst.stck_id, cst.fp_id,
+			cst.stack_test_method_cd, cst.date_received, cst.date_evaluated, cst.conformed
+			FROM %Schema%ce_stack_test cst 
+			INNER JOIN %Schema%fp_facility ff ON (cst.fp_id = ff.fp_id)
+			WHERE ff.facility_id = ? 
+		</retrieveFceStackTestsBySearch>
+		
+		<addFceStackTestSnapshotList>
+			INSERT INTO %Schema%ce_fce_pre_stack_test_xref (fce_id, stack_test_id)
+			VALUES (?, ?)
+		</addFceStackTestSnapshotList>
+		
+		<deleteFceStackTestPreservedList>
+			DELETE FROM %Schema%ce_fce_pre_stack_test_xref WHERE fce_id = ?
+		</deleteFceStackTestPreservedList>
+		
+		<retrieveFceStackTestListPreservedByFceId>
+			SELECT cfpstx.fce_id, cfpstx.stack_test_id, cst.stck_id, cst.fp_id,
+			cst.stack_test_method_cd, cst.date_received, cst.date_evaluated, cst.conformed
+			FROM dbo.ce_fce_pre_stack_test_xref cfpstx
+			INNER JOIN dbo.ce_stack_test cst ON (cfpstx.stack_test_id = cst.stack_test_id)
+			WHERE cfpstx.fce_id = ? ORDER BY cfpstx.stack_test_id
+		</retrieveFceStackTestListPreservedByFceId>
+		
+		<retrieveTestPollutantsAndEus>
+			SELECT ${CetaSQL.pollutantTestColumns}, cst.fp_id, feu.epa_emu_id,
+			null as facility_id, null as scsc_id, null as version_id, null as facility_nm, 
+			cst.reviewer_id, cst.fce_id, cst.stack_test_method_cd, 
+			cst.date_evaluated, null as test_date
+			FROM %Schema%ce_stack_test_pollutant_xref stpx
+			INNER JOIN %Schema%ce_stack_test cst ON (stpx.stack_test_id = cst.stack_test_id)
+			LEFT JOIN %Schema%fp_emissions_unit feu ON (stpx.tested_eu = feu.corr_epa_emu_id AND feu.fp_id = cst.fp_id)
+			WHERE stpx.stack_test_id = ?
+		</retrieveTestPollutantsAndEus>
+		<retrieveStackTestDatesById>
+			SELECT ${CetaSQL.visitDateColumns}
+			FROM %Schema%ce_stack_test_visit_date_xref cstvdx
+			WHERE cstvdx.stack_test_id = ? ORDER BY cstvdx.test_date
+		</retrieveStackTestDatesById>
+		
+		<addFceSiteVisitSnapshotList>
+			INSERT INTO
+			%Schema%ce_fce_pre_site_visit_xref (fce_id, visit_id)
+			VALUES
+			(?, ?)
+		</addFceSiteVisitSnapshotList>
+		<deleteFceSiteVisitPreservedList>
+			DELETE FROM
+			%Schema%ce_fce_pre_site_visit_xref WHERE fce_id = ?
+		</deleteFceSiteVisitPreservedList>
+		<retrieveFceSiteVisitListPreservedByFceId>
+			SELECT ${CetaSQL.visitColumns2fp},
+			ca.county_cd,
+			${CetaSQL.evaluatorColumns}, cf.insp_id, ccm.cmp_id,
+			ccm.name as company_nm FROM %Schema%fp_facility ff1,
+			%Schema%fp_facility ff2 LEFT JOIN %Schema%fp_facility_company_xref
+			ffcx ON (ffcx.facility_id =
+			ff2.facility_id AND ffcx.end_date IS NULL)
+			LEFT JOIN %Schema%cm_company ccm ON ccm.company_id = ffcx.company_id
+			, %Schema%cm_address ca, %Schema%fp_facility_address_xref faxr,
+			%Schema%ce_site_visit csv 
+			INNER JOIN %Schema%ce_fce_pre_site_visit_xref cesvref ON (cesvref.visit_id = csv.visit_id AND cesvref.fce_id = ?)
+			LEFT OUTER JOIN %Schema%ce_visit_eval_xref cvex ON (cvex.visit_id = csv.visit_id) 
+			LEFT OUTER JOIN %Schema%ce_fce cf ON (csv.fce_id = cf.fce_id) 
+			WHERE csv.fp_id = ff1.fp_id
+			AND ff1.facility_id = ff2.facility_id 
+			AND ff2.version_id = -1 AND ff2.fp_id = faxr.fp_id AND
+			faxr.address_id = ca.address_id AND ca.end_dt is null 
+			ORDER BY cesvref.visit_id
+		</retrieveFceSiteVisitListPreservedByFceId>
+		
+		<addFceComplianceReportSnapshotList>
+			INSERT INTO %Schema%ce_fce_pre_compliance_report_xref (fce_id, compliance_report_id)
+			VALUES (?, ?)
+		</addFceComplianceReportSnapshotList>
+		
+		<deleteFceComplianceReportPreservedList>
+			DELETE FROM %Schema%ce_fce_pre_compliance_report_xref WHERE fce_id = ?
+		</deleteFceComplianceReportPreservedList>
+		
+		<retrieveFceComplianceReportListPreservedByFceId>
+			SELECT ${ComplianceReportSQL.complianceReportColumns},
+			null as facility_id, null as cmp_id, null as facility_nm,
+			null as facility_type_cd, null as permit_classification_cd,
+			null as do_laa_cd, null as scsc_id, null as facility_afs_num
+			FROM %Schema%ce_fce_pre_compliance_report_xref cfpcrx
+			INNER JOIN %Schema%cr_compliance_report cr ON (cfpcrx.compliance_report_id = cr.report_id)
+			WHERE cfpcrx.fce_id = ? ORDER BY cfpcrx.compliance_report_id
+		</retrieveFceComplianceReportListPreservedByFceId>
+		
+		<addFceAmbientMonitorSnapshotList>
+			INSERT INTO %Schema%ce_fce_pre_ambient_monitor_site_xref (fce_id, site_id)
+			VALUES (?, ?)
+		</addFceAmbientMonitorSnapshotList>
+		<deleteFceAmbientMonitorPreservedList>
+			DELETE FROM %Schema%ce_fce_pre_ambient_monitor_site_xref WHERE fce_id = ?
+		</deleteFceAmbientMonitorPreservedList>
+		<retrieveFceAmbientMonitorListPreservedByFceId>
+			SELECT
+			mst.mst_id, mst.site_id,
+			mst.site_name, mst.aqs_site_id, mst.status_cd as site_status,
+			mst.start_date as site_start_date, mst.end_date as site_end_date,
+			mst.latlong, mst.latitude, mst.longitude,
+			m.monitor_id, m.mntr_id, m.type_cd,
+			m.parameter_cd, m.status_cd, m.name,
+			m.parameter2_cd, m.start_date, m.end_date, 
+			m.freq_cd, m.met_parameter_cd
+			FROM %Schema%mo_monitor_site mst
+			INNER JOIN %Schema%mo_monitor_group mgrp on mgrp.group_id = mst.group_id
+			LEFT JOIN %Schema%mo_monitor m on (mst.site_id = m.site_id  and m.type_cd='01')
+			INNER JOIN %Schema%ce_fce_pre_ambient_monitor_site_xref amref on (amref.site_id = mst.site_id)
+			WHERE amref.fce_id = ? ORDER BY mst.site_id, m.monitor_id
+		</retrieveFceAmbientMonitorListPreservedByFceId>
+		
+		<deleteFceCorrespondencePreservedList>
+			DELETE FROM %Schema%ce_fce_pre_correspondence_xref WHERE fce_id = ?
+		</deleteFceCorrespondencePreservedList>
+		
+		<addFceCorrespondenceSnapshotList>
+			INSERT INTO %Schema%ce_fce_pre_correspondence_xref (fce_id, correspondence_id)
+			VALUES (?, ?)
+		</addFceCorrespondenceSnapshotList>
+		
+		<retrieveFceCorrespondenceListPreservedByFceId>
+			SELECT ${CorrespondenceSQL.correspondenceColumns},
+			null as company_id, null as company_name, null as county_cd,
+			null as county_nm, null as city_cd, null as city_nm
+			FROM %Schema%ce_fce_pre_correspondence_xref cfpcxref 
+			INNER JOIN %Schema%dc_correspondence cs ON (cfpcxref.correspondence_id = cs.correspondence_id)
+			WHERE cfpcxref.fce_id = ?
+		</retrieveFceCorrespondenceListPreservedByFceId>
+		
+		<retrieveFceEmissionsInventoriesBySearch>
+			SELECT * FROM (
+				SELECT ROW_NUMBER() OVER (PARTITION BY ff.facility_id, rer.report_year, ser.content_type_cd ORDER BY rer.received_date desc, rer.emissions_rpt_id desc) as rn,
+				rer.emissions_rpt_id, rer.report_modified, rer.ei_id,
+				rer.report_year, rer.total_emissions,
+				rer.eis_status_cd, ff.version_id, ff.fp_id, ff.facility_id,
+				rer.received_date, 
+				rer.report_approved_status_dt, rer.companion_report,
+				rer.rpt_received_status_cd, rer.rpt_received_status_dt,	
+				rer.total_reported_emissions,
+				ser.content_type_cd,
+				rer.invoice_amount, rer.invoice_date, rer.payment_received_date
+				FROM dbo.rp_emissions_rpt rer 
+				INNER JOIN dbo.fp_facility ff ON (rer.fp_id = ff.fp_id)
+				INNER JOIN dbo.RP_EMISSIONS_RPT_SC_EMISSIONS_REPORT_XREF scx ON scx.EMISSIONS_RPT_ID = rer.EMISSIONS_RPT_ID
+				INNER JOIN dbo.sc_emissions_report ser ON ser.sc_emissions_report_id = scx.sc_emissions_report_id
+				WHERE LOWER(ff.facility_id) LIKE LOWER(?) AND rer.received_date &gt;= ? AND rer.received_date &lt; ?
+			) as rs WHERE rn = 1 ORDER BY rs.emissions_rpt_id		
+		</retrieveFceEmissionsInventoriesBySearch>
+		
+		
+		<deleteFceEmissionsInventoryPreservedList>
+			DELETE FROM %Schema%ce_fce_pre_emissions_rpt_xref WHERE fce_id = ?
+		</deleteFceEmissionsInventoryPreservedList>
+		
+		<addFceEmissionsInventorySnapshotList>
+			INSERT INTO %Schema%ce_fce_pre_emissions_rpt_xref (fce_id, emissions_rpt_id)
+			VALUES (?, ?)
+		</addFceEmissionsInventorySnapshotList>
+		
+		<retrieveFceEmissionsInventoryListPreservedByFceId>
+			SELECT DISTINCT rer.emissions_rpt_id, rer.report_modified,
+			rer.report_year, rer.rpt_received_status_cd, 
+			ff.fp_id, ff.facility_id, ff.version_id, 
+			rer.received_date, 
+			rer.ei_id
+			FROM %Schema%ce_fce_pre_emissions_rpt_xref cfperx 
+			INNER JOIN %Schema%rp_emissions_rpt rer ON (cfperx.emissions_rpt_id = rer.emissions_rpt_id)
+			INNER JOIN %Schema%fp_facility ff ON (rer.fp_id = ff.fp_id)
+			where cfperx.fce_id = ? ORDER BY rer.emissions_rpt_id
+		</retrieveFceEmissionsInventoryListPreservedByFceId>
+		
+		<retrieveEmissionsInventoryPollutantTotalEmissions>
+			SELECT cpd.pollutant_cd, 
+			SUM (CASE re.emission_unit_numerator WHEN N'LB' 
+	              THEN
+	                                  cast(cast(replace(re.fugitive_emissions, ',', '') as float)  as decimal(24, 12)) * 0.0005
+	                                  + cast(cast(replace(re.stack_emissions, ',', '') as float)  as decimal(24, 12)) * 0.0005
+	                           
+	              ELSE
+	                           cast(cast(replace(re.fugitive_emissions, ',', '') as float)  as decimal(24, 12))
+	                                  + cast(cast(replace(re.stack_emissions, ',', '') as float)  as decimal(24, 12))
+	              END) AS total_emissions    
+	       FROM rp_report_period_xref rrpx
+	       INNER JOIN rp_emissions re ON (re.emission_period_id = rrpx.emission_period_id)
+	       INNER JOIN cm_pollutant_def cpd ON (cpd.pollutant_cd = re.pollutant_cd)
+	       WHERE rrpx.emissions_rpt_id = ?
+	       GROUP BY cpd.pollutant_cd
+			
+		</retrieveEmissionsInventoryPollutantTotalEmissions>
+
+		<addFceContinuousMonitorLimitSnapshotList>
+			INSERT INTO %Schema%ce_fce_pre_continuous_monitor_xref (fce_id, limit_id)
+			VALUES (?, ?)
+		</addFceContinuousMonitorLimitSnapshotList>
+	
+		<deleteFceContinuousMonitorLimitPreservedList>
+			DELETE FROM %Schema%ce_fce_pre_continuous_monitor_xref WHERE fce_id = ?
+		</deleteFceContinuousMonitorLimitPreservedList>
+		
+		<retrieveFceContinuousMonitorListPreservedByFceId>
+			SELECT  fccl.lim_id, fccl.limit_id,
+			fcm.mon_id, fccl.monitor_id,
+			fcm.monitor_desc, eqt.install_date, 
+			crm.last_audit_dt, fccl.limit_desc, 
+			limit_source, fccl.addl_info,
+			fccl.start_dt, fccl.end_dt, fccl.corr_limit_id
+			FROM %Schema%FP_CEM_COM_LIMIT fccl
+			JOIN %Schema%FP_CONTINUOUS_MONITOR fcm ON (fcm.monitor_id = fccl.monitor_id)
+			INNER JOIN %Schema%FP_FACILITY fp on (fp.fp_id = fcm.fp_id)
+			INNER JOIN %Schema%CE_FCE_PRE_CONTINUOUS_MONITOR_XREF cecmref on (cecmref.limit_id = fccl.limit_id)
+			CROSS APPLY (select TOP 1 eqt.install_date as install_date from %Schema%FP_CONTINUOUS_MONITOR_EQT eqt 
+							where eqt.monitor_id = fccl.monitor_id order by eqt.install_date asc) eqt
+			CROSS APPLY (
+			SELECT MAX (crm.test_dt) as last_audit_dt
+				FROM
+				%Schema%FP_FACILITY fp
+				INNER JOIN %Schema%CR_COMPLIANCE_REPORT cr on cr.fp_id = fp.fp_id
+				INNER JOIN %Schema%CR_COMPLIANCE_REPORT_MONITOR crm ON crm.report_id = cr.report_id
+				INNER JOIN %Schema%CR_COMPLIANCE_REPORT_LIMIT crl ON crl.cr_monitor_id = crm.cr_monitor_id
+				INNER JOIN %Schema%FP_CONTINUOUS_MONITOR cm ON CM.monitor_id = crm.monitor_id
+				INNER JOIN %Schema%FP_CEM_COM_LIMIT lim ON lim.LIMIT_ID = crl.LIMIT_ID
+				LEFT OUTER JOIN %Schema%FP_ACTIVE_CONTINUOUS_MONITOR_EQT eqp ON eqp.monitor_id = crm.monitor_id
+				WHERE crl.included_flag = 'Y' AND cr.report_type_cd = 'cems'
+					AND cr.report_status = 'sbmt' AND cr.dapc_accepted = 'yes'
+					AND lim.corr_limit_id = fccl.corr_limit_id) crm
+			WHERE cecmref.fce_id = ? ORDER BY fcm.mon_id, fccl.lim_id
+		</retrieveFceContinuousMonitorListPreservedByFceId>
+		
+		<updateFceReferenceReviewStartDate>
+			UPDATE %Schema%ce_fce SET 
+			reference_review_start_date = ?, last_modified = ? 
+			WHERE fce_id = ? AND last_modified = ?
+		</updateFceReferenceReviewStartDate>
+
+		<retrieveInspectionIdsForApplicationId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_application_xref cepa ON (cepa.fce_id = cef.fce_id)
+			  WHERE application_id = ?
+		</retrieveInspectionIdsForApplicationId>
+		<retrieveInspectionIdsForPermitId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_permit_xref cefip ON (cefip.fce_id = cef.fce_id)
+			  WHERE permit_id = ?
+		</retrieveInspectionIdsForPermitId>
+		<retrieveInspectionIdsForStackTestId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_stack_test_xref cepst ON (cepst.fce_id = cef.fce_id)
+			  WHERE  stack_test_id = ?
+	    </retrieveInspectionIdsForStackTestId>
+		<retrieveInspectionIdsForComplianceRptId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_compliance_report_xref cepcr ON (cepcr.fce_id = cef.fce_id)
+			  WHERE compliance_report_id = ?
+	    </retrieveInspectionIdsForComplianceRptId>
+		<retrieveInspectionIdsForCorrespondenceId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+		    	INNER JOIN %Schema%ce_fce_pre_correspondence_xref cepc ON (cepc.fce_id = cef.fce_id)
+		      WHERE correspondence_id = ?
+	    </retrieveInspectionIdsForCorrespondenceId>
+		<retrieveInspectionIdsForEmissionRptId>
+			SELECT insp_id 
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_emissions_rpt_xref ceper ON (ceper.fce_id = cef.fce_id)
+			  WHERE emissions_rpt_id = ?
+		</retrieveInspectionIdsForEmissionRptId>
+		<retrieveInspectionIdsForCemComId>
+			SELECT insp_id 
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_continuous_monitor_xref cepcm ON (cepcm.fce_id = cef.fce_id)
+			  WHERE limit_id = ?
+		</retrieveInspectionIdsForCemComId>
+		<retrieveInspectionIdCountForCemComIds>
+			SELECT count(distinct insp_id) 
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_continuous_monitor_xref cepcm ON (cepcm.fce_id = cef.fce_id)
+			  WHERE 1 = 1 
+		</retrieveInspectionIdCountForCemComIds>
+		<retrieveInspectionIdsForAmbientMonSiteId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+			    INNER JOIN %Schema%ce_fce_pre_ambient_monitor_site_xref cepam ON (cepam.fce_id = cef.fce_id)
+			  WHERE site_id = ?
+		</retrieveInspectionIdsForAmbientMonSiteId>
+		<retrieveInspectionIdsForSiteVisitId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+		    	INNER JOIN %Schema%ce_fce_pre_site_visit_xref cepsv ON (cepsv.fce_id = cef.fce_id)
+		      WHERE visit_id = ?
+	    </retrieveInspectionIdsForSiteVisitId>
+	    
+	    <retireveFceAttachmentCountByType>
+	    	SELECT count(*) as cnt FROM %Schema%ce_Fce_attachment WHERE fce_id = ? AND fce_attachment_type_cd = ? 
+	    	GROUP BY fce_attachment_type_cd 
+	    </retireveFceAttachmentCountByType>
+	    
+	    <retrieveInspectionIdsForLastFceId>
+			SELECT insp_id
+			  FROM %Schema%ce_fce cef 
+		      WHERE last_fce_id = ?
+	    </retrieveInspectionIdsForLastFceId>
+
+	    <clearLastInspId>
+	    	UPDATE %Schema%ce_fce SET last_fce_id = null WHERE fp_id IN 
+	    	(SELECT fp_id from %Schema%fp_facility WHERE facility_id = ?)
+	    </clearLastInspId>
+	</CetaSQL>
+</root>

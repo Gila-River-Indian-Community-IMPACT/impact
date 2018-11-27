@@ -1,0 +1,1953 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RY: all *Base* will be removed later -->
+<root>
+	<ApplicationSQL>
+		<allApplicationColumns>
+			APPLICATION_ID,PREVIOUS_APPLICATION_NBR,APPLICATION_TYPE_CD,APPLICATION_DESC,FP_ID,
+			APPLICATION_NBR,CONTACT_ID,VALIDATED_FLAG,RECEIVED_DATE,
+			SUBMITTED_DATE,PA_LM,
+			OTHER_PURPOSE_DESC,GENERAL_PERMIT_TYPE_CD, APP_AMENDED_FLAG, LEGACY_FLAG,
+			APP_CORRECTED_FLAG, APP_CORRECTED_REASON,
+			REQUESTED_PER_DUE_DATE_CD,CHANGED_PER_DUE_DATE_CD,
+			GHG_APPLICABLE_FLAG,
+			NSPS_APPLICABLE_FLAG, NESHAPS_APPLICABLE_FLAG,MACT_APPLICABLE_FLAG,
+			PSD_APPLICABLE_FLAG,NSR_APPLICABLE_FLAG, RM_APPLICABLE_FLAG,
+			TIV_APPLICABLE_FLAG,
+			FEDERAL_RULE_APPL_EXPLANATION,QUALIFY_EXPRESS_FLAG,REQUEST_EXPRESS_FLAG,
+			TRADE_SECRET_FLAG,LAND_USE_PLANNING_FLAG,FACILITY_CHANGED_LOCATION_FLAG,
+			DIVISION_CONTACED_FLAG, CONTAIN_H2S_FLAG, PTIO_APP_SAGEGROUSE_CD, PTIO_APP_SAGEGROUSE_AGENCY_NM,
+			MODELING_CONTACT_FLAG, MODELING_ANALYSIS_FLAG, PREVENTION_PSD_FLAG,
+   			PRE_APP_MEETING_FLAG, MODELING_PROTOCOL_SUBMIT_FLAG, AQRV_ANALYSIS_SUBMIT_FLAG,
+			POTENTIAL_TITLE_V_FACILITY_FLAG, LEGACY_ST_PTO_APP_FLAG,PTIOAPP_LM,
+			REASON_CD, TV_APP_PURPOSE_CD, OPERATIONS_DSC, SUBJECT_TO_112R,
+			PLAN_SUBMITTED_UNDER_112R, SUBJECT_TO_TIV, TVAPP_LM,
+			TIV_REASON_CD, TIV_APP_PURPOSE_CD, TIVAPP_LM,
+			PBR_TYPE_CD, PBR_REASON_CD,
+			REQUESTING_REVOCATION_FLAG, ppn_reg_cmnty_dsc, ppn_disposition_flag, PPN_LM,
+			RPC_TYPE_CD, PRR_PERMIT_ID, PRR_LM,
+			prer_permit_id, termination_date, prer_reg_cmnty_dsc,
+			prer_disposition_flag, prer_other_adjustment, prer_lm,
+			prpr_permit_id, rpr_reason_cd, prpr_reg_cmnty_dsc, prpr_disposition_flag,
+			prpr_basis_for_revoke, prpr_revoke_entire_permit, prpr_lm,
+			facility_id, facility_nm, do_laa_cd,
+			ff_lm,pr_form_complete,pr_facility_compliant,
+			pr_site_approved,pr_jfo_recommendation_cd,pr_request_disposition_cd,pr_future_address,
+			pr_target_county_cd,pr_special_text,pr_user_id,pr_request_id,pr_lm,
+			pd_effective_date,pd_originator_first_name,pd_originator_last_name,pd_originator_title,
+			pd_originator_address1,pd_originator_address2,pd_originator_city,pd_originator_state_cd,
+			pd_originator_zip,pd_originator_phone_no,pd_corporate_qualified,pd_request_type_cd,
+			pd_fac_250emp_qualified,pd_fac_25mil_qualified,pd_delegate_qualified,pd_successor_qualified,
+			pd_assignee_first_name,pd_assignee_last_name,pd_assignee_title,pd_assignee_address1,
+			pd_assignee_address2,pd_assignee_city,pd_assignee_state_cd,pd_assignee_zip,pd_lm,
+			aqd_tv_application_nbr, tv_nsps_applicable_flag, tv_neshap_applicable_flag, tv_mact_applicable_flag, 
+			tv_psd_applicable_flag, tv_nsr_applicable_flag, facility_wide_requirement_flag, proposed_exemptions,
+			ambient_monitoring, alternate_operating_scenarios, legacy_st_tv_app_flag, risk_management_plan_submit_date,
+			compliance_cert_submit_frequency, compliance_with_applicable_enhanced_monitoring,
+			compliance_requirements_not_met, subject_to_engine_config_restrictions,	
+			nsr_permit_number, subject_to_waqsr, facility_type_cd, permit_classification_cd, known_incomplete_nsr_app_flag
+		</allApplicationColumns>
+		
+		<BasicApplicationColumns>
+			pa.application_id
+			, pa.application_type_cd
+			, pa.contact_id
+			, pa.fp_id
+			, pa.previous_application_nbr
+			, pa.application_nbr
+			, pa.validated_flag
+			, pa.received_date
+			, pa.app_amended_flag
+			, pa.app_corrected_flag
+			, pa.app_corrected_reason
+			, pa.application_desc
+			, pa.submitted_date
+			, pa.legacy_flag
+			, pa.general_permit
+			, pa.last_modified
+		</BasicApplicationColumns>
+
+		<createPBRNotification>
+			INSERT INTO %Schema%pa_pbr_notification
+			(application_id, pbr_reason_cd, pbr_type_cd, requesting_revocation_flag,
+			reg_cmnty_dsc, disposition_flag)
+			VALUES (?, ?, ?, ?, ?, ?)
+		</createPBRNotification>
+
+		<modifyPBRNotification>
+			UPDATE %Schema%pa_pbr_notification
+			SET pbr_reason_cd = ?, pbr_type_cd = ?, requesting_revocation_flag = ?,
+			reg_cmnty_dsc = ?,
+			disposition_flag = ?, last_modified = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyPBRNotification>
+
+		<createRPRRequest>
+			INSERT INTO %Schema%pa_rpr_request
+			(application_id, permit_id, rpr_reason_cd, reg_cmnty_dsc, disposition_flag,
+			revoke_entire_permit,
+			basis_for_revoke)
+			VALUES (?, ?, ?, ?, ?, ?, ?)
+		</createRPRRequest>
+
+		<modifyRPRRequest>
+			UPDATE %Schema%pa_rpr_request
+			SET permit_id = ?, rpr_reason_cd = ?, reg_cmnty_dsc = ?,
+			disposition_flag = ?,
+			revoke_entire_permit = ?, basis_for_revoke = ?, last_modified = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyRPRRequest>
+
+		<createRPERequest>
+			INSERT INTO %Schema%pa_rpe_request
+			(application_id, permit_id, termination_date, reg_cmnty_dsc,
+			disposition_flag, other_adjustment)
+			VALUES (?, ?, ?, ?, ?, ?)
+		</createRPERequest>
+
+		<modifyRPERequest>
+			UPDATE %Schema%pa_rpe_request
+			SET permit_id = ?, termination_date = ?, reg_cmnty_dsc = ?,
+			disposition_flag = ?, other_adjustment = ?, last_modified = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyRPERequest>
+
+		<createRPCRequest>
+			INSERT INTO %Schema%pa_rpc_request (application_id, rpc_type_cd, permit_id)
+			VALUES (?, ?, ?)
+		</createRPCRequest>
+
+		<modifyRPCRequest>
+			UPDATE %Schema%pa_rpc_request
+			SET rpc_type_cd = ?, permit_id = ?, last_modified = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyRPCRequest>
+
+		<applicationDocumentColumns>application_doc_id,
+			application_doc_type_cd,
+			eac_form_type_cd, application_id, application_eu_id,
+			document_id, description, trade_secret_doc_id, trade_secret_reason, is_required_doc
+		</applicationDocumentColumns>
+
+		<applicationEUColumns>pe.application_eu_id, pe.application_id,
+			pe.emu_id,
+			pe.excluded_flag, pe.not_includable_flag, pe.validated_flag, pe.eu_text,
+			pe.last_modified AS pe_lm
+		</applicationEUColumns>
+
+		<ptioApplicationEUColumns>ppe.application_eu_id, ppe.work_start_date,
+			ppe.work_start_after_permit_flag, ppe.operation_begin_dt,
+			ppe.reconstruction_desc, ppe.shutdown_years_qty,
+			ppe.requesting_fed_limits_flag,
+			ppe.fed_limits_other_reason_desc, ppe.modification_dsc,
+			ppe.general_permit_type_cd, ppe.model_general_permit_cd, ppe.bact_flag, ppe.laer_flag,
+			ppe.last_modified as ppe_lm, ppe.ghg_applicable_flag,
+			ppe.nsps_applicable_flag, ppe.neshaps_applicable_flag, ppe.mact_applicable_flag,
+			ppe.psd_applicable_flag, ppe.nsr_applicable_flag,
+			ppe.rm_applicable_flag, ppe.tiv_applicable_flag,
+			ppe.federal_rule_appl_explanation, ppe.psd_bact_flag, ppe.nsr_laer_flag,ppe.op_sched_hrs_day,ppe.op_sched_hrs_yr
+		</ptioApplicationEUColumns>
+
+		<tvApplicationEUColumns>pte.application_eu_id,
+			pte.monitor_req, pte.monitor_req_dsc, pte.comply_w_enh_monitor,
+			pte.tv_ieu_reason_cd, pte.applicable_reqs, 
+			pte.nsps_applicable_flag as tv_nsps_applicable_flag, 
+			pte.neshaps_applicable_flag as tv_neshaps_applicable_flag, 
+			pte.mact_applicable_flag as tv_mact_applicable_flag, 
+			pte.federal_rule_appl_explanation as tv_federal_rule_appl_explanation, 
+			pte.last_modified AS tpe_lm
+		</tvApplicationEUColumns>
+
+		<retrieveApplication>
+			SELECT ${ApplicationSQL.allApplicationColumns}
+			FROM %Schema%pa_all_applications
+			WHERE application_id = ?
+		</retrieveApplication>
+
+		<retrievePortalRelocationApplication>
+			SELECT
+			APPLICATION_ID,PREVIOUS_APPLICATION_NBR,APPLICATION_TYPE_CD,APPLICATION_DESC,FP_ID,
+			APPLICATION_NBR,CONTACT_ID,VALIDATED_FLAG,RECEIVED_DATE,
+			SUBMITTED_DATE, LAST_MODIFIED AS PA_LM
+			FROM %Schema%pa_application
+			WHERE application_id = ?
+		</retrievePortalRelocationApplication>
+
+		<retrieveApplicationByNumber>
+			SELECT ${ApplicationSQL.allApplicationColumns}
+			FROM %Schema%pa_all_applications
+			WHERE application_nbr = ?
+		</retrieveApplicationByNumber>
+		<findApplications>
+			SELECT ${ApplicationSQL.allApplicationColumns}
+			FROM %Schema%pa_all_applications
+		</findApplications>
+		<retrieveApplicationDocument>
+			SELECT ${ApplicationSQL.applicationDocumentColumns}, last_modified
+			FROM %Schema%pa_application_document
+			WHERE application_doc_id = ?
+			ORDER BY is_required_doc, application_doc_type_cd, application_doc_id
+		</retrieveApplicationDocument>
+
+		<retrieveApplicationTypes>
+			SELECT patd.application_type_cd AS code,
+			patd.application_type_dsc AS description, deprecated, last_modified
+			FROM %Schema%pa_application_type_def patd
+		</retrieveApplicationTypes>
+
+		<retrievePTIOApplicationPurposeCds>
+			SELECT pppx.ptio_app_purpose_cd
+			FROM %Schema%pa_ptio_app_purpose_xref pppx
+			WHERE pppx.application_id = ?
+		</retrievePTIOApplicationPurposeCds>
+
+		<retrieveTVApplicationReasonCds>
+			SELECT ptvrx.reason_cd
+			FROM %Schema%pa_tv_application_reason_xref ptvrx
+			WHERE ptvrx.application_id = ?
+		</retrieveTVApplicationReasonCds>
+
+		<retrieveApplicationDocuments>
+			SELECT ${ApplicationSQL.applicationDocumentColumns}, last_modified
+			FROM %Schema%pa_application_document
+			WHERE application_id = ?
+			AND application_eu_id IS NULL
+			ORDER BY is_required_doc, application_doc_type_cd, application_doc_id
+		</retrieveApplicationDocuments>
+
+		<retrieveApplicationEUDocuments>
+			SELECT ${ApplicationSQL.applicationDocumentColumns}, last_modified
+			FROM %Schema%pa_application_document
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUDocuments>
+
+		<retrieveApplicationEmissionUnit>
+			SELECT ${ApplicationSQL.applicationEUColumns},
+			${ApplicationSQL.ptioApplicationEUColumns},
+			${ApplicationSQL.tvApplicationEUColumns},
+			${FacilitySQL.emissionUnitColumns},
+			ppe.application_eu_id AS is_ptio_eu
+			FROM %Schema%pa_eu pe
+			LEFT OUTER JOIN %Schema%pa_ptio_eu ppe ON (ppe.application_eu_id =
+			pe.application_eu_id)
+			LEFT OUTER JOIN %Schema%pa_tv_eu pte ON (pte.application_eu_id =
+			pe.application_eu_id)
+			INNER JOIN %Schema%fp_emissions_unit feu ON (pe.emu_id = feu.emu_id)
+			WHERE pe.application_eu_id = ?
+		</retrieveApplicationEmissionUnit>
+
+		<retrieveApplicationEmissionUnits>
+			SELECT ${ApplicationSQL.applicationEUColumns},
+			${FacilitySQL.emissionUnitColumns}
+			FROM %Schema%pa_eu pe, %Schema%fp_emissions_unit feu
+			WHERE pe.application_id = ?
+			AND pe.emu_id = feu.emu_id
+		</retrieveApplicationEmissionUnits>
+
+		<retrievePTIOApplicationEmissionUnits>
+			SELECT ${ApplicationSQL.applicationEUColumns},
+			${ApplicationSQL.ptioApplicationEUColumns},
+			${FacilitySQL.emissionUnitColumns}
+			FROM %Schema%pa_eu pe, %Schema%fp_emissions_unit feu, %Schema%pa_ptio_eu
+			ppe
+			WHERE pe.application_id = ?
+			AND pe.emu_id = feu.emu_id
+			AND pe.application_eu_id = ppe.application_eu_id
+		</retrievePTIOApplicationEmissionUnits>
+
+		<retrieveTVApplicationEmissionUnits>
+			SELECT ${ApplicationSQL.applicationEUColumns},
+			${ApplicationSQL.tvApplicationEUColumns},
+			${FacilitySQL.emissionUnitColumns}
+			FROM %Schema%pa_eu pe, %Schema%fp_emissions_unit feu, %Schema%pa_tv_eu
+			pte
+			WHERE pe.application_id = ?
+			AND pe.emu_id = feu.emu_id
+			AND pe.application_eu_id = pte.application_eu_id
+		</retrieveTVApplicationEmissionUnits>
+
+
+		<retrieveApplicationPermits>
+			SELECT ${PermitSQL.permitColumns}, ccm.name as company_nm
+			FROM %Schema%pt_permit_application_xref ppa, %Schema%pt_permit pp
+			INNER JOIN fp_facility ff ON (pp.facility_id = ff.facility_id AND ff.version_id = -1)
+          	LEFT JOIN fp_facility_company_xref ffcx ON (ffcx.facility_id = ff.facility_id AND ffcx.end_date IS NULL)
+		  	LEFT JOIN cm_company ccm ON ccm.company_id = ffcx.company_id
+			WHERE ppa.application_id = ?
+			AND pp.permit_id = ppa.permit_id
+		</retrieveApplicationPermits>
+
+		<createPTIOApplicationPurpose>
+			INSERT INTO %Schema%pa_ptio_app_purpose_xref
+			(application_id, ptio_app_purpose_cd)
+			VALUES (?,?)
+		</createPTIOApplicationPurpose>
+
+		<removePTIOApplicationPurposeCds>
+			DELETE FROM %Schema%pa_ptio_app_purpose_xref
+			WHERE application_id = ?
+		</removePTIOApplicationPurposeCds>
+
+		<createTVApplicationReason>
+			INSERT INTO %Schema%pa_tv_application_reason_xref
+			(application_id, reason_cd)
+			VALUES (?,?)
+		</createTVApplicationReason>
+
+		<removeTVApplicationReasonCds>
+			DELETE FROM %Schema%pa_tv_application_reason_xref
+			WHERE application_id = ?
+		</removeTVApplicationReasonCds>
+
+		<createApplicationEU>
+			INSERT INTO %Schema%pa_eu (application_eu_id, application_id,
+			emu_id, excluded_flag, not_includable_flag, validated_flag, eu_text)
+			VALUES (?,?,?,?,?,?,?)
+		</createApplicationEU>
+		<createPTIOApplicationEU>
+			INSERT INTO %Schema%pa_ptio_eu (application_eu_id,
+			work_start_date, work_start_after_permit_flag, operation_begin_dt,
+			reconstruction_desc, shutdown_years_qty,
+			requesting_fed_limits_flag, fed_limits_other_reason_desc,
+			modification_dsc, general_permit_type_cd, model_general_permit_cd,
+			bact_flag, laer_flag, ghg_applicable_flag, nsps_applicable_flag, neshaps_applicable_flag,
+			mact_applicable_flag, psd_applicable_flag, nsr_applicable_flag,
+			rm_applicable_flag,
+			tiv_applicable_flag, federal_rule_appl_explanation, psd_bact_flag, nsr_laer_flag,op_sched_hrs_day,op_sched_hrs_yr)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		</createPTIOApplicationEU>
+
+		<modifyApplicationEU>
+			UPDATE %Schema%pa_eu SET emu_id = ?,
+			excluded_flag = ?, not_includable_flag = ?, validated_flag = ?,
+			eu_text = ?, last_modified = ?
+			WHERE application_eu_id = ?
+			AND last_modified = ?
+		</modifyApplicationEU>
+
+		<createTVApplicationEU>
+			INSERT INTO %Schema%pa_tv_eu (
+			application_eu_id, monitor_req, monitor_req_dsc,
+			comply_w_enh_monitor, tv_ieu_reason_cd,	applicable_reqs, 
+			nsps_applicable_flag, neshaps_applicable_flag, mact_applicable_flag, 
+			federal_rule_appl_explanation)
+			VALUES (?,?,?,?,?,?,?,?,?,?)
+		</createTVApplicationEU>
+
+		<removeApplicationEUs>
+			DELETE FROM %Schema%pa_eu
+			WHERE application_id = ?
+		</removeApplicationEUs>
+
+		<removeApplicationEU>
+			DELETE FROM %Schema%pa_eu
+			WHERE application_eu_id = ?
+		</removeApplicationEU>
+
+		<removeApplicationPTIOEUs>
+			DELETE FROM %Schema%pa_ptio_eu
+			WHERE application_eu_id in
+			(SELECT application_eu_id FROM %Schema%pa_eu WHERE application_id = ?)
+		</removeApplicationPTIOEUs>
+
+		<removePTIOApplicationEU>
+			DELETE FROM %Schema%pa_ptio_eu
+			WHERE application_eu_id = ?
+		</removePTIOApplicationEU>
+
+		<removeTVApplicationEU>
+			DELETE FROM %Schema%pa_tv_eu
+			WHERE application_eu_id = ?
+		</removeTVApplicationEU>
+
+		<createApplicationDocument>
+			INSERT INTO %Schema%pa_application_document
+			(${ApplicationSQL.applicationDocumentColumns})
+			VALUES (?,?,?,?,?,?,?,?,?,?)
+		</createApplicationDocument>
+
+		<modifyApplicationDocument>
+			UPDATE %Schema%pa_application_document
+			SET application_doc_type_cd = ?, eac_form_type_cd = ?,
+			document_id = ?, description = ?,
+			trade_secret_doc_id = ?,
+			trade_secret_reason = ?, last_modified = ?,
+			is_required_doc = ?
+			WHERE application_doc_id = ?
+			AND last_modified = ?
+		</modifyApplicationDocument>
+			
+		<!-- The "markTemp" queries below take into account the fact that the same 
+			document_id may be referred to in multiple rows of the pa_application_document 
+			table. This is because applications or application EUs can have documents 
+			copied from one to another. When such a copy is made, we do not create a 
+			new record in dc_document, but just point to the existing dc_document row 
+			from pa_application_document. As a result, we need to ensure that there is 
+			only one reference to a dc_document row in pa_application_document before 
+			marking it as "temporary". Temporary records will be deleted from dc_document 
+			periodically, so we need to be sure not to mark a row as temporary if it 
+			still has a reference in pa_application_document! -->
+		<markTempApplicationBaseDocuments>
+			UPDATE %Schema%dc_document
+			SET temp_flag = 'Y'
+			WHERE document_id IN (
+			SELECT document_id
+			FROM %Schema%pa_application_document a
+			WHERE application_id = ?
+			AND application_eu_id IS NULL
+			AND (SELECT COUNT(*)
+			FROM %Schema%pa_application_document b
+			WHERE
+			b.document_id = a.document_id
+			OR b.trade_secret_doc_id = a.document_id) = 1
+			UNION
+			SELECT trade_secret_doc_id
+			FROM %Schema%pa_application_document a
+			WHERE application_id = ?
+			AND application_eu_id IS NULL
+			AND (SELECT COUNT(*)
+			FROM %Schema%pa_application_document b
+			WHERE
+			b.document_id = a.trade_secret_doc_id
+			OR b.trade_secret_doc_id = a.trade_secret_doc_id) = 1)
+		</markTempApplicationBaseDocuments>
+
+		<markTempApplicationEUBaseDocuments>
+			UPDATE %Schema%dc_document
+			SET temp_flag = 'Y'
+			WHERE document_id IN (
+			SELECT document_id
+			FROM %Schema%pa_application_document a
+			WHERE application_eu_id = ?
+			AND (SELECT COUNT(*)
+			FROM %Schema%pa_application_document b
+			WHERE
+			b.document_id = a.document_id
+			OR b.trade_secret_doc_id = a.document_id) = 1
+			UNION
+			SELECT trade_secret_doc_id
+			FROM %Schema%pa_application_document a
+			WHERE application_eu_id = ?
+			AND (SELECT COUNT(*)
+			FROM %Schema%pa_application_document b
+			WHERE
+			b.document_id = a.trade_secret_doc_id
+			OR b.trade_secret_doc_id = a.trade_secret_doc_id) = 1)
+		</markTempApplicationEUBaseDocuments>
+
+		<markTempPBRNotificationDocuments>
+			UPDATE %Schema%dc_document
+			SET temp_flag = 'Y'
+			WHERE document_id IN (
+			SELECT document_id
+			FROM
+			%Schema%pa_pbr_notification_document
+			WHERE application_id = ?)
+		</markTempPBRNotificationDocuments>
+
+		<markTempRPCRequestDocuments>
+			UPDATE %Schema%dc_document
+			SET temp_flag = 'Y'
+			WHERE document_id IN (
+			SELECT document_id
+			FROM
+			%Schema%pa_rpc_request_document
+			WHERE application_id = ?)
+		</markTempRPCRequestDocuments>
+
+		<removeApplicationDocuments>
+			DELETE FROM %Schema%pa_application_document
+			WHERE application_id = ? AND application_eu_id IS NULL
+		</removeApplicationDocuments>
+
+		<removeApplicationDocument>
+			DELETE FROM %Schema%pa_application_document WHERE application_doc_id = ?
+		</removeApplicationDocument>
+		
+		<removeApplicationDocumentDocId>
+			UPDATE %Schema%pa_application_document 
+			SET document_id = null, description=null,
+			trade_secret_doc_id = null, trade_secret_reason = null
+			WHERE application_doc_id = ?
+		</removeApplicationDocumentDocId>
+		
+		<updateApplicationValidatedFlagByAppDocId>
+			UPDATE %Schema%pa_application set validated_flag = ? 
+  			WHERE APPLICATION_ID = 
+			(SELECT application_id 
+	 			FROM pa_application_document
+     			WHERE APPLICATION_DOC_ID = ?)
+		</updateApplicationValidatedFlagByAppDocId>
+
+		<removeApplicationEUDocuments>
+			DELETE FROM %Schema%pa_application_document
+			WHERE application_eu_id = ?
+		</removeApplicationEUDocuments>
+
+		<createPTIOApplication>
+			INSERT INTO %Schema%pa_ptio_application (application_id,
+			other_purpose_desc, general_permit_type_cd,
+			requested_per_due_date_cd,
+			changed_per_due_date_cd,
+			nsps_applicable_flag, neshaps_applicable_flag, mact_applicable_flag, ghg_applicable_flag,
+			psd_applicable_flag, nsr_applicable_flag, rm_applicable_flag,
+			tiv_applicable_flag,
+			federal_rule_appl_explanation, qualify_express_flag, request_express_flag,
+			trade_secret_flag, legacy_st_pto_app_flag,potential_title_v_facility_flag,ptio_app_sagegrouse_cd,ptio_app_sagegrouse_agency_nm,
+			land_use_planning_flag,facility_changed_location_flag,contain_h2s_flag,division_contaced_flag,
+			modeling_contact_flag,modeling_analysis_flag,prevention_psd_flag,pre_app_meeting_flag,modeling_protocol_submit_flag,aqrv_analysis_submit_flag,
+			known_incomplete_nsr_app_flag)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createPTIOApplication>
+
+		<modifyPTIOApplication>
+			UPDATE %Schema%pa_ptio_application SET other_purpose_desc = ?,
+			general_permit_type_cd = ?, requested_per_due_date_cd = ?,
+			changed_per_due_date_cd = ?,
+			nsps_applicable_flag = ?, neshaps_applicable_flag = ?, mact_applicable_flag = ?,
+			ghg_applicable_flag = ?,
+			psd_applicable_flag = ?, nsr_applicable_flag = ?, rm_applicable_flag = ?,
+			tiv_applicable_flag = ?,
+			federal_rule_appl_explanation = ?, qualify_express_flag = ?,
+			request_express_flag = ?, trade_secret_flag = ?, legacy_st_pto_app_flag = ?,
+			land_use_planning_flag = ?, facility_changed_location_flag = ?,
+			potential_title_v_facility_flag=?, 
+			contain_h2s_flag=?,division_contaced_flag=?,ptio_app_sagegrouse_cd=?, ptio_app_sagegrouse_agency_nm=?,
+			modeling_contact_flag=?, modeling_analysis_flag=?, prevention_psd_flag=?,
+   			pre_app_meeting_flag=?, modeling_protocol_submit_flag=?, aqrv_analysis_submit_flag=?,
+   			known_incomplete_nsr_app_flag = ?,
+			last_modified = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyPTIOApplication>
+
+		<modifyPTIOApplicationEU>
+			UPDATE %Schema%pa_ptio_eu SET work_start_date = ?,
+			work_start_after_permit_flag = ?, operation_begin_dt = ?,
+			reconstruction_desc = ?, shutdown_years_qty = ?,
+			requesting_fed_limits_flag = ?, fed_limits_other_reason_desc = ?,
+			modification_dsc = ?, general_permit_type_cd = ?,
+			model_general_permit_cd = ?,
+			bact_flag = ?, laer_flag = ?, ghg_applicable_flag = ?,
+			nsps_applicable_flag = ?, neshaps_applicable_flag = ?, mact_applicable_flag = ?,
+			psd_applicable_flag = ?, nsr_applicable_flag = ?, rm_applicable_flag
+			= ?, tiv_applicable_flag = ?,
+			federal_rule_appl_explanation = ?, psd_bact_flag = ?, nsr_laer_flag = ?, op_sched_hrs_day = ?, op_sched_hrs_yr = ?, last_modified = ?
+			WHERE application_eu_id = ?
+			AND last_modified = ?
+		</modifyPTIOApplicationEU>
+
+		<modifyTVApplicationEU>
+			UPDATE %Schema%pa_tv_eu
+			SET monitor_req = ?, monitor_req_dsc = ?,
+			comply_w_enh_monitor = ?, tv_ieu_reason_cd = ?,
+			applicable_reqs = ?, nsps_applicable_flag = ?, neshaps_applicable_flag = ?, mact_applicable_flag = ?, federal_rule_appl_explanation = ?, last_modified = ?
+			WHERE application_eu_id = ?
+			AND last_modified = ?
+		</modifyTVApplicationEU>
+
+		<createTVApplication>
+			INSERT INTO %Schema%pa_tv_application (application_id,
+			tv_app_purpose_cd, operations_dsc, subject_to_112r,
+			plan_submitted_under_112r, subject_to_tiv,
+			aqd_tv_application_nbr,	tv_nsps_applicable_flag, tv_neshap_applicable_flag, tv_mact_applicable_flag, 
+            tv_psd_applicable_flag, tv_nsr_applicable_flag, facility_wide_requirement_flag, proposed_exemptions,
+			ambient_monitoring, alternate_operating_scenarios, legacy_st_tv_app_flag, risk_management_plan_submit_date,
+			compliance_cert_submit_frequency, compliance_with_applicable_enhanced_monitoring,
+			compliance_requirements_not_met, subject_to_engine_config_restrictions,
+			nsr_permit_number, subject_to_waqsr)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createTVApplication>
+
+		<modifyTVApplication>
+			UPDATE %Schema%pa_tv_application SET tv_app_purpose_cd = ?,
+			operations_dsc = ?, subject_to_112r = ?,
+			plan_submitted_under_112r = ?, subject_to_tiv = ?,
+			last_modified = ?, aqd_tv_application_nbr = ?, 
+			tv_nsps_applicable_flag = ?, tv_neshap_applicable_flag = ?, 
+			tv_mact_applicable_flag = ?, tv_psd_applicable_flag = ?, 
+			tv_nsr_applicable_flag = ?, facility_wide_requirement_flag = ?,
+			proposed_exemptions = ?, ambient_monitoring = ?, alternate_operating_scenarios = ?, legacy_st_tv_app_flag = ?,
+			risk_management_plan_submit_date = ?, compliance_cert_submit_frequency = ?,
+			compliance_with_applicable_enhanced_monitoring = ?,	compliance_requirements_not_met = ?,
+			subject_to_engine_config_restrictions = ?, nsr_permit_number = ?,
+			subject_to_waqsr = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyTVApplication>
+
+		<createTIVApplication>
+			INSERT INTO %Schema%pa_tiv_application (application_id,
+			app_purpose_cd, reason_cd)
+			VALUES (?,?,?)
+		</createTIVApplication>
+
+		<modifyTIVApplication>UPDATE %Schema%pa_tiv_application SET
+			app_purpose_cd = ?,
+			reason_cd = ?, last_modified = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyTIVApplication>
+
+		<createApplication>INSERT INTO %Schema%pa_application (application_id,
+			application_type_cd, fp_id, contact_id,
+			previous_application_nbr, application_nbr,
+			validated_flag, received_date, submitted_date, legacy_flag,
+			app_amended_flag, app_corrected_flag, app_corrected_reason, application_desc)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createApplication>
+		<modifyApplication>UPDATE %Schema%pa_application SET contact_id = ?,
+			previous_application_nbr = ?, application_nbr = ?, fp_id = ?,
+			validated_flag = ?, received_date = ?, submitted_date = ?,
+			app_amended_flag = ?,
+			app_corrected_flag = ?, app_corrected_reason = ?, application_desc = ?,
+			general_permit = ?,
+			last_modified = ?
+			WHERE application_id = ?
+			AND last_modified = ?
+		</modifyApplication>
+
+		<removeApplication>
+			DELETE FROM %Schema%pa_application
+			WHERE application_id = ?
+		</removeApplication>
+
+		<removePTIOApplication>
+			DELETE FROM %Schema%pa_ptio_application
+			WHERE application_id = ?
+		</removePTIOApplication>
+
+		<removeTVApplication>
+			DELETE FROM %Schema%pa_tv_application
+			WHERE application_id = ?
+		</removeTVApplication>
+
+		<removeRPCRequest>
+			DELETE FROM %Schema%pa_rpc_request
+			WHERE application_id = ?
+		</removeRPCRequest>
+
+		<removeRPERequest>
+			DELETE FROM %Schema%pa_rpe_request
+			WHERE application_id = ?
+		</removeRPERequest>
+
+		<removeRPRRequest>
+			DELETE FROM %Schema%pa_rpr_request
+			WHERE application_id = ?
+		</removeRPRRequest>
+
+		<removePBRNotification>
+			DELETE FROM %Schema%pa_pbr_notification
+			WHERE application_id = ?
+		</removePBRNotification>
+
+		<addApplicationNote>
+			INSERT INTO %Schema%pa_application_note_xref (application_id, note_id)
+			VALUES (?,?)
+		</addApplicationNote>
+		<retrieveApplicationNotes>
+			SELECT ${InfrastructureSQL.noteColumns}, paanx.application_id
+			FROM %Schema%pa_application_note_xref paanx, %Schema%cm_note cn
+			WHERE paanx.application_id = ?
+			AND paanx.note_id = cn.note_id
+			ORDER BY note_id DESC
+		</retrieveApplicationNotes>
+		<removeApplicationNotes>
+			DELETE FROM %Schema%pa_application_note_xref
+			WHERE application_id = ?
+		</removeApplicationNotes>
+
+		<retrievePTIOEUPurposeCds>SELECT pepx.ptio_eu_purpose_cd
+			FROM %Schema%pa_ptio_eu_purpose_xref pepx
+			WHERE pepx.application_eu_id = ?
+		</retrievePTIOEUPurposeCds>
+		<createPTIOEUPurpose>INSERT INTO %Schema%pa_ptio_eu_purpose_xref
+			(application_eu_id, ptio_eu_purpose_cd)
+			VALUES (?,?)
+		</createPTIOEUPurpose>
+		<removePTIOEUPurposeCds>DELETE FROM %Schema%pa_ptio_eu_purpose_xref
+			WHERE application_eu_id = ?
+		</removePTIOEUPurposeCds>
+
+		<retrievePTIOEUFedLimitCds>SELECT pepflx.federal_limits_reason_cd
+			FROM %Schema%pa_ptio_eu_fed_lim_reason_xref pepflx
+			WHERE pepflx.application_eu_id = ?
+		</retrievePTIOEUFedLimitCds>
+		<createPTIOEUFedLimit>INSERT INTO
+			%Schema%pa_ptio_eu_fed_lim_reason_xref
+			(application_eu_id, federal_limits_reason_cd)
+			VALUES (?,?)
+		</createPTIOEUFedLimit>
+		<removePTIOEUFedLimitCds>DELETE FROM
+			%Schema%pa_ptio_eu_fed_lim_reason_xref
+			WHERE application_eu_id = ?
+		</removePTIOEUFedLimitCds>
+
+		<retrievePTIOAppNSPSSubpartCds>SELECT nsps_subpart_cd
+			FROM %Schema%pa_ptio_nsps_subpart_xref
+			WHERE application_eu_id = ?
+		</retrievePTIOAppNSPSSubpartCds>
+		<addPTIOAppNSPSSubpartCd>INSERT INTO %Schema%pa_ptio_nsps_subpart_xref
+			(application_eu_id, nsps_subpart_cd)
+			VALUES (?,?)
+		</addPTIOAppNSPSSubpartCd>
+		<removePTIOAppNSPSSubpartCds>DELETE FROM
+			%Schema%pa_ptio_nsps_subpart_xref
+			WHERE application_eu_id = ?
+		</removePTIOAppNSPSSubpartCds>
+
+		<retrievePTIOAppNESHAPSubpartCds>SELECT neshaps_subpart_cd
+			FROM %Schema%pa_ptio_neshaps_subpart_xref
+			WHERE application_eu_id = ?
+		</retrievePTIOAppNESHAPSubpartCds>
+		<addPTIOAppNESHAPSubpartCd>INSERT INTO
+			%Schema%pa_ptio_neshaps_subpart_xref
+			(application_eu_id, neshaps_subpart_cd)
+			VALUES (?,?)
+		</addPTIOAppNESHAPSubpartCd>
+		<removePTIOAppNESHAPSubpartCds>DELETE FROM
+			%Schema%pa_ptio_neshaps_subpart_xref
+			WHERE application_eu_id = ?
+		</removePTIOAppNESHAPSubpartCds>
+
+		<retrievePTIOAppMACTSubpartCds>SELECT mact_subpart_cd
+			FROM %Schema%pa_ptio_mact_subpart_xref
+			WHERE application_eu_id = ?
+		</retrievePTIOAppMACTSubpartCds>
+		<addPTIOAppMACTSubpartCd>INSERT INTO %Schema%pa_ptio_mact_subpart_xref
+			(application_eu_id, mact_subpart_cd)
+			VALUES (?,?)
+		</addPTIOAppMACTSubpartCd>
+		<removePTIOAppMACTSubpartCds>DELETE FROM
+			%Schema%pa_ptio_mact_subpart_xref
+			WHERE application_eu_id = ?
+		</removePTIOAppMACTSubpartCds>
+
+		<applicationEUEmissionsColumns>
+			application_eu_id, pollutant_cd, eu_emission_table_cd,
+			pre_ctl_potential_emission_ton_yr,potential_to_emit,unit_cd,potential_to_emit_lb_hr,
+			potential_to_emit_ton_yr,pte_determination_basis_cd,
+			co2_equivalent
+		</applicationEUEmissionsColumns>
+
+		<addApplicationEUEmissions>
+			INSERT INTO %Schema%pa_eu_emissions
+			(${ApplicationSQL.applicationEUEmissionsColumns})
+			VALUES (?,?,?,?,?,?,?,?,?,?)
+		</addApplicationEUEmissions>
+
+		<modifyApplicationEUEmissions>
+			UPDATE %Schema%pa_eu_emissions
+			SET pre_ctl_potential_emission_ton_yr = ?,
+			potential_to_emit = ?, unit_cd = ?,
+			potential_to_emit_lb_hr = ?, potential_to_emit_ton_yr = ?, pte_determination_basis_cd = ?
+			last_modified = ?
+			WHERE application_eu_id = ? AND pollutant_cd = ?
+			AND eu_emission_table_cd = ? AND last_modified = ?
+		</modifyApplicationEUEmissions>
+
+		<removeApplicationEUEmissions>
+			DELETE FROM %Schema%pa_eu_emissions
+			WHERE application_eu_id = ? AND pollutant_cd = ?
+			AND eu_emission_table_cd = ?
+		</removeApplicationEUEmissions>
+
+		<tvApplicationEUEmissionsColumns>
+			application_eu_id, tv_eu_operating_scenario_id,
+			pollutant_cd, eu_emission_table_cd,
+			pte_tons_yr, co2_equivalent, pte_determination_basis,
+			det_basis_trade_secret, reason_det_basis_trade_secret,
+			applicable_req
+		</tvApplicationEUEmissionsColumns>
+
+		<addTVApplicationEUEmissions>
+			INSERT INTO %Schema%pa_tv_eu_emissions
+			(${ApplicationSQL.tvApplicationEUEmissionsColumns})
+			VALUES (?,?,?,?,?,?,?,?,?,?)
+		</addTVApplicationEUEmissions>
+
+		<modifyTVApplicationEUEmissions>
+			UPDATE %Schema%pa_tv_eu_emissions
+			pte_tons_yr = ?, co2_equivalent = ?, pte_determination_basis = ?,
+			det_basis_trade_secret = ?,
+			reason_det_basis_trade_secret = ?, applicable_req = ?,
+			last_modified = ?
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+			AND pollutant_cd = ?
+			AND eu_emission_table_cd = ? AND last_modified = ?
+		</modifyTVApplicationEUEmissions>
+
+		<removeTVApplicationEUEmission>
+			DELETE FROM %Schema%pa_tv_eu_emissions
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+			AND pollutant_cd = ? AND eu_emission_table_cd = ?
+		</removeTVApplicationEUEmission>
+
+		<removeTVApplicationEUEmissionsForScenario>
+			DELETE FROM %Schema%pa_tv_eu_emissions
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+		</removeTVApplicationEUEmissionsForScenario>
+
+		<removeAllTVApplicationEUEmissionsForEU>
+			DELETE FROM %Schema%pa_tv_eu_emissions
+			WHERE application_eu_id = ?
+		</removeAllTVApplicationEUEmissionsForEU>
+
+		<retrieveTVApplicationEUEmissions>
+			SELECT ${ApplicationSQL.tvApplicationEUEmissionsColumns},
+			last_modified
+			FROM %Schema%pa_tv_eu_emissions
+			WHERE application_eu_id = ?
+		</retrieveTVApplicationEUEmissions>
+
+		<retrieveTVApplicationEUEmissionsForScenario>
+			SELECT ${ApplicationSQL.tvApplicationEUEmissionsColumns},
+			last_modified
+			FROM %Schema%pa_tv_eu_emissions
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+		</retrieveTVApplicationEUEmissionsForScenario>
+
+		<removeAllApplicationEUEmissionsForEU>
+			DELETE FROM %Schema%pa_eu_emissions
+			WHERE application_eu_id = ?
+		</removeAllApplicationEUEmissionsForEU>
+
+		<retrieveApplicationEUEmissions>
+			SELECT ${ApplicationSQL.applicationEUEmissionsColumns},
+			last_modified
+			FROM %Schema%pa_eu_emissions
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUEmissions>
+
+		<tvOperatingScenarioColumns>
+			application_eu_id, tv_eu_operating_scenario_id,
+			tv_eu_operating_scenario_nm,
+			op_sched_hrs_day, op_sched_hrs_yr,
+			op_sched_trade_secret, op_aos_autherized,reason_op_sched_trade_secret,
+			operation_limits, operation_limits_dsc,engine_order_dt,engine_manufacture_dt
+		</tvOperatingScenarioColumns>
+
+		<addTVEUOperatingScenario>
+			INSERT INTO %Schema%pa_tv_eu_operating_scenario
+			(${ApplicationSQL.tvOperatingScenarioColumns})
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+		</addTVEUOperatingScenario>
+
+		<modifyTVEUOperatingScenario>
+			UPDATE %Schema%pa_tv_eu_operating_scenario
+			SET tv_eu_operating_scenario_nm = ?, op_sched_hrs_day = ?,
+			op_sched_hrs_yr = ?, op_sched_trade_secret = ?, op_aos_autherized = ?,
+			reason_op_sched_trade_secret = ?, operation_limits = ?,
+			operation_limits_dsc = ?, engine_order_dt = ?, engine_manufacture_dt = ?
+			last_modified = ?
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+			AND last_modified = ?
+		</modifyTVEUOperatingScenario>
+
+		<removeTVEUOperatingScenario>
+			DELETE FROM %Schema%pa_tv_eu_operating_scenario
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+		</removeTVEUOperatingScenario>
+
+		<removeTVEUOperatingScenariosForEU>
+			DELETE FROM %Schema%pa_tv_eu_operating_scenario
+			WHERE application_eu_id = ?
+		</removeTVEUOperatingScenariosForEU>
+
+		<retrieveTVOperatingScenariosForEU>
+			SELECT ${ApplicationSQL.tvOperatingScenarioColumns},
+			last_modified
+			FROM %Schema%pa_tv_eu_operating_scenario
+			WHERE application_eu_id = ?
+			ORDER BY tv_eu_operating_scenario_id
+		</retrieveTVOperatingScenariosForEU>
+
+		<getMaxOpScenarioId>
+			SELECT MAX(tv_eu_operating_scenario_id)
+			FROM %Schema%pa_tv_eu_operating_scenario
+			WHERE application_eu_id = ?
+		</getMaxOpScenarioId>
+
+		<getMaxAltScenarioPteReqId>
+			SELECT MAX(tv_alt_scenario_pte_req_id)
+			FROM %Schema%pa_tv_alt_scenario_pte_req
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+		</getMaxAltScenarioPteReqId>
+
+		<tvApplicableReqColumns>
+			tv_applicable_req_id, application_id, application_eu_id, tv_eu_group_id,
+			pollutant_cd, state_only, tv_rule_cite_type_cd,
+			allowable_rule_cite_cd, allowable_permit_cite, allowable_value,
+			monitoring_rule_cite_cd, monitoring_permit_cite, monitoring_value,
+			record_keeping_rule_cite_cd, record_keeping_permit_cite,
+			record_keeping_value,
+			reporting_rule_cite_cd, reporting_permit_cite, tv_comprpt_freq_cd, reporting_other_dsc,
+			testing_rule_cite_cd, testing_permit_cite, testing_value,
+			in_compliance_flag,
+			compliance_obligations_flag,
+			proposed_exemptions_flag,
+			proposed_alt_limits_flag,
+			proposed_test_changes_flag
+		</tvApplicableReqColumns>
+
+		<addTVApplicableReq>
+			INSERT INTO %Schema%pa_tv_applicable_req
+			(${ApplicationSQL.tvApplicableReqColumns})
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</addTVApplicableReq>
+
+		<removeTVApplicableReqs>
+			DELETE FROM %Schema%pa_tv_applicable_req
+			WHERE application_id = ? and application_eu_id IS NULL
+			AND tv_eu_group_id IS NULL
+		</removeTVApplicableReqs>
+
+		<removeTVApplicableReqsForEU>
+			DELETE FROM %Schema%pa_tv_applicable_req
+			WHERE application_eu_id = ?
+		</removeTVApplicableReqsForEU>
+
+		<removeTVApplicableReqsForEUGroup>
+			DELETE FROM %Schema%pa_tv_applicable_req
+			WHERE tv_eu_group_id = ?
+		</removeTVApplicableReqsForEUGroup>
+
+		<retrieveTVApplicableReqs>
+			SELECT ${ApplicationSQL.tvApplicableReqColumns},
+			patar.last_modified
+			FROM %Schema%pa_tv_applicable_req patar
+			WHERE patar.application_id = ? AND patar.application_eu_id IS NULL
+			AND patar.tv_eu_group_id IS NULL
+			ORDER BY patar.pollutant_cd
+		</retrieveTVApplicableReqs>
+
+		<retrieveTVApplicableReqsForEU>
+			SELECT ${ApplicationSQL.tvApplicableReqColumns},
+			patar.last_modified
+			FROM %Schema%pa_tv_applicable_req patar
+			WHERE patar.application_eu_id = ?
+			ORDER BY patar.pollutant_cd
+		</retrieveTVApplicableReqsForEU>
+
+		<retrieveTVApplicableReqsForEUGroup>
+			SELECT ${ApplicationSQL.tvApplicableReqColumns},
+			patar.last_modified
+			FROM %Schema%pa_tv_applicable_req patar
+			WHERE patar.tv_eu_group_id = ?
+			ORDER BY patar.pollutant_cd
+		</retrieveTVApplicableReqsForEUGroup>
+
+		<retrieveRenewalApplication>
+			SELECT pa.application_id
+			FROM %Schema%pa_application pa
+			INNER JOIN %Schema%pa_tv_application pta ON (pta.application_id =
+			pa.application_id)
+			INNER JOIN %Schema%fp_facility ff ON (pa.fp_id = ff.fp_id)
+			WHERE ff.facility_id = ?
+			AND pa.received_date &gt; ?
+			AND pa.received_date &lt; ?
+		</retrieveRenewalApplication>
+
+		<retrieveRenewalApplicationByEU>
+			SELECT pa.application_id
+			FROM %Schema%pa_application pa
+			INNER JOIN %Schema%pa_eu pe ON (pe.application_id = pa.application_id AND
+			excluded_flag = 'N')
+			INNER JOIN %Schema%FP_EMISSIONS_UNIT feu ON (pe.EMU_ID = feu.EMU_ID)
+			WHERE feu.CORR_EPA_EMU_ID = ?
+			AND pa.received_date &gt; ?
+			AND pa.received_date &lt; ?
+		</retrieveRenewalApplicationByEU>
+
+		<setApplicationValidatedFlag>
+			UPDATE %Schema%pa_application SET validated_flag = ?
+			WHERE application_id = ?
+		</setApplicationValidatedFlag>
+		
+		<setApplicationEUValidatedFlag>
+			UPDATE %Schema%pa_eu SET validated_flag = ?
+			WHERE application_eu_id = ?
+		</setApplicationEUValidatedFlag>		
+		
+		<markApplicationSubmitted>
+			UPDATE %Schema%pa_application
+			SET submitted_date = ?
+			WHERE application_id = ?
+		</markApplicationSubmitted>
+
+		<createTvEuGroup>
+			INSERT INTO %Schema%pa_tv_eu_group (tv_eu_group_id, application_id,
+			tv_eu_group_name)
+			VALUES (?, ?, ?)
+		</createTvEuGroup>
+
+		<retrieveTvEuGroupsForApplication>
+			SELECT DISTINCT tv_eu_group_id
+			FROM %Schema%pa_tv_eu_group
+			WHERE application_id = ?
+		</retrieveTvEuGroupsForApplication>
+
+		<retrieveTvEuGroup>
+			SELECT grp.tv_eu_group_id, grp.application_id, grp.tv_eu_group_name,
+			grp.last_modified,
+			${ApplicationSQL.applicationEUColumns},
+			${ApplicationSQL.tvApplicationEUColumns},
+			${FacilitySQL.emissionUnitColumns}
+			FROM %Schema%pa_tv_eu_group grp
+			LEFT OUTER JOIN %Schema%pa_tv_eu_group_xref xref ON grp.tv_eu_group_id =
+			xref.tv_eu_group_id
+			LEFT OUTER JOIN %Schema%pa_tv_eu pte ON xref.application_eu_id =
+			pte.application_eu_id
+			LEFT OUTER JOIN %Schema%pa_eu pe ON pe.application_eu_id =
+			pte.application_eu_id
+			LEFT OUTER JOIN %Schema%fp_emissions_unit feu ON pe.emu_id = feu.emu_id
+			WHERE grp.tv_eu_group_id = ?
+		</retrieveTvEuGroup>
+
+		<modifyTvEuGroup>
+			UPDATE %Schema%pa_tv_eu_group
+			SET tv_eu_group_name = ?,
+			last_modified = ?
+			WHERE tv_eu_group_id = ?
+			AND application_id = ?
+			AND last_modified = ?
+		</modifyTvEuGroup>
+
+		<addTvEuToGroup>
+			INSERT INTO %Schema%pa_tv_eu_group_xref (application_eu_id, tv_eu_group_id)
+			VALUES (?, ?)
+		</addTvEuToGroup>
+
+		<removeTvEusFromGroup>
+			DELETE FROM %Schema%pa_tv_eu_group_xref WHERE tv_eu_group_id = ?
+		</removeTvEusFromGroup>
+
+		<removeTvEuGroup>
+			DELETE FROM %Schema%pa_tv_eu_group WHERE tv_eu_group_id = ?
+		</removeTvEuGroup>
+
+		<tvAltScenarioPteReqColumns>
+			tv_alt_scenario_pte_req_id, application_eu_id, tv_eu_operating_scenario_id,
+			pollutant_cd, allowable, emission_units_cd, applicable_req
+		</tvAltScenarioPteReqColumns>
+
+		<createTVAltScenarioPteReq>
+			INSERT INTO %Schema%pa_tv_alt_scenario_pte_req
+			(${ApplicationSQL.tvAltScenarioPteReqColumns})
+			VALUES (?,?,?,?,?,?,?)
+		</createTVAltScenarioPteReq>
+
+		<modifyTVAltScenarioPteReq>
+			UPDATE %Schema%pa_tv_alt_scenario_pte_req
+			SET pollutant_cd = ?, allowable = ?, emission_units_cd = ?,
+			applicable_req = ?, last_modified = ?
+			WHERE tv_alt_scenario_pte_req_id = ? AND application_eu_id = ?
+			AND tv_eu_operating_scenario_id = ? AND last_modified = ?
+		</modifyTVAltScenarioPteReq>
+
+		<removeTVAltScenarioPteReqsForEu>
+			DELETE FROM %Schema%pa_tv_alt_scenario_pte_req
+			WHERE application_eu_id = ?
+		</removeTVAltScenarioPteReqsForEu>
+
+		<removeTVAltScenarioPteReqsForScenario>
+			DELETE FROM %Schema%pa_tv_alt_scenario_pte_req
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+		</removeTVAltScenarioPteReqsForScenario>
+
+		<retrieveTVAltScenarioPteReqsForScenario>
+			SELECT ${ApplicationSQL.tvAltScenarioPteReqColumns}, last_modified
+			FROM %Schema%pa_tv_alt_scenario_pte_req
+			WHERE application_eu_id = ? AND tv_eu_operating_scenario_id = ?
+		</retrieveTVAltScenarioPteReqsForScenario>
+
+		<tvFacilityPteColumns>
+			application_id, eu_emission_table_cd, pollutant_cd, pte_adjustment
+		</tvFacilityPteColumns>
+
+		<addTVPteAdjustment>
+			INSERT INTO %Schema%pa_tv_pte_adjustment
+			(${ApplicationSQL.tvFacilityPteColumns})
+			VALUES (?,?,?,?)
+		</addTVPteAdjustment>
+
+		<removeTVPteAdjustmentForApplication>
+			DELETE FROM %Schema%pa_tv_pte_adjustment
+			WHERE application_id = ?
+		</removeTVPteAdjustmentForApplication>
+
+		<retrieveTVPteAdjustmentForApplication>
+			SELECT ${ApplicationSQL.tvFacilityPteColumns}, last_modified
+			FROM %Schema%pa_tv_pte_adjustment
+			WHERE application_id = ?
+		</retrieveTVPteAdjustmentForApplication>
+
+		<tvComplianceColumns>
+			tv_applicable_req_id, compliance_id,
+			compliance_approach_req, compliance_approach
+		</tvComplianceColumns>
+
+		<addTvCompliance>
+			INSERT INTO %Schema%pa_tv_compliance
+			(${ApplicationSQL.tvComplianceColumns})
+			VALUES (?, ?, ?, ?)
+		</addTvCompliance>
+
+		<retrieveTvComplianceForAppReq>
+			SELECT ${ApplicationSQL.tvComplianceColumns}, last_modified
+			FROM %Schema%pa_tv_compliance
+			WHERE tv_applicable_req_id = ?
+		</retrieveTvComplianceForAppReq>
+
+		<removeTvComplianceForAppReq>
+			DELETE FROM %Schema%pa_tv_compliance
+			WHERE tv_applicable_req_id = ?
+		</removeTvComplianceForAppReq>
+
+		<getMaxComplianceId>
+			SELECT MAX(compliance_id)
+			FROM %Schema%pa_tv_compliance
+			WHERE tv_applicable_req_id = ?
+		</getMaxComplianceId>
+
+		<tvComplianceObligationsColumns>
+			tv_applicable_req_id, compliance_obligations_id,
+			compliance_obligations_req, compliance_obligations_limit,
+			compliance_obligations_basis
+		</tvComplianceObligationsColumns>
+
+		<addTvComplianceObligations>
+			INSERT INTO %Schema%pa_tv_compliance_obligations
+			(${ApplicationSQL.tvComplianceObligationsColumns})
+			VALUES (?, ?, ?, ?, ?)
+		</addTvComplianceObligations>
+
+		<retrieveTvComplianceObligationsForAppReq>
+			SELECT ${ApplicationSQL.tvComplianceObligationsColumns}, last_modified
+			FROM %Schema%pa_tv_compliance_obligations
+			WHERE tv_applicable_req_id = ?
+		</retrieveTvComplianceObligationsForAppReq>
+
+		<removeTvComplianceObligationsForAppReq>
+			DELETE FROM %Schema%pa_tv_compliance_obligations
+			WHERE tv_applicable_req_id = ?
+		</removeTvComplianceObligationsForAppReq>
+
+		<getMaxComplianceObligationsId>
+			SELECT MAX(compliance_obligations_id)
+			FROM %Schema%pa_tv_compliance_obligations
+			WHERE tv_applicable_req_id = ?
+		</getMaxComplianceObligationsId>
+
+		<tvProposedExemptionsColumns>
+			tv_applicable_req_id, proposed_exemptions_id,
+			proposed_exemptions_req, proposed_exemptions
+		</tvProposedExemptionsColumns>
+
+		<addTvProposedExemptions>
+			INSERT INTO %Schema%pa_tv_proposed_exemptions
+			(${ApplicationSQL.tvProposedExemptionsColumns})
+			VALUES (?, ?, ?, ?)
+		</addTvProposedExemptions>
+
+		<retrieveTvProposedExemptionsForAppReq>
+			SELECT ${ApplicationSQL.tvProposedExemptionsColumns}, last_modified
+			FROM %Schema%pa_tv_proposed_exemptions
+			WHERE tv_applicable_req_id = ?
+		</retrieveTvProposedExemptionsForAppReq>
+
+		<removeTvProposedExemptionsForAppReq>
+			DELETE FROM %Schema%pa_tv_proposed_exemptions
+			WHERE tv_applicable_req_id = ?
+		</removeTvProposedExemptionsForAppReq>
+
+		<getMaxProposedExemptionsId>
+			SELECT MAX(proposed_exemptions_id)
+			FROM %Schema%pa_tv_proposed_exemptions
+			WHERE tv_applicable_req_id = ?
+		</getMaxProposedExemptionsId>
+
+		<tvProposedAltLimitsColumns>
+			tv_applicable_req_id, proposed_alt_limits_id,
+			proposed_alt_limits_req, proposed_alt_limits
+		</tvProposedAltLimitsColumns>
+
+		<addTvProposedAltLimits>
+			INSERT INTO %Schema%pa_tv_proposed_alt_limits
+			(${ApplicationSQL.tvProposedAltLimitsColumns})
+			VALUES (?, ?, ?, ?)
+		</addTvProposedAltLimits>
+
+		<retrieveTvProposedAltLimitsForAppReq>
+			SELECT ${ApplicationSQL.tvProposedAltLimitsColumns}, last_modified
+			FROM %Schema%pa_tv_proposed_alt_limits
+			WHERE tv_applicable_req_id = ?
+		</retrieveTvProposedAltLimitsForAppReq>
+
+		<removeTvProposedAltLimitsForAppReq>
+			DELETE FROM %Schema%pa_tv_proposed_alt_limits
+			WHERE tv_applicable_req_id = ?
+		</removeTvProposedAltLimitsForAppReq>
+
+		<getMaxProposedAltLimitsId>
+			SELECT MAX(proposed_alt_limits_id)
+			FROM %Schema%pa_tv_proposed_alt_limits
+			WHERE tv_applicable_req_id = ?
+		</getMaxProposedAltLimitsId>
+
+		<tvProposedTestChangesColumns>
+			tv_applicable_req_id, proposed_test_changes_id,
+			proposed_test_changes_req, proposed_test_changes
+		</tvProposedTestChangesColumns>
+
+		<addTvProposedTestChanges>
+			INSERT INTO %Schema%pa_tv_proposed_test_changes
+			(${ApplicationSQL.tvProposedTestChangesColumns})
+			VALUES (?, ?, ?, ?)
+		</addTvProposedTestChanges>
+
+		<retrieveTvProposedTestChangesForAppReq>
+			SELECT ${ApplicationSQL.tvProposedTestChangesColumns}, last_modified
+			FROM %Schema%pa_tv_proposed_test_changes
+			WHERE tv_applicable_req_id = ?
+		</retrieveTvProposedTestChangesForAppReq>
+
+		<removeTvProposedTestChangesForAppReq>
+			DELETE FROM %Schema%pa_tv_proposed_test_changes
+			WHERE tv_applicable_req_id = ?
+		</removeTvProposedTestChangesForAppReq>
+
+		<getMaxProposedTestChangesId>
+			SELECT MAX(proposed_test_changes_id)
+			FROM %Schema%pa_tv_proposed_test_changes
+			WHERE tv_applicable_req_id = ?
+		</getMaxProposedTestChangesId>
+
+		<retrievePermitTypeForRPCType>
+			SELECT permit_type_cd
+			FROM %Schema%pa_rpc_type_permit_type_xref
+			WHERE rpc_type_cd = ?
+		</retrievePermitTypeForRPCType>
+
+		<retrieveRPCRequestDocument>
+			SELECT ${DocumentSQL.documentColumns},
+			rpcd.application_id, rpcd.rpc_request_doc_type_cd AS attachment_type_cd,
+			null AS attachment_type_dsc,
+			rpcd.last_modified AS ref_lm
+			FROM %Schema%dc_document dd, %Schema%pa_rpc_request_document rpcd
+			WHERE application_id = ?
+			AND dd.document_id = rpcd.document_id
+			AND
+			rpcd.document_id = ?
+		</retrieveRPCRequestDocument>
+
+		<retrieveRPCRequestDocuments>
+			SELECT ${DocumentSQL.documentColumns},
+			rpcd.application_id, rpcd.rpc_request_doc_type_cd AS attachment_type_cd,
+			null AS attachment_type_dsc,
+			rpcd.last_modified AS ref_lm
+			FROM %Schema%dc_document dd, %Schema%pa_rpc_request_document rpcd
+			WHERE application_id = ?
+			AND dd.document_id = rpcd.document_id
+		</retrieveRPCRequestDocuments>
+
+		<createRPCRequestDocument>
+			INSERT INTO %Schema%pa_rpc_request_document
+			(document_id, application_id, rpc_request_doc_type_cd)
+			VALUES (?, ?, ?)
+		</createRPCRequestDocument>
+
+		<modifyRPCRequestDocument>
+			UPDATE %Schema%pa_rpc_request_document
+			SET rpc_request_doc_type_cd = ?, last_modified = ?
+			WHERE application_id = ?
+			AND document_id = ?
+			AND last_modified = ?
+		</modifyRPCRequestDocument>
+
+		<removeRPCRequestDocument>
+			DELETE FROM %Schema%pa_rpc_request_document
+			WHERE application_id = ?
+			AND document_id = ?
+		</removeRPCRequestDocument>
+
+		<removeRPCRequestDocuments>
+			DELETE FROM %Schema%pa_rpc_request_document
+			WHERE application_id = ?
+		</removeRPCRequestDocuments>
+
+		<retrievePBRNotificationDocument>
+			SELECT ${DocumentSQL.documentColumns},
+			pbrd.application_id, pbrd.pbr_notif_doc_type_cd AS attachment_type_cd,
+			null AS attachment_type_dsc,
+			pbrd.last_modified AS ref_lm
+			FROM %Schema%dc_document dd, %Schema%pa_pbr_notification_document pbrd
+			WHERE application_id = ?
+			AND dd.document_id = pbrd.document_id
+			AND
+			pbrd.document_id = ?
+		</retrievePBRNotificationDocument>
+
+		<retrievePBRNotificationDocuments>
+			SELECT ${DocumentSQL.documentColumns},
+			pbrd.application_id, pbrd.pbr_notif_doc_type_cd AS attachment_type_cd,
+			null AS attachment_type_dsc,
+			pbrd.last_modified AS ref_lm
+			FROM %Schema%dc_document dd, %Schema%pa_pbr_notification_document pbrd
+			WHERE application_id = ?
+			AND dd.document_id = pbrd.document_id
+		</retrievePBRNotificationDocuments>
+
+		<createPBRNotificationDocument>
+			INSERT INTO %Schema%pa_pbr_notification_document
+			(document_id, application_id, pbr_notif_doc_type_cd)
+			VALUES (?, ?, ?)
+		</createPBRNotificationDocument>
+
+		<modifyPBRNotificationDocument>
+			UPDATE %Schema%pa_pbr_notification_document
+			SET pbr_notif_doc_type_cd = ?, last_modified = ?
+			WHERE application_id = ?
+			AND document_id = ?
+			AND last_modified = ?
+		</modifyPBRNotificationDocument>
+
+		<removePBRNotificationDocument>
+			DELETE FROM %Schema%pa_pbr_notification_document
+			WHERE application_id = ?
+			AND document_id = ?
+		</removePBRNotificationDocument>
+
+		<removePBRNotificationDocuments>
+			DELETE FROM %Schema%pa_pbr_notification_document
+			WHERE application_id = ?
+		</removePBRNotificationDocuments>
+
+		<retrieveApplicationSearchResults>
+			SELECT pa.application_id, pa.application_type_cd, pa.application_nbr,
+			pa.previous_application_nbr, pa.received_date, pa.submitted_date,
+			pa.general_permit, pa.fp_id, ff.facility_id, ff.facility_nm,
+			ff.do_laa_cd, ISNULL(rel.target_county_cd, ca.county_cd) AS
+			county_cd, ccm.CMP_ID, ccm.NAME as company_nm
+			FROM %Schema%pa_application pa
+			INNER JOIN %Schema%fp_facility ff ON (pa.fp_id = ff.fp_id)
+			INNER JOIN %Schema%fp_facility_address_xref ffax ON (ff.fp_id = ffax.fp_id
+			AND ffax.address_id = (
+			SELECT MAX(ffaxmax.address_id)
+			FROM %Schema%fp_facility_address_xref ffaxmax
+			WHERE ffaxmax.fp_id = ff.fp_id))
+			INNER JOIN %Schema%cm_address ca ON (ffax.address_id = ca.address_id)
+			LEFT OUTER JOIN %Schema%pa_relocation rel ON (pa.application_id =
+			rel.application_id)
+			LEFT JOIN %Schema%FP_FACILITY_COMPANY_XREF ffcx ON (ffcx.FACILITY_ID =
+			ff.FACILITY_ID AND ffcx.END_DATE IS NULL)
+			LEFT JOIN %Schema%CM_COMPANY ccm ON ccm.COMPANY_ID = ffcx.COMPANY_ID
+		</retrieveApplicationSearchResults>
+
+		<applicationSearchWithEuId>
+			pa.application_id in (SELECT distinct pe.APPLICATION_ID
+			FROM %Schema%PA_EU pe
+			INNER JOIN %Schema%FP_EMISSIONS_UNIT feu
+			ON (feu.EMU_ID = pe.EMU_ID AND pe.EXCLUDED_FLAG = 'N')
+			WHERE %ApplicationSearchEUWhere%)
+		</applicationSearchWithEuId>
+
+		<applicationSearchByPTIOTypeAndClause>
+			pa.application_id IN (
+			select application_id from %Schema%pa_ptio_app_purpose_xref
+			where ptio_app_purpose_cd = 'APP_PURPOSE_CD')
+		</applicationSearchByPTIOTypeAndClause>
+
+		<applicationSearchByLegacyPTOAndClause>
+			pa.application_id IN (
+			select application_id from %Schema%pa_ptio_application
+			where legacy_st_pto_app_flag = 'Y')
+		</applicationSearchByLegacyPTOAndClause>
+
+		<applicationSearchByBRTypeAndClause>
+			pa.application_id IN (
+			select application_id from %Schema%pa_pbr_notification
+			where pbr_type_cd = 'PBR_TYPE_CD')
+		</applicationSearchByBRTypeAndClause>
+
+		<applicationSearchByPermitAndClause>
+			pa.application_id IN (
+			select application_id from %Schema%pt_permit_application_xref
+			where permit_id in (
+			select permit_id from %Schema%pt_permit
+			where lower(permit_nbr) like lower('PERMIT_NBR'))
+			UNION (select application_id from %Schema%pa_rpc_request
+			where permit_id in (
+			select permit_id from %Schema%pt_permit
+			where lower(permit_nbr) like lower('PERMIT_NBR')))
+			UNION (select application_id from %Schema%pa_rpe_request
+			where permit_id in (
+			select permit_id from %Schema%pt_permit
+			where lower(permit_nbr) like lower('PERMIT_NBR')))
+			UNION (select application_id from %Schema%pa_rpr_request
+			where permit_id in (
+			select permit_id from %Schema%pt_permit
+			where lower(permit_nbr) like lower('PERMIT_NBR')))
+			)
+		</applicationSearchByPermitAndClause>
+
+		<!-- <retrievePermitNumbersForApplications> SELECT ap.application_id, pt.permit_nbr 
+			FROM %Schema%pa_application ap, %Schema%PT_PERMIT_APPLICATION_XREF apx, %Schema%PT_PERMIT 
+			pt, %Schema%FP_FACILITY ff WHERE ap.application_id = apx.application_id AND 
+			apx.permit_id = pt.permit_id AND ap.fp_id = ff.fp_id AND lower(ap.application_nbr) 
+			like lower('APP_NBR') AND lower(pt.permit_nbr) like lower('PERMIT_NBR') AND 
+			lower(ff.facility_id) like lower('FAC_ID') </retrievePermitNumbersForApplications> -->
+
+		<retrievePermitNumbersForApplications>
+			SELECT pa.application_id, pt.permit_nbr
+			FROM %Schema%pa_application pa
+			INNER JOIN %Schema%pt_permit_application_xref apx ON (pa.application_id =
+			apx.application_id)
+			INNER JOIN %Schema%pt_permit pt ON (apx.permit_id = pt.permit_id)
+			INNER JOIN %Schema%fp_facility ff ON (pa.fp_id = ff.fp_id)
+			INNER JOIN
+			%Schema%fp_facility_address_xref ffax ON (ff.fp_id = ffax.fp_id
+			AND ffax.address_id = (
+			SELECT MAX(ffaxmax.address_id)
+			FROM %Schema%fp_facility_address_xref ffaxmax
+			WHERE ffaxmax.fp_id = ff.fp_id))
+			INNER JOIN %Schema%cm_address ca ON (ffax.address_id = ca.address_id)
+			LEFT OUTER JOIN %Schema%pa_relocation rel ON (pa.application_id =
+			rel.application_id)
+			LEFT JOIN %Schema%FP_FACILITY_COMPANY_XREF ffcx ON (ffcx.FACILITY_ID =
+			ff.FACILITY_ID AND ffcx.END_DATE IS NULL)
+			LEFT JOIN %Schema%CM_COMPANY ccm ON ccm.COMPANY_ID = ffcx.COMPANY_ID
+			WHERE_CLAUSE
+			UNION
+			SELECT pa.application_id, pt.permit_nbr
+			FROM %Schema%pa_application pa
+			INNER JOIN %Schema%pa_rpc_request rpc ON (pa.application_id =
+			rpc.application_id)
+			INNER JOIN %Schema%pt_permit pt ON (rpc.permit_id = pt.permit_id)
+			INNER JOIN %Schema%fp_facility ff ON (pa.fp_id = ff.fp_id)
+			INNER JOIN
+			%Schema%fp_facility_address_xref ffax ON (ff.fp_id = ffax.fp_id
+			AND ffax.address_id = (
+			SELECT MAX(ffaxmax.address_id)
+			FROM %Schema%fp_facility_address_xref ffaxmax
+			WHERE ffaxmax.fp_id = ff.fp_id))
+			INNER JOIN %Schema%cm_address ca ON (ffax.address_id = ca.address_id)
+			LEFT JOIN %Schema%FP_FACILITY_COMPANY_XREF ffcx ON (ffcx.FACILITY_ID =
+			ff.FACILITY_ID AND ffcx.END_DATE IS NULL)
+			LEFT JOIN %Schema%CM_COMPANY ccm ON ccm.COMPANY_ID = ffcx.COMPANY_ID
+			WHERE_CLAUSE
+			UNION
+			SELECT pa.application_id, pt.permit_nbr
+			FROM %Schema%pa_application pa
+			INNER JOIN %Schema%pa_rpe_request rpe ON (pa.application_id =
+			rpe.application_id)
+			INNER JOIN %Schema%pt_permit pt ON (rpe.permit_id = pt.permit_id)
+			INNER JOIN %Schema%fp_facility ff ON (pa.fp_id = ff.fp_id)
+			INNER JOIN
+			%Schema%fp_facility_address_xref ffax ON (ff.fp_id = ffax.fp_id
+			AND ffax.address_id = (
+			SELECT MAX(ffaxmax.address_id)
+			FROM %Schema%fp_facility_address_xref ffaxmax
+			WHERE ffaxmax.fp_id = ff.fp_id))
+			INNER JOIN %Schema%cm_address ca ON (ffax.address_id = ca.address_id)
+			LEFT JOIN %Schema%FP_FACILITY_COMPANY_XREF ffcx ON (ffcx.FACILITY_ID =
+			ff.FACILITY_ID AND ffcx.END_DATE IS NULL)
+			LEFT JOIN %Schema%CM_COMPANY ccm ON ccm.COMPANY_ID = ffcx.COMPANY_ID
+			WHERE_CLAUSE
+			UNION
+			SELECT pa.application_id, pt.permit_nbr
+			FROM %Schema%pa_application pa
+			INNER JOIN %Schema%pa_rpr_request rpr ON (pa.application_id =
+			rpr.application_id)
+			INNER JOIN %Schema%pt_permit pt ON (rpr.permit_id = pt.permit_id)
+			INNER JOIN %Schema%fp_facility ff ON (pa.fp_id = ff.fp_id)
+			INNER JOIN
+			%Schema%fp_facility_address_xref ffax ON (ff.fp_id = ffax.fp_id
+			AND ffax.address_id = (
+			SELECT MAX(ffaxmax.address_id)
+			FROM %Schema%fp_facility_address_xref ffaxmax
+			WHERE ffaxmax.fp_id = ff.fp_id))
+			INNER JOIN %Schema%cm_address ca ON (ffax.address_id = ca.address_id)
+			LEFT JOIN %Schema%FP_FACILITY_COMPANY_XREF ffcx ON (ffcx.FACILITY_ID =
+			ff.FACILITY_ID AND ffcx.END_DATE IS NULL)
+			LEFT JOIN %Schema%CM_COMPANY ccm ON ccm.COMPANY_ID = ffcx.COMPANY_ID
+			WHERE_CLAUSE
+		</retrievePermitNumbersForApplications>
+
+		<retrieveApplicationPermitNumbers>
+			SELECT x.permit_id
+			FROM %Schema%pa_application a, %Schema%pt_permit_application_xref x
+			WHERE x.application_id=?
+			AND x.application_id=a.application_id
+		</retrieveApplicationPermitNumbers>
+
+		<retrivePBRExport>
+			SELECT fp.facility_id, fp.facility_nm, ap.received_date, eu.epa_emu_id,
+			eu.requlated_user_dsc, pbrt.pbr_type_dsc, 'Active' AS status,
+			pt.effective_date
+			FROM %Schema%FP_FACILITY fp, %Schema%PA_APPLICATION ap,
+			%Schema%PA_PBR_NOTIFICATION pbr,
+			%Schema%pa_eu paeu, %Schema%FP_EMISSIONS_UNIT eu, %Schema%PA_PBR_TYPE_DEF pbrt,
+			%Schema%PT_PERMIT pt, %Schema%PT_PERMIT_APPLICATION_XREF ptax
+			WHERE ap.application_type_cd = 'PBR'
+			AND ap.fp_id = fp.fp_id
+			AND pbr.application_id = ap.application_id
+			AND pbrt.pbr_type_cd = pbr.pbr_type_cd
+			AND paeu.application_id = ap.application_id
+			AND paeu.excluded_flag = 'N'
+			AND paeu.emu_id = eu.emu_id
+			AND pt.permit_id = ptax.permit_id
+			AND ptax.application_id = ap.application_id
+			AND pbr.disposition_flag = 'a'
+			ORDER BY fp.facility_nm, fp.facility_id, eu.epa_emu_id ,
+			eu.requlated_user_dsc
+		</retrivePBRExport>
+
+		<retrieveAttachmentReferenceCount>
+			SELECT COUNT(*)
+			FROM %Schema%PA_APPLICATION_DOCUMENT ad
+			WHERE (ad.document_id = ? OR ad.trade_secret_doc_id = ?)
+			AND ad.application_doc_id &lt;&gt; ?
+		</retrieveAttachmentReferenceCount>
+
+		<retrieveOrphanEus>
+			SELECT application_eu_id
+			FROM %Schema%pa_eu paeu
+			JOIN %Schema%pa_application pa
+			ON (paeu.application_id = pa.application_id)
+			WHERE pa.application_id = ?
+			AND paeu.emu_id NOT IN (
+			SELECT emu_id
+			FROM %Schema%fp_emissions_unit feu
+			WHERE feu.fp_id = pa.fp_id)
+		</retrieveOrphanEus>
+
+		<nsrApplicationBACTEmissionsColumns>
+			application_eu_id, pollutant_cd, bact
+		</nsrApplicationBACTEmissionsColumns>
+
+		<retrieveNSRApplicationBACTEmissions>
+			SELECT ${ApplicationSQL.nsrApplicationBACTEmissionsColumns},
+			last_modified
+			FROM %Schema%pa_nsr_bact_emissions
+			WHERE application_eu_id = ?
+		</retrieveNSRApplicationBACTEmissions>
+
+		<removeBACTEmissions>DELETE FROM %Schema%pa_nsr_bact_emissions
+			WHERE application_eu_id = ?
+		</removeBACTEmissions>
+
+		<addBACTEmission>
+			INSERT INTO %Schema%pa_nsr_bact_emissions
+			(${ApplicationSQL.nsrApplicationBACTEmissionsColumns})
+			VALUES (?,?,?)
+		</addBACTEmission>
+
+		<nsrApplicationLAEREmissionsColumns>
+			application_eu_id, pollutant_cd, laer
+		</nsrApplicationLAEREmissionsColumns>
+		
+		<retrieveNSRApplicationLAEREmissions>
+			SELECT ${ApplicationSQL.nsrApplicationLAEREmissionsColumns},
+			last_modified
+			FROM %Schema%pa_nsr_laer_emissions
+			WHERE application_eu_id = ?
+		</retrieveNSRApplicationLAEREmissions>
+
+		<removeLAEREmissions>DELETE FROM %Schema%pa_nsr_laer_emissions
+			WHERE application_eu_id = ?
+		</removeLAEREmissions>
+
+		<addLAEREmission>
+			INSERT INTO %Schema%pa_nsr_laer_emissions
+			(${ApplicationSQL.nsrApplicationLAEREmissionsColumns})
+			VALUES (?,?,?)
+		</addLAEREmission>		
+
+		<retrieveApplicationDocTypes>
+			SELECT application_doc_type_cd code, application_doc_type_dsc description,deprecated,last_modified, application_doc_type_exp, trade_secret_allowed
+			FROM %Schema%PA_APPLICATION_DOC_TYPE_DEF
+			WHERE deprecated = 'N'
+			ORDER BY application_doc_type_cd
+		</retrieveApplicationDocTypes>
+
+		<retrieveTVApplicationDocTypes>
+			SELECT application_doc_type_cd code, application_doc_type_dsc description,deprecated,last_modified, application_doc_type_exp, trade_secret_allowed
+			FROM %Schema%PA_TV_APPLICATION_DOC_TYPE_DEF
+			WHERE deprecated = 'N'
+			ORDER BY application_doc_type_cd
+		</retrieveTVApplicationDocTypes>
+		
+		<checkApplicationTypeIsInDb>
+			SELECT COUNT(1) 
+			FROM %Schema%pa_application_document
+			WHERE application_id = ? AND
+				application_doc_type_cd = ? AND
+				is_required_doc = ? AND 
+				( ? IS NULL OR application_eu_id = ?)
+		</checkApplicationTypeIsInDb>
+		<retrieveRequiredApplicationDocId>
+			SELECT application_doc_id FROM %Schema%pa_application_document
+			WHERE application_id = ? AND
+				application_doc_type_cd = ? AND 
+				is_required_doc = 1 AND
+				( ? IS NULL OR application_eu_id = ?)
+		</retrieveRequiredApplicationDocId>
+		<removeReqruiedAttachmnetApplicationDoc>
+			DELETE %Schema%pa_application_document
+			WHERE application_id = ? AND
+				application_doc_type_cd = ? AND
+				is_required_doc = 1 AND 
+				( ? IS NULL OR application_eu_id = ?)
+		</removeReqruiedAttachmnetApplicationDoc>
+		<changeReqruiedAttachmnetToOption>
+			UPDATE %Schema%pa_application_document
+			SET is_required_doc = 0
+			WHERE application_id = ? AND
+				application_doc_type_cd = ? AND 
+				is_required_doc = 1 AND
+				( ? IS NULL OR application_eu_id = ?)
+		</changeReqruiedAttachmnetToOption>
+		<changeOptionAttachmentToReqruied>
+			UPDATE %Schema%pa_application_document
+			SET is_required_doc = 1
+			WHERE application_doc_id = (
+				SELECT TOP 1 application_doc_id 
+				FROM %Schema%pa_application_document
+				WHERE application_id = ? AND
+					application_doc_type_cd = ? AND 
+					is_required_doc = 0 AND
+					( ? IS NULL OR application_eu_id = ?)
+					ORDER BY application_doc_id desc)
+		</changeOptionAttachmentToReqruied>
+		<retrievefacilityWideRequirements>
+			SELECT requirement_id, application_id,
+      			description,proposed_method
+			FROM %Schema%pa_facility_wide_requirement
+			WHERE application_id = ?
+		</retrievefacilityWideRequirements>
+		<createFacilityWideRequirements>
+			INSERT INTO %Schema%pa_facility_wide_requirement
+	           (application_id, description, proposed_method)
+	     	VALUES(?, ?, ?)
+		</createFacilityWideRequirements>
+		<modifyFacilityWideRequirements>
+			UPDATE %Schema%pa_facility_wide_requirement
+	   		SET description = ?, proposed_method = ?
+	 		WHERE requirement_id = ?
+		</modifyFacilityWideRequirements>
+		<removeFacilityWideRequirement>
+			DELETE %Schema%pa_facility_wide_requirement
+	 		WHERE requirement_id = ?
+		</removeFacilityWideRequirement>
+		<removeFacilityWideRequirements>
+			DELETE %Schema%pa_facility_wide_requirement
+	 		WHERE application_id = ?
+		</removeFacilityWideRequirements>
+		
+		<retrieveTvEuAppNSPSSubpartCds>SELECT nsps_subpart_cd
+			FROM %Schema%pa_tv_eu_nsps_subpart_xref
+			WHERE application_eu_id = ?
+		</retrieveTvEuAppNSPSSubpartCds>
+		<addTvEuAppNSPSSubpartCd>INSERT INTO %Schema%pa_tv_eu_nsps_subpart_xref
+			(application_eu_id, nsps_subpart_cd)
+			VALUES (?,?)
+		</addTvEuAppNSPSSubpartCd>
+		<removeTvEuAppNSPSSubpartCds>DELETE FROM
+			%Schema%pa_tv_eu_nsps_subpart_xref
+			WHERE application_eu_id = ?
+		</removeTvEuAppNSPSSubpartCds>
+
+		<retrieveTvEuAppNESHAPSubpartCds>SELECT neshaps_subpart_cd
+			FROM %Schema%pa_tv_eu_neshaps_subpart_xref
+			WHERE application_eu_id = ?
+		</retrieveTvEuAppNESHAPSubpartCds>
+		<addTvEuAppNESHAPSubpartCd>INSERT INTO
+			%Schema%pa_tv_eu_neshaps_subpart_xref
+			(application_eu_id, neshaps_subpart_cd)
+			VALUES (?,?)
+		</addTvEuAppNESHAPSubpartCd>
+		<removeTvEuAppNESHAPSubpartCds>DELETE FROM
+			%Schema%pa_tv_eu_neshaps_subpart_xref
+			WHERE application_eu_id = ?
+		</removeTvEuAppNESHAPSubpartCds>
+
+		<retrieveTvEuAppMACTSubpartCds>SELECT mact_subpart_cd
+			FROM %Schema%pa_tv_eu_mact_subpart_xref
+			WHERE application_eu_id = ?
+		</retrieveTvEuAppMACTSubpartCds>
+		<addTvEuAppMACTSubpartCd>INSERT INTO %Schema%pa_tv_eu_mact_subpart_xref
+			(application_eu_id, mact_subpart_cd)
+			VALUES (?,?)
+		</addTvEuAppMACTSubpartCd>
+		<removeTvEuAppMACTSubpartCds>DELETE FROM
+			%Schema%pa_tv_eu_mact_subpart_xref
+			WHERE application_eu_id = ?
+		</removeTvEuAppMACTSubpartCds>
+
+		<retrieveTvAppNSPSSubpartCds>
+			SELECT nsps_subpart_cd
+			FROM %Schema%pa_tv_nsps_subpart_xref
+			WHERE application_id = ?
+		</retrieveTvAppNSPSSubpartCds>
+		<addTvAppNSPSSubpartCd>INSERT INTO %Schema%pa_tv_nsps_subpart_xref
+			(application_id, nsps_subpart_cd)
+			VALUES (?,?)
+		</addTvAppNSPSSubpartCd>
+		<removeTvAppNSPSSubpartCds>DELETE FROM
+			%Schema%pa_tv_nsps_subpart_xref
+			WHERE application_id = ?
+		</removeTvAppNSPSSubpartCds>
+
+		<retrieveTvAppNESHAPSubpartCds>SELECT neshaps_subpart_cd
+			FROM %Schema%pa_tv_neshaps_subpart_xref
+			WHERE application_id = ?
+		</retrieveTvAppNESHAPSubpartCds>
+		<addTvAppNESHAPSubpartCd>INSERT INTO
+			%Schema%pa_tv_neshaps_subpart_xref
+			(application_id, neshaps_subpart_cd)
+			VALUES (?,?)
+		</addTvAppNESHAPSubpartCd>
+		<removeTvAppNESHAPSubpartCds>DELETE FROM
+			%Schema%pa_tv_neshaps_subpart_xref
+			WHERE application_id = ?
+		</removeTvAppNESHAPSubpartCds>
+
+		<retrieveTvAppMACTSubpartCds>SELECT mact_subpart_cd
+			FROM %Schema%pa_tv_mact_subpart_xref
+			WHERE application_id = ?
+		</retrieveTvAppMACTSubpartCds>
+		<addTvAppMACTSubpartCd>INSERT INTO %Schema%pa_tv_mact_subpart_xref
+			(application_id, mact_subpart_cd)
+			VALUES (?,?)
+		</addTvAppMACTSubpartCd>
+		<removeTvAppMACTSubpartCds>DELETE FROM
+			%Schema%pa_tv_mact_subpart_xref
+			WHERE application_id = ?
+		</removeTvAppMACTSubpartCds>		
+		
+		<tvEUPollutantLimitsColumns>
+			application_eu_id, req_basis_cd, rule_cite, num_limit_unit, pollutant_cd, 
+			avg_period, compliance_flag, potential_emissions, determination_basis_cd, 
+			cam_flag, compliance_method, controlled
+		</tvEUPollutantLimitsColumns>
+
+		<addTVEUPollutantLimit>
+			INSERT INTO %Schema%pa_tv_eu_pollutant_limits
+			(${ApplicationSQL.tvEUPollutantLimitsColumns})
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+		</addTVEUPollutantLimit>
+
+		<removeTVEUPollutantLimits>
+			DELETE FROM %Schema%pa_tv_eu_pollutant_limits
+			WHERE application_eu_id = ?
+		</removeTVEUPollutantLimits>
+
+		<retrieveTVEUPollutantLimits>
+			SELECT ${ApplicationSQL.tvEUPollutantLimitsColumns},
+			patepl.last_modified
+			FROM %Schema%pa_tv_eu_pollutant_limits patepl
+			WHERE patepl.application_eu_id = ?
+			ORDER BY patepl.pollutant_cd
+		</retrieveTVEUPollutantLimits>
+		
+		<tvEUOperationalRestrictionColumns>
+			application_eu_id, req_basis_cd, rule_cite, rest_type_cd, 
+			restriction_desc, compliance_flag, compliance_method
+		</tvEUOperationalRestrictionColumns>
+
+		<addTVEUOperationalRestriction>
+			INSERT INTO %Schema%pa_tv_eu_operational_restriction
+			(${ApplicationSQL.tvEUOperationalRestrictionColumns})
+			VALUES (?,?,?,?,?,?,?)
+		</addTVEUOperationalRestriction>
+
+		<removeTVEUOperationalRestrictions>
+			DELETE FROM %Schema%pa_tv_eu_operational_restriction
+			WHERE application_eu_id = ?
+		</removeTVEUOperationalRestrictions>
+
+		<retrieveTVEUOperationalRestrictions>
+			SELECT ${ApplicationSQL.tvEUOperationalRestrictionColumns},
+			pateor.last_modified
+			FROM %Schema%pa_tv_eu_operational_restriction pateor
+			WHERE pateor.application_eu_id = ?
+		</retrieveTVEUOperationalRestrictions>	
+		
+		<setActiveApplicationsValidatedFlag>
+			UPDATE %Schema%pa_application SET validated_flag = ?
+			WHERE fp_id = ? AND submitted_date IS NULL 
+		</setActiveApplicationsValidatedFlag>		
+		<createApplicationEUFugitiveLeaks>INSERT INTO %Schema%pa_nsr_eu_fugitive_leaks
+			(
+			fugitive_leaks_id, application_eu_id, equipment_service_type_cd,
+			number_of_each_equipment_type,
+			leak_rate, percent_voc)
+			VALUES(?,?,?,?,?,?)
+		</createApplicationEUFugitiveLeaks>
+		<removeAllApplicationEUFugitiveLeaks>
+			DELETE FROM %Schema%pa_nsr_eu_fugitive_leaks
+			WHERE application_eu_id = ?
+		</removeAllApplicationEUFugitiveLeaks>
+		<retrieveApplicationEUFugitiveLeaks>
+			SELECT fugitive_leaks_id,application_eu_id,equipment_service_type_cd,number_of_each_equipment_type,leak_rate,percent_voc
+			FROM %Schema%pa_nsr_eu_fugitive_leaks
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUFugitiveLeaks>	
+		<applicationEUMaterialUsedColumns>
+			application_eu_id, material_used_cd, material_amount,unit_cd
+		</applicationEUMaterialUsedColumns>	
+		<addApplicationEUMaterialUsed>
+			INSERT INTO %Schema%pa_eu_material_used
+			(${ApplicationSQL.applicationEUMaterialUsedColumns})
+			VALUES (?,?,?,?)
+		</addApplicationEUMaterialUsed>
+		<modifyApplicationEUMaterialUsed>
+			UPDATE %Schema%pa_eu_material_used
+			SET material_amount = ?,
+			unit_cd = ?,
+			last_modified = ?
+			WHERE application_eu_id = ? AND material_used_cd = ?
+			last_modified = ?
+		</modifyApplicationEUMaterialUsed>
+		
+		<removeAllApplicationEUMaterialUsedForEU>
+			DELETE FROM %Schema%pa_eu_material_used
+			WHERE application_eu_id = ?
+		</removeAllApplicationEUMaterialUsedForEU>
+		<retrieveApplicationEUMaterialUsed>
+			SELECT ${ApplicationSQL.applicationEUMaterialUsedColumns},
+			last_modified
+			FROM %Schema%pa_eu_material_used
+			WHERE application_eu_id = ?
+		</retrieveApplicationEUMaterialUsed>
+		
+		<retrieveApplicationDocTypeDef>
+			SELECT application_doc_type_cd as code, application_doc_type_dsc as description, 
+			deprecated, application_doc_type_exp, last_modified, trade_secret_allowed
+			FROM %Schema%PA_APPLICATION_DOC_TYPE_DEF where application_doc_type_cd = ?
+		</retrieveApplicationDocTypeDef>
+		
+		<retrieveTVApplicationDocTypeDef>
+			SELECT application_doc_type_cd as code, application_doc_type_dsc as description, 
+			deprecated, application_doc_type_exp, last_modified, trade_secret_allowed
+			FROM %Schema%PA_TV_APPLICATION_DOC_TYPE_DEF where application_doc_type_cd = ?
+		</retrieveTVApplicationDocTypeDef>
+		
+		<retrieveNSRApplicationDocTypeDef>
+			SELECT application_doc_type_cd AS code,
+			application_doc_type_dsc AS description, deprecated, application_doc_type_exp,
+			last_modified, trade_secret_allowed FROM %Schema%PA_APPLICATION_DOC_TYPE_DEF
+			ORDER BY application_doc_type_dsc
+		</retrieveNSRApplicationDocTypeDef>	
+		
+		<retrieveTitleVApplicationDocTypeDef>
+			SELECT application_doc_type_cd AS code,
+			application_doc_type_dsc AS description, deprecated, application_doc_type_exp,
+			last_modified, trade_secret_allowed FROM %Schema%PA_TV_APPLICATION_DOC_TYPE_DEF
+			ORDER BY application_doc_type_dsc
+		</retrieveTitleVApplicationDocTypeDef>
+	
+	<applicationExists>
+		SELECT [APPLICATION_NBR]
+		  FROM dbo.[PA_APPLICATION]
+		where upper(APPLICATION_NBR) = upper(?)
+	</applicationExists>
+
+	<retrieveTVApplicationEUEmissionsForPollutant>
+		SELECT SUM(CONVERT (Float,PTE_TONS_YR))
+			FROM %Schema%pa_tv_eu_emissions ptee
+		JOIN %Schema%pa_eu pe ON pe.application_eu_id = ptee.application_eu_id
+		JOIN %Schema%fp_emissions_unit feu on feu.EMU_ID = pe.EMU_ID
+			WHERE application_id = ? AND pollutant_cd = ? AND
+		tv_eu_operating_scenario_id=0
+		AND pe.excluded_flag='N' AND feu.OPERATING_STATUS_CD !='sd'
+		AND EU_Emission_table_cd = ?
+	</retrieveTVApplicationEUEmissionsForPollutant>
+
+	<retrieveUniquePTIOPurposeCds>
+		select distinct PTIO_EU_PURPOSE_CD from %Schema%pa_application pa
+		LEFT JOIN %Schema%pa_eu pe on pa.application_id = pe.application_id
+		LEFT JOIN %Schema%pa_ptio_eu_purpose_xref ppepx on
+		pe.APPLICATION_EU_ID=ppepx.APPLICATION_EU_ID
+		where pa.application_id=? and pe.EXCLUDED_FLAG='N'
+	</retrieveUniquePTIOPurposeCds>
+
+	<retrieveModificationDescList>
+		select modification_dsc from %Schema%pa_application pa
+		LEFT JOIN
+		%Schema%pa_eu pe on pa.application_id = pe.application_id
+		LEFT JOIN
+		%Schema%pa_ptio_eu_purpose_xref ppepx on
+		pe.APPLICATION_EU_ID=ppepx.APPLICATION_EU_ID
+		LEFT JOIN
+		%Schema%pa_ptio_eu ppe on ppe.APPLICATION_EU_ID=pe.APPLICATION_EU_ID
+		INNER JOIN %Schema%FP_EMISSIONS_UNIT feu ON (pe.EMU_ID = feu.EMU_ID)
+		where pa.application_id=?
+		and pe.EXCLUDED_FLAG='N'
+		and modification_dsc IS NOT NULL
+		and PTIO_EU_PURPOSE_CD=5
+		ORDER BY feu.epa_emu_id
+	</retrieveModificationDescList>
+
+	<retrieveApplicationHAPPollutantList>
+		SELECT distinct pollutant_cd
+		FROM %Schema%pa_tv_eu_emissions ptee
+		JOIN %Schema%pa_eu pe ON pe.application_eu_id = ptee.application_eu_id
+		JOIN %Schema%fp_emissions_unit feu on feu.EMU_ID = pe.EMU_ID
+		WHERE application_id = ? AND tv_eu_operating_scenario_id=0
+		AND pe.excluded_flag='N' AND feu.OPERATING_STATUS_CD !='sd' AND
+		EU_Emission_table_cd != 'CAP' and EU_Emission_table_cd != 'OTH' and
+		EU_Emission_table_cd != 'GHG'
+	</retrieveApplicationHAPPollutantList>
+
+	<retrieveApplicationGHGPollutantList>
+		SELECT distinct pollutant_cd
+		FROM %Schema%pa_tv_eu_emissions ptee
+		JOIN %Schema%pa_eu pe ON pe.application_eu_id = ptee.application_eu_id
+		JOIN %Schema%fp_emissions_unit feu on feu.EMU_ID = pe.EMU_ID
+		WHERE application_id = ? AND tv_eu_operating_scenario_id=0
+		AND pe.excluded_flag='N' AND feu.OPERATING_STATUS_CD !='sd' AND
+		EU_Emission_table_cd = 'GHG'
+	</retrieveApplicationGHGPollutantList>
+
+	<retrieveApplicationOTHPollutantList>
+		SELECT distinct pollutant_cd
+		FROM %Schema%pa_tv_eu_emissions ptee
+		JOIN %Schema%pa_eu pe ON pe.application_eu_id = ptee.application_eu_id
+		JOIN %Schema%fp_emissions_unit feu on feu.EMU_ID = pe.EMU_ID
+		WHERE application_id = ? AND tv_eu_operating_scenario_id=0
+		AND pe.excluded_flag='N' AND feu.OPERATING_STATUS_CD !='sd' AND
+		EU_Emission_table_cd = 'OTH'
+	</retrieveApplicationOTHPollutantList>
+	
+	<retrieveApplicationDocumentByTradeSecrectDocId>
+		SELECT ${ApplicationSQL.applicationDocumentColumns}
+			FROM %Schema%pa_application_document
+			WHERE trade_secret_doc_id = ?
+	</retrieveApplicationDocumentByTradeSecrectDocId>
+	
+	<retrieveApplicationSubmittedDate>
+		SELECT SUBMITTED_DATE FROM
+			%Schema%pa_application
+			WHERE application_id = ?
+	</retrieveApplicationSubmittedDate>
+	
+	<retrieveBasicApplicationById>
+		SELECT ${ApplicationSQL.BasicApplicationColumns}
+			FROM %Schema%pa_application pa 
+			WHERE pa.application_id = ?
+	</retrieveBasicApplicationById>
+	
+	<retrieveBasicApplicationByNbr>
+		SELECT ${ApplicationSQL.BasicApplicationColumns}
+			FROM %Schema%pa_application pa 
+			WHERE pa.application_nbr = ?
+	</retrieveBasicApplicationByNbr>
+	
+	</ApplicationSQL>
+</root>

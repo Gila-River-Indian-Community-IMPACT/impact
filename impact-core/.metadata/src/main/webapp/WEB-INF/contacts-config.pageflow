@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13609635695990" configfile="/impact/src/main/webapp/WEB-INF/contacts-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="contacts/contactSearch" x="122" y="178" id="pf13613081891270" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf13613081891271" inlinks="pf13613081891271 pf13620052996321" path="/contacts/contactSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="562" id="pf13613081891272" outlinks="pf13613081891273 pf13613894683280 pf13613894683281 pf13614806144664 pf13620052996321" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/createContact" x="338" y="370" id="pf13613081891275" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf13613081891273" path="/contacts/createContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/notes" id="pf13613894683282" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf13613894683280" path="/contacts/notes.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/noteDetail" id="pf13613894683283" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf13613894683281" path="/contacts/noteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/contactDetail" id="pf13614806144665" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf13614806144664" path="/contacts/contactDetail.jsp"/>
+  <links id="pf13613081891273" target="pf13613081891275" source="pf13613081891272" outcome="contacts.createContact" redirect="true"/>
+  <links id="pf13613081891271" target="pf13613081891270" source="pf13613081891270" outcome="Success" fromaction="#{contactSearch.submitSearch}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf13613894683280" target="pf13613894683282" source="pf13613081891272" outcome="contacts.detail.notes" redirect="true"/>
+  <links id="pf13613894683281" target="pf13613894683283" source="pf13613081891272" outcome="dialog:contactNoteDetail"/>
+  <links id="pf13614806144664" target="pf13614806144665" source="pf13613081891272" outcome="contactDetail" redirect="true"/>
+  <links id="pf13620052996321" target="pf13613081891270" source="pf13613081891272" outcome="ContactDeleteSuccess" fromaction="#{contactDetail.saveContactDetail}"/>
+</pageflow:Pageflow>

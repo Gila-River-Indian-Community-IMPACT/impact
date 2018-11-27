@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14812263628870" configfile="/impact-web/src/main/webapp/WEB-INF/project_tracking-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1330" id="pf14812264298841" outlinks="pf14812264298842 pf14812264298843 pf14812264298844 pf14879608776160 pf14879608776161 pf14879608776162 pf14879608776163 pf14879608776164" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/projectTrackingSearch" x="338" y="178" id="pf14812264298845" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14812264298842" path="/projectTracking/projectTrackingSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/projectTrackingDetail" x="338" y="562" id="pf14812264298846" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14812264298843" path="/projectTracking/projectTrackingDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/createProjectTracking" x="338" y="946" id="pf14812264298847" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14812264298844" path="/projectTracking/createProjectTracking.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/projectTrackingEventDetail" x="338" y="1330" id="pf14879608776165" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf14879608776160" path="/projectTracking/projectTrackingEventDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/projectNoteDetail" x="338" y="1714" id="pf14879608776166" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf14879608776161" path="/projectTracking/projectNoteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/projectAttachmentDetail" x="338" y="2098" id="pf14879608776167" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf14879608776162" path="/projectTracking/projectAttachmentDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/budgetDetail" x="338" y="2482" id="pf14879608776168" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf14879608776163" path="/projectTracking/budgetDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="projectTracking/prtProjectTrackingDetail" id="pf14879608776169" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf14879608776164" path="/projectTracking/prtProjectTrackingDetail.jsp"/>
+  <links id="pf14812264298842" target="pf14812264298845" source="pf14812264298841" outcome="projectTrackingSearch" redirect="true"/>
+  <links id="pf14812264298843" target="pf14812264298846" source="pf14812264298841" outcome="projectTrackingDetail" redirect="true"/>
+  <links id="pf14812264298844" target="pf14812264298847" source="pf14812264298841" outcome="createProjectTracking" redirect="true"/>
+  <links id="pf14879608776160" target="pf14879608776165" source="pf14812264298841" outcome="dialog:projectTrackingEventDetail"/>
+  <links id="pf14879608776161" target="pf14879608776166" source="pf14812264298841" outcome="dialog:projectNoteDetail"/>
+  <links id="pf14879608776162" target="pf14879608776167" source="pf14812264298841" outcome="dialog:projectAttachmentDetail"/>
+  <links id="pf14879608776163" target="pf14879608776168" source="pf14812264298841" outcome="dialog:budgetDetail"/>
+  <links id="pf14879608776164" target="pf14879608776169" source="pf14812264298841" outcome="dialog:prtProjectTrackingDetail"/>
+</pageflow:Pageflow>

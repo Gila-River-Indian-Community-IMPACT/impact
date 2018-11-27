@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!-- SECOND DRAFT 12/31/0072 -->
+<head>
+<title>Help: Common User Interface Elements --> Datagrids</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+<link rel="STYLESHEET" type="text/css" href="stars2.css">
+<script language="JavaScript" type="text/javascript" src="browvers.js">
+</script>
+</head>
+
+<body>
+<noscript>Script to detect browser version</noscript>
+<a name="top"></a>
+<div class="zz-skip-header"><a href="#start">Skip navigation header</a></div>
+
+<table summary="Document information and navigation controls" border="0" 
+width="97%">
+<tbody>
+  <tr>
+    <td class="zz-nav-header-cell" scope="col" width="80%">
+	<strong>Common User Interface Elements</strong></td>
+    <td class="zz-nav-button-cell" scope="col"  width="8%">
+    <a class="zz-nav-button-link" href="common_ui_searchParadigm.html">
+	<img src="images/leftnav.gif" alt="Previous Topic" border="0" height="24" width="23">
+	<br>Previous Topic</a></td>
+    <td class="zz-nav-button-cell" scope="col"  width="8%">
+    <td class="zz-nav-button-cell" scope="col"  width="8%">
+    <a class="zz-nav-button-link" href="common_ui_detailData.html">
+	<img src="images/rightnav.gif" alt="Next Topic" border="0" height="24" width="23">
+	<br>Next Topic</a></td>
+</tr>
+</tbody>
+</table>
+
+<a name="start"></a>
+
+<H1>Datagrids</H1>
+<p><h2>Overview</h2>
+<p>Datagrids are simply tables of data.  The system presents such 
+tables whenever you request information that is best presented as a
+list of common objects; that is,  
+where a data table most clearly represents the data.  
+A datagrid looks like this: <br>
+</p>
+<div align="center">
+<p><img src="images/datagrid.gif" alt="Datagrid example: Facilities"></p>
+<p><b>Datagrid Example: <font face="Courier New">Facilities</font></b></p>
+</div>
+<p>The data in a datagrid is a series of rows, or records, each 
+presenting summary data for     
+one of whatever objects the data represents, for example control equipment 
+(as shown above), 
+permit applications, emissions inventories, etc.  The objects shown, in this case control
+equipment, are those
+associated with your
+facility.  
+<p>Each row provides information for one such object or entity, each
+column providing one data item about the object. 
+Usually, the data in at 
+least one field or   
+column in the datagrid appears as a selectable link or  
+<a class="glossary-link" href="glossary.html/#hyperlink" target="_blank">
+hyperlink</a>.   Often 
+(but not always) this is first column or     
+the field that uniquely identifies each object (called the 'key' field); sometimes
+it is a numeric 
+identifier such as<font face="Courier New"> Permit ID</font>.  In the case illustrated above,
+it is the <font face="Courier New"> Company ID</font> for the equipment (a string).   Clicking 
+on any of    
+these links takes you to a detail data page for the specific object described
+in that row.  The detail data 
+page contains    
+different information depending upon the object or entity the data describes. </p>
+<p>Regardless of what data is in the table, ALL datagrids in the system provide 
+the following capabilities: 
+<ul>
+<li><a href="#paging">Paging</a></li>
+<li><a href="#sorting">Sorting</a></li>
+<li><a href="#printing">Printing</a></li>
+<li><a href="#exporting">Exporting</a></li>
+</ul>
+which are described in more detail below.
+
+<h2><a name="paging"></a><br>Paging within Datagrids</h2>
+If a search produces more records than fit easily on a page without scrolling 
+up and down, the system 
+provides <a class="glossary_link" href="glossary.html/#paging">paging</a>.  At 
+the top of the table,  aligned with the table's right margin the system 
+indicates which records in the sequence of returned records are currently visible and 
+provides controls with which
+ you can 
+move among all the records (whether you can see them initially or not). You can use the 
+<font face="Courier New"><b>Previous #</b></font> and <font face="Courier New">
+<b>Next # </b></font>links, or you can click on the down arrow 
+on the field 
+that shows which set of records you are currently viewing 
+(<img src="images/icon_dropDownArrow.jpg" alt="Drop Down Arrow"> at the top
+ or the
+bottom of the datagrid), and select the set 
+of records you  
+wish to see.  There is no search capability on datagrids in this system. 
+<p>
+<div align="center">
+<img src="images/datagrid_pg.gif" alt="Datagrid paging controls">
+<br><b>Datagrid Paging Controls</b>
+</div>
+<a href="#top">Back to Top</a>
+
+<h2><a name="sorting"></a><br>Sorting Datagrids</h2>
+<p>Datagrids have a default sort order.  Often, but not always, the data 
+will be sorted by default in 
+ascending numerical order on the value of the key field.  
+However, you can easily change the sort order by clicking on the column header 
+for the data you  
+wish to 
+sort on.   The datagrids below show  
+the data sorted first in ascending alphabetical  
+order on the '<font face="Courier New">'Manufacturer'</font>' value, and then in 
+descending alphabetical order on the same value.  
+<div align="center">
+<p><img src="images/datagrid-sort4.jpg" alt="Datagrid sorted, first in 
+Ascending, then Descending 'County' order"></p>
+<b>Ascending and Descending Sort Order</b>
+</div>
+<p>The order of the
+sort is indicated in&nbsp; the column header of the column on which you sort 
+the data.&nbsp; 
+For example:<br>
+<img src="images/icons_sort.jpg" alt="Icons Indicating direction of sort 
+order"></p>
+<p>When the column on which you sort contains numbers, rather than 
+alpha-numeric character strings, then the sort will be in
+ascending or descending numerical order.</p>
+<p>
+<a href="#top">Back to Top</a> 
+
+<h2><a name="printing"></a><br>Printing Datagrids</h2>
+<p>Every datagrid offers a <img src="images/btn_printableView.jpg" 
+alt="Printable View button"> button below the visible rows in the grid.  
+When you 
+click on this button, the system opens a new browser window and 
+shows you a 
+printable table containing all the data in the datagrid (not just the rows 
+that you currently 
+see).  The illustration below shows an example of such a table, based on the 
+data presented in the  
+<a href="#paging">Overview</a> section:</p>
+<p>
+<div align="center">
+<p><img src="images/printview.jpg" alt="Table Produced by the Datagrid's 
+'Printable view' Button"></p>
+<b>Table Produced by the Datagrid's <img src="images/btn_printableView.jpg" 
+alt="Printable View button"> Button</b>
+</div>
+<p>You may then use your browser print capability to print the table.  
+Depending on your 
+browser, you may also be able to change the orientation of the data table, 
+change the 
+margins on the page, control the header and footer (e.g., print a title, 
+page number(s), date, etc.) 
+and change the overall size of the table (which impacts column width), using 
+<font face="Courier New">File --&gt;  
+Print Preview --&gt; Page Setup</font>.   
+<p><a href="#top">Back to Top</a>
+<h2><a name="exporting"></a><br>Exporting Datagrids to Excel</h2> 
+<p>Every datagrid offers an <img src="images/btn_exportToExcel.jpg" 
+alt="Export to excel Button">button below the visible rows in the grid.  
+When you 
+select this button operation, the system gives you an option of opening
+ the Excel file it generates,  
+or saving it.  In either case, you will see an Excel file like the one 
+illustrated below </p>
+<div align="center">
+<p><img src="images/excelview.jpg" alt="Table Produced by the Datagrid's 
+'Export to Excel' Button"></p>   
+<p><b>Table Produced by the Datagrid's <img src="images/btn_exportToExcel.jpg" 
+alt="Export to excel Button">Button</b></p> 
+</div>
+Note that the generated or saved file contains rows for every row in the 
+datagrid you exported, not just the rows that are visible on the screen when you selected 
+the <img src="images/btn_exportToExcel.jpg" alt="Export to excel Button">
+button. 
+<p>After you have generated and/or saved this file, you can use any of the 
+capabilities of Excel to manipulate and  
+format the data.  You may also, of course, print the file in Excel's normal 
+manner (<font face="Courier New">File --&gt; Print</font>)  
+<p>  
+<a href="#top">Back to Top</a> 
+<p class="horizontal-rule">&nbsp;</p> 
+<div class="zz-nav-footer-menu"> 
+<a href="common_ui_searchParadigm.html">Previous Topic</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+<a href="common_ui_detailData.html">Next Topic</a> 
+</div> 
+ 
+</body>
+
+</html>

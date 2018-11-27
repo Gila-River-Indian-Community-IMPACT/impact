@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<!-- PORTAL HELP: Common User Interface Elements --&gt; Entering & Editing Data -->
+<html>
+
+
+<!-- ********** HEAD ************ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Help: Common User Interface Elements --&gt; Exceptions</title>
+
+<link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+<link rel="STYLESHEET" type="text/css" href="stars2.css">
+
+<!-- **Uncomment** this STYLE element to hide TOC button -->
+<!-- **Comment out** this STYLE element to display TOC button -->
+<script language="JavaScript" type="text/javascript" src="browvers.js"></script>
+
+<style type="text/css"> .hide {display : none}
+</style>
+</head> <!--  END HEAD -->
+
+<!-- ********** BODY ************ -->
+<body>
+<noscript>Script to detect browser version</noscript>
+<!-- ********** TOP [BOOKMARK] ************ -->
+<a name="top"></a>
+
+<div class="zz-skip-header"><a href="#start">Skip navigation header</a></div>
+
+<table summary="Document information and navigation controls" border="0" width="97%">
+<tbody>
+  <tr>
+    <td class="zz-nav-header-cell" scope="col"><strong>Common User Interface Elements
+<img src="images/grn_rt_arrow.gif" alt="green right arrow"> Entering &amp;
+Editing Data</strong></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="common_ui_editButtons.html">
+       <img src="images/leftnav.gif" alt="Previous Topic" border="0" height="24" width="23">
+       <br>Previous Topic</a></td>
+    <td class="zz-nav-button-cell" scope="col">
+    <a class="zz-nav-button-link" href="common_ui_popupWin.html">
+       <img src="images/rightnav.gif" alt="Next Topic" border="0" height="24" width="23">
+       <br>Next Topic</a></td>
+  </tr>
+</tbody>
+</table>
+
+
+<!-- ********** START Bookmark; also used to mark the Overview section ************ -->
+<a name="start"></a>
+<h1>Exception Reporting<br></h1>
+<h2>Overview </h2>
+<p>This topic covers the various ways that the system validates the information
+you enter, and how it lets you know if there is an error or exception in
+the data. It covers the following kinds of validation, and their associated
+exception reporting:
+
+<ul>
+<li><a href="#editSave" target="">Edit/Save Exception</a></li>
+<li><a href="#simple" target="">Simple Field Validation</a></li>
+<li><a href="#required" target="">Required Fields <br></a></li>
+<li><a href="#dependent" target="">Field Dependencies <br></a></li>
+<li><a href="#complex" target="">Complex Form Validation <br></a></li>
+</ul>
+<p>
+In the case of simple messages produced by the IMPACT System, the system writes 
+the message in red at the 
+upper right of the 
+screen, directly above the page title.  In more complex cases, the errors
+are displayed in a pop-up window.  In both cases, the system shows you (or
+takes you to) the place on the screen where the error occurred so that you
+can easily fix it.
+<!-- ********** Edit/Save Exception************ -->
+<h2><a name="editSave"></a><br>Edit/Save Exception</h2>
+You must <img src="images/btn_save.jpg" alt="Save button"> or 
+<img src="images/btn_capCancel.jpg" alt="Cancel button"> your editing session whenever 
+you want to navigate away from a page where you can edit any information EVEN IF YOU DID NOT
+ENTER OR CHANGE ANYTHING.  If you try to move away from the screen without doing so, you 
+will see the following message:
+</p>
+<div align="center">
+<img src="images/saveDiscardPopup.jpg" alt="Save-Discard Popup">
+<br><br>
+<b>Browser Exception Window</b><br>
+</div>
+
+
+</div>
+<p>When this window pops up, you must click <img src="images/btn_ok.jpg" alt="Save/OK Button">
+in the popup window and THEN click <img src="images/btn_save.jpg" alt="Save button"> or 
+<img src="images/btn_capCancel.jpg" alt="Cancel button"> in the edit window you
+have open, depending on whether you wish to preserve any changes you may have made or not.  Note that
+the wording in the popup says "Save or discard", but the button labels on your edit window
+are almost always "Save" and "Cancel".
+<p>When this exception occurs, you will NOT see an error message at the top of the page; the
+popup is the only notification you receive.
+</p>
+<a href="#top">Back to Top</a>
+
+<p><!-- ********** Simple Field Validation Exceptions************ -->
+<h2><a name="simple"></a><br>Simple Field Validation <br></h2>
+<p>
+In many, but not all cases, the system checks to see that any data you enter, 
+for example in a text input field, is the right kind of data for that field
+and is in the right format.  For example, if a field expects numeric data
+and you give it a character string made up of letters, you will get an
+exception such as this:
+<div align="center">
+<img src="images/except_fieldError.jpg" alt="Exception: Invalid Numeric Input">
+<br><br>
+<b>Invalid Numeric Input Exception</b><br>
+</div>
+ 
+<p>The system performs this check whenever you <img src="images/btn_save.jpg" alt="Save button">
+or otherwise navigate away from an edit page.
+</p>
+<p> 
+The exception message is displayed as described in the <a href="#start">Overview</a> 
+section, and indicates, with an icon (<img src="images/icon_fieldException.jpg" alt="Field Exception Icon">)and a description of the error 
+on the screen near the field for which the input was invalid. 
+</p>
+<a href="#top">Back to Top</a>
+
+<!-- ********** Required Field Exceptions************ -->
+<h2><a name="required"></a><br>Required Fields<br></h2>
+<p>
+Required field validation is similar to Simple Field Validation in that the system
+performs this validation whenever you Save changes you have made in on an edit
+screen.  The system checks to be sure that you have completed every field which is
+marked with an asterisk (<img src="images/icon_asterisk.jpg" alt="Asterisk Icon">) as
+shown below on AQD Emissions Unit ID field when you are entering a Compliance Report.
+<div align="center">
+<img src="images/requiredField.jpg" alt="Required Input Field"><br>
+</div>
+<p>If you fail to complete the required fields, like this one, 
+on an edit page, the system displays an error similar to that illustrated above indicating
+that a required field has not been completed. 
+</p> 
+<a href="#top">Back to Top</a>
+
+<!-- ********** Field Dependency Exceptions -->
+<h2><a name="dependent"></a><br>Field Dependencies<br></h2>
+<p> 
+In a few instances, there may be multiple fields on the same edit screen that are
+dependent on each other.  For example: The window below shows some of the input
+fields you may use if you are creating a new or revised Emissions Inventory.</p>
+<div align="center">
+<img src="images/erpt_editProcessInfo.jpg" alt="Required Input Field"><br><br>
+<b>Process &amp; Emissions Detail Edit Window for Title V and SMTV Emissions Inventories</b><br>
+</div>
+<p>
+If you click <img src="images/btn_save.jpg" alt="Save button"> on this window, you will see the
+following error:
+ <div align="center">
+<img src="images/erpt_editProcessInfoError.jpg" alt="Required Input Field"><br><br>
+<br>
+</div>
+<p>
+Clearly, the check the system performs here depends on multiple input fields 
+where the valid input depends on the sum of multiple fields, and all the fields are on
+the same screen, so the system can validate the data when you Save it.
+</p> 
+<a href="#top">Back to Top</a>
+
+<!-- ********** Complex Form Validation Exceptions ************ -->
+<h2><a name="complex"></a><br>Complex Form Validation <br></h2>
+<p>   
+Some complex operations, such as entering permit application or facility change information, 
+involve more than one screen where you must enter information.  In addition, some information 
+is only required at certain stages of the operation.  You instruct the system to 
+perform its complex validation for such operations when you click on the  
+<img src="images/btn_validate.jpg" alt="Validate button"> button.  
+The system uses complex validation rules and business logic to determine 
+whether the information you have entered is internally consistent. For instance,
+if you are building the emissions profile for your facility  (emissions units,
+emissinos processes, control equipment and release points) and you choose to
+Validate the data at the facility level and your data is not totally complete (at
+least what you're required to specify) or is inconsistent, they the system 
+presents a popup window that shows you a datagrid listing all the errors.  (If there
+are a lot of errors, the datagrid may have several 'pages'.)  The figure below
+is an example of a complex form validation error window 
+that shows multiple errors.</p>
+<p>
+<div align="center">
+<img src="images/complexValidationFailure.jpg" alt="Form Validation Error Popup Window">
+<br><br>
+<b>Complex Form Validation Failure Notification</b>
+<br>
+</div>
+<p>
+The validation operation gives you an error message at the top of the screen,
+similar to those for the simpler
+cases described above.
+The popup window shows you all the validation errors it encountered.  It also tells you
+about conditions it identified that are not errors, and will not cause subsequent
+operations to fail, but which may represent incomplete data that you may want to 
+correct.</p>
+<p>If you click on any of the individual messages in the popup 
+window, the system will take you to the screen where you can fix the error.  For 
+example, if you click on <u>Attribute Filter/Baghouse is not set</u>, the system 
+will take you to the Control Equipment Information page for the specific control equipment 
+instance that is missing it's Filter/Baghouse attribute as shown in the figure below. There, you can 
+Edit the page to enter whatever data is missing or otherwise correct the 
+error.&nbsp; As you correct the errors, you can re-validate until you have 
+corrected all of them.  Then the validation will succeed.</p>  
+<p>
+You can <img src="images/btn_validate.jpg" alt="Validate button"> your input at any time to
+check your progress.  The system, however, will always validate it if you click 
+<img src="images/btn_submit.jpg" alt="Submit button"> the Facility Detail Change (in this case)
+or other object such as a Permit Application, Emissions or Compliance Report.</p>
+<p><a href="#top">Back to Top</a></p> 
+ 
+
+<!-- ********** Related Help Topics BOOKMARK************ -->
+<a name="#rel_topics"></a><br><br>
+<h2>Related Help Topics</h2>
+<ul>
+<li><a href="common_ui_inputFields.html"> 
+Input Fields</a>
+<li><a href="common_ui_editButtons.html">Edit Button Operations</a></li>
+<li><a href="common_ui_detailData.html">Detail Data</a></li>
+</ul>
+<div class="zz-nav-footer-menu"><a href="common_ui_editButtons.html" target="_blank">Previous
+Topic</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="common_ui_popupWin.html">Next Topic</a> </div>
+<!-- no legal notice in Stars2 system help; command remains for potential future use -->
+<p class="zz-legal-notice"><a class="zz-legal-notice-link" href="cpyr.html">Copyright
+© 1996, 2004, Oracle.</a> All rights reserved.</p>
+</body></html>

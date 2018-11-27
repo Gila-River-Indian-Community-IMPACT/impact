@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf136847571651138" configfile="/impact-web/src/main/webapp/WEB-INF/contacts-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="contacts/contactSearch" x="338" y="178" id="pf13726915218520" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf13726915218531" inlinks="pf13726915218531 pf13726915218532" path="/contacts/contactSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2098" id="pf13726915218533" outlinks="pf13726915218532 pf13726915218534 pf13726915218536 pf13726915218537 pf13726915218538 pf13726915218539 pf137270130955516 pf1376400438928119 pf1376400438928120 pf1376400438928121 pf1376400438928122" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/createContact" x="338" y="562" id="pf137269152185310" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf13726915218534" path="/contacts/createContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/notes" x="338" y="946" id="pf137269152185312" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf13726915218536" path="/contacts/notes.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/noteDetail" x="338" y="1330" id="pf137269152185313" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf13726915218537" path="/contacts/noteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/timeOutContact" x="338" y="1714" id="pf137269152185414" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf13726915218538" path="/contacts/timeOutContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/deleteContact" x="338" y="2098" id="pf137269152185415" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf13726915218539" path="/contacts/deleteContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/contactDetail" x="338" y="2482" id="pf137270130955518" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf137270130955516" path="/contacts/contactDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/contactCompanyPerms" x="122" y="3250" id="pf137270135786320" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" path="/contacts/contactCompanyPerms.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/mergeContact" x="338" y="2866" id="pf1376400438928123" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf1376400438928119" path="/contacts/mergeContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/contactPortalAccount" x="338" y="3250" id="pf1376400438928124" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf1376400438928120" path="/contacts/contactPortalAccount.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/viewExcludedFacilities" x="338" y="3634" id="pf1376400438929125" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf1376400438928121" path="/contacts/viewExcludedFacilities.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="contacts/confirmMergeContact" x="338" y="4018" id="pf1376400438929126" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" inlinks="pf1376400438928122" path="/contacts/confirmMergeContact.jsp"/>
+  <links id="pf13726915218532" target="pf13726915218520" source="pf13726915218533" outcome="ContactDeleteSuccess" fromaction="#{contactDetail.saveContactDetail}"/>
+  <links id="pf13726915218534" target="pf137269152185310" source="pf13726915218533" outcome="contacts.createContact" redirect="true"/>
+  <links id="pf13726915218536" target="pf137269152185312" source="pf13726915218533" outcome="contacts.detail.notes" redirect="true"/>
+  <links id="pf13726915218537" target="pf137269152185313" source="pf13726915218533" outcome="dialog:contactNoteDetail"/>
+  <links id="pf13726915218538" target="pf137269152185414" source="pf13726915218533" outcome="dialog:timeOutContact"/>
+  <links id="pf13726915218539" target="pf137269152185415" source="pf13726915218533" outcome="dialog:deleteContact"/>
+  <links id="pf137270130955516" target="pf137270130955518" source="pf13726915218533" outcome="contactDetail" redirect="true"/>
+  <links id="pf1376400438928119" target="pf1376400438928123" source="pf13726915218533" outcome="contacts.mergeContact" redirect="true"/>
+  <links id="pf1376400438928120" target="pf1376400438928124" source="pf13726915218533" outcome="contactPortalAccount" redirect="true"/>
+  <links id="pf1376400438928121" target="pf1376400438929125" source="pf13726915218533" outcome="dialog:viewExcludedFacilities"/>
+  <links id="pf1376400438928122" target="pf1376400438929126" source="pf13726915218533" outcome="dialog:confirmMergeContact"/>
+  <links id="pf13726915218531" target="pf13726915218520" source="pf13726915218520" outcome="Success" fromaction="#{contactSearch.submitSearch}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+</pageflow:Pageflow>

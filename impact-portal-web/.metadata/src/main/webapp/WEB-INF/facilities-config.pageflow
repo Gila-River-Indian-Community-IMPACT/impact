@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13644982152270" configfile="/impact-portal-web/src/main/webapp/WEB-INF/facilities-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="5554" id="pf13644989427921" outlinks="pf13644989427932 pf13644989427933 pf13644989427934 pf13644989427935 pf13644989427936 pf13644989427937 pf13644989427938 pf13644989427939 pf136449894279310 pf136449894279311 pf136449894279312 pf136449894279313 pf136449894279314 pf136449894279315 pf136449894279316 pf136449894279317 pf136449894279318 pf136449894279319 pf136449894279320 pf136449894279321 pf136449894279322 pf136449894279323 pf136449894279324 pf136449894279325 pf136449894279326 pf136449894279327 pf137174543956530 pf137174543956531 pf137174543956532 pf137176238396236 pf137176462751238 pf137176462751239" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/facilityProfile" x="338" y="178" id="pf136449894279328" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13644989427932" path="/facilities/facilityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/owners" x="338" y="562" id="pf136449894279329" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13644989427933" path="/facilities/owners.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/eventLog" x="338" y="946" id="pf136449894279330" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf13644989427934" path="/facilities/eventLog.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/permits" x="338" y="1330" id="pf136449894279331" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf13644989427935" path="/facilities/permits.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/applications" x="338" y="1714" id="pf136449894279332" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf13644989427936" path="/facilities/applications.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/reports" x="338" y="2482" id="pf136449894279333" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf136449894279334 pf136449894279335 pf136449894279336" inlinks="pf13644989427937" path="/facilities/reports.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/yearlyReportingInfo" x="338" y="2098" id="pf136449894279437" referenceLink="//@navigationRule.1/@navigationCase.5/@toViewId|" inlinks="pf13644989427938" path="/facilities/yearlyReportingInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/fedRules" x="338" y="2866" id="pf136449894279438" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf136449894279439" inlinks="pf13644989427939 pf136449894279439" path="/facilities/fedRules.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/euSummary" x="338" y="3250" id="pf136449894279440" referenceLink="//@navigationRule.1/@navigationCase.7/@toViewId|" inlinks="pf136449894279310" path="/facilities/euSummary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/ceSummary" x="338" y="3634" id="pf136449894279441" referenceLink="//@navigationRule.1/@navigationCase.8/@toViewId|" inlinks="pf136449894279311" path="/facilities/ceSummary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/egpSummary" x="338" y="4018" id="pf136449894279442" referenceLink="//@navigationRule.1/@navigationCase.9/@toViewId|" inlinks="pf136449894279312" path="/facilities/egpSummary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/compReports" x="338" y="4402" id="pf136449894279443" referenceLink="//@navigationRule.1/@navigationCase.10/@toViewId|" inlinks="pf136449894279313" path="/facilities/compReports.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/history" x="338" y="4786" id="pf136449894279444" referenceLink="//@navigationRule.1/@navigationCase.11/@toViewId|" inlinks="pf136449894279314" path="/facilities/history.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/homeFedRules" x="338" y="5170" id="pf136449894279445" referenceLink="//@navigationRule.1/@navigationCase.12/@toViewId|" inlinks="pf136449894279315" path="/facilities/homeFedRules.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/allEuPermits" x="338" y="5554" id="pf136449894279446" referenceLink="//@navigationRule.1/@navigationCase.13/@toViewId|" inlinks="pf136449894279316" path="/facilities/allEuPermits.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/comSccSearchTable" x="338" y="5938" id="pf136449894279447" referenceLink="//@navigationRule.1/@navigationCase.14/@toViewId|" inlinks="pf136449894279317" path="/facilities/comSccSearchTable.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/createFacility" x="338" y="6322" id="pf136449894279448" referenceLink="//@navigationRule.1/@navigationCase.15/@toViewId|" inlinks="pf136449894279318" path="/facilities/createFacility.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/printFacProfile" x="338" y="6706" id="pf136449894279449" referenceLink="//@navigationRule.1/@navigationCase.16/@toViewId|" inlinks="pf136449894279319" path="/facilities/printFacProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/confirmFacilityRemoveOp" x="338" y="7090" id="pf136449894279450" referenceLink="//@navigationRule.2/@navigationCase.5/@toViewId|" inlinks="pf136449894279320 pf136449894279325" path="/facilities/confirmFacilityRemoveOp.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/comAddContact" x="338" y="7474" id="pf136449894279451" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf136449894279321" path="/facilities/comAddContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/comViewContact" x="338" y="7858" id="pf136449894279452" referenceLink="//@navigationRule.2/@navigationCase.2/@toViewId|" inlinks="pf136449894279322" path="/facilities/comViewContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/comViewContactType" x="338" y="8242" id="pf136449894279553" referenceLink="//@navigationRule.2/@navigationCase.3/@toViewId|" inlinks="pf136449894279323" path="/facilities/comViewContactType.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/comAddTypeToContact" x="338" y="8626" id="pf136449894279554" referenceLink="//@navigationRule.2/@navigationCase.4/@toViewId|" inlinks="pf136449894279324" path="/facilities/comAddTypeToContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/confirmRemoveEU" x="338" y="9010" id="pf136449894279555" referenceLink="//@navigationRule.2/@navigationCase.6/@toViewId|" inlinks="pf136449894279326" path="/facilities/confirmRemoveEU.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/addressDetail" x="338" y="9394" id="pf136449894279556" referenceLink="//@navigationRule.2/@navigationCase.7/@toViewId|" inlinks="pf136449894279327" path="/facilities/addressDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/reportProfile" x="554" y="2482" id="pf136449894279557" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf136449894279334 pf136449894279336" path="/reports/reportProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/erNTVDetail" x="554" y="2866" id="pf136449894279558" referenceLink="//@navigationRule.4/@navigationCase.1/@toViewId|" inlinks="pf136449894279335" path="/reports/erNTVDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/emissionUnitHelpInfo" x="338" y="9778" id="pf137174543956933" referenceLink="//@navigationRule.1/@navigationCase.17/@toViewId|" inlinks="pf137174543956530" path="/facilities/emissionUnitHelpInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/apiDetail" x="338" y="10162" id="pf137174543956934" referenceLink="//@navigationRule.2/@navigationCase.8/@toViewId|" inlinks="pf137174543956531" path="/facilities/apiDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/naicsDetail" x="338" y="10546" id="pf137174543956935" referenceLink="//@navigationRule.2/@navigationCase.9/@toViewId|" inlinks="pf137174543956532" path="/facilities/naicsDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/homeEuSummary" id="pf137176238396337" referenceLink="//@navigationRule.1/@navigationCase.15/@toViewId|" inlinks="pf137176238396236" path="/facilities/homeEuSummary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/homeCeSummary" id="pf137176462751340" referenceLink="//@navigationRule.1/@navigationCase.14/@toViewId|" inlinks="pf137176462751238" path="/facilities/homeCeSummary.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/homeEgpSummary" id="pf137176462751341" referenceLink="//@navigationRule.1/@navigationCase.15/@toViewId|" inlinks="pf137176462751239" path="/facilities/homeEgpSummary.jsp"/>
+  <links id="pf13644989427932" target="pf136449894279328" source="pf13644989427921" outcome="facilityProfile" redirect="true"/>
+  <links id="pf13644989427933" target="pf136449894279329" source="pf13644989427921" outcome="facilities.profile.owners" redirect="true"/>
+  <links id="pf13644989427934" target="pf136449894279330" source="pf13644989427921" outcome="facilities.profile.eventLog" redirect="true"/>
+  <links id="pf13644989427935" target="pf136449894279331" source="pf13644989427921" outcome="facilities.profile.permits" redirect="true"/>
+  <links id="pf13644989427936" target="pf136449894279332" source="pf13644989427921" outcome="facilities.profile.applications" redirect="true"/>
+  <links id="pf13644989427937" target="pf136449894279333" source="pf13644989427921" outcome="facilities.profile.emissionReports" redirect="true"/>
+  <links id="pf13644989427938" target="pf136449894279437" source="pf13644989427921" outcome="facilities.profile.reportingCategory" redirect="true"/>
+  <links id="pf13644989427939" target="pf136449894279438" source="pf13644989427921" outcome="facilities.profile.fedRules" redirect="true"/>
+  <links id="pf136449894279310" target="pf136449894279440" source="pf13644989427921" outcome="facilities.profile.euSummary" redirect="true"/>
+  <links id="pf136449894279311" target="pf136449894279441" source="pf13644989427921" outcome="facilities.profile.ceSummary" redirect="true"/>
+  <links id="pf136449894279312" target="pf136449894279442" source="pf13644989427921" outcome="facilities.profile.egpSummary" redirect="true"/>
+  <links id="pf136449894279313" target="pf136449894279443" source="pf13644989427921" outcome="facilities.profile.compReports" redirect="true"/>
+  <links id="pf136449894279314" target="pf136449894279444" source="pf13644989427921" outcome="facilities.profile.history" redirect="true"/>
+  <links id="pf136449894279315" target="pf136449894279445" source="pf13644989427921" outcome="facilities.profile.homeFedRules" redirect="true"/>
+  <links id="pf136449894279316" target="pf136449894279446" source="pf13644989427921" outcome="dialog:allEuPermits"/>
+  <links id="pf136449894279317" target="pf136449894279447" source="pf13644989427921" outcome="dialog:searchSccCodes"/>
+  <links id="pf136449894279318" target="pf136449894279448" source="pf13644989427921" outcome="facilities.createFacility" redirect="true"/>
+  <links id="pf136449894279319" target="pf136449894279449" source="pf13644989427921" outcome="dialog:facilityProfileReport"/>
+  <links id="pf136449894279320" target="pf136449894279450" source="pf13644989427921" outcome="dialog:confirmFacilityRemoveOp"/>
+  <links id="pf136449894279321" target="pf136449894279451" source="pf13644989427921" outcome="dialog:addContact"/>
+  <links id="pf136449894279322" target="pf136449894279452" source="pf13644989427921" outcome="dialog:viewContact"/>
+  <links id="pf136449894279323" target="pf136449894279553" source="pf13644989427921" outcome="dialog:viewContType"/>
+  <links id="pf136449894279324" target="pf136449894279554" source="pf13644989427921" outcome="dialog:addTypeToContact"/>
+  <links id="pf136449894279325" target="pf136449894279450" source="pf13644989427921" outcome="dialog:confirmShutdownEuOp"/>
+  <links id="pf136449894279326" target="pf136449894279555" source="pf13644989427921" outcome="dialog:confirmRemoveEU"/>
+  <links id="pf136449894279327" target="pf136449894279556" source="pf13644989427921" outcome="dialog:addressDetail"/>
+  <links id="pf136449894279334" target="pf136449894279557" source="pf136449894279333" outcome="newOtherEmissionReport" redirect="true" fromaction="#{facilityProfile.createNewEmissionReport}"/>
+  <links id="pf136449894279335" target="pf136449894279558" source="pf136449894279333" outcome="newNTVEmissionReport" redirect="true" fromaction="#{facilityProfile.createNewEmissionReport}"/>
+  <links id="pf136449894279336" target="pf136449894279557" source="pf136449894279333" outcome="tvEmissionReport" fromaction="#{reportDetail.submit}"/>
+  <links id="pf137174543956530" target="pf137174543956933" source="pf13644989427921" outcome="dialog:emissionUnitHelpInfo"/>
+  <links id="pf137174543956531" target="pf137174543956934" source="pf13644989427921" outcome="dialog:apiDetail"/>
+  <links id="pf137174543956532" target="pf137174543956935" source="pf13644989427921" outcome="dialog:naicsDetail"/>
+  <links id="pf136449894279439" target="pf136449894279438" source="pf136449894279438" redirect="true" fromaction="#{facilityProfile.cancelEdit}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf137176238396236" target="pf137176238396337" source="pf13644989427921" outcome="facilities.profile.homeEuSummary" redirect="true"/>
+  <links id="pf137176462751238" target="pf137176462751340" source="pf13644989427921" outcome="facilities.profile.homeCeSummary" redirect="true"/>
+  <links id="pf137176462751239" target="pf137176462751341" source="pf13644989427921" outcome="facilities.profile.homeEgpSummary" redirect="true"/>
+</pageflow:Pageflow>

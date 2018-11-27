@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<index version="1.0">
+<indexitem text="introduction">
+    <indexentry text="System Overview" />
+    <indexentry text="System Help Overview" target="help_overview_html" />
+    <indexentry text="Common User Interface Elements">
+    	<indexentry text="Common Search Paradigm" target="common_ui_searchParadigm_html"/>
+    	<indexentry text="Data Grids" target="common_ui_datagrids_html" /> 
+    </indexentry>
+    <indexentry text="Facility Roles" target="facility_roles_html" />
+    <indexentry text="System Role-based Security in Stars2" target="role-based_security_html" />
+    <indexentry text="Stars2 System Glossary" target="glossary_html" />
+</indexitem>
+ 
+<indexitem text="getting started">
+<indexentry text="System Overview" />
+    <indexentry text="System Help Overview" target="help_overview_html" />
+	<indexentry text="Contents Tab" target="about_conttab_html" />
+	<!--  
+	<indexentry text="Purpose and Scope" target="about_scope_html" />
+	-->
+    <indexentry text="AQD Web Access to Stars2" target="internal_app_html" />
+    <indexentry text="Ohio EPA Portal for Regulated Community Users" target="portal_app_html" />
+    <indexentry text="Common User Interface Elements">
+    <!--  
+    	<indexitem text="Purpose and Scope" target="about_scope_html" />
+    	<indexentry text="Common Search Paradigm" target="about_stars2_searches_html"/>
+    	<indexentry text="Data Grids" target="about_datagrids_html" /> 
+    -->	
+    </indexentry>
+    <indexentry text="Index Tab" target="about_idxtab_html" />
+    <indexentry text="Search Tab" target="about_search_tab_html" />
+    
+</indexitem>
+
+<indexitem text="navigator window">
+    <indexentry text="Contents Tab" target="about_conttab_html" />
+    <indexentry text="Index Tab" target="about_idxtab_html" />
+</indexitem>
+
+ <indexitem text="help">
+  <indexentry text="Navigating Stars2 Help" target="about_nav_html" />
+  <indexentry text="Contents Tab" target="about_conttab_html" />
+  <indexentry text="Index Tab" target="about_idxtab_html" />
+  <indexentry text="Search Tab" target="about_search_html" />
+ </indexitem>
+
+<indexitem text="finding help on a topic">
+  <indexentry text="Contents Tab" target="about_conttab_html" />
+  <indexentry text="Index Tab" target="about_idxtab_html" />
+  <indexentry text="Search Tab" target="about_search_tab_html" />
+</indexitem>
+
+ <!-- indexitem templates
+
+<indexitem text="">
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+    <indexentry text="" target="_html" />
+</indexitem>
+ 
+<indexitem text="search index file format">
+    <indexentry text="Search Index File" target="#" />
+</indexitem>
+
+<indexitem text="configuration file format (OHW)">
+    <indexentry text="text" target="#"/>
+    <indexentry text="text" target="#l"/>
+</indexitem>
+
+-->
+
+<indexitem text="text search">
+    <indexentry text="Index Tab" target="about_idxtab_html" />
+    <indexentry text="Search Tab" target="about_search_tab_html" />
+</indexitem>
+
+  
+</index>

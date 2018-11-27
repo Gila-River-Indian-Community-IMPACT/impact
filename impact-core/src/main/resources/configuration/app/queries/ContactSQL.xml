@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<ContactSQL>
+		<contactColumns>
+			cc.contact_id, cc.start_date, cc.end_date,
+			cc.title_cd,
+			cc.address_id, cc.first_nm, cc.middle_nm, cc.last_nm,
+			cc.suffix,
+			cc.phone_no, cc.email_address_txt, cc.email_pager_address,
+			cc.fax_no,
+			cc.max_email_pager_chars_num, cc.mobile_phone_no,
+			cc.pager_no,
+			cc.pager_pin_no, cc.phone_extension_val,
+			cc.secondary_extension_val,
+			cc.secondary_phone_no, cc.last_modified AS
+			contact_lm,
+			cc.company_title,
+			cc.company_id,
+			cc.preferred_name,
+			cc.cnt_id, cc.active, cc.company_id,
+			cc.envite_username, cc.secondary_email_address_txt
+		</contactColumns>
+		<contact> ${ContactSQL.contactColumns},
+			${InfrastructureSQL.addressColumns},
+			${InfrastructureSQL.contactTypeColumns},
+			${ContactSQL.contactReleventCompanyColumns}
+			FROM %Schema%cm_contact cc
+			LEFT OUTER JOIN
+			%Schema%cm_contact_contact_type_xref ccctx ON
+			(cc.contact_id = ccctx.contact_id) INNER
+			JOIN %Schema%cm_address ca on
+			(cc.address_id = ca.address_id)
+			LEFT
+			JOIN dbo.cm_company com on
+			cc.company_id =
+			com.COMPANY_ID
+		</contact>
+		<removeContact>DELETE FROM %Schema%cm_contact
+			WHERE contact_id = ?
+		</removeContact>
+		<removeStagingContact>DELETE FROM %Schema%cm_contact
+			WHERE contact_id =
+			? and facility_id = ?
+		</removeStagingContact>
+		<createContact>INSERT INTO %Schema%cm_contact
+			(contact_id,
+			operating_company_name, start_date, end_date, title_cd, address_id,
+			first_nm, middle_nm, last_nm, suffix,
+			phone_no, phone_extension_val,
+			secondary_phone_no, secondary_extension_val,
+			mobile_phone_no, fax_no,
+			pager_no, pager_pin_no, email_address_txt,
+			email_pager_address,
+			max_email_pager_chars_num, company_title, preferred_name, company_id
+			, secondary_email_address_txt)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createContact>
+		<createStagingContact>INSERT INTO %Schema%cm_contact
+			(contact_id,
+			operating_company_name, start_date, end_date, title_cd, address_id,
+			first_nm, middle_nm, last_nm, suffix,
+			phone_no, phone_extension_val,
+			secondary_phone_no, secondary_extension_val,
+			mobile_phone_no, fax_no,
+			pager_no, pager_pin_no, email_address_txt,
+			email_pager_address,
+			max_email_pager_chars_num, company_title, preferred_name, company_id,
+			facility_id, secondary_email_address_txt)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createStagingContact>
+		<modifyContact>UPDATE %Schema%cm_contact SET
+			title_cd = ?,
+			address_id = ?,
+			first_nm = ?,
+			middle_nm = ?,
+			last_nm = ?,
+			suffix = ?,
+			phone_no = ?,
+			phone_extension_val = ?,
+			secondary_phone_no = ?,
+			secondary_extension_val = ?,
+			mobile_phone_no = ?,
+			fax_no = ?,
+			email_address_txt = ?,
+			last_modified = ?,
+			preferred_name = ?,
+			company_id = ?,
+			company_title = ?,
+			active = ?,
+			secondary_email_address_txt = ?
+			WHERE  contact_id = ?
+			AND  last_modified = ?
+		</modifyContact>
+		<modifyStagingContact>UPDATE %Schema%cm_contact SET
+			title_cd = ?,
+			address_id = ?,
+			first_nm = ?,
+			middle_nm = ?,
+			last_nm = ?,
+			suffix = ?,
+			phone_no = ?,
+			phone_extension_val = ?,
+			secondary_phone_no = ?,
+			secondary_extension_val = ?,
+			mobile_phone_no = ?,
+			fax_no = ?,
+			email_address_txt = ?,
+			last_modified = ?,
+			preferred_name = ?,
+			company_id = ?,
+			company_title = ?,
+			active = ?,
+			secondary_email_address_txt = ?
+			WHERE  contact_id = ?
+			AND  facility_id = ?
+			AND  last_modified = ?
+		</modifyStagingContact>
+		<retrieveContactByUserId>SELECT ${ContactSQL.contactColumns}
+			FROM
+			%Schema%cm_contact cc, %Schema%cm_user_def cud
+			WHERE
+			cc.contact_id =
+			cud.contact_id
+			AND cud.user_id = ?
+		</retrieveContactByUserId>
+		<retrieveAllContacts>
+			SELECT ${ContactSQL.contactColumns},
+			${ContactSQL.contactReleventCompanyColumns},
+			${InfrastructureSQL.addressColumns}
+			FROM
+			(%Schema%cm_contact cc
+			LEFT
+			JOIN %Schema%cm_company com on
+			cc.company_id =
+			com.COMPANY_ID)
+
+			INNER
+			JOIN %Schema%cm_address ca on
+			(cc.address_id =
+			ca.address_id)
+
+			WHERE cc.active='Y'
+			ORDER BY
+			cc.last_nm
+			ASC
+		</retrieveAllContacts>
+		<retrieveContact>SELECT ${ContactSQL.contact} WHERE
+			cc.contact_id = ?
+		</retrieveContact>
+		
+		<retrieveContactDetail>SELECT ${ContactSQL.contact} WHERE
+			cc.cnt_id = ?
+		</retrieveContactDetail>
+		
+		<retrieveStagingContact>SELECT ${ContactSQL.contact} WHERE
+			cc.contact_id = ? and cc.facility_id = ?
+		</retrieveStagingContact>
+		<contactReleventCompanyColumns>
+			com.cmp_id, com.name as company_name
+		</contactReleventCompanyColumns>
+		<findContacts>
+			SELECT ${ContactSQL.contactColumns},
+			${InfrastructureSQL.addressColumns},
+			${ContactSQL.contactReleventCompanyColumns}
+			FROM %Schema%cm_address
+			ca, %Schema%cm_contact cc
+			LEFT JOIN %Schema%cm_company com on
+			cc.company_id = com.COMPANY_ID
+			WHERE cc.address_id = ca.address_id
+		</findContacts>
+		<retrieveContactByExternalUsername>SELECT ${ContactSQL.contact} WHERE
+			cc.envite_username = ?
+		</retrieveContactByExternalUsername>
+		<addContactType>INSERT INTO %Schema%cm_contact_contact_type_xref
+			(contact_id, contact_type_cd, start_date, facility_id)
+			VALUES(?,?,?,?)
+		</addContactType>
+		<addContactType1>INSERT INTO %Schema%cm_contact_contact_type_xref
+			(contact_id, contact_type_cd, start_date, end_date, facility_id)
+			VALUES(?,?,?,?,?)
+		</addContactType1>
+		<deleteContactTypes>DELETE FROM %Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ?
+		</deleteContactTypes>
+		<deleteContactTypesByFacilityId>DELETE FROM
+			%Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ? AND
+			facility_id= ?
+		</deleteContactTypesByFacilityId>
+		<deleteContactNote>DELETE FROM %Schema%cm_note
+			WHERE note_id = ?
+		</deleteContactNote>
+		<deleteContactNoteXrefs>DELETE FROM %Schema%cm_contact_note_xref
+			WHERE
+			contact_id = ?
+		</deleteContactNoteXrefs>
+		<modifyContactNoteXrefs>UPDATE %Schema%cm_contact_note_xref SET
+			contact_id = ?
+			WHERE
+			contact_id = ?
+		</modifyContactNoteXrefs>
+		<deleteContactType>DELETE FROM %Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ?
+			AND contact_type_cd = ?
+			AND start_date = ?
+			AND
+			end_date = ?
+			AND
+			facility_id = ?
+		</deleteContactType>
+		<deleteContactType1>DELETE FROM %Schema%cm_contact_contact_type_xref
+			WHERE contact_id = ?
+			AND contact_type_cd = ?
+			AND start_date = ?
+			AND
+			end_date is null
+			AND
+			facility_id = ?
+		</deleteContactType1>
+		<retrieveContactNotes>SELECT ${InfrastructureSQL.noteColumns},
+			ctnx.contact_id
+			FROM %Schema%cm_contact_note_xref ctnx,
+			%Schema%cm_note cn
+			WHERE ctnx.contact_id = ?
+			AND ctnx.note_id =
+			cn.note_id
+			AND cn.note_type_cd != 'hist'
+			ORDER BY note_id DESC
+		</retrieveContactNotes>
+		<addContactNote>
+			INSERT INTO %Schema%cm_contact_note_xref (contact_id,
+			note_id)
+			VALUES (?,?)
+		</addContactNote>
+		<retrieveContactsByCompany>
+			SELECT ${ContactSQL.contactColumns},
+			${InfrastructureSQL.addressColumns},
+			${ContactSQL.contactReleventCompanyColumns}
+			FROM %Schema%cm_address
+			ca, %Schema%cm_contact cc
+			LEFT JOIN %Schema%cm_company com on
+			cc.company_id = com.COMPANY_ID
+			WHERE cc.address_id = ca.address_id
+			AND
+			cc.company_id=? ORDER BY cc.last_nm ASC
+		</retrieveContactsByCompany>
+		<retrieveStagedContactsByFacility>SELECT ${ContactSQL.contactColumns},
+			${InfrastructureSQL.contactTypeColumns},
+			${InfrastructureSQL.addressColumns}
+			, ccm.name as company_name
+			FROM %Schema%cm_address ca,
+			dbo.cm_company ccm,
+			%Schema%cm_contact cc LEFT OUTER JOIN
+			%Schema%cm_contact_contact_type_xref ccctx
+			ON (cc.contact_id =
+			ccctx.contact_id AND cc.facility_id=ccctx.facility_id)
+			WHERE
+			cc.facility_id = ?
+			AND ca.address_id =
+			cc.address_id
+			AND ccm.company_id=cc.company_id
+			ORDER BY cc.last_nm ASC, cc.first_nm ASC
+		</retrieveStagedContactsByFacility>
+
+		<removeCompanyAuth>
+			DELETE from %Schema%cm_contact_company_auth where
+			contact = ?
+		</removeCompanyAuth>
+
+		<addCompanyAuth>
+			INSERT INTO %Schema%cm_contact_company_auth
+			(contact,company) VALUES (?,?)
+		</addCompanyAuth>
+
+		<retrieveExcludedFacilities>
+			SELECT DISTINCT
+			${FacilitySQL.facilityListColumns},
+			${InfrastructureSQL.addressColumns}, fc.start_date, fc.end_date
+			FROM
+			%Schema%fp_facility ff,
+			%Schema%cm_address ca,
+			%Schema%fp_facility_address_xref faxr,
+			%Schema%fp_facility_company_xref fc,
+			%Schema%cm_company ccm,
+			%Schema%cm_contact_facility_noauth ccfn
+			WHERE
+			ff.version_id = -1
+			AND
+			ff.fp_id = faxr.fp_id
+			AND faxr.address_id =
+			ca.address_id
+			AND
+			ff.facility_id=fc.facility_id
+			AND
+			ccfn.contact=?
+			AND
+			ff.facility_id=ccfn.facility
+			AND
+			ccm.company_id=fc.company_id
+			AND
+			ca.end_dt is null
+			AND
+			fc.end_date is null
+		</retrieveExcludedFacilities>
+
+		<addFacilityNoAuth>
+			INSERT INTO %Schema%cm_contact_facility_noauth
+			(contact,facility) VALUES (?,?)
+		</addFacilityNoAuth>
+
+		<removeFacilityFromFacilityNoAuth>
+			DELETE from
+			%Schema%cm_contact_facility_noauth where contact = ? and facility = ?
+		</removeFacilityFromFacilityNoAuth>
+
+		<modifyExternalUsername>UPDATE %Schema%cm_contact SET
+			envite_username = ?
+			WHERE
+			contact_id = ?
+		</modifyExternalUsername>
+		
+		<modifyApplicationContact>UPDATE %Schema%pa_application SET
+			contact_id = ?
+			WHERE
+			contact_id = ?
+		</modifyApplicationContact>		
+
+	</ContactSQL>
+</root>
+

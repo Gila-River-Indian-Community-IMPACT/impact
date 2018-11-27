@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<MonitoringSQL>
+
+		<monitorSiteColumns>
+			mst.site_id,
+			mst.mst_id,
+			mst.site_name,
+			mst.site_objective,
+			mst.county_cd,
+			mst.aqs_site_id,
+			mst.last_modified,
+			mst.exists_in_aqs,
+			mst.status_cd,
+			mst.start_date,
+			mst.end_date,
+			mst.latitude,
+			mst.longitude,
+			mst.elevation,
+			mst.wyvisnet_uri,
+			mst.latlong
+		</monitorSiteColumns>
+		
+		<monitorGroupColumns>
+			mgrp.aqd_owned,
+			mgrp.group_id,
+			mgrp.mgrp_id,
+			mgrp.group_name,
+			mgrp.description,
+			mgrp.facility_id,
+			mgrp.monitor_reviewer,
+			mgrp.company_id,
+			mgrp.contractor_cd,
+			mgrp.last_modified
+		</monitorGroupColumns>
+		
+		<monitorColumns>
+			m.monitor_id,
+			m.site_id,
+			m.type_cd,
+			m.parameter_cd,
+			m.status_cd,
+			m.mntr_id,
+			m.name,
+			m.parameter2_cd,
+			m.param_occurrence_cd,
+			m.method_cd,
+			m.unit_cd,
+			m.start_date,
+			m.end_date,
+			m.duration_cd,
+			m.freq_cd,
+			m.comments,
+			m.mntr_id,
+			m.last_modified,
+			m.met_parameter_cd
+		</monitorColumns>
+		
+		<monitorGroupAttachmentColumns>
+			mga.document_id,
+			mga.group_id,
+			mga.attachment_type_cd,
+			mga.last_modified
+		</monitorGroupAttachmentColumns>
+		
+		<monitorReportColumns>
+			mr.report_id,
+			mr.mrpt_id,
+			mr.monitor_group_id,
+			mr.report_type_cd,
+			mr.year,
+			mr.quarter,
+			mr.legacy_report,
+			mr.description,
+			mr.validated,
+			mr.submitted,
+			mr.submitted_date,
+			mr.monitoring_reviewer_id,
+			mr.monitoring_review_date,
+			mr.compliance_reviewer_id,
+			mr.compliance_review_date,
+			mr.review_status_cd,
+			mr.compliance_status_cd,
+			mr.permit_nbr,
+			mr.rpt_accepted_cd,
+			mr.aqd_comments,
+			mr.created_by_id,
+			mr.last_modified
+		</monitorReportColumns>
+		
+		<monitorReportAttachmentColumns>
+			mra.document_id,
+			mra.report_id,
+			mra.attachment_type_cd,
+			mra.last_modified
+		</monitorReportAttachmentColumns>
+		
+		<searchMonitorSites>
+			SELECT
+			${MonitoringSQL.monitorSiteColumns},
+			mgrp.group_name,
+			mgrp.group_id,
+			mgrp.mgrp_id,
+			mgrp.description as group_description,
+			f.facility_id,
+			f.facility_nm,
+			f.fp_id,
+			c.name as company_name,
+			c.cmp_id
+			FROM
+			%Schema%mo_monitor_site mst
+			inner join dbo.MO_MONITOR_GROUP mgrp on mgrp.GROUP_ID = mst.GROUP_ID
+			left join dbo.FP_FACILITY f on f.FACILITY_ID = mgrp.FACILITY_ID
+			left join dbo.CM_COMPANY c on c.COMPANY_ID = mgrp.COMPANY_ID
+			WHERE f.END_DT is null
+		</searchMonitorSites>
+
+		<modifyMonitorSite>
+			UPDATE %Schema%mo_monitor_site
+			SET
+				site_name = ?,
+				site_objective = ?,
+				aqs_site_id = ?,
+				county_cd = ?,
+				group_id = ?,
+				exists_in_aqs = ?,
+				status_cd = ?,
+				start_date = ?,
+				end_date = ?,
+				latitude = ?,
+				longitude = ?,
+				elevation = ?,
+				wyvisnet_uri = ?,
+				last_modified = ?
+			WHERE
+			site_id	= ?
+			AND
+			last_modified = ?
+		</modifyMonitorSite>
+
+		<modifyMonitorGroup>
+			UPDATE %Schema%mo_monitor_group
+			SET
+				group_name = ?,
+				description = ?,
+				aqd_owned = ?,
+				monitor_reviewer = ?,
+				company_id = ?,
+				facility_id = ?,
+				contractor_cd = ?,
+				last_modified = ?
+			WHERE
+			group_id = ?
+			AND
+			last_modified = ?
+		</modifyMonitorGroup>
+
+
+		<deleteMonitor>
+			DELETE FROM %Schema%mo_monitor WHERE
+			monitor_id = ?
+		</deleteMonitor>
+
+		<deleteMonitorSite>
+			DELETE FROM %Schema%mo_monitor_site WHERE
+			site_id = ?
+		</deleteMonitorSite>
+
+		<deleteMonitorGroup>
+			DELETE FROM %Schema%mo_monitor_group WHERE
+			group_id = ?
+		</deleteMonitorGroup>
+
+
+		<createMonitorGroup>
+			INSERT INTO %Schema%mo_monitor_group
+			(group_id, group_name, aqd_owned, monitor_reviewer, company_id, facility_id, description, contractor_cd)
+			VALUES (?,?,?,?,?,?,?,?)
+		</createMonitorGroup>
+
+
+		<createMonitorSite>
+			INSERT INTO %Schema%mo_monitor_site
+			(site_id, site_name, site_objective, aqs_site_id, county_cd,
+			group_id, exists_in_aqs, status_cd, start_date, 
+			end_date, latitude, longitude, elevation, wyvisnet_uri)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createMonitorSite>
+
+		<createMonitor>
+			INSERT INTO %Schema%mo_monitor
+			(monitor_id, site_id, type_cd, parameter_cd, 
+			status_cd, name, parameter2_cd, param_occurrence_cd,
+			method_cd, unit_cd, start_date, end_date, duration_cd, 
+			freq_cd, comments, met_parameter_cd)
+			VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createMonitor>
+
+		
+		<searchMonitorGroups>
+			SELECT
+			${MonitoringSQL.monitorGroupColumns},
+			c.cmp_id,
+			c.name as company_name,
+			f.facility_nm,
+			f.facility_type_cd,
+			f.permit_classification_cd,
+			f.facility_id,
+			f.fp_id
+			FROM
+			%Schema%mo_monitor_group mgrp
+			left join dbo.FP_FACILITY f on f.FACILITY_ID = mgrp.FACILITY_ID
+			left join dbo.CM_COMPANY c on c.COMPANY_ID = mgrp.COMPANY_ID
+			WHERE f.END_DT is null
+		</searchMonitorGroups>
+
+
+		
+		<searchMonitors>
+			SELECT
+			${MonitoringSQL.monitorColumns},
+			mst.site_name,
+			mst.mst_id,
+			mgrp.group_name,
+			mgrp.description as group_description,
+			mgrp.mgrp_id
+			FROM
+			%Schema%mo_monitor m
+			inner join %Schema%mo_monitor_site mst on mst.site_id = m.site_id
+			inner join %Schema%mo_monitor_group mgrp on mgrp.group_id = mst.group_id
+			WHERE 1=1
+		</searchMonitors>
+
+		<modifyMonitor>
+			UPDATE %Schema%mo_monitor
+			SET
+				site_id = ?,
+				type_cd = ?,
+				parameter_cd = ?,
+				status_cd = ?,
+				name = ?,
+				parameter2_cd = ?,
+				param_occurrence_cd = ?,
+				method_cd = ?,
+				unit_cd = ?,
+				start_date = ?,
+				end_date = ?,
+				duration_cd = ?,
+				freq_cd = ?,
+				comments = ?,
+				last_modified = ?,
+				met_parameter_cd = ?
+			WHERE
+			monitor_id	= ?
+			AND
+			last_modified = ?
+		</modifyMonitor>
+
+		<searchMonitorsByAqsId>
+			SELECT
+				${MonitoringSQL.monitorColumns},
+				mst.site_name,
+				mst.aqs_site_id,
+				mst.mst_id,
+				mgrp.group_name,
+				mgrp.description as group_description,
+				mgrp.mgrp_id,
+				c.name as company_name
+				FROM
+				%Schema%mo_monitor m
+				inner join %Schema%mo_monitor_site mst on mst.site_id = m.site_id
+				inner join %Schema%mo_monitor_group mgrp on mgrp.group_id = mst.group_id
+				left join dbo.CM_COMPANY c on c.COMPANY_ID = mgrp.COMPANY_ID
+				WHERE mst.aqs_site_id = ?
+				AND m.site_id != ?
+		</searchMonitorsByAqsId>
+		
+		<createMonitorGroupAttachment>
+			INSERT INTO %Schema%mo_monitor_group_attachment
+			(document_id, group_id, attachment_type_cd, last_modified)
+			VALUES(?,?,?,?)
+		</createMonitorGroupAttachment>
+		
+		<retrieveMonitorGroupAttachments>
+			SELECT ${MonitoringSQL.monitorGroupAttachmentColumns}, mga.last_modified as ref_lm,
+				${DocumentSQL.documentColumns} 
+				FROM %Schema%mo_monitor_group_attachment mga, %Schema%dc_document dd
+				WHERE group_id = ? AND mga.document_id = dd.document_id
+		</retrieveMonitorGroupAttachments>
+
+		<updateMonitorGroupAttachment>
+			UPDATE %Schema%mo_monitor_group_attachment
+			SET
+				document_id = ?,
+				attachment_type_cd = ?,
+				last_modified = ?
+			WHERE
+			document_id = ?	AND last_modified = ?
+		</updateMonitorGroupAttachment>
+		
+		<removeMonitorGroupAttachment>
+			DELETE FROM %Schema%mo_monitor_group_attachment
+			WHERE document_id = ?
+		</removeMonitorGroupAttachment>
+		
+		<removeMonitorGroupNotes>			
+			DELETE FROM %Schema%mo_monitor_group_note_xref WHERE monitor_group_id = ?
+		</removeMonitorGroupNotes>
+		
+		<createMonitorGroupNote>
+			INSERT INTO %Schema%mo_monitor_group_note_xref
+			(monitor_group_id, note_id) VALUES (?,?)
+		</createMonitorGroupNote>
+		
+		<removeMonitorGroupNote>
+      	   DELETE FROM %Schema%mo_monitor_group_note_xref WHERE monitor_group_id = ? AND note_id = ?
+    	</removeMonitorGroupNote>
+    	
+    	<retrieveMonitorGroupNote>
+			SELECT mmgnx.monitor_group_id,
+			${InfrastructureSQL.noteColumns} FROM
+			%Schema%mo_monitor_group_note_xref mmgnx, cm_note cn WHERE
+			mmgnx.note_id = ? AND mmgnx.note_id = cn.note_id
+		</retrieveMonitorGroupNote>
+		
+		<retrieveMonitorGroupNotes>
+			SELECT ${InfrastructureSQL.noteColumns},
+			mmgnx.monitor_group_id FROM
+			%Schema%mo_monitor_group_note_xref mmgnx, %Schema%cm_note cn
+			WHERE mmgnx.monitor_group_id = ? AND mmgnx.note_id =
+			cn.note_id ORDER BY mmgnx.note_id DESC
+		</retrieveMonitorGroupNotes>
+		
+		<removeMonitorSiteNotes>			
+			DELETE FROM %Schema%mo_monitor_site_note_xref WHERE monitor_site_id = ?
+		</removeMonitorSiteNotes>
+		
+		<createMonitorSiteNote>
+			INSERT INTO %Schema%mo_monitor_site_note_xref
+			(monitor_site_id, note_id) VALUES (?,?)
+		</createMonitorSiteNote>
+		
+		<removeMonitorSiteNote>
+      	   DELETE FROM %Schema%mo_monitor_site_note_xref WHERE monitor_site_id = ? AND note_id = ?
+    	</removeMonitorSiteNote>
+    	
+    	<retrieveMonitorSiteNote>
+			SELECT mmsnx.monitor_site_id,
+			${InfrastructureSQL.noteColumns} FROM
+			%Schema%mo_monitor_site_note_xref mmsnx, cm_note cn WHERE
+			mmsnx.note_id = ? AND mmsnx.note_id = cn.note_id
+		</retrieveMonitorSiteNote>
+		
+		<retrieveMonitorSiteNotes>
+			SELECT ${InfrastructureSQL.noteColumns},
+			mmsnx.monitor_site_id FROM
+			%Schema%mo_monitor_site_note_xref mmsnx, %Schema%cm_note cn
+			WHERE mmsnx.monitor_site_id = ? AND mmsnx.note_id =
+			cn.note_id ORDER BY mmsnx.note_id DESC
+		</retrieveMonitorSiteNotes>
+		
+		<removeMonitorNotes>			
+			DELETE FROM %Schema%mo_monitor_note_xref WHERE monitor_id = ?
+		</removeMonitorNotes>
+		
+		<createMonitorNote>
+			INSERT INTO %Schema%mo_monitor_note_xref
+			(monitor_id, note_id) VALUES (?,?)
+		</createMonitorNote>
+		
+		<removeMonitorNote>
+      	   DELETE FROM %Schema%mo_monitor_note_xref WHERE monitor_id = ? AND note_id = ?
+    	</removeMonitorNote>
+    	
+    	<retrieveMonitorNote>
+			SELECT mmnx.monitor_id,
+			${InfrastructureSQL.noteColumns} FROM
+			%Schema%mo_monitor_note_xref mmnx, cm_note cn WHERE
+			mmnx.note_id = ? AND mmnx.note_id = cn.note_id
+		</retrieveMonitorNote>
+		
+		<retrieveMonitorNotes>
+			SELECT ${InfrastructureSQL.noteColumns},
+			mmnx.monitor_id FROM
+			%Schema%mo_monitor_note_xref mmnx, %Schema%cm_note cn
+			WHERE mmnx.monitor_id = ? AND mmnx.note_id =
+			cn.note_id ORDER BY mmnx.note_id DESC
+		</retrieveMonitorNotes>
+		
+		<createMonitorReport>
+			INSERT INTO %Schema%mo_monitor_rpt ( 
+				report_id, monitor_group_id, report_type_cd, year,
+				quarter, legacy_report, description, validated, submitted,
+				submitted_date, monitoring_reviewer_id, monitoring_review_date,
+				compliance_reviewer_id, compliance_review_date,
+				review_status_cd, permit_nbr, compliance_status_cd,
+				rpt_accepted_cd, aqd_comments, created_by_id)
+				VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+		</createMonitorReport>
+		
+		<retrieveMonitorReportsByGroupId>
+			SELECT ${MonitoringSQL.monitorReportColumns} 
+				FROM %Schema%mo_monitor_rpt mr WHERE mr.monitor_group_id = ?
+		</retrieveMonitorReportsByGroupId>
+		
+		<retrieveMonitorReportById>
+			SELECT ${MonitoringSQL.monitorReportColumns} 
+				FROM %Schema%mo_monitor_rpt mr WHERE mr.report_id = ?
+		</retrieveMonitorReportById>
+		
+		<modifyMonitorReport>
+			UPDATE %Schema%mo_monitor_rpt SET
+				monitor_group_id = ?,
+				report_type_cd = ?,
+				year = ?,
+				quarter = ?,
+				legacy_report = ?,
+				description = ?,
+				validated = ?,
+				submitted = ?,
+				submitted_date = ?,
+				monitoring_reviewer_id = ?,
+				monitoring_review_date = ?,
+				compliance_reviewer_id = ?,
+				compliance_review_date = ?,
+				review_status_cd = ?,
+				permit_nbr = ?,
+				compliance_status_cd = ?,
+				rpt_accepted_cd = ?,
+				aqd_comments = ?,
+				last_modified = ?
+			WHERE report_id = ? AND last_modified = ?	
+		</modifyMonitorReport>
+		
+		<deleteMonitorReport>
+			DELETE from %Schema%mo_monitor_rpt
+				WHERE report_id = ?
+		</deleteMonitorReport>
+		
+		<createMonitorReportAttachment>
+			INSERT INTO %Schema%mo_monitor_rpt_attachment
+			(document_id, report_id, attachment_type_cd, last_modified)
+			VALUES(?,?,?,?)
+		</createMonitorReportAttachment>
+		
+		<retrieveMonitorReportAttachments>
+			SELECT ${MonitoringSQL.monitorReportAttachmentColumns}, mra.last_modified as ref_lm,
+				${DocumentSQL.documentColumns} 
+				FROM %Schema%mo_monitor_rpt_attachment mra, %Schema%dc_document dd
+				WHERE report_id = ? AND mra.document_id = dd.document_id
+		</retrieveMonitorReportAttachments>
+
+		<updateMonitorReportAttachment>
+			UPDATE %Schema%mo_monitor_rpt_attachment
+			SET
+				document_id = ?,
+				attachment_type_cd = ?,
+				last_modified = ?
+			WHERE
+			document_id = ?	AND last_modified = ?
+		</updateMonitorReportAttachment>
+		
+		<removeMonitorReportAttachment>
+			DELETE FROM %Schema%mo_monitor_rpt_attachment
+			WHERE document_id = ?
+		</removeMonitorReportAttachment>
+		
+		<checkMonitorReportsValid>
+		  select count(*)  
+		  FROM %Schema%[MO_MONITOR_RPT] 
+		  where VALIDATED != 'Y' and MONITOR_GROUP_ID = ?
+		</checkMonitorReportsValid>
+		
+    	<searchFacilityMonitorSitesByDate>
+			SELECT
+			mst.mst_id, mst.site_id,
+			mst.site_name, mst.aqs_site_id, mst.status_cd as site_status,
+			mst.start_date as site_start_date, mst.end_date as site_end_date,
+			mst.latlong, mst.latitude, mst.longitude,
+			m.monitor_id, m.mntr_id, m.type_cd,
+			m.parameter_cd, m.status_cd, m.name,
+			m.parameter2_cd, m.start_date, m.end_date, 
+			m.freq_cd, m.met_parameter_cd
+			FROM %Schema%mo_monitor_site mst
+			INNER JOIN %Schema%mo_monitor_group mgrp on mgrp.group_id = mst.group_id
+			LEFT JOIN %Schema%mo_monitor m on (mst.site_id = m.site_id and m.type_cd = '01'
+												AND  m.start_date &lt;= ?
+												AND (m.end_date is null OR m.end_date &gt;= ?))
+			WHERE LOWER(mgrp.facility_id) = LOWER(?)
+			AND mst.start_date &lt;= ?
+			AND (mst.end_date is null OR mst.end_date &gt;= ?)
+		</searchFacilityMonitorSitesByDate>
+	</MonitoringSQL>
+</root>

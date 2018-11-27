@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf137893906448586" configfile="/impact-portal-web/src/main/webapp/WEB-INF/permits-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="178" id="pf137893912481187" outlinks="pf137893912481188" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="permits/permitDetail" x="338" y="178" id="pf137893912481189" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf137893912481188" path="/permits/permitDetail.jsp"/>
+  <links id="pf137893912481188" target="pf137893912481189" source="pf137893912481187" outcome="permits" redirect="true"/>
+</pageflow:Pageflow>

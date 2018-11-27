@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <WorkFlowSQL>
+	<processActivityColumns>
+		A.FACILITY_ID, A.facility_Nm, A.DO_LAA_CD, PA.Activity_Template_Id, 
+        PA.Process_Id, P.External_Id, P.Service_Id, PA.User_Id, PA.loop_cnt, 
+		PA.start_dt as A_start_dt, PA.Ready_Dt as A_Ready_Dt, PA.END_DT as A_END_DT, 
+		PA.Due_Dt as A_Due_Dt, ATD.Activity_Url, P.parent_process_id,
+        PA.jeopardy_dt AS A_Jeopardy_Dt, P.Start_Dt as P_Start_Dt, PA.IS_CURRENT,
+		P.Due_Dt as P_Due_Dt, PA.CONTACT_ID, PA.EXTEND_PROCESS_END_DATE, PA.ACTIVITY_REFERRAL_TYPE_ID,
+		PA.ACTIVITY_STATUS_CD, PT.PROCESS_CD, A.FP_ID,
+		PD.DATA_VAL, p.EXPEDITE, PA.viewed, AT.AGGREGATE, p.END_DT as P_End_Dt, 
+		p.JEOPARDY_DT as P_Jeopardy_Dt, PT.PROCESS_TEMPLATE_NM, PA.LAST_MODIFIED
+	</processActivityColumns>
+
+	<retrieveActivityTemplates>
+	    SELECT AT.activity_template_id, AT.process_template_id,
+	    PT.process_template_nm, AT.activity_template_def_id,AT.service_id,
+	    AT.expected_duration, AT.milestone_ind, AT.init_task_ind,
+	    AT.in_transition_def_cd, AT.out_transition_def_cd, AT.aggregate,
+	    AT.facility_role_cd, AT.x_loc, AT.y_loc, AT.activity_template_nm, AT.deprecated_ind,
+	    AT.activity_data, AT.jeopardy_duration, AT.last_modified
+	    FROM %Schema%wf_activity_template AT
+	    INNER JOIN %Schema%wf_process_template PT
+	    	on AT.process_template_id = PT.process_template_id
+	    WHERE AT.deprecated_ind = 'N'
+	    ORDER BY AT.activity_template_nm ASC
+	</retrieveActivityTemplates>
+
+    <retrieveWorkflowTempIdAndNm>
+        SELECT process_template_id AS id,
+        process_template_nm AS description,
+        deprecated_ind AS deprecated,
+        last_modified
+        FROM %Schema%wf_process_template
+        WHERE deprecated_ind =
+        'N'
+    </retrieveWorkflowTempIdAndNm>
+        
+    <retrievePermittingActivityTypes>
+    	SELECT
+    		ACTIVITY_TEMPLATE_ID
+    		, ACTIVITY_TEMPLATE_NM
+    	FROM
+    		%Schema%PT_PERMITTING_WF_ACTIVITY_TEMPLATES
+    	ORDER BY
+    		ACTIVITY_TEMPLATE_NM ASC
+    </retrievePermittingActivityTypes>
+    
+    <createProcessTemplate> INSERT 
+        INTO %Schema%wf_process_template (process_template_id, process_cd, 
+          process_template_nm, process_template_dsc, expected_duration,
+          jeopardy_duration, dynamic_ind, deprecated_ind,earliest_prov_interval,
+          min_prov_interval)  
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+    </createProcessTemplate>
+    <createActivityTemplate> INSERT 
+        INTO %Schema%wf_activity_template (activity_template_id, process_template_id, 
+          activity_template_def_id, service_id, expected_duration, 
+          milestone_ind, init_task_ind, in_transition_def_cd, 
+          out_transition_def_cd, aggregate, facility_role_cd, x_loc, y_loc, activity_template_nm, 
+          deprecated_ind, activity_data, jeopardy_duration)  
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+    </createActivityTemplate>
+    <createActivityTemplateDef> INSERT 
+        INTO %Schema%wf_activity_template_def (activity_template_def_id, 
+         activity_template_nm, activity_template_dsc,performer_type_cd, 
+         automatic_class_nm, process_template_id, hidden_ind, activity_url,     
+         terminal_ind, expected_duration, activity_template_type_cd, 
+         number_of_retries, retry_interval, deprecated_ind, jeopardy_duration, 
+         undo_activity_template_def_id )
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+    </createActivityTemplateDef>
+    <createATDServiceDataDetailIds> INSERT 
+         INTO %Schema%wf_activity_service_dtl_xref 
+         (activity_template_def_id, data_detail_id)  
+          VALUES (?, ?) 
+    </createATDServiceDataDetailIds>
+    <createProcessActivity> INSERT 
+         INTO %Schema%wf_process_activity (activity_template_id, process_id, user_id, loop_cnt,
+           activity_status_cd, start_dt, ready_dt, end_dt, due_dt, 
+           performer_type_cd, number_of_retries, retry_interval, jeopardy_dt, 
+		   is_current, contact_id, extend_process_end_date, activity_referral_type_id)  
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+    </createProcessActivity>
+    <createTransitionData> INSERT 
+         INTO %Schema%wf_transition_data (from_activity_template_id, 
+           to_activity_template_id, process_template_id, transition_def_cd, 
+           condition_val, deprecated_ind)  
+           VALUES (?, ?, ?, ?, ?, ?) 
+    </createTransitionData>
+    <createProcessData> INSERT 
+         INTO %Schema%wf_process_data (data_template_id, process_id, data_detail_id, 
+           data_val)  
+           VALUES (?, ?, ?, ?) 
+    </createProcessData>
+    <createProcess> INSERT 
+          INTO %Schema%wf_process (process_id, user_id, fp_id, service_id, 
+            process_template_id, parent_process_id, activity_template_id, 
+            external_id, expedite, start_dt, end_dt, due_dt, jeopardy_dt, ready_dt )  
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+    </createProcess>
+    <createProcessDataTemplate> INSERT 
+          INTO %Schema%wf_process_Data_Template (data_template_id, data_detail_id, 
+            process_template_id, data_template_nm, deprecated_ind, 
+            line_order_num,oe_required_ind, activity_template_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?) 
+    </createProcessDataTemplate>
+    <modifyTransition> 
+          UPDATE %Schema%wf_transition_data     
+            SET transition_def_cd = ?, condition_val = ?, deprecated_ind = ?   
+            WHERE from_activity_template_id = ?     
+                AND to_activity_template_id = ?     
+                AND process_template_id = ? 
+    </modifyTransition>
+    <modifyProcessData> 
+          UPDATE %Schema%wf_process_data     
+            SET data_detail_id = ?, data_val = ?, last_modified = ?   
+            WHERE data_template_id = ?     
+                AND process_id = ? 
+                AND last_modified = ?
+    </modifyProcessData>
+    <modifyProcess> 
+          UPDATE %Schema%wf_process     
+            SET user_id = ?, fp_id = ?, service_id = ?, 
+            process_template_id = ?, parent_process_id = ?,
+            activity_template_id = ?, external_id = ?, expedite = ?, start_dt = ?, end_dt = ?,
+            due_dt = ?, jeopardy_dt = ?, ready_dt = ?, last_modified = ?   
+            WHERE process_id = ? 
+            AND last_modified = ?
+    </modifyProcess>
+    <modifyActivityTemplate> 
+          UPDATE %Schema%wf_activity_template     
+            SET process_template_id = ?, activity_template_def_id = ?, 
+            service_id = ?,expected_duration = ?, milestone_ind = ?,
+            init_task_ind = ?, in_transition_def_cd = ?, 
+            out_transition_def_cd = ?, aggregate = ? , facility_role_cd = ?, x_loc = ?, 
+            y_loc = ?, activity_template_nm = ?, deprecated_ind = ?, 
+            activity_data = ?, jeopardy_duration = ?, last_modified = ?   
+            WHERE activity_template_id = ? 
+            AND last_modified = ?
+    </modifyActivityTemplate>
+    <modifyActivityTemplateDef> 
+          UPDATE %Schema%wf_activity_template_def     
+            SET activity_template_nm = ?, activity_template_dsc = ?,
+            performer_type_cd = ?, automatic_class_nm = ?, 
+            process_template_id = ?, hidden_ind = ?, terminal_ind = ?, 
+            activity_template_type_cd = ?, undo_activity_template_def_id = ?, 
+            expected_duration = ?, number_of_retries = ?, retry_interval = ?, 
+            deprecated_ind = ?, jeopardy_duration = ?, last_modified = ?   
+            WHERE activity_template_def_id = ? 
+            AND last_modified = ?
+    </modifyActivityTemplateDef>
+    <modifyProcessActivity> 
+          UPDATE %Schema%wf_process_activity     
+            SET user_id = ?, activity_status_cd = ?, start_dt = ?, ready_dt = ?,
+            end_dt = ?, due_dt = ?, number_of_retries = ?, retry_interval = ?,
+            jeopardy_dt = ?, last_modified = ?, is_current = ?, EXTEND_PROCESS_END_DATE = ?,
+			contact_id = ?, activity_referral_type_id = ? 
+            WHERE process_id = ?  
+            AND loop_cnt = ?
+            AND activity_template_id = ?
+            AND last_modified = ?
+    </modifyProcessActivity>   
+    <modifyProcessActivityViewedState> 
+          UPDATE %Schema%wf_process_activity     
+            SET viewed = 'Y'
+            WHERE process_id = ?  
+            AND loop_cnt = ?
+            AND activity_template_id = ?
+            AND last_modified = ?
+    </modifyProcessActivityViewedState>
+    <modifyProcessActivityEndDate> 
+          UPDATE %Schema%wf_process_activity
+            SET end_dt = ?
+            WHERE process_id = ?
+            AND loop_cnt = ?
+            AND activity_template_id = ?
+    </modifyProcessActivityEndDate>
+    <modifyProcessTemplate> 
+          UPDATE %Schema%wf_process_template     
+            SET process_cd = ?, process_template_nm = ?, 
+            process_template_dsc=?,expected_duration = ?,jeopardy_duration = ?,
+            dynamic_ind = ?, deprecated_ind = ?, earliest_prov_interval = ?,
+            min_prov_interval = ?, last_modified = ?   
+            WHERE process_template_id = ? 
+            AND last_modified = ?
+    </modifyProcessTemplate>
+
+    <retrieveActivitiesToUnDeadend> 
+    SELECT 'notused' AGGREGATE, 'notused' Activity_Url, 'notused' activity_template_nm,
+    	'notused' first_nm, 'notused' last_nm, 'notused' activity_status_dsc,
+    	'notused' activity_template_dsc,
+		A.FACILITY_ID, A.facility_Nm, A.DO_LAA_CD, PA.Activity_Template_Id, 
+        PA.Process_Id, P.External_Id, P.Service_Id, PA.User_Id, PA.loop_cnt, 
+		PA.start_dt as A_start_dt, PA.Ready_Dt as A_Ready_Dt, PA.END_DT as A_END_DT, 
+		PA.Due_Dt as A_Due_Dt, P.parent_process_id,
+        PA.jeopardy_dt AS A_Jeopardy_Dt, P.Start_Dt as P_Start_Dt, PA.IS_CURRENT,
+		P.Due_Dt as P_Due_Dt, PA.CONTACT_ID, PA.EXTEND_PROCESS_END_DATE, PA.ACTIVITY_REFERRAL_TYPE_ID,
+		PA.ACTIVITY_STATUS_CD, PT.PROCESS_CD, A.FP_ID,
+		PD.DATA_VAL, p.EXPEDITE, PA.viewed, p.END_DT as P_End_Dt, 
+		p.JEOPARDY_DT as P_Jeopardy_Dt, PT.PROCESS_TEMPLATE_NM, PA.LAST_MODIFIED,
+	PA.performer_type_cd, 
+	PA.number_of_retries, PA.retry_interval,  PA.ACTIVITY_STATUS_CD  
+    FROM  %Schema%FP_facility A, %Schema%WF_Process_Template PT, %Schema%WF_Process P 
+    LEFT OUTER JOIN  %Schema%WF_PROCESS_DATA PD ON (PD.DATA_DETAIL_ID = 101 AND p.PROCESS_ID = PD.PROCESS_ID), 
+    %Schema%WF_Process_Activity PA    
+    WHERE PT.Process_Template_Id=P.Process_Template_Id  
+	AND P.fp_id=A.fp_id  
+	AND P.Process_Id = PA.Process_Id
+	AND PA.process_id = (SELECT process_id FROM %Schema%wf_process WHERE external_id = ? AND process_template_id = 101)
+    AND PA.Activity_Status_Cd = 'CNC'
+    </retrieveActivitiesToUnDeadend>
+
+    <retrieveAllTransitionsForPTID> 
+          SELECT td.from_activity_template_id, td.to_activity_template_id, 
+            td.process_template_id,td.transition_def_cd, tt.transition_def_dsc,
+            td.condition_val, td.deprecated_ind, td.last_modified,    
+        (SELECT activity_template_nm 
+		FROM %Schema%wf_activity_template at 
+		WHERE td.from_activity_template_id = at.activity_template_id) AS from_activity_template_nm,    
+        (SELECT activity_template_nm 
+		FROM %Schema%wf_activity_template at 
+		WHERE td.to_activity_template_id = at.activity_template_id) 
+		    AS to_activity_template_nm    
+            FROM %Schema%wf_Transition_Data td, %Schema%wf_Transition_Def tt   
+            WHERE td.transition_def_cd = tt.transition_def_cd     
+            AND td.deprecated_ind = 'N'     
+            AND td.process_template_id = ? 
+    </retrieveAllTransitionsForPTID>
+    <retrieveActiveTransitionsForPTID> 
+          SELECT td.from_activity_template_id, td.to_activity_template_id, 
+            td.process_template_id, td.transition_def_cd, tt.transition_def_dsc,
+            td.condition_val, td.deprecated_ind, td.last_modified,    
+        (SELECT activity_template_nm 
+		FROM %Schema%wf_activity_template at 
+		WHERE td.from_activity_template_id = at.activity_template_id) 
+		  AS from_activity_template_nm,    
+        (SELECT activity_template_nm 
+		FROM %Schema%wf_activity_template at 
+		WHERE td.to_activity_template_id = at.activity_template_id) 
+		  AS to_activity_template_nm    
+            FROM %Schema%wf_Transition_Data td, %Schema%wf_Transition_Def tt   
+            WHERE td.transition_def_cd = tt.transition_def_cd     
+            AND td.deprecated_ind = 'N'     
+            AND td.process_template_id = ? 
+    </retrieveActiveTransitionsForPTID>
+	<DatafieldColumns>
+			pdt.data_template_id, pdt.data_template_nm, dd.data_detail_id, 
+			dd.DATA_TYPE_ID, dd.ENUM_CD, pdt.ACTIVITY_TEMPLATE_ID, dd.UNIT_CD,
+			dd.DATA_DETAIL_DSC, dd.DATA_DETAIL_LBL, dd.READ_ONLY, dd.REQUIRED,
+			dd.VISIBLE, dd.MIN_VAL, dd.MAX_VAL
+	</DatafieldColumns>
+    <retrieveAllDatafieldsForProcess> 
+	SELECT  pd.process_id, pd.data_val, pd.last_modified, ${WorkFlowSQL.DatafieldColumns}
+    FROM %Schema%wf_process_data pd, %Schema%wf_process_data_template pdt 
+	LEFT OUTER JOIN %Schema%dd_data_detail dd ON pdt.data_detail_id = dd.data_detail_id
+    WHERE pd.data_template_id = pdt.data_template_id
+    AND pd.process_id = ?
+    ORDER BY pdt.line_order_num
+    </retrieveAllDatafieldsForProcess>
+    <retrieveAllDatafieldsForProcessTemplate> 
+	SELECT NULL AS process_id, dd.DEFAULT_VAL AS data_val, pdt.last_modified,
+	${WorkFlowSQL.DatafieldColumns}
+	FROM %Schema%wf_process_data_template pdt, %Schema%dd_data_detail dd   
+	WHERE pdt.data_detail_id = dd.data_detail_id     
+	AND pdt.process_template_id = ? 
+    </retrieveAllDatafieldsForProcessTemplate>
+    <retrieveActivityTemplate> 
+    SELECT AT.activity_template_id, AT.process_template_id,         
+    PT.process_template_nm, AT.activity_template_def_id,AT.service_id, 
+    AT.expected_duration, AT.milestone_ind, AT.init_task_ind, 
+    AT.in_transition_def_cd, AT.out_transition_def_cd, AT.aggregate, 
+    AT.facility_role_cd, AT.x_loc, AT.y_loc, AT.activity_template_nm, AT.deprecated_ind,         
+    AT.activity_data, AT.jeopardy_duration, AT.last_modified    
+    FROM %Schema%wf_activity_template AT, %Schema%wf_process_template PT   
+    WHERE AT.process_template_id = PT.process_template_id     
+    AND AT.activity_template_id = ? 
+    </retrieveActivityTemplate>
+    <retrieveActvitiyTemplateForPTID> 
+    SELECT AT.activity_template_id, AT.process_template_id,         
+    PT.process_template_nm, AT.activity_template_def_id,AT.service_id, 
+    AT.expected_duration, AT.milestone_ind, AT.init_task_ind, 
+    AT.in_transition_def_cd, AT.out_transition_def_cd, AT.aggregate, 
+    AT.facility_role_cd, AT.x_loc, AT.y_loc, AT.activity_template_nm, 
+    AT.deprecated_ind, AT.activity_data, AT.jeopardy_duration, 
+    AT.last_modified    
+    FROM %Schema%wf_activity_template AT, %Schema%wf_process_template PT   
+    WHERE AT.process_template_id = PT.process_template_id     
+    AND AT.deprecated_ind = 'N'     
+    AND AT.process_template_id = ? 
+    </retrieveActvitiyTemplateForPTID>
+    <retrieveProcessDataTemplateForPTID>   
+    SELECT D.data_template_id, D.data_detail_id, 
+    D.process_template_id, D.data_template_nm, D.deprecated_ind, 
+    D.last_modified, D.line_order_num,S.data_detail_lbl, 
+    D.activity_template_id      
+    FROM %Schema%wf_process_data_template D, %Schema%dd_data_detail S     
+    WHERE D.data_detail_id = S.data_detail_id       
+    AND D.process_template_id = ?  
+    ORDER BY D.line_order_num 
+    </retrieveProcessDataTemplateForPTID>
+    <retrievePDTForCatalogId> 
+    SELECT CX.Catalog_Def_Id, A.process_template_id, P.data_template_id, 
+    P.service_detail_def_id, P.data_template_nm, P.deprecated_ind,
+    P.line_order_num, P.oe_required_ind, S.data_detail_lbl, 
+    P.activity_template_id    
+    FROM %Schema%WF_Activity_Template_Def A, %Schema%Catalog_Activity_Order_Xref CX,  
+    %Schema%Process_Data_Template P, %Schema%DD_data_Detail_Def S   
+    WHERE CX.catalog_def_id = ?     
+    AND CX.order_type_cd = ?     
+    AND CX.activity_template_def_id = A.activity_template_def_id     
+    AND A.process_template_id = P.process_template_id     
+    AND P.data_detail_id = S.data_detail_id     
+    AND P.deprecated_ind = 'N'  
+    ORDER BY P.line_order_num 
+    </retrievePDTForCatalogId>
+    <retrieveManualActivityTemplateDef>
+        SELECT  
+          watd.activity_template_def_id, watd.activity_template_nm,         
+          watd.activity_template_dsc, wattd.activity_template_type_dsc, watd.performer_type_cd,         
+          watd.automatic_class_nm, watd.process_template_id,         
+          watd.hidden_ind, watd.activity_url, wptd.performer_type_dsc,         
+          watd.terminal_ind, watd.activity_template_type_cd,         
+          watd.undo_activity_template_def_id, watd.expected_duration,         
+          watd.number_of_retries, watd.retry_interval, watd.deprecated_ind,         
+          watd.jeopardy_duration, watd.last_modified 
+        FROM %Schema%wf_activity_template_def watd, %Schema%wf_performer_type_def wptd,         
+             %Schema%wf_activity_template_type_def wattd 
+        WHERE watd.performer_type_cd = wptd.performer_type_cd   
+           AND wattd.Activity_Template_Type_Cd = watd.Activity_Template_Type_Cd       
+           AND watd.process_template_id is null 
+           AND watd.performer_type_cd!='A'
+        ORDER BY watd.activity_template_nm
+    </retrieveManualActivityTemplateDef>
+    <retrieveActivityTemplateDef> 
+            SELECT A.activity_template_def_id, A.activity_template_nm,         
+                   A.activity_template_dsc, TD.activity_template_type_dsc, A.performer_type_cd,         
+                   A.automatic_class_nm, A.process_template_id,         
+                   A.hidden_ind, A.activity_url, P.performer_type_dsc,         
+                   A.terminal_ind, A.activity_template_type_cd,         
+                   A.undo_activity_template_def_id, A.expected_duration,         
+                   A.number_of_retries, A.retry_interval, A.deprecated_ind,         
+                   A.jeopardy_duration, A.last_modified   
+            FROM %Schema%WF_Activity_Template_Def A, %Schema%WF_Performer_Type_Def P,         
+                 %Schema%WF_Activity_Template_Type_Def TD   
+            WHERE A.performer_type_cd = P.performer_type_cd   
+                AND TD.Activity_Template_Type_Cd = A.Activity_Template_Type_Cd 
+                AND A.activity_template_def_id = ? 
+    </retrieveActivityTemplateDef>
+    <retrieveSubflowAtdByName> 
+            SELECT A.activity_template_def_id, A.activity_template_nm,         
+                   A.activity_template_dsc, A.performer_type_cd,         
+                   A.automatic_class_nm, A.process_template_id,         
+                   A.hidden_ind, A.activity_url, P.performer_type_dsc,         
+                   A.terminal_ind, A.activity_template_type_cd,         
+                   A.undo_activity_template_def_id, A.expected_duration,         
+                   A.number_of_retries, A.retry_interval, A.deprecated_ind,         
+                   A.jeopardy_duration, A.last_modified 
+            FROM %Schema%WF_Activity_Template_Def A, %Schema%WF_Performer_Type_Def P,         
+                 %Schema%WF_Activity_Template_Type_Def TD   
+            WHERE A.performer_type_cd = 'S'     
+                AND A.hidden_ind = 'N'     
+                AND A.deprecated_ind = 'N'     
+                AND A.activity_template_nm = ? 
+    </retrieveSubflowAtdByName>
+    <retrieveSubflowActivityTemplateDef> 
+            SELECT A.activity_template_def_id, A.activity_template_nm,         
+                   A.activity_template_dsc, A.performer_type_cd,         
+                   A.automatic_class_nm, A.process_template_id,         
+                   A.hidden_ind, A.activity_url, P.performer_type_dsc,         
+                   A.terminal_ind, A.activity_template_type_cd,          
+                   TD.activity_template_type_dsc,        
+                   A.undo_activity_template_def_id, A.expected_duration,         
+                   A.number_of_retries, A.retry_interval, A.deprecated_ind,         
+                   A.jeopardy_duration, A.last_modified
+            FROM %Schema%WF_Activity_Template_Def A, %Schema%WF_Performer_Type_Def P,         
+                 %Schema%WF_Activity_Template_Type_Def TD   
+            WHERE A.performer_type_cd = 'S'     
+                AND A.hidden_ind = 'N'     
+                AND A.process_template_id = ?     
+    </retrieveSubflowActivityTemplateDef>
+    <retrieveActivityTemplateDefsByType>  
+            SELECT A.activity_template_def_id, A.activity_template_nm,          
+                   A.activity_template_dsc, A.performer_type_cd,          
+                   A.automatic_class_nm, A.process_template_id,          
+                   A.hidden_ind, A.activity_url, P.performer_type_dsc,          
+                   A.terminal_ind, A.activity_template_type_cd,          
+                   TD.activity_template_type_dsc,          
+                   A.undo_activity_template_def_id, A.expected_duration,          
+                   A.number_of_retries, A.retry_interval, A.deprecated_ind,          
+                   A.jeopardy_duration, A.last_modified 
+            FROM %Schema%WF_Activity_Template_Def A, %Schema%WF_Performer_Type_Def P,          
+                 %Schema%WF_Activity_Template_Type_Def TD    
+            WHERE A.performer_type_cd = P.performer_type_cd      
+                AND A.activity_template_type_cd = TD.activity_template_type_cd      
+                AND A.hidden_ind = 'N'      
+                AND A.performer_type_cd &lt;&gt; 'S'      
+                AND A.activity_template_type_cd = ? 
+            ORDER BY A.activity_template_nm 
+    </retrieveActivityTemplateDefsByType>
+    <retrieveProcessActivitiesForPid> 
+    SELECT ${WorkFlowSQL.processActivityColumns}, pa.performer_type_cd, 
+	AT.activity_template_nm, PA.number_of_retries, 
+	pa.retry_interval, ATD.activity_template_dsc, ud.first_nm, 
+    ud.last_nm, PA.ACTIVITY_STATUS_CD, ASD.activity_status_dsc
+    FROM dbo.WF_Activity_Template AT, dbo.WF_Activity_Status_Def ASD, 
+	dbo.WF_Process_Template PT, dbo.WF_Activity_Template_Def ATD, 
+    dbo.WF_Process P
+    LEFT OUTER JOIN dbo.FP_facility A ON P.fp_id=A.fp_id
+    LEFT OUTER JOIN dbo.WF_PROCESS_DATA pd ON (pd.DATA_DETAIL_ID = 101 AND p.PROCESS_ID = pd.PROCESS_ID),
+    dbo.WF_Process_Activity pa
+    LEFT OUTER JOIN dbo.cm_user_def ud ON pa.user_id = ud.user_id   
+    WHERE pa.activity_template_id = AT.activity_template_id     
+    AND AT.activity_template_def_id = ATD.activity_template_def_id     
+    AND pa.activity_status_cd = ASD.activity_status_cd
+	AND PT.Process_Template_Id=P.Process_Template_Id  
+	AND P.Process_Id = PA.Process_Id
+    AND pa.is_current = 'Y'  
+    AND pa.process_id = ? 
+    </retrieveProcessActivitiesForPid>
+    <retrieveProcessActivity> 
+    SELECT ${WorkFlowSQL.processActivityColumns}, pa.performer_type_cd, 
+	AT.activity_template_nm, PA.number_of_retries, 
+	pa.retry_interval, ATD.activity_template_dsc,ud.first_nm, 
+    ud.last_nm, PA.ACTIVITY_STATUS_CD, ASD.activity_status_dsc
+    FROM %Schema%WF_Activity_Template AT, %Schema%wf_activity_status_def ASD, 
+    %Schema%wf_process_template pt,
+    %Schema%wf_activity_template_def ATD, %Schema%wf_process P 
+	LEFT OUTER JOIN %Schema%fp_facility A ON P.fp_id=A.fp_id  
+    LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd ON pd.data_detail_id = 101 AND p.process_id = pd.process_id, 
+    %Schema%WF_Process_Activity pa 
+    LEFT OUTER JOIN %Schema%cm_user_def ud ON pa.user_id = ud.user_id   
+    WHERE pa.activity_template_id = AT.activity_template_id     
+    AND AT.activity_template_def_id = ATD.activity_template_def_id     
+    AND pa.activity_status_cd = ASD.activity_status_cd
+	AND PT.Process_Template_Id=P.Process_Template_Id  
+	AND P.Process_Id = PA.Process_Id  
+    AND PA.process_id = ?     
+    AND PA.activity_template_id = ? 
+    </retrieveProcessActivity>
+    <retrieveUserByExternalId> 
+    SELECT user_id 
+    FROM %Schema%WF_Process  
+    WHERE external_id = ?     
+    </retrieveUserByExternalId>
+    <retrieveProcessById> 
+    SELECT P.process_id, P.user_id, P.fp_id, P.service_id, A.FACILITY_ID,
+	P.process_template_id, P.parent_process_id, P.activity_template_id,
+	at.activity_template_nm, P.external_id, P.expedite, P.start_dt, P.end_dt, P.due_dt,
+	P.jeopardy_dt, P.ready_dt, PT.process_template_nm, PT.process_cd,
+	PT.dynamic_ind, a.facility_nm, p.last_modified AS process_lm  
+    FROM %Schema%WF_Process P 
+    LEFT OUTER JOIN %Schema%FP_facility a ON p.fp_id = a.fp_id
+    LEFT OUTER JOIN %Schema%WF_activity_template at ON (p.activity_template_id = at.activity_template_id),
+	%Schema%WF_Process_Template PT   
+    WHERE P.process_template_id = PT.process_template_id     
+    </retrieveProcessById>
+    <retrieveInworkProcesses> 
+    SELECT P.process_id, P.user_id, P.fp_id, P.service_id, A.FACILITY_ID,
+	P.process_template_id, P.parent_process_id, P.activity_template_id,
+	at.activity_template_nm, P.external_id, P.expedite, P.start_dt, P.end_dt, P.due_dt,
+	P.jeopardy_dt, P.ready_dt, PT.process_template_nm, PT.process_cd,
+	PT.dynamic_ind, a.facility_nm, p.last_modified AS process_lm    
+    FROM %Schema%WF_Process P 
+    LEFT OUTER JOIN %Schema%FP_facility a ON p.fp_id = a.fp_id
+    LEFT OUTER JOIN %Schema%WF_activity_template at ON (p.activity_template_id = at.activity_template_id),
+	%Schema%WF_Process_Template PT  
+    WHERE P.process_template_id = PT.process_template_id     
+    AND P.end_dt IS NULL 
+    </retrieveInworkProcesses>
+    <retrieveSubflowProcess> 
+    SELECT P.process_id, P.user_id, P.fp_id, P.service_id, 
+	P.process_template_id, P.parent_process_id, P.activity_template_id,
+	at.activity_template_nm, P.external_id, P.expedite, P.start_dt, P.end_dt, P.due_dt,
+	P.jeopardy_dt, P.ready_dt, PT.process_template_nm, PT.process_cd,
+	PT.dynamic_ind, a.facility_nm, p.last_modified AS process_lm   
+    FROM %Schema%WF_Process P 
+    LEFT OUTER JOIN %Schema%FP_facility a ON p.fp_id = a.fp_id
+    LEFT OUTER JOIN %Schema%WF_activity_template at ON p.activity_template_id = at.activity_template_id, 
+	%Schema%WF_Process_Template PT   
+    WHERE P.process_template_id = PT.process_template_id     
+    AND P.parent_process_id = ?     
+    AND P.activity_template_id = ? 
+    </retrieveSubflowProcess>
+    
+    <searchActivityByNameAndStatus> 
+    SELECT ${WorkFlowSQL.processActivityColumns}, pa.performer_type_cd, 
+        AT.activity_template_nm, PA.number_of_retries, 
+	    pa.retry_interval, ATD.activity_template_dsc,c.first_nm, 
+        c.last_nm, PA.ACTIVITY_STATUS_CD, ASD.activity_status_dsc 
+      FROM %Schema%WF_Activity_Template AT, %Schema%WF_Activity_Status_Def ASD, 
+        %Schema%WF_Process_Template PT, 
+        %Schema%WF_Activity_Template_Def ATD, %Schema%WF_Process P 
+      LEFT OUTER JOIN %Schema%FP_facility A ON P.fp_id = A.fp_id  
+      LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd ON (pd.DATA_DETAIL_ID = 101 AND p.PROCESS_ID = pd.PROCESS_ID), 
+      %Schema%WF_Process_Activity pa 
+      LEFT OUTER JOIN (%Schema%cm_user_def ud 
+                         LEFT OUTER JOIN %Schema%cm_contact c ON ud.contact_id = c.contact_id) 
+                           ON pa.user_id = ud.user_id   
+      WHERE pa.activity_template_id = AT.activity_template_id     
+        AND AT.activity_template_def_id = ATD.activity_template_def_id     
+        AND pa.activity_status_cd = ASD.activity_status_cd
+	    AND PT.Process_Template_Id=P.Process_Template_Id  
+	    AND P.Process_Id = PA.Process_Id    
+        AND AT.activity_template_nm = ?     
+        AND PA.activity_status_cd = ? 
+    </searchActivityByNameAndStatus>
+    
+    <retrieveWorkingList>
+    SELECT ${WorkFlowSQL.processActivityColumns}, pa.performer_type_cd, 
+	AT.activity_template_nm, PA.number_of_retries, 
+	pa.retry_interval, ATD.activity_template_dsc,c.first_nm, 
+    c.last_nm, PA.ACTIVITY_STATUS_CD, ASD.activity_status_dsc  
+    FROM %Schema%WF_Activity_Template AT, %Schema%WF_Activity_Status_Def ASD, 
+    %Schema%WF_Process_Template PT,
+    %Schema%WF_Activity_Template_Def ATD, %Schema%WF_Process P 
+    LEFT OUTER JOIN %Schema%FP_facility A ON  P.fp_id=A.fp_id  
+    LEFT OUTER JOIN WF_PROCESS_DATA pd ON (pd.DATA_DETAIL_ID = 101 AND p.PROCESS_ID = pd.PROCESS_ID), 
+    %Schema%WF_Process_Activity pa 
+    LEFT OUTER JOIN (%Schema%cm_user_def ud LEFT OUTER JOIN %Schema%cm_contact c ON ud.contact_id = c.contact_id) ON pa.user_id = ud.user_id   
+    WHERE pa.activity_template_id = AT.activity_template_id     
+    AND AT.activity_template_def_id = ATD.activity_template_def_id     
+    AND pa.activity_status_cd = ASD.activity_status_cd
+	AND PT.Process_Template_Id=P.Process_Template_Id  
+	AND P.Process_Id = PA.Process_Id
+    AND PT.Process_Cd=?  
+    AND PA.Activity_Status_Cd = ?  
+    AND pa.user_id=? 
+    </retrieveWorkingList>
+    <retrieveBlockedList>
+    SELECT DISTINCT ${WorkFlowSQL.processActivityColumns}, pa.performer_type_cd, 
+	AT.activity_template_nm, PA.number_of_retries, pa.retry_interval, 
+    ATD.activity_template_dsc,c.first_nm, c.last_nm, PA.ACTIVITY_STATUS_CD, 
+    ASD.activity_status_dsc   
+    FROM %Schema%WF_Activity_Template AT, %Schema%WF_Activity_Status_Def ASD, 
+    %Schema%WF_Process_Template PT,
+    %Schema%WF_Activity_Template_Def ATD, %Schema%WF_Process P 
+    LEFT OUTER JOIN %Schema%FP_facility A ON  P.fp_id=A.fp_id  
+    LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd ON (pd.DATA_DETAIL_ID = 101 AND p.PROCESS_ID = pd.PROCESS_ID), 
+    %Schema%WF_Process_Activity pa 
+    LEFT OUTER JOIN (%Schema%cm_user_def ud LEFT OUTER JOIN %Schema%cm_contact c ON ud.contact_id = c.contact_id) ON pa.user_id = ud.user_id   
+    WHERE pa.activity_template_id = AT.activity_template_id     
+    AND AT.activity_template_def_id = ATD.activity_template_def_id     
+    AND pa.activity_status_cd = ASD.activity_status_cd
+	AND PT.Process_Template_Id=P.Process_Template_Id  
+	AND P.Process_Id = PA.Process_Id   
+    AND PT.Process_Cd=?  
+    AND PA.Activity_Status_Cd = ? 
+    </retrieveBlockedList>
+    <retrieveProcessTemplateById> 
+    SELECT process_template_id, process_cd, process_template_nm, process_template_dsc, 
+    expected_duration, jeopardy_duration, dynamic_ind, deprecated_ind, 
+    earliest_prov_interval, min_prov_interval, last_modified    
+    FROM %Schema%WF_Process_Template   
+    WHERE process_template_id = ? 
+    </retrieveProcessTemplateById>
+    <retrieveAllProcessTemplates>   
+            SELECT process_template_id, process_cd,  process_template_nm, 
+              process_template_dsc, expected_duration, jeopardy_duration,  
+              dynamic_ind, deprecated_ind, earliest_prov_interval,   
+              min_prov_interval, last_modified      
+            FROM %Schema%WF_Process_Template
+            ORDER BY process_template_nm 
+    </retrieveAllProcessTemplates>
+    <retrieveAllProcessTemplatesByType>   
+            SELECT process_template_id, process_cd,  process_template_nm, 
+              process_template_dsc, expected_duration, jeopardy_duration,  
+              dynamic_ind, deprecated_ind, earliest_prov_interval, 
+              min_prov_interval, last_modified      
+            FROM %Schema%WF_Process_Template p  
+            WHERE process_cd = ?
+            ORDER BY process_template_nm 
+    </retrieveAllProcessTemplatesByType>
+    <retrieveTransitionDef>
+            SELECT transition_def_cd, transition_def_dsc, last_modified
+            FROM %Schema%WF_TRANSITION_DEF
+    </retrieveTransitionDef>
+    <retrieveActivityStatusDef>
+            SELECT activity_status_cd AS code, activity_status_dsc AS description, 
+            deprecated, last_modified
+            FROM %Schema%WF_ACTIVITY_STATUS_DEF
+    </retrieveActivityStatusDef>
+    <retrieveProcessDefs>
+            SELECT process_cd AS code, process_dsc AS description, deprecated, 
+            last_modified
+            FROM %Schema%wf_process_def
+    </retrieveProcessDefs>
+    <retrievePerformerDefs>
+            SELECT performer_type_cd, performer_type_dsc, performer_type_panel, 
+            last_modified
+            FROM %Schema%wf_performer_type_def
+    </retrievePerformerDefs>
+    <retrieveCompositeProcesssTemplate> 
+            SELECT process_template_id, process_cd, process_template_nm, 
+              process_template_dsc,  expected_duration, jeopardy_duration,         
+              dynamic_ind, deprecated_ind, earliest_prov_interval,         
+              min_prov_interval, last_modified    
+            FROM %Schema%WF_Process_Template   
+            WHERE process_template_nm = ? 
+    </retrieveCompositeProcesssTemplate>
+    <SELECT_DEP_SERVICE_DETAILS> 
+            SELECT service_detail_def_id    
+            FROM %Schema%WF_Activity_Service_Dtl_Xref   
+            WHERE activity_template_def_id = ? 
+    </SELECT_DEP_SERVICE_DETAILS>
+    <retrieveDepDataDetailBases>   
+            SELECT dd.data_detail_lbl, dd.data_detail_id       
+            FROM %Schema%dd_data_detail dd, %Schema%wf_activity_service_dtl_xref a     
+            WHERE dd.data_detail_id = a.data_detail_id       
+                AND a.activity_template_def_id = ?  
+            ORDER BY dd.data_detail_lbl 
+    </retrieveDepDataDetailBases>
+    <retrieveSubflowByProcessCd> 
+            SELECT A.activity_template_def_id, A.activity_template_nm,  
+              A.activity_template_dsc, TD.activity_template_type_dsc,
+              A.performer_type_cd, A.automatic_class_nm, 
+              A.process_template_id,  A.hidden_ind, A.activity_url, 
+              PTD.performer_type_dsc,  A.terminal_ind, A.activity_template_type_cd, 
+              A.undo_activity_template_def_id, A.expected_duration,         
+              A.number_of_retries, A.retry_interval, A.deprecated_ind,         
+              A.jeopardy_duration, A.last_modified   
+            FROM %Schema%WF_Activity_Template_Def A, %Schema%WF_Performer_Type_Def PTD, 
+              %Schema%WF_Process_Template P, %Schema%WF_Activity_Template_Type_Def TD
+            WHERE A.process_template_id = P.process_template_id    
+                AND A.performer_type_cd = PTD.performer_type_cd    
+                AND A.activity_template_type_cd = TD.activity_template_type_cd
+                AND A.performer_type_cd = 'S'    
+                AND P.dynamic_ind = 'N'    
+                AND P.process_cd = ? 
+    </retrieveSubflowByProcessCd>
+    <moveSubflow> 
+            UPDATE %Schema%WF_Process     
+            SET parent_process_id = ?, activity_template_id = ?, external_id = ?   
+            WHERE process_id = ? 
+    </moveSubflow>
+    <removeFromTransitions> DELETE 
+            FROM %Schema%WF_Transition_Data   
+            WHERE from_activity_template_id = ?     
+                AND process_template_id = ? 
+    </removeFromTransitions>
+    <removeToTransitions> DELETE 
+            FROM %Schema%WF_Transition_Data   
+            WHERE to_activity_template_id = ?     
+                AND process_template_id = ? 
+    </removeToTransitions>
+    <removeActivityDetailData> DELETE 
+            FROM %Schema%WF_Activity_Service_Dtl_Xref   
+            WHERE activity_template_def_id = ? 
+    </removeActivityDetailData>
+    <removeProcessActivity> DELETE 
+            FROM %Schema%WF_Process_Activity   
+            WHERE activity_template_id = ? 
+                AND process_id = ? 
+                AND loop_cnt = ?
+    </removeProcessActivity>
+    <removeProcessActivities> DELETE 
+            FROM %Schema%WF_Process_Activity        
+            WHERE process_id = ? 
+    </removeProcessActivities>
+    <removeProcess> DELETE 
+            FROM %Schema%WF_Process        
+            WHERE process_id = ? 
+    </removeProcess>
+    <removeActivityTemplate> DELETE 
+            FROM %Schema%WF_Activity_Template   
+            WHERE activity_template_id = ? 
+    </removeActivityTemplate>
+    <MOVE_ACTIVITY_TEMPLATE> 
+            UPDATE %Schema%WF_Activity_Template     
+            SET process_template_id = ?   
+            WHERE activity_template_id = ?     
+                AND process_template_id = ? 
+    </MOVE_ACTIVITY_TEMPLATE>
+    <deprecateProcessTemplate> 
+            UPDATE %Schema%WF_Process_Template     
+            SET deprecated_ind = 'Y', last_modified = ?   
+            WHERE process_template_id = ? 
+            AND last_modified = ?
+    </deprecateProcessTemplate>
+    <deprecateProcessDataTemplate> 
+            UPDATE %Schema%WF_Process_Data_Template     
+            SET deprecated_ind = 'Y', last_modified = ?   
+            WHERE data_template_id = ? 
+            AND last_modified = ?
+    </deprecateProcessDataTemplate>
+    <deprecateProcessDataTemplateByPTID> 
+            UPDATE %Schema%WF_Process_Data_Template     
+            SET deprecated_ind = 'Y'   
+            WHERE process_template_id = ? 
+    </deprecateProcessDataTemplateByPTID>
+    <deprecateProcessTemplates> 
+            UPDATE %Schema%WF_Activity_Template     
+            SET deprecated_ind = 'Y', last_modified = ?   
+            WHERE process_template_id = ? 
+            AND last_modified = ?
+    </deprecateProcessTemplates>
+    <deprecateTransitions> 
+            UPDATE %Schema%WF_Transition_Data     
+            SET deprecated_ind = 'Y', last_modified = ?   
+            WHERE process_template_id = ? 
+            AND last_modified = ?
+    </deprecateTransitions>
+    <deprecateSubflowTemplate> 
+          UPDATE %Schema%WF_Activity_Template_Def     
+          SET process_template_id = null, hidden_ind = 'Y',         
+            deprecated_ind = 'Y', last_modified = ?   
+          WHERE performer_type_cd = 'S' 
+            AND process_template_id = ? 
+            AND last_modified = ?
+     </deprecateSubflowTemplate>
+     <updateInPlaceActivityTemplate> 
+            UPDATE %Schema%WF_ACTIVITY_TEMPLATE    
+            SET x_loc = ?, y_loc = ?, last_modified = ?   
+            WHERE process_template_id = ?
+            AND activity_template_id = ? 
+            AND last_modified = ?
+     </updateInPlaceActivityTemplate> 
+     <retrieveProcessGroupByType>
+          SELECT pt.PROCESS_TEMPLATE_NM + ':' + CAST(pt.PROCESS_TEMPLATE_ID AS VARCHAR(50)) AS description, 
+			 COUNT (p.PROCESS_TEMPLATE_ID) AS id, 'N' AS deprecated, 1 AS last_modified
+          FROM %Schema%WF_process p, %Schema%WF_process_template pt 
+          WHERE p.end_dt is null  
+             AND pt.process_template_id = p.process_template_id
+			 AND pt.PROCESS_CD != 'task'
+		  GROUP BY pt.PROCESS_TEMPLATE_NM, pt.PROCESS_TEMPLATE_ID
+     </retrieveProcessGroupByType>
+     <retrieveProcessActivityByDate>
+		 SELECT pa.end_dt, pa.ready_dt, at.activity_template_nm,
+    	   at.activity_template_id, at.loop_cnt, pa.last_modified
+    	 FROM %Schema%WF_process_activity pa, %Schema%WF_activity_template at, 
+    	   %Schema%WF_process_template pt, %Schema%WF_activity_template_def ad 
+    	 WHERE pa.activity_template_id = at.activity_template_id 
+    	   and pt.process_template_id = at.process_template_id 
+    	   and at.activity_template_def_id = ad.activity_template_def_id 
+    	   and pa.ready_dt &gt;= ? and pa.ready_dt &lt;= ? 
+    	   and ad.process_template_id is null 
+    	   and pa.activity_status_cd='CM' 
+    	   and pa.ready_dt is not null 
+    	   and pa.end_dt is not null 
+    	   and pt.process_cd=? 
+    	   and pt.dynamic_ind='N' 
+	 </retrieveProcessActivityByDate>
+    <retrieveAllConfigs> 
+      SELECT control_type, object, controller_class  
+      FROM %Schema%WF_controller_factory_cfg 
+    </retrieveAllConfigs>
+    <retrieveConfigsByObject> 
+      SELECT control_type, object, controller_class  
+      FROM %Schema%WF_controller_factory_cfg   
+      WHERE object = ? 
+    </retrieveConfigsByObject>
+    <retrieveUniqueObjectTypes> 
+      SELECT DISTINCT (object)    
+      FROM %Schema%WF_controller_factory_cfg 
+    </retrieveUniqueObjectTypes>
+	
+	<retrieveActivities>
+		SELECT ${WorkFlowSQL.processActivityColumns}, ATD.performer_type_cd,
+			AT.ACTIVITY_TEMPLATE_NM, pp.PERMIT_NBR, pp.PERMIT_TYPE_CD, pp.PRIMARY_REASON_CD
+        FROM %Schema%WF_Process_Activity PA
+        INNER JOIN %Schema%WF_Process P ON (P.Process_Id = PA.Process_Id ) 
+        LEFT OUTER JOIN %Schema%FP_facility A ON (P.fp_id=A.fp_id)
+        INNER JOIN %Schema%WF_Activity_Template AT ON (PA.Activity_Template_Id = AT.Activity_Template_Id)
+        INNER JOIN %Schema%WF_Process_Template PT ON (PT.Process_Template_Id=P.Process_Template_Id)
+        LEFT OUTER JOIN %Schema%PT_PERMIT pp ON (PT.PROCESS_CD = 'perm' AND p.EXTERNAL_ID = pp.PERMIT_ID)
+        INNER JOIN %Schema%WF_Activity_Template_Def ATD ON (ATD.Activity_Template_Def_Id = AT.Activity_Template_Def_Id AND ATD.Process_Template_Id IS NULL)
+		LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd ON (pd.DATA_DETAIL_ID = 1 AND p.PROCESS_ID = pd.PROCESS_ID)
+        WHERE 1 = 1
+	</retrieveActivities>
+  
+	<retrieveActivitiesForFacilities>
+		SELECT ${WorkFlowSQL.processActivityColumns}, atd.performer_type_cd,
+			at.activity_template_nm, pp.permit_nbr, pp.permit_type_cd, pp.primary_reason_cd
+        FROM %Schema%wf_process_activity pa
+          INNER JOIN %Schema%wf_process p ON (p.process_id = pa.process_id) 
+          LEFT OUTER JOIN %Schema%fp_facility a ON (p.fp_id = a.fp_id)
+          INNER JOIN %Schema%fp_facility_id fpfid ON (fpfid.facility_id = a.facility_id AND fpfid.user_id = ?)
+          INNER JOIN %Schema%wf_activity_template at ON (pa.activity_template_id = at.activity_template_id)
+          INNER JOIN %Schema%wf_process_template pt ON (pt.process_template_id = p.process_template_id)
+          LEFT OUTER JOIN %Schema%pt_permit pp ON (pt.process_cd = 'perm' AND p.external_id = pp.permit_id)
+          INNER JOIN %Schema%wf_activity_template_def atd ON (atd.activity_template_def_id = at.activity_template_def_id 
+                                                                AND atd.process_template_id IS NULL)
+		  LEFT OUTER JOIN %Schema%wf_process_data pd ON (pd.data_detail_id = 1 AND p.process_id = pd.process_id)
+        WHERE 1 = 1
+	</retrieveActivitiesForFacilities>
+
+    <retrieveActivitiesLight>
+    SELECT ${WorkFlowSQL.processActivityColumns}, ATD.performer_type_cd,
+      AT.ACTIVITY_TEMPLATE_NM, pp.PERMIT_ID, pp.PERMIT_NBR, pp.PERMIT_TYPE_CD, pp.PRIMARY_REASON_CD,
+      %Schema%f_all_reasons(pp.permit_id) all_reasons,
+      cmp.CMP_ID, cmp.NAME AS cmp_name
+    FROM %Schema%WF_Process_Activity PA
+        INNER JOIN %Schema%WF_Process P ON (P.Process_Id = PA.Process_Id ) 
+        LEFT OUTER JOIN %Schema%FP_facility A ON (P.fp_id=A.fp_id)
+        INNER JOIN %Schema%WF_Activity_Template AT ON (PA.Activity_Template_Id = AT.Activity_Template_Id)
+        INNER JOIN %Schema%WF_Process_Template PT ON (PT.Process_Template_Id=P.Process_Template_Id)
+        LEFT OUTER JOIN %Schema%PT_PERMIT pp ON (PT.PROCESS_CD = 'perm' AND p.EXTERNAL_ID = pp.PERMIT_ID)
+        INNER JOIN %Schema%WF_Activity_Template_Def ATD ON (ATD.Activity_Template_Def_Id = AT.Activity_Template_Def_Id AND ATD.Process_Template_Id IS NULL)
+        LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd ON (pd.DATA_DETAIL_ID = 1 AND p.PROCESS_ID = pd.PROCESS_ID)
+        LEFT OUTER JOIN %Schema%fp_facility_company_xref fcx on (A.facility_id = fcx.facility_id and fcx.END_DATE is NULL)
+		LEFT OUTER JOIN %Schema%cm_company cmp on fcx.company_id = cmp.company_id
+    WHERE 1 = 1
+  </retrieveActivitiesLight>
+  
+  <retrieveActivity>
+    SELECT ${WorkFlowSQL.processActivityColumns}, ATD.performer_type_cd,
+      AT.ACTIVITY_TEMPLATE_NM
+        FROM %Schema%WF_Process_Activity PA
+        INNER JOIN %Schema%WF_Process P ON (P.Process_Id = PA.Process_Id ) 
+        LEFT OUTER JOIN %Schema%FP_facility A ON (P.fp_id=A.fp_id)
+        INNER JOIN %Schema%WF_Activity_Template AT ON (PA.Activity_Template_Id = AT.Activity_Template_Id)
+        INNER JOIN %Schema%WF_Process_Template PT ON (PT.Process_Template_Id=P.Process_Template_Id)
+        INNER JOIN %Schema%WF_Activity_Template_Def ATD ON (ATD.Activity_Template_Def_Id = AT.Activity_Template_Def_Id AND ATD.Process_Template_Id IS NULL)
+    LEFT OUTER JOIN %Schema%WF_PROCESS_DATA pd ON (pd.DATA_DETAIL_ID = 1 AND p.PROCESS_ID = pd.PROCESS_ID)
+        WHERE 1 = 1
+  </retrieveActivity>
+
+	  <createProcessData>
+		  INSERT INTO %Schema%WF_PROCESS_DATA (
+		  DATA_TEMPLATE_ID,PROCESS_ID,DATA_DETAIL_ID,DATA_VAL) 
+		  VALUES (?,?,?,?)
+	  </createProcessData>
+	  
+	  <retrieveProcessListBySearch>
+      SELECT p.process_id, p.external_id, p.service_id, p.start_dt, A.FACILITY_ID,
+        p.fp_id, p.parent_process_id, a.facility_nm, p.due_dt, p.end_dt, p.USER_ID,
+        p.jeopardy_dt, p.process_template_id , p.EXPEDITE, a.facility_Nm, p.SERVICE_ID,
+        p.ACTIVITY_TEMPLATE_ID, p.READY_DT, pt.PROCESS_TEMPLATE_NM, pt.PROCESS_CD,
+        p.last_modified AS process_lm, PT.dynamic_ind, pa.activity_template_nm, pa.ACTIVITY_STATUS_CD,
+        pp.PERMIT_NBR, pp.PERMIT_TYPE_CD, pp.PRIMARY_REASON_CD
+      FROM %Schema%WF_Process P 
+        LEFT OUTER JOIN %Schema%FP_facility a ON (a.fp_id=p.fp_id)
+        INNER JOIN %Schema%WF_process_template pt ON (pt.process_template_id = p.process_template_id)
+        LEFT OUTER JOIN %Schema%PT_PERMIT pp ON (pt.PROCESS_CD = 'perm' AND p.EXTERNAL_ID = pp.PERMIT_ID)
+        LEFT OUTER JOIN (
+          SELECT tpa.process_ID, at.activity_template_nm, tpa2.ACTIVITY_STATUS_CD, tpa2.IS_CURRENT
+          FROM (SELECT MAX(ACTIVITY_TEMPLATE_ID) AS maid, PROCESS_ID
+				FROM %Schema%WF_PROCESS_ACTIVITY 
+				GROUP BY PROCESS_ID) tpa
+			INNER JOIN  %Schema%WF_PROCESS_ACTIVITY tpa2 ON ( tpa.maid = tpa2.ACTIVITY_TEMPLATE_ID AND tpa.PROCESS_ID = tpa2.PROCESS_ID)
+			INNER JOIN %Schema%WF_ACTIVITY_TEMPLATE at ON (tpa.maid = at.ACTIVITY_TEMPLATE_ID)) pa ON (p.process_id = pa.process_id)
+      WHERE 1 = 1
+	  </retrieveProcessListBySearch>
+	  <retrieveChildrenProcessById> 
+            SELECT P.process_id, P.user_id, P.fp_id, P.service_id, A.FACILITY_ID,
+		      P.process_template_id, P.parent_process_id, P.activity_template_id,
+		      at.activity_template_nm, P.external_id, P.expedite, P.start_dt, P.end_dt, P.due_dt,
+		      P.jeopardy_dt, P.ready_dt, PT.process_template_nm, PT.process_cd,
+		      PT.dynamic_ind, a.facility_nm, p.last_modified AS process_lm  
+            FROM %Schema%WF_Process P 
+            LEFT OUTER JOIN %Schema%FP_facility a ON p.fp_id = a.fp_id
+            LEFT OUTER JOIN %Schema%WF_activity_template at ON p.activity_template_id = at.activity_template_id,
+		   %Schema%WF_Process_Template PT   
+            WHERE P.process_template_id = PT.process_template_id     
+                AND P.parent_process_id = ? 
+    </retrieveChildrenProcessById>
+	<removeProcessData> DELETE 
+            FROM %Schema%WF_Process_Data        
+            WHERE process_id = ? 
+    </removeProcessData>
+	<retrieveUserIdsOfFacility>
+    SELECT user_id 
+    FROM %Schema%fp_facility fp 
+    LEFT OUTER JOIN %Schema%fp_facility_role_xref fprol ON (fp.facility_id = fprol.facility_id)
+	WHERE fp.fp_id = ?
+	</retrieveUserIdsOfFacility>
+	<createProcessNote>
+		  INSERT INTO %Schema%WF_PROCESS_NOTES 
+		(NOTE_ID,PROCESS_ID,USER_ID,POSTED_DT,NOTE) 
+		VALUES (?,?,?,?,?)
+	</createProcessNote>
+    <modifyProcessNote>
+    UPDATE %Schema%WF_PROCESS_NOTES SET NOTE = ?,
+    last_modified = ? 
+    WHERE note_id = ?
+    AND last_modified = ?
+    </modifyProcessNote>
+	<retrieveProcessNotes>
+		SELECT NOTE_ID,PROCESS_ID,USER_ID,POSTED_DT,NOTE,last_modified
+		FROM %Schema%WF_PROCESS_NOTES WHERE PROCESS_ID is not NULL
+	</retrieveProcessNotes>
+    <retrieveActivityReferralTypes>
+            SELECT ACTIVITY_REFERRAL_TYPE_ID, ACTIVITY_REFERRAL_TYPE_DSC, 
+            EXTEND_PROCESS_END_DATE, DEFAULT_DAYS, last_modified
+            FROM %Schema%WF_ACTIVITY_REFERRAL_TYPE_DEF
+    </retrieveActivityReferralTypes>
+    <removeProcessNotes> DELETE 
+            FROM %Schema%WF_PROCESS_NOTES        
+            WHERE process_id = ? 
+    </removeProcessNotes>
+    
+      <retrieveFacilityRoleDefs>
+          SELECT facility_role_cd AS code,
+          facility_role_dsc AS description, deprecated, type,
+          last_modified
+          FROM
+          %Schema%fp_facility_role_def frd
+      </retrieveFacilityRoleDefs>
+
+    <retrieveRoleCdByParent>
+          SELECT facility_role_cd
+          FROM
+          %Schema%fp_facility_role_def
+          WHERE parent = ?
+          AND discriminator = ?
+    </retrieveRoleCdByParent>
+    
+    <findActiveProcessByExternalObject>
+    	SELECT process_id
+    	FROM
+    	%Schema%wf_process
+    	WHERE
+    		end_dt is null
+    		and process_template_id = ?
+    		and external_id = ?
+    </findActiveProcessByExternalObject>
+    
+  </WorkFlowSQL>
+</root>

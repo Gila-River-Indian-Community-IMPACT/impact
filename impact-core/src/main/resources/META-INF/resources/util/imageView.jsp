@@ -1,0 +1,1 @@
+<%@ page session="false" contentType="image/jpeg" autoFlush="true"%><%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %><%@ taglib uri="http://us.oh.state.epa.stars2/util" prefix="mu" %><f:view><mu:ImageOutput beanName="#{param.beanName}"/></f:view>

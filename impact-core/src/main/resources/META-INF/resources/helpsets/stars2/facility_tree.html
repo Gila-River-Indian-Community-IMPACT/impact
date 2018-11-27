@@ -1,0 +1,1332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- ********** HEAD ************ -->
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><!-- !!! THIS LINE DEFINES THE STRING THAT APPEARS AS THE WINDOW TITLE !!! -->
+
+
+
+<title>Help: Facility Tree</title><link rel="STYLESHEET" type="text/css" href="blafdoc.css">
+<link rel="STYLESHEET" type="text/css" href="stars2.css"><!-- **Uncomment** this STYLE element to hide TOC button --><!-- **Comment out** this STYLE element to display TOC button -->
+
+<script language="JavaScript" type="text/javascript" src="browvers.js"></script>
+<style type="text/css"> .hide {display : none}
+</style><!-- END HEAD --><!-- ********** BODY ************ --></head>
+<body>
+<noscript>Script to detect browser version</noscript>
+<!-- ********** TOP [BOOKMARK] ************ -->
+<a name="top"></a>
+<div class="zz-skip-header"><a href="#start">Skip
+navigation header</a></div>
+<table summary="Document information and navigation controls" border="0" width="97%">
+<tbody>
+<tr>
+<!-- !!! THIS LINE DEFINES THE STRING THAT APPEARS ABOVE THE HELP TOPIC TITLE !!! -->
+<!-- !!! This 'Chapter Title' should be the TOC entry one level higher than the !!! -->
+<!-- !!! Help Topic Title specified in the Level 1 heading (h1) below !!! -->
+<td class="zz-nav-header-cell" scope="col"><strong></strong></td>
+<td class="zz-nav-button-cell" scope="col"> <a class="zz-nav-button-link" href="facilities_profile.html">
+<img src="images/leftnav.gif" alt="Previous Topic" border="0" height="24" width="23"> <br>
+Previous Topic</a></td>
+<td class="zz-nav-button-cell" scope="col"> <a class="zz-nav-button-link" href="facilities_profile_contacts.html">
+<img src="images/rightnav.gif" alt="Next Topic" border="0" height="24" width="23"> <br>
+Next Topic</a></td>
+</tr>
+</tbody>
+</table>
+<!-- !!! THIS IS THE BEGINNING OF THE HELP TOPIC CONTENT. IT SHOULD BE !!! --><!-- !!! REPLACED BY THE CONTENT OF THE HELP TOPIC. !!! --><!-- ********** START [BOOKMARK] ************ -->
+<a name="start"></a><!-- !!! This Level 1 HEADING (h1) is the Help Topic Title. It should!!! --><!-- !!! 'MATCH' the HELP topic as listed in the TOC. If the page has a direct !!! --><!-- !!! HELP button/link, then both the HELP topic title and the TOC !!! --><!-- !!! listing should match the menu item for the last component in the !!! --><!-- !!! navigation path linked to the page/topic. !!! -->
+<h1>Facility Tree</h1>
+<h2>Overview</h2>
+<p>The &#8220;Facility Tree&#8221; concept is graphical, interactive, and
+available on almost all screens within the system. The tree enables you
+to navigate within the virtual/online facility by simply clicking on
+the tree icons which are labeled and graphically represent individual
+or collective emissions units, processes, control equipment, and release
+points.</p>
+<p>The Facility Tree contains and displays the relationship
+between emissions units, process, control equipment and release point
+information; e.g., whether control equipment is in series or parallel
+and whether release points are venting controlled or uncontrolled
+emissions.</p>
+<p>The icons appearance also gives a clear indication of the
+emissions unit operational status as well as being hyperlinked to all
+information known about that particular item. </p>
+<p>Below is an example of a Facility Tree. While in the system,
+clicking on any item that appears brown and is underlined will display
+the specific information available at that level.</p>
+<div align="left">
+<p><img alt="Facility Tree" src="images/app_tree_description.jpg" title="Facility Tree" style="border: 0px solid ;" vspace="4"></p>
+</div>
+<p>Note that release point EP01 is associated with the Shredder
+Baghouse in
+both emissions units F001 and F002. This scenario is common for control
+equipment. The graphical nature of the tree allows you to easily see
+which controls have been associated with each emissions unit within the
+facility.</p>
+<p>As shown &#8220;graphically&#8221; and as mentioned earlier in the
+example, an
+emissions unit (F002) can have one or more &#8220;process&#8221; associated. Each
+process is characterized by one SCC number as supplied by the facility.
+The SCC number is entered or selected via a built-in search tool within
+the system and can be searched by either a cascading level menu or a
+keyword. All types of facilities (e.g., Title V, non-Title V, Synthetic
+Minor) will need to identify SCC codes in the new system, regardless of
+whether it was necessary in the past.</p>
+<p>In summary, an emissions unit will have one or more processes
+associated with it. A process may have one or more control equipment,
+release points or both associated with it. Egress points may be
+associated to a process (e.g. fugitive) or a control equipment (e.g.
+stack). A control equipment may have one or more release points,
+subsequent control equipment, or both associated with it. The Facility
+Tree is designed to capture any real world scenario.</p>
+<p>The following topics are included in this help page:</p>
+<a name="main_menu"></a>
+<ul>
+<li><a href="#imp_icons">Important Icons</a>
+</li>
+<li><a href="#create_eu">Create an Emissions Unit</a></li>
+<ul>
+<li><a href="#enter_eu_info">Entering
+Emissions Unit Information</a></li>
+<li><a href="#permit_class_status">Permitting
+Classification and Status</a></li>
+<li><a href="#Permit_History">Permit History</a></li>
+<li><a href="#EIS_info">EIS Information</a></li>
+<li><a href="#allow_emit">Allowable Emissions</a></li>
+</ul>
+<li><a href="#create_cloned_eu">Create Cloned
+Emissions Unit</a></li>
+<li><a href="#perm_shut_eu">Permanently Shutting
+Down a Facility or Emissions Unit</a> </li>
+<li><a href="#create_ep">Create Emissions Process</a></li>
+<ul>
+<li><a href="#process_info">Process
+Information</a></li>
+<li><a href="#assoc_ce_ep">Associate Control
+Equipment and Release Points</a></li>
+</ul>
+<li><a href="#control_equip">Create Control
+Equipment</a></li>
+<ul>
+<li><a href="#create_ce">Control Equipment
+Information</a></li>
+<li><a href="#assoc_ce_sce">Associate Control
+Equipment and Subsequent Control Equipment</a></li>
+<ul>
+<li><a href="#assoc_ce">Associate
+Control Equipment</a></li>
+<li><a href="#assoc_sce">Associate Subsequent
+Control Equipment</a></li>
+</ul>
+<li><a href="#disassoc_ce">Disassociate Control
+Equipment</a></li>
+<li><a href="#viewup_fce">View/Update Facility
+Control Equipment</a></li>
+</ul>
+<li><a href="#egress_point">Create Release Point</a></li>
+<ul>
+<li><a href="#create_ep_2">Release Point
+Information</a></li>
+<li><a href="#assoc_ep">Associate Release Point</a></li>
+<li><a href="#disassoc_ep">Disassociate Release
+Points</a></li>
+<li><a href="#viewup_fep">View/Update Facility
+Release Points</a> </li>
+</ul>
+<li><a href="#rel_help_pages">Related Help Topics</a></li>
+</ul>
+<p><a href="#top">Back to Top</a>
+<a name="imp_icons"></a></p>
+<h2>Important Icons</h2>
+<p>The following is a general discussion and graphical
+representation of
+the Facility Tree Icons. The data grid will show you the icon and then
+describe what it means when it shows up in the various trees throughout
+the system.</p>
+<br>
+<table align="center" border="1" cellpadding="0" cellspacing="0" width="900">
+<tbody>
+<tr>
+<td align="center" height="22" valign="middle" width="300"><b>Icon/Graphic</b></td>
+<td align="center" height="22" valign="middle" width="300"><b>Usage</b></td>
+<td align="center" height="22" valign="middle" width="300"><b>Discussion </b></td>
+</tr>
+<tr>
+<td align="center" height="31" valign="middle" width="300"><br>
+<img alt="Facility Icon" title="Facility Icon" src="images/icon_facility.jpg" height="25" width="24"><br>
+</td>
+<td align="left" height="31" valign="middle" width="300">Represents the facility.</td>
+<td align="left" height="31" valign="middle" width="300">The Icon is followed by the facility ID and is
+hyperlinked to the Facility
+Profile.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Shutdown Facility Icon" src="images/icon_shutdownFacility.jpg" height="31" width="28"></td>
+<td align="left" valign="middle" width="300">Represents
+a facility that has been permanently shutdown.</td>
+<td align="left" valign="middle" width="300">Once
+the
+facility is permanently shutdown, it can only be resurrected by the
+system administrator.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Green Checkmark" src="images/icon_grn_check.jpg" height="15" width="16"></td>
+<td align="left" valign="middle" width="300">Indicates
+an entity that has passed validation.</td>
+<td align="left" valign="middle" width="300">When
+you see the green
+checkmark next to the icon at the top of the Facility Tree, you know
+the action you were validating has been accepted.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Emissions Unit" src="images/EU.gif" height="24" width="28"></td>
+<td align="left" valign="middle" width="300">Indicates
+an emissions unit.</td>
+<td align="left" valign="middle" width="300">The
+Icon represents an emissions unit within
+the facility that is active.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Emissions Unit Not Yet Validated" src="images/icon_invalid_EU.bmp" height="22" width="25"></td>
+<td align="left" valign="middle" width="300">Represents
+an emissions unit that has not been validated or has been
+changed.</td>
+<td align="left" valign="middle" width="300">Once
+the emissions unit is associated, validated and submitted
+in IMPACT as an action, the icon will change from this form to
+the icon above.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Excluded Emissions unit" src="images/Excluded_EU.gif" height="26" width="28"></td>
+<td align="left" valign="middle" width="300">Represents
+an emissions unit that is not associated with the
+application or permit.</td>
+<td align="left" valign="middle" width="300">Indicates
+the emissions unit is not associated
+with the permit application and will not be associated with any
+subsequent issued permits.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Shutdown Emissions Unit Icon" src="images/icon_shutdown_EUs.bmp" height="22" width="25"></td>
+<td align="left" valign="middle" width="300">Represents
+emissions units that have been permanently shutdown.</td>
+<td align="left" valign="middle" width="300">Once
+the
+emissions unit is permanently shutdown, it can only be resurrected by
+the system administrator.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Ineligible Emissions Unit Icon" src="images/icon_ineligible_EUs.bmp" height="22" width="25"></td>
+<td align="left" valign="middle" width="300">Indicates
+an emissions unit that is not eligible or available to be
+included in the subject artifact.</td>
+<td align="left" valign="middle" width="300">The
+subject artifact may be an
+application or a permit action or other action that will not accept the
+emissions unit.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Insignificant Emissions Unit Icon" src="images/icon_fac_tree_insig_eus.bmp" height="15" width="17"></td>
+<td align="left" valign="middle" width="300">In
+Title V Applications
+and Permits,
+represents an insignificant
+emissions unit.</td>
+<td align="left" valign="middle" width="300">The
+size of this triple gear indicates that the emissions
+unit is an insignificant emissions unit.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Non-Validated Insignificant Emissions Unit Icon" src="images/icon_fac_tree_nonvalid_eus.bmp" height="17" width="19"></td>
+<td align="left" valign="middle" width="300">In
+Title V Applications
+and Permits,
+represents an insignificant
+emissions that has not been validated or has been changed.</td>
+<td align="left" valign="middle" width="300">Once
+the
+emissions unit is associated, validated and submitted in IMPACT
+as an action, the icon will change from this form to the icon above.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Emissions Process Icon" src="images/icon_emissions_process.bmp" height="16" width="16"></td>
+<td align="left" valign="middle" width="300">Represents
+an emissions process.</td>
+<td align="left" valign="middle" width="300">The
+process must have an SCC and will
+always be associated with an emissions unit. There may be more than one
+process for a single emissions unit.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20"></td>
+<td align="left" valign="middle" width="300">Represents
+control equipment.</td>
+<td align="left" valign="middle" width="300">The
+Icon is hyperlinked to all known
+information about the equipment.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Egress Point Icon" src="images/icon_egress_point.bmp" height="16" width="18"></td>
+<td align="left" valign="middle" width="300">Represents
+an release point.</td>
+<td align="left" valign="middle" width="300">The
+release point can be a
+fugitive or stack emissions point from the facility. Fugitive is
+directly associated with the process while stack is directly associated
+with control equipment.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Modified but not Validated Icon" src="images/exclamation.bmp" height="18" width="18"></td>
+<td align="left" valign="middle" width="300">Indicates
+an entity that has been changed in the system but not validated.</td>
+<td align="left" valign="middle" width="300">When
+you
+see this icon there is more work to be done or the action must be
+validated and submitted. </td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Validated report Icon" src="images/icon_validated_report.bmp" height="16" width="17"></td>
+<td align="left" valign="middle" width="300">For
+Emissions Inventories, indicates that an SCC has been entered for the
+process and has been validated.</td>
+<td align="left" valign="middle" width="300">Indicates
+that information is available
+for the emissions process in the form of an SCC. This icon must be
+present for Emissions Reporting.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Report Entered but not Validated icon" src="images/icon_nonValid_report.bmp" height="16" width="17"></td>
+<td align="left" valign="middle" width="300">For
+Emissions Inventories, a process for which data has not been
+validated.</td>
+<td align="left" valign="middle" width="300">Validation
+of the Emissions Inventory will change
+the icon to the above icon.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Grouped Emissions Units Icon" src="images/icon_grouped_EUs.bmp" height="16" width="16"></td>
+<td align="left" valign="middle" width="300">More
+than one emissions units grouped.</td>
+<td align="left" valign="middle" width="300">For
+Emissions
+Reports, groups of emissions units with the same process
+are grouped together for calculation purposes.<br>
+<br>
+For Title V Applications,
+for the purpose of a combined emissions
+requirement. <br>
+<br>
+For PTI/PTIO Permits,
+for emissions units with identical requirements,
+all emissions units covered by a specific set of terms are listed above
+the Applicable Requirements table.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Grouped Emissions Units not yet Validated Icon" src="images/icon_nonvalid_grouped_EUs.bmp" height="16" width="16"></td>
+<td align="left" valign="middle" width="300">Emissions
+units grouped for which the data has not been validated.</td>
+<td align="left" valign="middle" width="300">The
+group must be validated and submitted to change to the above icon.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Collapsed Tree Section Icon" src="images/icon_collapsed_EUs.bmp" height="27" width="16"></td>
+<td align="left" valign="middle" width="300">Represents
+collapsed section of any lengthy tree representation.</td>
+<td align="left" valign="middle" width="300">To
+&#8220;un-collapse&#8221; the tree, click on the three dots and all emissions units
+in the tree will appear.</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="300"><br>
+<img alt="Issued Permit or Report Icon" src="images/icon_issued_report.bmp" height="16" width="16"></td>
+<td align="left" valign="middle" width="300">Represents
+either a permit has been issued or an emissions inventory.</td>
+<td align="left" valign="middle" width="300">This
+icon is followed by the permit number or the emissions inventory number.
+Both are hyperlinked to the opening detail page for each
+tab.</td>
+</tr>
+<tr>
+<td align="center" valign="middle"><br>
+<img alt="Disassociated CEs" src="images/Disassociated_CEs.jpg" height="26" width="198"></td>
+<td valign="middle">Represents control equipment
+that is not
+associated with a process.</td>
+<td valign="middle">If this appears, the equipment
+is at the
+facility but is not associated with any process. Once associated, the
+icon will not appear.</td>
+</tr>
+<tr>
+<td align="center" valign="middle"><br>
+<img alt="Diassociated EG Points" src="images/disassociated_eg_pts.jpg" height="46" width="193"></td>
+<td valign="middle">Represents an release point
+that is not associated with a process.</td>
+<td valign="middle">If this appears, the release
+point
+is at the facility but is not associated with the process. Once
+associated, the icon will not appear.</td>
+</tr>
+<tr>
+<td align="center" valign="middle"><br>
+<img alt="Invalid EUs" src="images/invalid_eus.jpg" height="22" width="137"></td>
+<td valign="middle">Represents emissions
+units with invalid status or have been given invalid status.</td>
+<td valign="middle">Invalid is
+used when migrated emissions units have invalid alphanumeric schemes
+and are subsequently renamed.</td>
+</tr>
+<tr>
+<td align="center" valign="middle"><br>
+<img alt="Collapsed Object Icon" src="images/icon_collapsed_object.bmp" height="18" width="19"></td>
+<td valign="middle">Represents the
+collapsed/compressed version of the object.</td>
+<td valign="middle">This button is
+useful to compress the length of a tree.</td>
+</tr>
+<tr>
+<td align="center" valign="middle"><br>
+<img alt="Uncollapsed Object Icon" src="images/icon_uncollapsed_object.bmp" height="18" width="19"></td>
+<td valign="middle">Represents the
+uncollapsed/uncompressed version of the object.</td>
+<td valign="middle">This
+button is useful to expand the tree to see all information.</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="create_eu"></a></p>
+<h2>Create Emissions Unit</h2>
+<p>The system&#8217;s
+<font face="Courier New, Courier, monospace">Facility
+Profile</font> page allows you to create an emissions unit from
+the
+<font face="Courier New, Courier, monospace">Create
+Emissions Unit</font> button located at the bottom of the page.
+This is
+where you add an emission unit that is not listed in the Facility Tree.</p>
+<p>Asterisks(*) denote what the system requires for creating an
+emission
+unit. However, information in some other data fields may be needed for
+the system to perform other functions. Therefore, completing as many
+fields as possible with correct information benefits the system and all
+its users.</p>
+<p>To begin the process, click on the <font face="Courier New, Courier, monospace">Create Emissions Unit</font>
+button and
+complete the fields discussed below.</p>
+<ul>
+<li><a href="#enter_eu_info">Entering
+Emissions Unit Information</a></li>
+<li><a href="#permit_class_status">Permitting
+Classification and Status</a></li>
+<li><a href="#EIS_info">EIS Information</a></li>
+<li><a href="#Permit_History">Permit History</a></li>
+<li><a href="#allow_emit">Allowable Emissions</a></li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="enter_eu_info"></a></p>
+<ul>
+<h3>Entering Emissions Unit Information</h3>
+<ul>
+<li><font face="Courier New, Courier, monospace">AQD
+Emissions Unit
+ID.</font> - This is the ID that will be included in permits and
+on
+documentation within the system. The assigned ID should not duplicate
+another ID in the current <font face="Courier New, Courier, monospace">Facility Detail</font>
+tree. For example, if the
+facility is adding a fourth boiler, and the last boiler installed was
+B003 then you can give the new boiler an ID of B004.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">AQD
+Description</font> - Not required in the system but is beneficial
+to
+differentiate between similar emissions units at the facility. This
+description will be used in permits and on documentation within the
+system. This description should be short but specific. For example, the
+new boiler may be described as: 116 Megawatt Coal Fired Boiler with
+electrostatic precipitator and scrubber.<br>
+<br ="">
+</li>
+<li><font face="Courier New, Courier, monospace">Company
+Equipment ID</font> - Enter the term the company uses
+internally to
+identify the equipment. For example, the new boiler may be identified
+by the facility as 116MW CFB4.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Company
+Description</font> - Enter the
+description used by the company, often more descriptive than the AQD
+description.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Operating
+Status</font> - Picklist that contains operating
+options for the emissions unit being created. Choose the option that
+best describes the emission unit being created. If you need to
+permanently shutdown an emissions unit, see the heading below <a href="#perm_shut_eu">&#8220;Permanently Shutting Down a Facility
+or Emissions Unit&#8221;</a>.<small><small><small>&nbsp;<small><small><small><small><span style="font-size: 12pt; color: black; font-family: Arial;"><small>The</small>
+</span><span style="font-size: 12pt; font-family: &quot;Courier New&quot;; color: black;">Invalid</span></small></small></small><span style="font-size: 12pt; font-family: Arial; color: black;"><small><small>
+</small>choice would only be
+applicable when editing</small> <small>an existing
+emissions unit.<span style="">&nbsp; </span>In
+some cases, incomplete migrated data from
+older Ohio EPA systems may not have accurately categorized this
+emissions unit
+for the purposes of<span style="">&nbsp; </span>migrating
+the data
+to this<small><small> <big><big>n</big></big></small><big>ew
+system.<span style="">&nbsp; </span>In these
+cases the
+emissions unit will be identified as</big></small></small></span><small><small><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;; color: black;">
+</span><small><small><small><span style="font-size: 12pt; font-family: &quot;Courier New&quot;; color: black;"><small>Invalid</small>
+</span></small><span style="font-size: 12pt; color: black; font-family: Arial;"><small>until
+the facility, or Ohio EPA, updates the information in this field</small>.</span>
+</small></small></small></small></small></small></small></small><br>
+</li>
+<li><font face="Courier New, Courier, monospace">Completion
+of Initial Installation Date</font> -&nbsp;The date the
+emissions unit was installed for the first time should be entered into
+the input field or you
+may click on the calendar icon <img alt="Calendar Icon" src="images/calendar.jpg" height="27" width="20">&nbsp;to
+choose the date. This date is the
+date that construction or changes were completed for the first time,
+not the completion date for any subsequent modifications.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Begin
+Installation/Modification Date</font> - The date that the
+installation/modification was started or when it will be started in the
+future; depending on whether the emissions unit is already built or if
+it is anticipated for future installation. Enter the date in the input
+field or click on the calendar icon <img alt="Calendar Icon" src="images/calendar.jpg" height="27" width="20">&nbsp;
+to choose the date.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Commence
+Operation After Installation or Latest Modification Date</font> -
+The date in which the emissions unit will start operating or if already
+operating, the date in which it previously started operating.</li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="permit_class_status"></a></p>
+<h3>Facility Class and Status</h3>
+<ul>
+<li><font face="Courier New, Courier, monospace">Permitting
+Status</font>
+-&nbsp;Identifies the type of
+permitting the specific emissions unit is subject to; for example <font face="Courier New, Courier, monospace">Active PTIO</font>.
+None is identified after the emissions unit is first created but before
+the
+first permit is issued. However, in the
+event a permit is issued, this field is automatically updated by the
+system to
+identify the emissions unit&#8217;s new permitting status. <font face="Courier New, Courier, monospace">Extended</font>
+indicates a timely renewal application for a permit was submitted;
+however, the expiration date has passed.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">PTI
+Status</font> -&nbsp;Identifies the permit-to-install status
+for the
+emissions unit; <font face="Courier New, Courier, monospace">Active,
+None</font> or <font face="Courier New, Courier, monospace">PBR</font>.&nbsp;
+If the emissions unit is permitted under a PTIO
+the <font face="Courier New, Courier, monospace">PTI
+Status</font> will display <font face="Courier New, Courier, monospace">None </font>while
+the <font face="Courier New, Courier, monospace">Permitting
+Status</font> will display <font face="Courier New, Courier, monospace">Active
+PTIO</font>. &nbsp;<small><small><small><small><span style="font-size: 12pt; font-family: Arial; color: black;"><small>However,
+in the event a
+permit is issued, this field is automatically updated by the system to
+identify
+the emissions unit&#8217;s new permitting status</small>.</span></small></small></small></small><br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Title
+V EU
+Classification</font> -&nbsp;This field is only editable
+by the facility through the external system.&nbsp;
+It will designate the emissions unit classification as either <font face="Courier New, Courier, monospace">Insignificant,
+Non-insignificant,</font> or <font face="Courier New, Courier, monospace">Trivial</font>.
+If this is not a Title V facility, it will
+identify <font face="Courier New, Courier, monospace">Not
+Applicable</font>.&nbsp; Note, <font face="Courier New, Courier, monospace">Trivial</font>
+sources are only expected
+if an existing emissions unit that was previously entered into the
+system as <font face="Courier New, Courier, monospace">Non-insignficant</font>
+or <font face="Courier New, Courier, monospace">Insignificant</font>
+<u>becomes</u> <font face="Courier New, Courier, monospace">Trivial</font>.&nbsp;
+No new <font face="Courier New, Courier, monospace">Trivial</font>
+sources should be entered
+into the system.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Exemption
+Status</font> -&nbsp;Should be chosen from the
+pick list, <font face="Courier New, Courier, monospace">De
+minimis</font> or <font face="Courier New, Courier, monospace">Exempt</font>,
+based on whether or not the newly created
+emission unit is exempt from permitting.
+If neither is applicable, enter <font face="Courier New, Courier, monospace">NA</font>.</li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="eis_info"></a><br>
+<span style="background: yellow none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;"></span></p>
+<h3 style="background-color: white;">Permit
+History</h3>
+When
+this hyperlink is clicked,&nbsp; they system
+will open a pop-up window showing all of the permits - including PTIs,
+registrations, PTIOs, state PTOs, Title V Permits, and PBRs - for this
+emissions unit.
+Note that the system searches its permit database for matches on the
+Facility Id and
+AQD
+Emissions Unit ID. Some migrated permits do&nbsp;not list the
+associated AQD Emissions Unit ID
+and those permits will not be shown in this list.
+</ul>
+<ul>
+<h3>EIS Information</h3>
+<p><font face="Courier New, Courier, monospace">EIS
+Information</font> is not required, but may be entered so that
+new EIS
+reports are pre-populated with the information when created. The
+information may be entered by clicking the expand information arrow <img alt="Expand Information Arrow" src="images/expand.jpg" height="18" width="19">. The <font face="Courier New, Courier, monospace">ORIS Boiler
+ID</font> which is designated by USEPA for electrical generation
+stations, if applicable, may be entered into the input field but is not
+required.</p>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="allow_emit"></a></p>
+<h3>Allowable Emissions</h3>
+<p><font face="Courier New, Courier, monospace">Allowable
+Emissions</font> can be added to the newly created
+emissions unit
+whereas existing emissions unit(s) should already have a permit with
+allowables.</p>
+<p><b>Note:</b> Only complete the table for
+qualifying emission units
+as requested by the Ohio EPA&#8217;s SIP or Modeling section. Please refer to
+document &#8220;Allowable Emissions Instructions and Understandings&#8221; in the <font face="Courier New, Courier, monospace">External
+Reference</font> section of the system for further insight.</p>
+<p>To add the emissions unit&#8217;s permitted allowables, you click
+on the <font face="Courier New, Courier, monospace">Add
+Emissions</font> button at the bottom of the list. Select the
+pollutant from
+the pick list and add the allowable, if applicable, in <font face="Courier New, Courier, monospace">Pounds/hour</font>
+and/or <font face="Courier New, Courier, monospace">Tons/Year</font>.
+Comments may be added to each pollutant if necessary.
+For example, if a unit has been issued more than one PTI, you can add
+the PTI number in which the allowable emissions originate from. To
+enter more than one allowable, click the <font face="Courier New, Courier, monospace">Add Emissions</font>
+button again and
+repeat the previous steps. To delete pollutants from the list, click
+the toggle button under the <font face="Courier New, Courier, monospace">Select</font>
+column and click the <font face="Courier New, Courier, monospace">Delete
+Selected
+Pollutants</font> button.</p>
+<p>You can print the allowable emissions list by
+clicking the <font face="Courier New, Courier, monospace">Printable
+view</font> button and then clicking print in the
+pop-up. You can also export the data by clicking the <font face="Courier New, Courier, monospace">Export to Excel</font>
+button.</p>
+<p><b>Note:</b> Facility total allowable emissions
+can be viewed by
+clicking the <font face="Courier New, Courier, monospace">Allowable
+Emissions</font> in the third-level menu on the <font face="Courier New, Courier, monospace">Facility
+Profile</font> page. The total will only be a total of
+emissions that have been individually input into each individual
+emission unit page. In other words, it is not required to fill out
+allowable emissions for each emission unit. (see note above) For
+example,
+if there are allowables entered for just two emission units out of 12,
+then the total for the facility will only be for those two units. </p>
+</ul>
+<p>Once
+you have finished entering the all the information click the <font face="Courier New, Courier, monospace">Save</font>
+button. The newly created emission unit ID will now be listed in the
+Facility Tree with a set of blue gears <img alt="Emissions Unit" src="images/EU.gif" height="24" width="28">.</p>
+<p>The system also has the
+ability to create a clone of an emissions unit, useful for creating
+additional emissions units with similar features, rather than entering
+duplicate information repeatedly. Refer to the <a href="#create_cloned_eu">&#8220;Create a Cloned Emissions
+Unit&#8221;</a> heading for more information on this feature.<br>
+<br>
+</p>
+<p>To continue
+creating the emission unit, additional information may need to be
+entered. Refer to the following headings below: <a href="#create_ep">&#8220;Create
+EmissionsProcess&#8221;</a>, <a href="#create_ce">&#8220;Create
+Control
+Equipment&#8221;</a>, and <a href="#create_ep_2">&#8220;Create
+Release Point&#8221;</a>.</p>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="create_cloned_eu"></a></p>
+<h2>Create a Cloned Emissions Unit</h2>
+<p>Another system feature is the
+ability to create an exact copy of an emission unit. This is useful for
+creating additional emissions units with similar features, rather than
+entering duplicate information repeatedly. This function is found under
+the Facility Tree by clicking on the emissions unit that you wish to
+copy. At the bottom of the <font face="Courier New, Courier, monospace">Emission Unit
+Information</font> page, click on the
+<font face="Courier New, Courier, monospace">Create Cloned
+Emission Unit</font> button. A screen will populate with the
+information from the emission unit being copied. You enter a new <font face="Courier New, Courier, monospace">AQD
+Emissions Unit ID</font> as described in the&nbsp;help above,
+as well as, any other information that you deem necessary to
+differentiate this unit from the unit copied. Once all information has
+been entered click the <font face="Courier New, Courier, monospace">Save</font>
+button and the emissions unit will appear
+in the Facility Tree as previously explained.</p>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="perm_shut_eu"></a></p>
+<h2>Permanently Shutting Down a Facility or Emissions Unit</h2>
+<p>In order to permanently shutdown a facility or an emissions
+unit(s),
+Ohio EPA must receive a request and signed certification from the
+authorized official, as defined in OAC rule 3745-31-04(B) for non-Title
+V facilities, or the responsible official, as defined in OAC rule
+3745-77-01 for Title V facilities, that identifies the facility ID or
+emission unit ID(s) and the date on which the facility or emissions
+unit(s) was permanently shutdown. If you select <font face="Courier New, Courier, monospace">Permanently Shutdown</font>
+from the <font face="Courier New, Courier, monospace">Operating
+Status</font> picklist, you will be required to enter a
+<font face="Courier New, Courier, monospace">Shutdown Date</font>.
+The <font face="Courier New, Courier, monospace">Shutdown
+Date</font> should be entered according to the
+actual shutdown date identified in the letter from the authorized
+official/responsible official, which may not necessarily correspond to
+the date of the letter itself.</p>
+<p>The steps for permanently shutting down
+a facility are discussed in the Help page for <font face="Courier New, Courier, monospace">Facility Detail</font>.</p>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="create_ep"></a></p>
+<h2>Create Emissions Process</h2>
+<p>The system allows you to create an
+emissions process for a specific emissions unit where you can identify
+the emissions unit process description, name, and Source Classification
+Code (SCC). An emissions process with a valid SCC associated to its
+corresponding emissions unit is required by the system in order for
+applications to be effectively submitted and subsequently be issued a
+permit. This feature is accessed either by clicking on the specific
+emissions unit icon,&nbsp;<img alt="Emissions Unit" src="images/EU.gif" height="24" width="28"> ,
+in the Facility Tree or by selecting the <font face="Courier New, Courier, monospace">AQD
+Emissions Unit ID</font> from the datagrid through the
+second-level menu,
+<font face="Courier New, Courier, monospace">Emission Units</font>,
+of the <font face="Courier New, Courier, monospace">Facility
+Profile</font> page. Either path will send you
+to the specific <font face="Courier New, Courier, monospace">Emissions
+Unit Information</font> page of the <font face="Courier New, Courier, monospace">Facility
+Profile</font>. At the bottom of the page click the <font face="Courier New, Courier, monospace">Create Emissions
+Process</font>
+button and enter information according to the descriptions below.</p>
+<ul>
+<li><a href="#process_info">Process
+Information</a></li>
+<li><a href="#assoc_ce_ep">Associate Control
+Equipment and Release Points</a></li>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="process_info"></a></p>
+<h3>Process Information</h3>
+<ul>
+<li><font face="Courier New, Courier, monospace">Process
+Name</font> - Name the process as succinctly as
+possible. For example: Aluminum Pressing, Waste Distillers Grain
+processing, etc. This is a required field.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Company
+Process Description</font> - Description determined by the
+facility
+and should be copied directly from the application or company provided
+documents. You can add text to be more descriptive, but the companies
+description should be used with modifiers as needed to clarify the
+emissions units in the facility. This is not a required field but it is
+beneficial to differentiate between similar emissions processes at the
+facility.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Source
+Classification Code (SCC)</font> - If known, can be entered into
+the
+input field or you may use the <font face="Courier New, Courier, monospace">Select SCC through
+cascading levels</font>
+button or the <font face="Courier New, Courier, monospace">search
+SCCs by keyword</font> button to determine what the SCC
+code would be.<br>
+<br>
+<ul>
+<li><font face="Courier New, Courier, monospace">Select
+SCC through cascading levels</font>, once clicked,
+allows you to choose from the <font face="Courier New, Courier, monospace">SCC Level 1
+Description</font> picklist. Note:
+Level 1 must be chosen before the other level&#8217;s picklists will
+populate. Once a Level 1 description has been chosen, the Level 2
+picklist will populate and a process description should be chosen for
+this level, continue these steps until all description levels have been
+completed.<br>
+<br>
+</li>
+<li><font face="Courier New, Courier, monospace">Search
+SCCs by keyword</font>, once clicked, allows you to search
+by entering a process relative word/words in the input field then click
+<font face="Courier New, Courier, monospace">Search</font>.
+A pop-up will appear with a variety of processes, relating to
+the word you entered, from which you may choose. At the bottom of the
+pop-up list, you will see a page picklist in which you may chose to <font face="Courier New, Courier, monospace">Show
+All</font> or go to the next page. Once you have found an SCC
+code, click
+the radio button in the <font face="Courier New, Courier, monospace">Select</font>
+column to the left of the SCC you wish
+to select and click the <font face="Courier New, Courier, monospace">Apply
+Selected SCC</font> button at the bottom of the
+list. Click <font face="Courier New, Courier, monospace">Cancel</font>
+to return to the <font face="Courier New, Courier, monospace">Process
+Information</font> page.</li>
+</ul>
+<p>Once you have chosen the SCC and filled in all process
+information,
+click the <font face="Courier New, Courier, monospace">Save</font>
+button. The page will refresh to the <font face="Courier New, Courier, monospace">Emissions Unit
+Information</font> page and the emissions process will appear, as
+a single
+light blue gear&nbsp;<img alt="Emissions Process Icon" src="images/icon_emissions_process.bmp" height="16" width="16"> in the Facility Tree under the related emissions
+unit.</p>
+<p>Note: If you click the <font face="Courier New, Courier, monospace">Cancel</font>
+button, you will be taken back to the <font face="Courier New, Courier, monospace">Emissions
+Unit Information</font> page where you must use the button at the
+bottom to get back to the <font face="Courier New, Courier, monospace">Create Emissions
+Process</font> page.&nbsp;
+
+</p><p class="MsoNormal"><b style=""><span style="font-family: Arial; color: black;">IMPORTANT: When emissions reporting is
+performed in IMPACT, the SCC identified for each process may be used to
+populate important information and perform calculations in this system. It is very
+important you determine and use accurate SCC information.<o:p></o:p></span></b></p>
+
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="assoc_ce_ep"></a></p>
+<h3 style="margin-left: 0px; width: 1177px;">Associate
+Control Equipment and Release Points</h3>
+<p>Once an emissions process has been saved, you can
+associate control
+equipment and associate release points by clicking on the emissions
+process ID in the Facility Tree denoted by <img alt="Emissions Process" src="images/icon_emissions_process.bmp" height="16" width="16">. The page will refresh to
+the specific <font face="Courier New, Courier, monospace">Process
+Information</font> page. In order for you to associate
+control equipment and release points, you must have already entered the
+control equipment information and the release point information by using
+the buttons at the bottom of the <font face="Courier New, Courier, monospace">Facility Detail</font>
+page. This is
+discussed in the next two sections of this Help page below.</p>
+</li></ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="control_equip"></a></p>
+</ul>
+
+<h2>Create Control Equipment</h2>
+<p> The system&#8217;s <font face="Courier New, Courier, monospace">Facility
+Profile</font> page allows
+you to create control equipment for the facility. By clicking the
+<font face="Courier New, Courier, monospace">Create
+Control Equipment</font> button, the <font face="Courier New, Courier, monospace">Control Equipment
+Information</font> page
+allows you enter control equipment type, specific information, and
+pollutants controlled by the equipment. Once equipment is entered and
+saved, you may associate/disassociate and view/update the equipment
+information.</p>
+<ul>
+<li><a href="#create_ce">Control Equipment Information</a></li>
+<li><a href="#assoc_ce_sce">Associate Control
+Equipment and Subsequent Control Equipment</a></li>
+<ul>
+<li><a href="#assoc_ce">Associate
+Control Equipment</a></li>
+<li><a href="#assoc_sce">Associate Subsequent
+Control Equipment</a></li>
+</ul>
+<li><a href="#disassoc_ce">Disassociate Control
+Equipment</a></li>
+<li><a href="#viewup_fce">View/Update Facility
+Control Equipment</a></li>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="create_ce"></a></p>
+<h3>Control Equipment Information</h3>
+<ul>
+<li>On the <font face="Courier New, Courier, monospace">Control
+Equipment
+Information</font> page choose from the <font face="Courier New, Courier, monospace">Equipment Type</font>
+picklist the specific
+type of control equipment you wish to add to the process in the
+Facility Tree. Once you have chosen the type, you fill in all equipment
+input fields with the information relating to that equipment. Note:
+whatever is entered for the <font face="Courier New, Courier, monospace">Company ID</font>
+is what will be used in the
+Facility Tree as the equipment ID.<br>
+<br>
+</li>
+<li>Some control equipment, when chosen from the <font face="Courier New, Courier, monospace">Equipment Type</font>
+picklist,
+will populate additional input fields for the <font face="Courier New, Courier, monospace">Specific Equipment
+Type
+Information</font> section and you can fill in these input fields
+as well to
+continue describing the equipment.<br>
+<br>
+</li>
+<li>The <font face="Courier New, Courier, monospace">Pollutants
+Controlled</font> section allows you to enter pollutants
+specifically controlled by the equipment as well as the control
+efficiency of the equipment per pollutant. In order to enter a
+pollutant, click the <font face="Courier New, Courier, monospace">Add
+Pollutant</font> button and choose from the <font face="Courier New, Courier, monospace">Pollutant</font>
+picklist; then, if applicable, add the efficiencies in the columns to
+the right. The final efficiency column, <font face="Courier New, Courier, monospace">Total Capture Control
+(%)</font>, will
+be automatically populated by the system. To add additional pollutants
+click the <font face="Courier New, Courier, monospace">Add
+Pollutant</font> button again and follow previous steps. Once
+all pollutant information has been entered, click <font face="Courier New, Courier, monospace">Save</font>.
+Once saved, the
+list may be printed by clicking the <font face="Courier New, Courier, monospace">Printable View</font>
+button or sent to
+Excel by clicking the <font face="Courier New, Courier, monospace">Export
+to Excel</font> button.
+
+<p class="MsoNormal" style="margin-bottom: 12pt;"><b style=""><span style="font-family: Arial; color: black;">IMPORTANT: When emissions reporting is
+performed in IMPACT, the control equipment efficiency(s) identified for
+each control may be used to populate important information and perform
+calculations in this system. It is very important you accurately enter this
+information.</span></b><span style="font-family: Arial; color: black;"><o:p></o:p></span></p>
+<br>
+</li>
+<li>Note: If you click <font face="Courier New, Courier, monospace">Cancel</font>
+the system will refresh to the <font face="Courier New, Courier, monospace">Facility Detail</font>
+page then you must
+click the <font face="Courier New, Courier, monospace">Create
+Control Equipment</font> button again and reenter all
+equipment information. </li>
+</ul>
+<p>Once you have clicked <font face="Courier New, Courier, monospace">Save</font>,
+the control
+equipment will appear at the very bottom of the <font face="Courier New, Courier, monospace">Facility Tree</font>
+under&nbsp;<img alt="Disassociated CE's" src="images/Disassociated_CEs.jpg" height="26" width="198"> denoted by <img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20">. All control equipment that has been
+created will populate in the Facility Tree as disassociated until it is
+associated with a specific process or other control equipment. This
+designation does not change
+the control equipment information that has been entered into the
+control equipment file; it simply indicates that it is not associated.</p>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="assoc_ce_sce"></a></p>
+<h3>Associate Control Equipment and Subsequent Control
+Equipment</h3>
+<p>You can associate a control equipment with an emissions
+process and you
+may also associate a &#8220;subsequent&#8221; control equipment with a specific
+control equipment. There may be more than one piece of control
+equipment associated with an emissions process, and there may be more
+than one emissions process in the facility that uses any particular
+piece of control equipment. However, any subsequent control equipment
+associated with a specific control equipment cannot be associated to
+another emissions process without the initial control equipment be
+associated first. Subsequent control equipment will always follow the
+initial control equipment, during association and disassociation. If a
+single piece of control equipment is used more than once in the
+Facility Tree, which is often the case, it will appear in the tree as
+many times as it is used. Also, the specific control equipment icon
+will be highlighted if selected throughout the Facility Tree.</p>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="assoc_ce"></a></p>
+<ul>
+<h4>Associate Control Equipment</h4>
+<p><b>Step1: Emissions Process.</b></p>
+<ul>
+<li>Click on the emission process single light blue
+gear&nbsp;<img alt="Emissions Process Icon" src="images/icon_emissions_process.bmp" height="16" width="16"> in the Facility
+Tree that you want to associate the control equipment. </li>
+<li>Scroll to the
+bottom of the <font face="Courier New, Courier, monospace">Process
+Information</font> page and click on the <font face="Courier New, Courier, monospace">Associate
+Control Equipment</font> button.</li>
+</ul>
+<p><b>Step 2: Designate the Control Equipment.</b></p>
+<ul>
+<li>When the page is refreshed from Step 1 the <font face="Courier New, Courier, monospace">Select Control
+Equipment
+to Associate</font> page will appear. </li>
+<li>Select the control equipment you want to associate with
+this
+emissions process from the picklist and click <font face="Courier New, Courier, monospace">Save</font>.</li>
+</ul>
+<p><b>Step 3: Verify.</b></p>
+<ul>
+<li>The page will refresh to the <font face="Courier New, Courier, monospace">Process Information</font>
+page and the control
+equipment <img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20">&nbsp;will populate in the Facility Tree
+under the process&nbsp;<img alt="Emissions Process Icon" src="images/icon_emissions_process.bmp" height="16" width="16"> in which
+you associated it. </li>
+<li>There will also be a message in the green Information
+bar at the top
+of the page that reads &#8220;<font face="Courier New, Courier, monospace">Control
+equipment added successfully</font>&#8221;.</li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="assoc_sce"></a></p>
+<h4>Associate Subsequent Control Equipment</h4>
+<p><b>Step1: Control Equipment.</b></p>
+<ul>
+<li>Click on the control equipment icon&nbsp;<img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20"> in the Facility Tree that you
+want to associate a subsequent control equipment. </li>
+<li>Scroll to the
+bottom of the <font face="Courier New, Courier, monospace">Process
+Information</font> page and click on the <font face="Courier New, Courier, monospace">Associate
+Subsequent Control Equipment</font> button.</li>
+</ul>
+<p><b>Step 2: Designate the Control Equipment.</b></p>
+<ul>
+<li>When the page is refreshed from Step 1 the <font face="Courier New, Courier, monospace">Select Control
+Equipment
+to Associate</font> page will appear. </li>
+<li>Select the control equipment you want to associate from
+the picklist
+and click <font face="Courier New, Courier, monospace">Save</font>.</li>
+</ul>
+<p><b>Step 3: Verify.</b></p>
+<ul>
+<li>The page will refresh to the <font face="Courier New, Courier, monospace">Control Equipment
+Information</font> page and
+the subsequent control equipment&nbsp;<img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20"> will populate in the Facility
+Tree
+under the initial control equipment&nbsp;<img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20"> in which you associated it. </li>
+<li>There will also be a message in the green Information
+bar at the top
+of the page that reads &#8220;<font face="Courier New, Courier, monospace">Control
+equipment added successfully</font>&#8221;.</li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="disassoc_ce"></a></p>
+</ul>
+<h3>Disassociate Control Equipment</h3>
+<p>Once the control equipment
+has been associated and saved, you have the option to disassociate the
+control equipment, whether it is a subsequent control equipment
+associated with another control equipment, or a control equipment
+associated with an emissions process. If a single piece of control
+equipment is associated with more than one process, it will only be
+disassociated from the specific process in which you have it
+disassociated and will remain on the other processes it is associated
+with. If applicable, you have to go to each specific process equipment
+to disassociate the control equipment from all processes. If you
+disassociate a subsequent control equipment it will disassociate from
+all the emissions processes for which the initial control equipment was
+associated.</p>
+<p><b>Step1: Emissions Process/Control Equipment.</b></p>
+<ul>
+<li>Click on the emission process single light blue
+gear&nbsp;<img alt="Emissions Process Icon" src="images/icon_emissions_process.bmp" height="16" width="16"> in the Facility
+Tree that you want to disassociate the control equipment, or when
+disassociating a subsequent control equipment, click on the control
+equipment&nbsp;<img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20"> above the subsequent control equipment you want
+to
+disassociate. </li>
+<li>Scroll to the bottom of the page and click on the <font face="Courier New, Courier, monospace">Disassociate
+Control Equipment</font> button or <font face="Courier New, Courier, monospace">Disassociate
+Subsequent
+Control Equipment</font> button, as applicable.</li>
+</ul>
+<p><b>Step 2: Designate the Control Equipment.</b></p>
+<ul>
+<li>When the page is refreshed from Step 1 the <font face="Courier New, Courier, monospace">Select Control
+Equipment
+to Disassociate</font> page will appear. </li>
+<li>Select the control equipment you want to disassociate
+from the
+picklist and click <font face="Courier New, Courier, monospace">Save</font>.</li>
+</ul>
+<p><b>Step 3: Verify.</b></p>
+<ul>
+<li>The page will refresh to the <font face="Courier New, Courier, monospace">Process Information</font>
+page or <font face="Courier New, Courier, monospace">Control
+Equipment Information</font> page, as applicable, and the control
+equipment
+will not longer be associated and will be populated to the bottom of
+the Facility Tree in the&nbsp;<img alt="Disassociated CEs" src="images/Disassociated_CEs.jpg" height="26" width="198">. </li>
+<li>There will also be a message in the green Information bar
+at the top
+of the page that reads &#8220;<font face="Courier New, Courier, monospace">Control
+equipment disassociated successfully</font>&#8221;.</li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="viewup_fce"></a></p>
+<h3>View/Update Facility Control Equipment</h3>
+<ul>
+<li>To view a
+complete list of control equipment at the facility, you may click on
+the third level menu tab for <font face="Courier New, Courier, monospace">Control Equipment</font>.
+The page will refresh
+to the <font face="Courier New, Courier, monospace">Control
+Equipment</font> page and list all equipment in the facility
+whether associated to a process or not. </li>
+<li>In order to view a specific
+piece of equipment, click on the <font face="Courier New, Courier, monospace">Company ID</font>
+link in the left column.
+The page will refresh to the specific equipment page. </li>
+<li>From the <font face="Courier New, Courier, monospace">Control
+Equipment Information</font> page you may edit
+the
+equipment information by clicking the <font face="Courier New, Courier, monospace">Edit</font>
+button, making changes, and
+clicking <font face="Courier New, Courier, monospace">Save</font>.
+You may also associate/disassociate subsequent control
+equipment as described above and you can associate/disassociate an
+release point. To associate/disassociate an release point, see related
+help page below.</li>
+</ul>
+<p>Additional information on this feature can be found on the
+Help page
+for the third-level menu, <a href="facilities_profile_ceSummary.html">Control
+Equipment</a>
+.</p>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="egress_point"></a></p>
+<h2>Create Release Point</h2>
+<p>The system&#8217;s <font face="Courier New, Courier, monospace">Facility
+Profile</font> page allows you
+to create release points for the facility. By clicking the <font face="Courier New, Courier, monospace">Create Egress
+Point</font> button, the <font face="Courier New, Courier, monospace">Create Release Point</font>
+page allows you enter release
+point information, as well as, continuous emissions monitor
+information. Once release points are entered and saved, you may
+associate/disassociate and view/update the information.</p>
+<ul>
+<li><a href="#create_ep_2">Release Point Information</a></li>
+<li><a href="#assoc_ep">Associate Release Point</a></li>
+<li><a href="#disassoc_ep">Disassociate Release
+Points</a></li>
+<li><a href="#viewup_fep">View/Update Facility
+Release Points</a> </li>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="create_ep_2"></a></p>
+<h3>Release Point Information</h3>
+<ul>
+<li>On the <font face="Courier New, Courier, monospace">Release
+Point Information</font>
+page choose from the <font face="Courier New, Courier, monospace">Release
+Type</font> picklist the specific type of release
+point you wish to add to the Facility Tree. Once you have chosen the
+type, you fill in all input fields with the information relating to
+that release point. Note: whatever is entered for the <font face="Courier New, Courier, monospace">Company ID</font>
+is what
+will be used in the Facility Tree as the release point ID. The <font face="Courier New, Courier, monospace">EIS</font>
+section, when expanded, allows you to enter the information not already
+populated for you.<br>
+<br>
+</li>
+<li>For release points that have continuous emissions
+monitor system(s) (CEMS), the <font face="Courier New, Courier, monospace">CEM Data</font>
+section should be completed. To
+add a CEMS, click the <font face="Courier New, Courier, monospace">Add
+CEM</font> button and enter the monitor brand and
+model into the input field. For example: Siemens Ultramat 6. Then click
+the box under the appropriate pollutant(s) in which it measures in the <font face="Courier New, Courier, monospace">Pollutant
+Monitored</font> column, placing a checkmark in the box(es). To
+delete a CEMS, place a checkmark in the box in the <font face="Courier New, Courier, monospace">Select</font>
+column to the
+left of the CEMS you wish to delete and click the <font face="Courier New, Courier, monospace">Delete Selected CEMs</font>
+button. To add additional CEMS click the <font face="Courier New, Courier, monospace">Add CEM</font>
+button again and
+follow previous steps. Once the CEMS information has been entered,
+click <font face="Courier New, Courier, monospace">Save</font>.
+Once saved, the CEMS list may be printed by clicking the <font face="Courier New, Courier, monospace">Printable
+View</font> button or sent to Excel by clicking the <font face="Courier New, Courier, monospace">Export to Excel</font>
+button.<br>
+<br>
+</li>
+<li>Note: If you click <font face="Courier New, Courier, monospace">Cancel</font>
+the system will refresh to the <font face="Courier New, Courier, monospace">Facility
+Profile</font> page then you must click the <font face="Courier New, Courier, monospace">Create Release Point</font>
+button again and reenter all information.</li>
+</ul>
+<p>Once you have clicked <font face="Courier New, Courier, monospace">Save</font>,
+the release point will appear at the very bottom of the <font face="Courier New, Courier, monospace">Facility Tree</font>
+under&nbsp;<img alt="Disassociated EG Points" src="images/disassociated_eg_pts_flat.jpg" height="26" width="247"> denoted by <img alt="Release Point Icon" src="images/icon_egress_point.bmp" height="16" width="18">.
+All release points that have
+been created will populate in the Facility Tree as disassociated until
+it is associated with a specific process or control equipment.</p>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="assoc_ep"></a></p>
+<h3>Associate Release Points</h3>
+<p>An release point can be either
+associated with an emissions process, control equipment, or be
+completely disassociated from anything else in the facility. Because an
+release point may be associated with either a process or a piece of
+control equipment or both, it is very important to determine how you
+should associate the release point. There may be more than one release
+point associated with an emissions process or control equipment, and
+there may be more than one emissions process or control equipment in
+the facility that uses any particular release point. If a single release
+point is used more than once in the Facility Tree, which is often the
+case, it will appear in the tree as many times as it is used. Also, the
+specific release point icon will be highlighted if selected throughout
+the Facility Tree.</p>
+<p>If the release point is completely disassociated from
+anything else in
+the facility, but it still exists in some capacity it will show up in
+the Facility Tree as <font face="Courier New, Courier, monospace">Disassociated
+release Point</font>. This designation does
+not change the release point information that has been entered into the
+release point file.</p>
+<p><b>Step1: Emissions Process or Control Equipment.</b></p>
+<ul>
+<li>Click on either the emission process single light blue
+gear&nbsp;<img alt="Emissions Process Icon" src="images/icon_emissions_process.bmp" height="16" width="16"> in the
+Facility Tree or the wavy blue lines&nbsp;<img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20"> of the control equipment that
+you
+want to associate the release point with. </li>
+<li>Scroll to the bottom of the page (either the <font face="Courier New, Courier, monospace">Control Equipment
+Information</font> page or the <font face="Courier New, Courier, monospace">Process Information</font>
+page) and click on the <font face="Courier New, Courier, monospace">Associate
+Release Point</font> button.</li>
+</ul>
+<p><b>Step 2: Designate the Release Point.</b></p>
+<ul>
+<li>When the page is refreshed from Step 1 the <font face="Courier New, Courier, monospace">Select Release Point
+to
+Associate</font> page will appear. </li>
+<li>Select the release point you want to associate from the
+picklist and <font face="Courier New, Courier, monospace">Save</font>.</li>
+</ul>
+<p><b>Step 3: Verify.</b></p>
+<ul>
+<li>When the page refreshes to the <font face="Courier New, Courier, monospace">Process Information</font>
+page or the <font face="Courier New, Courier, monospace">Control
+Equipment Information</font> page, the release point will be
+linked to
+either the emissions process or the control equipment you selected
+originally. </li>
+<li>There will also be a message in the green Information bar
+at the top
+of the page that reads &#8220;<font face="Courier New, Courier, monospace">Release
+point added successfully</font>&#8221;.</li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="disassoc_ep"></a></p>
+<h3>Disassociate Release Points</h3>
+<p>Once the release point has been
+associated and saved, you have the option to disassociate the release
+point.</p>
+<p><b>Step1: Emissions Process/Control Equipment.</b></p>
+<ul>
+<li>Click on either the emission process single light blue
+gear&nbsp;<img alt="Emissions Process Icon" src="images/icon_emissions_process.bmp" height="16" width="16"> in the
+Facility Tree or the wavy blue lines&nbsp;<img alt="Control Equipment Icon" src="images/Icon_control_equip.bmp" height="20" width="20"> of the control equipment that
+you
+want to disassociate the release point with. </li>
+<li>Scroll to the bottom of the page (either the <font face="Courier New, Courier, monospace">Control Equipment
+Information</font> page or the <font face="Courier New, Courier, monospace">Process Information</font>
+page) and click on the <font face="Courier New, Courier, monospace">Disassociate
+Release Point</font> button.</li>
+</ul>
+<p><b>Step 2: Designate the Egress Point.</b></p>
+<ul>
+<li>When the page is refreshed from Step 1 the <font face="Courier New, Courier, monospace">Select Egress Point
+to Disassociate</font> page will appear. </li>
+<li>Select the egress point you want to disassociate from the
+picklist
+and <font face="Courier New, Courier, monospace">Save</font>.</li>
+</ul>
+<p><b>Step 3: Verify.</b></p>
+<ul>
+<li>When the page refreshes to the <font face="Courier New, Courier, monospace">Process Information</font>
+page or the <font face="Courier New, Courier, monospace">Control
+Equipment Information</font> page, the egress point will be
+disassociated and will show up in the Facility Tree as a <font face="Courier New, Courier, monospace">Disassociated
+Egress Point</font>.
+There will also be a message in the green Information bar at the top of
+the page that reads &#8220;<font face="Courier New, Courier, monospace">Egress
+point disassociated successfully</font>&#8221;.</li>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="viewup_fep"></a></p>
+<h3>View/Update Facility Egress Points
+
+</h3></ul><p class="MsoNormal" style="margin-bottom: 12pt; margin-left: 1in;"><b style=""><span style="font-family: Arial; color: black;">IMPORTANT: When emissions reporting is
+performed in IMPACT, the control equipment efficiency(s) identified for
+each control may be used to populate important information and perform
+calculations in this system. It is very important you accurately enter this
+information.</span></b><span style="font-family: Arial; color: black;"><o:p></o:p></span></p>
+<ul>
+<ul>
+<li>To view a complete
+list of release points at the facility, you may click on the third level
+menu tab for <font face="Courier New, Courier, monospace">Release
+Points</font> on the <font face="Courier New, Courier, monospace">Facility Detail</font>
+page. The page will
+refresh to the <font face="Courier New, Courier, monospace">Release
+Points</font> page and list all points in the facility
+whether associated to a process/control equipment or not.<br>
+<br>
+</li>
+<li>In order to
+view a specific point, click on the <font face="Courier New, Courier, monospace">Company ID</font>
+link in the left column.
+The page will refresh to the specific equipment page.<br>
+<br>
+</li>
+<li>From the <font face="Courier New, Courier, monospace">Release
+Point Information</font> page you may edit the information
+by clicking the <font face="Courier New, Courier, monospace">Edit</font>
+button, making the changes, and clicking <font face="Courier New, Courier, monospace">Save</font>.</li>
+</ul>
+<p>Additional information on this feature can be found on the
+Help page
+for the third-level menu, <font face="Courier New, Courier, monospace">Release Points</font>.</p>
+</ul>
+<p><a href="#main_menu">Back to Main Menu</a>
+<a name="rel_help_pages"></a></p>
+<h2>Related Help Topics</h2>
+<ul>
+<li><a href="facilities_profile.html">Facility
+Profile</a></li>
+<li><a href="facilities_profile_ceSummary.html">Control
+Equipment</a></li>
+<li><a href="facilities_profile_egpSummary.html">Release
+Points</a></li>
+<li><a href="tools_externalReferences.html">External
+References</a></li>
+</ul>
+<!-- !!! THIS IS THE END OF THE HELP TOPIC CONTENT !!! --><!-- !!! BELOW IS THE FOOTER SECTION. IT SHOULD REMAIN IN ALL HELP PAGES THAT !!! --><!-- !!! APPEAR IN THE TABLE OF CONTENTS. PREVIOUS TOPIC AND NEXT TOPICS !!! -->
+<!-- !!! ARE MODIFIED HERE FOR THE FOOTER. !!! -->
+<p class="horizontal-rule">&nbsp;<br>
+</p>
+<div class="zz-nav-footer-menu"><a href="facilities_profile.html" target="_blank">Previous
+Topic</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="facilities_profile_contacts.html">Next Topic</a> </div>
+<!-- no legal notice in Stars2 system help; command remains for potential future use -->
+<p class="zz-legal-notice"><a class="zz-legal-notice-link" href="cpyr.html">Copyright
+© 1996, 2004, Oracle.</a> All rights reserved.</p>
+</body></html>

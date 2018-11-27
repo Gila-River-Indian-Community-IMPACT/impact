@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf144372456635216" configfile="/impact-portal-web/src/main/webapp/WEB-INF/monitoring-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="764" id="pf144372475698217" outlinks="pf144372475698218 pf14443383403470 pf14452835159676 pf14452835159677 pf14455221338580" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorGroup" x="338" y="562" id="pf144372475698219" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14438112587180" inlinks="pf144372475698218" path="/monitoring/monitorGroup.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorSite" x="554" y="764" id="pf14438112587181" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14438148820782" inlinks="pf14438112587180 pf14443383403470" path="/monitoring/monitorSite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitor" x="770" y="764" id="pf14438148820783" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf14438148820782" path="/monitoring/monitor.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorReport" x="338" y="178" id="pf14452835159679" referenceLink="//@navigationRule.4/@navigationCase.1/@toViewId|" inlinks="pf14452835159676" path="/monitoring/monitorReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/editReportAttachment" x="338" y="967" id="pf144528351596710" referenceLink="//@navigationRule.4/@navigationCase.1/@toViewId|" inlinks="pf14452835159677" path="/monitoring/editReportAttachment.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/homeMonitorReport" id="pf14455221338591" referenceLink="//@navigationRule.4/@navigationCase.1/@toViewId|" inlinks="pf14455221338580" path="/monitoring/homeMonitorReport.jsp"/>
+  <links id="pf144372475698218" target="pf144372475698219" source="pf144372475698217" outcome="monitoring.monitorGroupDetail" redirect="true"/>
+  <links id="pf14438112587180" target="pf14438112587181" source="pf144372475698219" outcome="Success" fromaction="#{monitorSiteDetail.submitFromJsp}"/>
+  <links id="pf14438148820782" target="pf14438148820783" source="pf14438112587181" outcome="Success" fromaction="#{monitorDetail.submitFromJsp}"/>
+  <links id="pf14443383403470" target="pf14438112587181" source="pf144372475698217" outcome="monitoring.monitorSiteDetail" redirect="true"/>
+  <links id="pf14452835159676" target="pf14452835159679" source="pf144372475698217" outcome="dialog:reportDetail"/>
+  <links id="pf14452835159677" target="pf144528351596710" source="pf144372475698217" outcome="dialog:editReportAttachment"/>
+  <links id="pf14455221338580" target="pf14455221338591" source="pf144372475698217" outcome="dialog:homeReportDetail"/>
+</pageflow:Pageflow>

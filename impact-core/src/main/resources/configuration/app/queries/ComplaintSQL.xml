@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+  <ComplaintSQL>
+  
+  	<ComplaintColumns>  			
+  	c.complaint_Id,
+	c.do_laa_cd,
+	c.year,
+	c.month,
+	c.highPriority,
+	c.nonHighPriority,
+	c.other,
+	c.openBurning,
+	c.antiTamperingInspections,
+	c.last_modified as complaint_lm	
+  	</ComplaintColumns>   
+  	
+  	<retrieveComplaint>
+  		SELECT ${ComplaintSQL.ComplaintColumns} FROM %Schema%ce_complaint c WHERE c.complaint_id = ? 		
+   	</retrieveComplaint>
+   	
+   	<retrieveComplaint3Arg>
+  		SELECT ${ComplaintSQL.ComplaintColumns} FROM %Schema%ce_complaint c WHERE c.do_laa_cd = ? AND c.year = ? AND c.month = ? 		
+   	</retrieveComplaint3Arg>
+  	  	
+  	<retrieveComplaintByDoLaa>
+  		SELECT ${ComplaintSQL.ComplaintColumns} FROM %Schema%ce_complaint c WHERE c.do_laa_cd = ? order by year DESC	
+   	</retrieveComplaintByDoLaa> 
+	
+	<createComplaint>
+		INSERT INTO %Schema%ce_complaint
+		(complaint_Id, do_laa_cd, year, month, highPriority, nonHighPriority, other, openBurning, antiTamperingInspections)
+		VALUES (?,?,?,?,?,?,?,?,?)
+	</createComplaint>	
+	
+	<modifyComplaint>
+		UPDATE %Schema%ce_complaint 
+		SET 
+		do_laa_cd = ?,
+		year = ?,
+		month = ?,
+		highPriority = ?,
+		nonHighPriority = ?,
+		other = ?,
+		openBurning = ?,
+		antiTamperingInspections = ?,
+		last_modified = ?		
+		where complaint_id = ? AND last_modified = ?
+	</modifyComplaint>
+			  	
+  	<deleteComplaint>
+		DELETE FROM %Schema%ce_complaint WHERE complaint_id = ? 	
+	</deleteComplaint>
+
+	
+  </ComplaintSQL>
+</root>

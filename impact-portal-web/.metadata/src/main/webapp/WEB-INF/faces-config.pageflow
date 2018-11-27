@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13630379074000" configfile="/impact-portal-web/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="946" id="pf13638935690350" outlinks="pf13638935690361 pf13638935690362 pf13638935690363 pf13638935690364 pf13638935690365" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="util/confirm" x="338" y="178" id="pf13638935690366" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13638935690361" path="/util/confirm.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="util/submitTaskAttest" x="338" y="562" id="pf13638935690367" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf13638935690362" path="/util/submitTaskAttest.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="util/submitTaskPin" x="338" y="946" id="pf13638935690368" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf13638935690363" path="/util/submitTaskPin.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="util/nonROSubmission" x="338" y="1330" id="pf13638935690369" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf13638935690364" path="/util/nonROSubmission.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="util/confirmROStatus" x="338" y="1714" id="pf136389356903610" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf13638935690365" path="/util/confirmROStatus.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="loginForm" id="pf15066285463481" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf15066315194062" inlinks="pf15066315194062" path="/loginForm.jsp"/>
+  <links id="pf13638935690361" target="pf13638935690366" source="pf13638935690350" outcome="dialog:confirm"/>
+  <links id="pf13638935690362" target="pf13638935690367" source="pf13638935690350" outcome="dialog:confirmAttestation"/>
+  <links id="pf13638935690363" target="pf13638935690368" source="pf13638935690350" outcome="dialog:confirmSubmitTaskPin"/>
+  <links id="pf13638935690364" target="pf13638935690369" source="pf13638935690350" outcome="dialog:confirmNonROSubmission"/>
+  <links id="pf13638935690365" target="pf136389356903610" source="pf13638935690350" outcome="dialog:confirmROStatus"/>
+  <links id="pf15066315194062" target="pf15066285463481" source="pf15066285463481" outcome="loginForm" fromaction="#{loginForm.login}"/>
+</pageflow:Pageflow>

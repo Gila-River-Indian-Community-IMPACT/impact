@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== Reports Tab CONFIGURATION FILE ================================== -->
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<!-- menu items -->
+
+	<!-- backing beans -->
+
+	<managed-bean>
+		<managed-bean-name>stackTestDetail</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.ceta.StackTestDetail
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>infrastructureService</property-name>
+			<value>#{infrastructureBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>stackTestService</property-name>
+			<value>#{stackTestBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>stackTestSearch</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.ceta.StackTestSearch
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>stackTestService</property-name>
+			<value>#{stackTestBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>stackTests</managed-bean-name>
+		<managed-bean-class>
+			us.oh.state.epa.stars2.portal.ceta.StackTests
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>facilityService</property-name>
+			<value>#{facilityBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>infrastructureService</property-name>
+			<value>#{infrastructureBO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>stackTestService</property-name>
+			<value>#{stackTestBO}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>compEvalDefs</managed-bean-name>
+		<managed-bean-class>us.oh.state.epa.stars2.webcommon.bean.ComplianceEvaluationDefs</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>facilities.profile.stackTest</from-outcome>
+			<to-view-id>/facilities/stackTests.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dialog:prtEmissionsTest</from-outcome>
+			<to-view-id>/ceta/prtEmissionsTest.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

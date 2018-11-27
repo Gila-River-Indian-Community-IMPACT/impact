@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13632900499540" configfile="/impact-portal-web/src/main/webapp/WEB-INF/complianceReports-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2034" id="pf142263226619928" outlinks="pf142263226619929 pf142263226619930 pf142263226619931 pf142263226619932 pf142263226619933 pf142263226619934 pf142263226619935 pf142263226619936 pf142263226619937 pf14452795832960 pf14452795832961 pf14679184756310" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/newComplianceReport" x="338" y="178" id="pf142263226619940" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf142263226619929" path="/compliance/newComplianceReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/editCompDeviationTV" x="338" y="562" id="pf142263226619941" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf142263226619930" path="/compliance/editCompDeviationTV.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/editCompDeviationPER" x="338" y="946" id="pf142263226619942" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf142263226619931" path="/compliance/editCompDeviationPER.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/compReportDetail" x="338" y="1330" id="pf142263226620043" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf142263226619932 pf142263226619934" path="/compliance/compReportDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/homeComReportDetail" x="338" y="1714" id="pf142263226620044" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf142263226619933" path="/compliance/homeComReportDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/editCompDeviation" x="338" y="2098" id="pf142263226620045" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf142263226619935" path="/compliance/editCompDeviation.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/compReportSearch" x="338" y="2482" id="pf142263226620046" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf142263226619936" path="/compliance/compReportSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/documentPrintInfo" x="338" y="2866" id="pf142263226620047" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf142263226619937" path="/compliance/documentPrintInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/valTradSecNotif" x="338" y="3250" id="pf14452795832973" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14452795832960" path="/compliance/valTradSecNotif.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home" x="338" y="3634" id="pf14452795832974" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14452795832961" path="/home.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="monitoring/monitorReport" x="122" y="3218" id="pf14452795832975" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" path="/monitoring/monitorReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="compliance/complianceReportTypeHelpInfo" x="338" y="4018" id="pf14679184756311" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf14679184756310" path="/compliance/complianceReportTypeHelpInfo.jsp"/>
+  <links id="pf142263226619929" target="pf142263226619940" source="pf142263226619928" outcome="dialog:newComplianceReport"/>
+  <links id="pf142263226619930" target="pf142263226619941" source="pf142263226619928" outcome="dialog:editComplianceDeviationTV"/>
+  <links id="pf142263226619931" target="pf142263226619942" source="pf142263226619928" outcome="dialog:editComplianceDeviationPER"/>
+  <links id="pf142263226619932" target="pf142263226620043" source="pf142263226619928" outcome="complianceDetail" redirect="true"/>
+  <links id="pf142263226619933" target="pf142263226620044" source="pf142263226619928" outcome="home.compliance.complianceReportDetails" redirect="true"/>
+  <links id="pf142263226619934" target="pf142263226620043" source="pf142263226619928" outcome="complianceDetailNoRedirect"/>
+  <links id="pf142263226619935" target="pf142263226620045" source="pf142263226619928" outcome="dialog:editComplianceDeviation"/>
+  <links id="pf142263226619936" target="pf142263226620046" source="pf142263226619928" outcome="complianceSearch" redirect="true"/>
+  <links id="pf142263226619937" target="pf142263226620047" source="pf142263226619928" outcome="dialog:viewPDF"/>
+  <links id="pf14452795832960" target="pf14452795832973" source="pf142263226619928" outcome="validationTradeSecretNotification"/>
+  <links id="pf14452795832961" target="pf14452795832974" source="pf142263226619928" outcome="home"/>
+  <links id="pf14679184756310" target="pf14679184756311" source="pf142263226619928" outcome="dialog:complianceReportTypeHelpInfo"/>
+</pageflow:Pageflow>

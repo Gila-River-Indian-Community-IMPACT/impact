@@ -1,0 +1,5 @@
+# TFS plug-in for Eclipse project ignore file
+# see http://technet.microsoft.com/en-us/subscriptions/gg413275(v=vs.100).aspx
+
+/target/.*
+/.settings/*.component

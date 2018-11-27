@@ -1,0 +1,929 @@
+<beans xmlns='http://www.springframework.org/schema/beans' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xmlns:p='http://www.springframework.org/schema/p' xmlns:context='http://www.springframework.org/schema/context'
+	xmlns:tx='http://www.springframework.org/schema/tx' xmlns:jpa='http://www.springframework.org/schema/data/jpa'
+	xmlns:jee='http://www.springframework.org/schema/jee' xmlns:util='http://www.springframework.org/schema/util'
+	xmlns:task='http://www.springframework.org/schema/task'
+	xsi:schemaLocation='http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	&#09;&#09;http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+	&#09;&#09;http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	&#09;&#09;http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	&#09;&#09;http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+	&#09;&#09;http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	&#09;&#09;http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd'>
+	
+	
+  <task:annotation-driven />
+  <context:component-scan base-package='us.oh.state.epa.stars2, us.wy.state.deq.impact, org.gricdeq' />
+  <context:annotation-config />
+  <context:load-time-weaver />
+  <tx:annotation-driven transaction-manager='transactionManager' mode='aspectj' />
+  <import resource="classpath:scs-beans.xml"/>
+  <bean id='transactionManager' class='org.springframework.jdbc.datasource.DataSourceTransactionManager'>
+    <property name='dataSource' ref='dataSource' />
+  </bean>
+  <bean id='retryAspect' class='us.wy.state.deq.impact.aspects.RetryAspect' factory-method='aspectOf'>
+    <property name='maxRetries' value='2' />
+  </bean>
+  <bean id='multipartFormHandlerAspect' class='us.wy.state.deq.impact.aspects.MultipartFormHandlerAspect' factory-method='aspectOf'>
+  </bean>
+  <bean id='uploadedFileAspect' class='us.wy.state.deq.impact.aspects.UploadedFileAspect' factory-method='aspectOf'>
+  </bean>
+  <jee:jndi-lookup id='dataSource' jndi-name='jdbc/impactDS' expected-type='javax.sql.DataSource' />
+  <bean id='readOnlyCoreDAO' class='us.oh.state.epa.stars2.database.dao.core.CoreSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingCoreDAO' class='us.oh.state.epa.stars2.database.dao.core.CoreSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyAdHocDAO' class='us.oh.state.epa.stars2.database.dao.adhoc.AdHocSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingAdHocDAO' class='us.oh.state.epa.stars2.database.dao.adhoc.AdHocSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationDAO' class='us.oh.state.epa.stars2.database.dao.application.ApplicationSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationDAO' class='us.oh.state.epa.stars2.database.dao.application.ApplicationSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAODefault' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODefault'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAODefault' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODefault'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOABS' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOABS'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOABS' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOABS'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOACB' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOACB'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOACB' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOACB'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOAMN' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOAMN'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOAMN' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOAMN'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOAPT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOAPT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOAPT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOAPT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOBAK' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBAK'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+   <bean id='stagingApplicationEUTypeDAOBAK' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBAK'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOBGM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBGM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOBGM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBGM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOBOL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBOL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOBOL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBOL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>  
+  <bean id='readOnlyApplicationEUTypeDAOBVC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBVC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOBVC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOBVC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOCCU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCCU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOCCU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCCU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOCOT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCOT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOCOT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCOT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOCKD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCKD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOCKD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCKD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOCMX' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCMX'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOCMX' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCMX'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOCSH' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCSH'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOCSH' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCSH'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOCTW' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCTW'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOCTW' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOCTW'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAODHY' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODHY'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAODHY' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODHY'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAODIS' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODIS'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAODIS' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODIS'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAODRY' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODRY'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAODRY' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAODRY'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOEGU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOEGU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOEGU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOEGU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOENG' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOENG'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOENG' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOENG'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOFAT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOFAT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOFAT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOFAT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOFLR' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOFLR'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOFLR' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOFLR'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOFUG' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOFUG'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOFUG' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOFUG'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOGIN' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOGIN'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOGIN' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOGIN'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOGRI' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOGRI'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOGRI' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOGRI'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOHET' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOHET'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOHET' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOHET'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOHMA' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOHMA'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOHMA' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOHMA'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOINC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOINC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOINC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOINC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOLUD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOLUD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOLUD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOLUD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+    <bean id='readOnlyApplicationEUTypeDAOMAC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMAC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>  
+  <bean id='stagingApplicationEUTypeDAOMAC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMAC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+   <bean id='readOnlyApplicationEUTypeDAOMAT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMAT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>  
+  <bean id='stagingApplicationEUTypeDAOMAT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMAT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+   <bean id='readOnlyApplicationEUTypeDAOMET' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMET'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>  
+  <bean id='stagingApplicationEUTypeDAOMET' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMET'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOMIL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMIL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOMIL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMIL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+    <bean id='readOnlyApplicationEUTypeDAOMIX' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMIX'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>  
+  <bean id='stagingApplicationEUTypeDAOMIX' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMIX'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOMLD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMLD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>       
+  <bean id='stagingApplicationEUTypeDAOMLD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOMLD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOOEP' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOOEP'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOOEP' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOOEP'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOORD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOORD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOORD' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOORD'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOOZG' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOOZG'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOOZG' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOOZG'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOPAM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPAM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOPAM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPAM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOPEL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPEL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOPEL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPEL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOPNE' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPNE'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOPNE' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPNE'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOPRN' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPRN'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOPRN' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOPRN'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOREM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOREM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOREM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOREM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAORES' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAORES'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAORES' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAORES'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOSEB' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSEB'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOSEB' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSEB'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOSEM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSEM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>  
+  <bean id='stagingApplicationEUTypeDAOSEM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSEM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOSEP' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSEP'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOSEP' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSEP'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOSRU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSRU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOSRU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSRU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOSTZ' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSTZ'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOSTZ' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSTZ'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOSVU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSVU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOSVU' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSVU'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOSVC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSVC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOSVC' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOSVC'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOTAR' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTAR'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOTAR' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTAR'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOTGT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTGT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOTGT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTGT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOTIM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTIM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOTIM' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTIM'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOTKO' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTKO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOTKO' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTKO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOTNK' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTNK'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOTNK' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOTNK'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOVNT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOVNT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOVNT' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOVNT'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOWEL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOWEL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOWEL' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOWEL'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyApplicationEUTypeDAOWWE' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOWWE'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingApplicationEUTypeDAOWWE' class='us.oh.state.epa.stars2.database.dao.application.nsr.ApplicationEUTypeSQLDAOWWE'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyCompEnfFacilityDAO' class='us.oh.state.epa.stars2.database.dao.ceta.CompEnfFacilitySQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingCompEnfFacilityDAO' class='us.oh.state.epa.stars2.database.dao.ceta.CompEnfFacilitySQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyComplaintDAO' class='us.oh.state.epa.stars2.database.dao.ceta.ComplaintSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingComplaintDAO' class='us.oh.state.epa.stars2.database.dao.ceta.ComplaintSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEnforcementActionDAO' class='us.oh.state.epa.stars2.database.dao.ceta.EnforcementActionSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEnforcementActionDAO' class='us.oh.state.epa.stars2.database.dao.ceta.EnforcementActionSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyFullComplianceEvalDAO' class='us.oh.state.epa.stars2.database.dao.ceta.FullComplianceEvalSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingFullComplianceEvalDAO' class='us.oh.state.epa.stars2.database.dao.ceta.FullComplianceEvalSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyGdfDAO' class='us.oh.state.epa.stars2.database.dao.ceta.GdfSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingGdfDAO' class='us.oh.state.epa.stars2.database.dao.ceta.GdfSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyOffsitePceDAO' class='us.oh.state.epa.stars2.database.dao.ceta.OffsitePceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingOffsitePceDAO' class='us.oh.state.epa.stars2.database.dao.ceta.OffsitePceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyStackTestDAO' class='us.oh.state.epa.stars2.database.dao.ceta.StackTestSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingStackTestDAO' class='us.oh.state.epa.stars2.database.dao.ceta.StackTestSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyVirtualExchangeServiceDAO' class='us.oh.state.epa.stars2.database.dao.ves.VirtualExchangeServiceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingVirtualExchangeServiceDAO' class='us.oh.state.epa.stars2.database.dao.ves.VirtualExchangeServiceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyComplianceReportDAO' class='us.oh.state.epa.stars2.database.dao.complianceReport.ComplianceReportSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingComplianceReportDAO' class='us.oh.state.epa.stars2.database.dao.complianceReport.ComplianceReportSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyDelegationRequestDAO' class='us.oh.state.epa.stars2.database.dao.delegation.DelegationRequestSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingDelegationRequestDAO' class='us.oh.state.epa.stars2.database.dao.delegation.DelegationRequestSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyDetailDataDAO' class='us.oh.state.epa.stars2.database.dao.detailData.DetailDataSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingDetailDataDAO' class='us.oh.state.epa.stars2.database.dao.detailData.DetailDataSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyCorrespondenceDAO' class='us.oh.state.epa.stars2.database.dao.document.CorrespondenceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingCorrespondenceDAO' class='us.oh.state.epa.stars2.database.dao.document.CorrespondenceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyDocumentDAO' class='us.oh.state.epa.stars2.database.dao.document.DocumentSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingDocumentDAO' class='us.oh.state.epa.stars2.database.dao.document.DocumentSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionsReportDAO' class='us.oh.state.epa.stars2.database.dao.emissionsReport.EmissionsReportSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionsReportDAO' class='us.oh.state.epa.stars2.database.dao.emissionsReport.EmissionsReportSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeDefaultDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDefaultSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeDefaultDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDefaultSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeABSDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeABSSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeABSDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeABSSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeACBDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeACBSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeACBDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeACBSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeAMNDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeAMNSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeAMNDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeAMNSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeAPTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeAPTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeAPTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeAPTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeBAKDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBAKSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeBAKDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBAKSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+   <bean id='readOnlyEmissionUnitTypeBGMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBGMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeBGMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBGMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeBOLDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBOLSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeBOLDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBOLSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeBVCDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBVCSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeBVCDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeBVCSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeCCUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCCUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeCCUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCCUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeCOTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCOTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeCOTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCOTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeCKDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCKDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeCKDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCKDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeCMXDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCMXSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeCMXDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCMXSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeCSHDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCSHSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeCSHDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCSHSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeCTWDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCTWSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeCTWDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeCTWSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeDHYDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDHYSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeDHYDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDHYSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeDISDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDISSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeDISDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDISSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeDRYDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDRYSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeDRYDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeDRYSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeEGUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeEGUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeEGUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeEGUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeENGDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeENGSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeENGDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeENGSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeFATDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeFATSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeFATDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeFATSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeFLRDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeFLRSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeFLRDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeFLRSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeFUGDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeFUGSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeFUGDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeFUGSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeGINDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeGINSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeGINDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeGINSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeGRIDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeGRISQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeGRIDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeGRISQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeHETDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeHETSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeHETDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeHETSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeHMADAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeHMASQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeHMADAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeHMASQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeINCDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeINCSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeINCDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeINCSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeLUDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeLUDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeLUDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeLUDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeMACDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMACSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeMACDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMACSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeMATDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMATSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeMATDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMATSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeMETDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMETSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeMETDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMETSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeMILDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMILSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeMILDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMILSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeMIXDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMIXSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeMIXDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMIXSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>  
+  <bean id='readOnlyEmissionUnitTypeMLDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMLDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeMLDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeMLDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>    
+  <bean id='readOnlyEmissionUnitTypeOEPDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeOEPSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeOEPDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeOEPSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeORDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeORDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeORDDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeORDSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeOZGDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeOZGSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeOZGDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeOZGSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypePAMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePAMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypePAMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePAMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+   <bean id='readOnlyEmissionUnitTypePELDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePELSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+   <bean id='stagingEmissionUnitTypePELDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePELSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypePNEDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePNESQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypePNEDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePNESQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypePRNDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePRNSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypePRNDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypePRNSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeREMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeREMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeREMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeREMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeRESDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeRESSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeRESDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeRESSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeSEBDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSEBSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeSEBDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSEBSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeSEMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSEMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeSEMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSEMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>  
+  <bean id='readOnlyEmissionUnitTypeSEPDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSEPSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeSEPDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSEPSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeSRUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSRUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeSRUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSRUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeSTZDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSTZSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeSTZDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSTZSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeSVUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSVUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeSVUDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSVUSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeSVCDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSVCSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeSVCDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeSVCSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeTARDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTARSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeTARDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTARSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>  
+  <bean id='readOnlyEmissionUnitTypeTGTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTGTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeTGTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTGTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeTIMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTIMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeTIMDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTIMSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeTKODAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTKOSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeTKODAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTKOSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeTNKDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTNKSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeTNKDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeTNKSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeVNTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeVNTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeVNTDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeVNTSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyEmissionUnitTypeWELDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeWELSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeWELDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeWELSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+    <bean id='readOnlyEmissionUnitTypeWWEDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeWWESQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingEmissionUnitTypeWWEDAO' class='us.oh.state.epa.stars2.database.dao.facility.emissionUnit.EmissionUnitTypeWWESQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyFacilityDAO' class='us.oh.state.epa.stars2.database.dao.facility.FacilitySQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingFacilityDAO' class='us.oh.state.epa.stars2.database.dao.facility.FacilitySQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyGenericIssuanceDAO' class='us.oh.state.epa.stars2.database.dao.genericIssuance.GenericIssuanceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingGenericIssuanceDAO' class='us.oh.state.epa.stars2.database.dao.genericIssuance.GenericIssuanceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyInfrastructureDAO' class='us.oh.state.epa.stars2.database.dao.infrastructure.InfrastructureSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingInfrastructureDAO' class='us.oh.state.epa.stars2.database.dao.infrastructure.InfrastructureSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyInvoiceDAO' class='us.oh.state.epa.stars2.database.dao.invoice.InvoiceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingInvoiceDAO' class='us.oh.state.epa.stars2.database.dao.invoice.InvoiceSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyPermitDAO' class='us.oh.state.epa.stars2.database.dao.permit.PermitSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingPermitDAO' class='us.oh.state.epa.stars2.database.dao.permit.PermitSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyPermitConditionDAO' class='us.oh.state.epa.stars2.database.dao.permit.PermitConditionSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingPermitonditionDAO' class='us.oh.state.epa.stars2.database.dao.permit.PermitConditionSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyRelocateRequestDAO' class='us.oh.state.epa.stars2.database.dao.relocate.RelocateRequestSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingRelocateRequestDAO' class='us.oh.state.epa.stars2.database.dao.relocate.RelocateRequestSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyReportsDAO' class='us.oh.state.epa.stars2.database.dao.reports.ReportsSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingReportsDAO' class='us.oh.state.epa.stars2.database.dao.reports.ReportsSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyServiceCatalogDAO' class='us.oh.state.epa.stars2.database.dao.serviceCatalog.ServiceCatalogSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingServiceCatalogDAO' class='us.oh.state.epa.stars2.database.dao.serviceCatalog.ServiceCatalogSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyWorkFlowDAO' class='us.oh.state.epa.stars2.database.dao.workflow.WorkFlowSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingWorkFlowDAO' class='us.oh.state.epa.stars2.database.dao.workflow.WorkFlowSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyCompanyDAO' class='us.wy.state.deq.impact.database.dao.company.CompanySQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingCompanyDAO' class='us.wy.state.deq.impact.database.dao.company.CompanySQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyContactDAO' class='us.wy.state.deq.impact.database.dao.contact.ContactSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingContactDAO' class='us.wy.state.deq.impact.database.dao.contact.ContactSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyMonitoringDAO' class='us.wy.state.deq.impact.database.dao.monitoring.MonitoringSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingMonitoringDAO' class='us.wy.state.deq.impact.database.dao.monitoring.MonitoringSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyContinuousMonitorDAO' class='us.wy.state.deq.impact.database.dao.continuousMonitoring.ContinuousMonitorSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+  <bean id='stagingContinuousMonitorDAO' class='us.wy.state.deq.impact.database.dao.continuousMonitoring.ContinuousMonitorSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).STAGING_SCHEMA}' />
+  </bean>
+  <bean id='readOnlyProjectTrackingDAO' class='us.wy.state.deq.impact.database.dao.projectTracking.ProjectTrackingSQLDAO'>
+    <property name='schema' value='#{T(us.oh.state.epa.stars2.CommonConst).READONLY_SCHEMA}' />
+  </bean>
+</beans>

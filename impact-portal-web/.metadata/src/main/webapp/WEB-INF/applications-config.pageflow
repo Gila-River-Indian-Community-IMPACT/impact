@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13632901928291" configfile="/impact-portal-web/src/main/webapp/WEB-INF/applications-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="4786" id="pf13797830066080" outlinks="pf13797830066081 pf13797830066082 pf13797830066083 pf13797830066084 pf13797830066085 pf13797830066086 pf13797830066087 pf13797830066088 pf13797830066089 pf137978300660810 pf137978300660811 pf137978300660812 pf137978300660813 pf137978300660814 pf137978300660815 pf137978300660816 pf137978300660817 pf137978300660818 pf137978300660819 pf137978300660820 pf137978300660821 pf137978300660822 pf137978300660823 pf137978300660824 pf137978300660825 pf137978300660826 pf137978300660827 pf137978300660828 pf137978300660829 pf13803025720681" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/homeApplicationDetail" x="338" y="178" id="pf137978300660831" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13797830066081" path="/applications/homeApplicationDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/applicationSearch" x="338" y="562" id="pf137978300660832" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf13797830066082" path="/applications/applicationSearch.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/applicationDetail" x="338" y="946" id="pf137978300660833" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf13797830066083 pf13797830066084 pf13797830066085" path="/applications/applicationDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/documentDetail" x="338" y="1330" id="pf137978300660834" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf13797830066086" path="/applications/documentDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/requiredDocumentDetail" x="338" y="1714" id="pf137978300660835" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf13797830066087" path="/applications/requiredDocumentDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/tvAppFacWideReqDetail" x="338" y="2098" id="pf137978300660836" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf13797830066088" path="/applications/tvAppFacWideReqDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/newApplication" x="338" y="2482" id="pf137978300660837" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf13797830066089" path="/applications/newApplication.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="relocation/createNewITR" x="338" y="2866" id="pf137978300660838" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf137978300660810" path="/relocation/createNewITR.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="relocation/intToRelocDetail" x="338" y="3250" id="pf137978300660839" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf137978300660811" path="/relocation/intToRelocDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/appDeleteDetail" x="338" y="3634" id="pf137978300660940" referenceLink="//@navigationRule.0/@navigationCase.11/@toViewId|" inlinks="pf137978300660812" path="/applications/appDeleteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/altScenarioDeleteDetail" x="338" y="4018" id="pf137978300660941" referenceLink="//@navigationRule.0/@navigationCase.12/@toViewId|" inlinks="pf137978300660813" path="/applications/altScenarioDeleteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/euGroupDeleteDetail" x="338" y="4402" id="pf137978300660942" referenceLink="//@navigationRule.0/@navigationCase.13/@toViewId|" inlinks="pf137978300660814" path="/applications/euGroupDeleteDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/copyApplication" x="338" y="4786" id="pf137978300660943" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf137978300660815" path="/applications/copyApplication.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/emissionsInfo" x="338" y="5170" id="pf137978300660944" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf137978300660816" path="/applications/emissionsInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/tvEmissionsInfo" x="338" y="5554" id="pf137978300660945" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf137978300660817" path="/applications/tvEmissionsInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/tvApplicableReqsInfo" x="338" y="5938" id="pf137978300660946" referenceLink="//@navigationRule.0/@navigationCase.18/@toViewId|" inlinks="pf137978300660818" path="/applications/tvApplicableReqsInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/submitDetail" x="338" y="6322" id="pf137978300660947" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf137978300660819" path="/applications/submitDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/confirmTSDownload" x="338" y="6706" id="pf137978300660948" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf137978300660820" path="/applications/confirmTSDownload.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/tvPteReqInfo" x="338" y="7090" id="pf137978300660949" referenceLink="//@navigationRule.0/@navigationCase.21/@toViewId|" inlinks="pf137978300660821" path="/applications/tvPteReqInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/documentPrintInfo" x="338" y="7474" id="pf137978300660950" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf137978300660822" path="/applications/documentPrintInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/documentNoTs" x="338" y="7858" id="pf137978300660951" referenceLink="//@navigationRule.0/@navigationCase.23/@toViewId|" inlinks="pf137978300660823" path="/applications/documentNoTs.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/permitInfo" x="338" y="8242" id="pf137978300660952" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf137978300660824" path="/applications/permitInfo.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/facilityContacts" x="338" y="8626" id="pf137978300660953" referenceLink="//@navigationRule.0/@navigationCase.25/@toViewId|" inlinks="pf137978300660825" path="/applications/facilityContacts.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/bactPollutantDetail" x="338" y="9010" id="pf137978300660954" referenceLink="//@navigationRule.0/@navigationCase.26/@toViewId|" inlinks="pf137978300660826" path="/applications/bactPollutantDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/laerPollutantDetail" x="338" y="9394" id="pf137978300660955" referenceLink="//@navigationRule.0/@navigationCase.27/@toViewId|" inlinks="pf137978300660827" path="/applications/laerPollutantDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/appDocTypeExplanations" x="338" y="9778" id="pf137978300660956" referenceLink="//@navigationRule.0/@navigationCase.28/@toViewId|" inlinks="pf137978300660828" path="/applications/appDocTypeExplanations.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/tvAppDocTypeExplanations" x="338" y="10162" id="pf137978300660957" referenceLink="//@navigationRule.0/@navigationCase.29/@toViewId|" inlinks="pf137978300660829" path="/applications/tvAppDocTypeExplanations.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="applications/emissionsFugLeaksOilGasInfoDetail" id="pf13803025720702" referenceLink="//@navigationRule.0/@navigationCase.16/@toViewId|" inlinks="pf13803025720681" path="/applications/emissionsFugLeaksOilGasInfoDetail.jsp"/>
+  <links id="pf13797830066081" target="pf137978300660831" source="pf13797830066080" outcome="home.applications.applicationDetail" redirect="true"/>
+  <links id="pf13797830066082" target="pf137978300660832" source="pf13797830066080" outcome="applicationSearch" redirect="true"/>
+  <links id="pf13797830066083" target="pf137978300660833" source="pf13797830066080" outcome="applications" redirect="true"/>
+  <links id="pf13797830066084" target="pf137978300660833" source="pf13797830066080" outcome="application_task_*" redirect="true"/>
+  <links id="pf13797830066085" target="pf137978300660833" source="pf13797830066080" outcome="applicationDetail" redirect="true"/>
+  <links id="pf13797830066086" target="pf137978300660834" source="pf13797830066080" outcome="dialog:applicationDoc"/>
+  <links id="pf13797830066087" target="pf137978300660835" source="pf13797830066080" outcome="dialog:requiredApplicationDoc"/>
+  <links id="pf13797830066088" target="pf137978300660836" source="pf13797830066080" outcome="dialog:tvAppFacWideReqDetail"/>
+  <links id="pf13797830066089" target="pf137978300660837" source="pf13797830066080" outcome="dialog:newApplication"/>
+  <links id="pf137978300660810" target="pf137978300660838" source="pf13797830066080" outcome="dialog:createIntToRel"/>
+  <links id="pf137978300660811" target="pf137978300660839" source="pf13797830066080" outcome="relocateDetail"/>
+  <links id="pf137978300660812" target="pf137978300660940" source="pf13797830066080" outcome="dialog:appDeleteDetail"/>
+  <links id="pf137978300660813" target="pf137978300660941" source="pf13797830066080" outcome="dialog:scenarioDeleteDetail"/>
+  <links id="pf137978300660814" target="pf137978300660942" source="pf13797830066080" outcome="dialog:euGroupDeleteDetail"/>
+  <links id="pf137978300660815" target="pf137978300660943" source="pf13797830066080" outcome="dialog:copyApplication"/>
+  <links id="pf137978300660816" target="pf137978300660944" source="pf13797830066080" outcome="dialog:appEmissionsInfo"/>
+  <links id="pf137978300660817" target="pf137978300660945" source="pf13797830066080" outcome="dialog:appTVEmissionsInfo"/>
+  <links id="pf137978300660818" target="pf137978300660946" source="pf13797830066080" outcome="dialog:appTVAppReqInfo"/>
+  <links id="pf137978300660819" target="pf137978300660947" source="pf13797830066080" outcome="dialog:appSubmitDetail"/>
+  <links id="pf137978300660820" target="pf137978300660948" source="pf13797830066080" outcome="dialog:appConfirmTSDownload"/>
+  <links id="pf137978300660821" target="pf137978300660949" source="pf13797830066080" outcome="dialog:tvAltScenarioPteReq"/>
+  <links id="pf137978300660822" target="pf137978300660950" source="pf13797830066080" outcome="dialog:appPrintableDocuments"/>
+  <links id="pf137978300660823" target="pf137978300660951" source="pf13797830066080" outcome="dialog:appNoTsDocuments"/>
+  <links id="pf137978300660824" target="pf137978300660952" source="pf13797830066080" outcome="dialog:associatedPermits"/>
+  <links id="pf137978300660825" target="pf137978300660953" source="pf13797830066080" outcome="dialog:appFacilityContacts"/>
+  <links id="pf137978300660826" target="pf137978300660954" source="pf13797830066080" outcome="dialog:bactPollutantDetail"/>
+  <links id="pf137978300660827" target="pf137978300660955" source="pf13797830066080" outcome="dialog:laerPollutantDetail"/>
+  <links id="pf137978300660828" target="pf137978300660956" source="pf13797830066080" outcome="dialog:appDocTypeExplanations"/>
+  <links id="pf137978300660829" target="pf137978300660957" source="pf13797830066080" outcome="dialog:tvAppDocTypeExplanations"/>
+  <links id="pf13803025720681" target="pf13803025720702" source="pf13797830066080" outcome="dialog:appEmissionsFugLeaksOilGasInfo"/>
+</pageflow:Pageflow>

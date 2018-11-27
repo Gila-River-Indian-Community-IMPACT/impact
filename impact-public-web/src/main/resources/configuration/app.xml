@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+	<app createNew="no" application-code="impactpub" tomcat="yes"
+		displayUncertainArea="false">
+
+		<Schemas alwaysUse="true">
+			<ReadOnly name="dbo" />
+		</Schemas>
+
+		<defaultEPAPortal jndiName="app/defaultEPAPortal" />
+		
+		<dataMigrated jndiName="app/dataMigrated" />
+
+		<timeZone>America/Detroit</timeZone>
+
+		<fileStore>
+			<rootPath jndiName="app/fileStore/rootPath" />
+			<protocol jndiName="app/fileStore/protocol" />
+			<host jndiName="app/fileStore/host" />
+			<port jndiName="app/fileStore/port" />
+			<urlPath jndiName="app/fileStore/urlPath" />
+		</fileStore>
+
+		<database>
+			<j2ee
+				component-class="us.oh.state.epa.stars2.framework.dbConnection.ContainerConnectionManager"
+				is-singleton="true" data-source="jdbc/impactDS" />
+		</database>
+
+		<buildVersion>Build ID: ${project.version}</buildVersion>
+	</app>
+</root>

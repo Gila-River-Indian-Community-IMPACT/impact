@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!-- This version of the STARS2 Help Guide was last updated for initial STARS2 HELP, 
+  based on OHJ rel. 4.2.7 and OHW rel. 2.0.11.  This TOC file was last updated 11/14/2007 -->
+
+<toc version="1.0">
+<!-- START non-use-case-base help topics -->
+   
+<tocitem text="System Overview"  target="stars2_systemOverview_html"/>
+
+<tocitem text="Common User Interface Elements" target="common_ui_elements_html">
+      <tocitem text="Screen Layout &amp; Menu Structure" target="common_ui_menuStructure_html" />
+      <tocitem text="Common Search Paradigm" target="common_ui_searchParadigm_html" />
+      <tocitem text="Data Grids" target="common_ui_datagrids_html" />
+      <tocitem text="Detail Data" target="common_ui_detailData_html" />
+      <!--  Topic covers
+      	* Detail Data Page Header
+      	* Tree Control (ref facility_tree.html for icons) 
+      	* High-level Detail Data
+      	* Collapsible Screen Regions
+      	* Operations Buttons
+      -->
+      <tocitem text="Entering and Editing Data" target="common_ui_editMode_html"> 
+      	<tocitem text="Input Fields" target="common_ui_inputFields_html" />
+    	<!-- The above topic includes: 
+    		* text input (incl. wildcarding
+    		* pick lists
+    		* dates (incl. calendar)
+			* checkboxes
+			* radio buttons
+			* list entries
+			* data shuttles
+    	 -->
+    	 <tocitem text="Edit Button Operations" target="common_ui_editButtons_html" />
+    	 <!-- The above topic includes: 
+    		* edit
+    		* save, cancel, done
+    		* add, delete
+			* apply, create
+			* validate
+    	  -->
+    	 <tocitem text="Exception Reporting" target="common_ui_exceptions_html" />
+    	 <!-- The above topic includes:
+    		* simple validation
+			* required fields
+			* field dependences / cross-references
+			* complex form validation
+		  -->
+        </tocitem>  <!--  End of Entering and Editing Data topics --> 
+    <tocitem text="Pop-up Windows" target="common_ui_popupWin_html" /> 
+    <tocitem text="Notes" target="common_ui_notes_html" /> 
+    <!-- NOT IMPLEMENTED DUE TO TIME CONSTRAINTS
+    <tocitem text="Attachments" target="common_ui_attachments_html" /> 
+    <tocitem text="Icon Legend" target="common_ui_iconLegend_html" />
+     -->
+</tocitem> <!-- End of Common User Interface Elements Chapter topics -->
+
+<tocitem text="System Role-based Security" target="system_roleBasedSecurity_html" />
+<tocitem text="Facility-based User Roles" target="facility_roles_html" />
+<tocitem text="System Glossary" target="glossary_html" />
+
+<!--  END [Most] non-Use Case-related Help topics - a few are integrated in other chapters -->
+
+<tocitem text="Home Tab" target="home">
+    <tocitem text="ToDos" target="home_todo" />
+    <tocitem text="Create ToDo Task" target="home_initTask" />
+</tocitem>
+
+<tocitem text="Workflows" target="workflows">
+    <tocitem text="Workflow Search" target="workflows" />
+    <tocitem text="Summary Charts" target="workflows_summary" />
+    <tocitem text="Workflow Diagram" target="workflows_workflowProfile">
+      	<tocitem text="Cancel a Workflow" target="workflows_workflowProfile_cancelProcess" />
+      	<tocitem text="Reassign a Workflow " target="workflows_workflowProfile_reassign" />
+      	<tocitem text="Change a Workflow Due Date" target="workflows_workflowProfile_changeProcessDueDate" />
+      	<tocitem text="Workflow Summary" target="workflows_workflowProfile_summaryProcess" />
+      	<tocitem text="Workflow Processing Summary" target="workflows_workflowProfile_permitSummaryProcess" />
+      	<!--  NO Clone Workflow Process HELP PAGE PROVIDED; Not in TOC
+      	<tocitem text="Clone Workflow Process" target="workflows_workflowProfile_cloneProcess" />
+        -->
+      	<tocitem text="Workflow Notes" target="workflows_workflowProfile_processNoteList" />
+    </tocitem> <!--  End of Workflow Diagram topics -->
+    <tocitem text="Task Profile" target="workflows_activityProfile">
+      	<tocitem text="Reassign a Task" target="workflows_activityProfile_reassignActivity" />
+      	<tocitem text="Change a Task Start Date" target="workflows_activityProfile_changeActivityStartDate" />
+      	<!--  NO Change a Task Due Date PAGE PROVIDED; Help Link 
+      	<tocitem text="Change Activity Due Date" target="workflows_activityProfile_changeActivityDueDate" />
+      	 -->
+      	<tocitem text="Loop Back to a Previous Activity" target="workflows_activityProfile_gotoActivity" />
+      	<tocitem text="Refer a Task" target="workflows_activityProfile_referActivity" />
+    </tocitem> <!--  End of Task Profile topics -->
+</tocitem> <!--  End of Workflow tab topics -->
+
+<tocitem text="Facilities">
+    <tocitem text="Facility Search" target="facilities" />
+    <tocitem text="Facility Detail" target="facilities_profile">
+    <!--  facility detail entails multiple screens - facility level detail, EU-level detail, 
+        CE-level detail, EGP-level details, plus operations, e.g., Create EU (can share help w/EU-level detail?
+        as its the same screen, in edit mode, with no data)  
+    -->
+      	<tocitem text="Facility Tree" target="facility_tree_html" /> 
+     	 <tocitem text="Owner &amp; Contact Information" target="facilities_profile_contacts" />
+     	 <tocitem text="Emissions Unit Summary Information" target="facilities_profile_euSummary" />
+     	 <tocitem text="Control Equipment Summary Information" target="facilities_profile_ceSummary" />
+     	 <tocitem text="Release Point Summary Information" target="facilities_profile_egpSummary" />
+     	 <tocitem text="Application(s) Summary Information" target="facilities_profile_applications" />
+     	 <tocitem text="Permit(s) Summary Information" target="facilities_profile_permits" />
+     	 <tocitem text="Applicable Federal Rules" target="facilities_profile_fedRules" />
+     	 <tocitem text="Allowable Emissions" target="facilities_profile_allowEmissions" />
+     	 <tocitem text="Emissions Inventories Summary Information" target="facilities_profile_reports" />
+     	 <tocitem text="Reporting Category" target="facilities_profile_reportCategory" />
+     	 <tocitem text="Compliance Report(s) Summary Information" target="facilities_profile_compReports" />
+         <tocitem text="General Facility Attachments" target="facilities_profile_attachments" />
+     	 <tocitem text="Facility Correspondence" target="facilities_profile_correspondence" />
+     	 <tocitem text="Invoice History" target="facilities_profile_invoices" />
+     	 <tocitem text="Facility Inventory History" target="facilities_profile_history" />
+     	 <tocitem text="Event Logs" target="facilities_profile_eventLog" />
+     	 <tocitem text="User Roles" target="facilities_profile_facilityRoles" />
+     	 <tocitem text="Facility Related Notes" target="facilities_profile_notes" />
+     	 <tocitem text="Facility Undelivered Mail" target="facilities_profile_rum" />
+    	 <tocitem text="PER Due Dates" target="facilities_profile_PERDueDates" />
+    </tocitem>  <!--  End of Facility Detail topics -->
+    <tocitem text="Facility History Search" target="facilities_facilityHistorySearch" />
+    <tocitem text="Contact History Search" target="facilities_contactHistorySearch" />
+    <tocitem text="Undelivered Mail" target="facilities_undeliveredMail" />
+    <tocitem text="Create a New Facility" target="facilities_createFacility" />
+</tocitem> <!--  End of Facilities tab topics -->
+
+<tocitem text="Permits">
+    <tocitem text="Permit Search" target="permits_search" />
+    <tocitem text="Permit Detail" target="permits_detail">
+    <!--  permit detail entails multiple screens - permit level detail, EU-level detail 
+        plus one screen for each of the operations buttons, e.g., Add/Remove EUs, etc. 
+    -->
+     	 <tocitem text="Permit Workflow List" target="permits_detail_permitAllWorkflows" />
+     	 <tocitem text="Terms and Conditions" target="permits_detail_tcList" />
+     	 <tocitem text="Permit Outline Structure" target="permits_detail_outlineStructure" />
+     	 <!--  NO Issuance PAGES PROVIDED 
+     	 <tocitem text="Draft Issuance" target="permits_detail_draftIssuance" />
+     	 <tocitem text="PPP Issuance" target="permits_detail_PPPIssuance" />
+     	 <tocitem text="PP Issuance" target="permits_detail_PPIssuance" />
+     	 <tocitem text="Final Issuance" target="permits_detail_finalIssuance" />
+     	 <tocitem text="Denial Issuance" target="permits_detail_denialIssuance" /> 
+     	 -->
+     	 <tocitem text="Carbon Copy List for Permits" target="permits_detail_ccList" />
+     	 <tocitem text="Permit Fee Summary" target="permits_detail_feeSummary" />
+     	 <tocitem text="Permit Related Attachments" target="permits_detail_attachments" />
+     	 <tocitem text="Permit Related Notes" target="permits_detail_notes" />
+    </tocitem> <!--  End of Permit Detail topics -->
+</tocitem>  <!--  End of Permits tab topics -->
+
+<tocitem text="Applications">
+    <tocitem text="Application Search" target="applications_search" />
+    <tocitem text="Application Detail" target="applications_detail" />
+    <!--  application detail entails multiple screens - application level detail, EU-level detail 
+      and EU-group-level detail; in addition, the screens differ for PTI/PTIO apps and Title V Permit apps
+      There are also additional screens such as for operations such as Create EU group / [View] EU group detail, Copy EU data, 
+      Add (or view) alternative or multiple operating scenarios -->
+</tocitem> <!--  End of Applications tab topics -->
+
+<tocitem text="Emissions Inventories" target="reports_search">
+    <tocitem text="Emissions Inventories Search" target="reports_search" />
+    <tocitem text="Emissions Inventory Detail" target="reports_TVdetail" />
+    <!--  Covers detail data pages for all report types (e.g., TV, NTV, etc.) -->
+</tocitem> <!--  End of Emissions Inventories tab topics -->
+
+<tocitem text="Compliance Reports" target="compliance_search">
+    <tocitem text="Compliance Report Search" target="compliance_search" />
+    <tocitem text="Compliance Report Detail" target="compliance_detail" />
+</tocitem> <!--  End of Compliance Reports tab topics -->
+
+<tocitem text="Invoices" target="invoices_search">
+    <tocitem text="Invoice Search" target="invoices_search" />
+    <tocitem text="Invoice Detail" target="invoices_detail" />
+</tocitem> <!--  End of Invoices tab topics -->
+
+<tocitem text="Management Reports" target="mgmt_reports">
+    <tocitem text="Report Tree" target="mgmt_reports" />
+    <tocitem text="Issuance Report" target="mgmt_reports_issuanceReport" />
+    <tocitem text="Permit Workload" target="mgmt_reports_permitWorkload" />
+    <tocitem text="Late Permits" target="mgmt_reports_permitSOP" />
+    <tocitem text="PBR Counts" target="mgmt_reports_pbrCount" />
+    <tocitem text="Facility Counts" target="mgmt_reports_facilityPermitCount" />
+    <tocitem text="TOPS Report" target="mgmt_reports_topsReport" />
+</tocitem> <!--  End of Management Reports tab topics -->
+
+<tocitem text="Tools">
+    <tocitem text="Bulk Operations Catalog" target="tools_bulkOperationsCatalog" />
+    <tocitem text="Document Generation" target="tools_docGenerationCatalog" />
+    <!--  NO CO Document Generation PAGE PROVIDED 
+    <tocitem text="Central Office Document Generation" target="tools_coDocumentGeneration" />
+    -->
+    <tocitem text="External References" target="tools_externalReferences" />
+    <tocitem text="Field Audit Log" target="tools_fieldAuditLog" />
+    <tocitem text="Correspondence Search" target="tools_correspondence" />
+    <tocitem text="Event Log" target="home_eventLog">
+     	 <tocitem text="Create New Event" target="home_eventNew" />
+    </tocitem> <!--  End of Event Log -->
+    <tocitem text="Gateway Submission Log" target="tools_submissionLog" />
+     <!--  NO CO Document Generation PAGE PROVIDED 
+     <tocitem text="Temporary Files" target="tools_temporaryFiles" />
+     -->
+</tocitem> <!--  End of TOOLS tab topics -->
+
+<!--  NO Admin PAGES PROVIDED; Help link says Topic Not Fouud 
+<tocitem text="Administration" target="admin">
+    <tocitem text="Definition Administration" target="admin_defTab" />
+    <tocitem text="Role Catalog" target="admin_roles" />
+    <tocitem text="User Catalog" target="admin_users" />
+    <tocitem text="Scheduler" target="admin_scheduler" />
+    <tocitem text="Service Catalog" target="admin_serviceCatalog" />
+    <tocitem text="Control Equipment Catalog" target="admin_contEquipCatalog" />
+    <tocitem text="Configuration Management" target="admin_configuration" />
+    <!  conf mgmt obsolete?  >
+    <tocitem text="Enable Reporting Year" target="reports_enableReporting" />
+    <tocitem text="NEI Export" target="admin_neiExport" />
+</tocitem> <!  End of ADMIN tab topics  >
+-->
+</toc>

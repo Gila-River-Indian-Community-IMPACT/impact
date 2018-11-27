@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf137893913268990" configfile="/impact-portal-web/src/main/webapp/WEB-INF/reports-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="3250" id="pf137893919895991" outlinks="pf137893919895992 pf137893919895993 pf137893919895994 pf137893919895995 pf137893919895996 pf137893919895997 pf137893919895998 pf137893919895999 pf1378939198959100 pf1378939198959101 pf1378939198959102 pf1378939198959103 pf1378939198959104 pf1378939198959105 pf1378939198959106 pf1378939198959107" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/processEG71Choices" x="338" y="178" id="pf1378939198959108" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf137893919895992" path="/reports/processEG71Choices.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/processChoices" x="338" y="562" id="pf1378939198959109" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf137893919895993" path="/reports/processChoices.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/documentDetail" x="338" y="946" id="pf1378939198959110" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf137893919895994" path="/reports/documentDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/documentDetailNTV" x="338" y="1330" id="pf1378939198959111" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf137893919895995" path="/reports/documentDetailNTV.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/confirmTSDownload" x="338" y="1714" id="pf1378939198959112" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf137893919895996" path="/reports/confirmTSDownload.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/confirmTSDownloadNTV" x="338" y="2098" id="pf1378939198959113" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf137893919895997" path="/reports/confirmTSDownloadNTV.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/createReportData" x="338" y="2482" id="pf1378939198959114" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" inlinks="pf137893919895998 pf1378939198959103" path="/reports/createReportData.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/reviseNTVReport" x="338" y="2866" id="pf1378939198959115" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf137893919895999" path="/reports/reviseNTVReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/reportDetail" x="338" y="4402" id="pf1378939198959116" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" outlinks="pf1378939198959117 pf1378939198959118 pf1378939198959119 pf1378939198959120 pf1378939198959121 pf1378939198959122 pf1378939198959123 pf1378939198959124 pf1378939198959125 pf1378939198959126 pf1378939198959127 pf1378939198959128 pf1378939198959129 pf1378939198959130 pf1378939198959131 pf1378939198959132 pf1378939198959133" inlinks="pf1378939198959100 pf1378939198959134 pf1378939198959135" path="/reports/reportDetail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/calculationTable" x="338" y="3250" id="pf1378939198959136" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf1378939198959101" path="/reports/calculationTable.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/confirmSaveReport" x="554" y="946" id="pf1378939198959137" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf1378939198959117" path="/reports/confirmSaveReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/addContact" x="554" y="1330" id="pf1378939198959138" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf1378939198959118" path="/reports/addContact.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/deleteNtvReportReq" x="554" y="1714" id="pf1378939198959139" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf1378939198959119" path="/reports/deleteNtvReportReq.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/reviseReport" x="554" y="2098" id="pf1378939198959140" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf1378939198959120" path="/reports/reviseReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/fireTable" x="554" y="2482" id="pf1378939198959141" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf1378939198959135" inlinks="pf1378939198959121 pf1378939198959122" path="/reports/fireTable.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/deletePeriod" x="554" y="2866" id="pf1378939198959142" referenceLink="//@navigationRule.1/@navigationCase.6/@toViewId|" inlinks="pf1378939198959123" path="/reports/deletePeriod.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/deleteEmissions" x="554" y="3250" id="pf1378939198959143" referenceLink="//@navigationRule.1/@navigationCase.7/@toViewId|" inlinks="pf1378939198959124" path="/reports/deleteEmissions.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/deleteEmissionUnit" x="554" y="3634" id="pf1378939198959144" referenceLink="//@navigationRule.1/@navigationCase.8/@toViewId|" inlinks="pf1378939198959125" path="/reports/deleteEmissionUnit.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/editFacilityProfile" x="554" y="4018" id="pf1378939198959145" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf1378939198959134" inlinks="pf1378939198959126" path="/reports/editFacilityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="facilities/facilityProfile" x="554" y="4402" id="pf1378939198959146" referenceLink="//@navigationRule.1/@navigationCase.10/@toViewId|" inlinks="pf1378939198959127" path="/facilities/facilityProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/tradeSecretJust" x="554" y="4786" id="pf1378939198959147" referenceLink="//@navigationRule.1/@navigationCase.11/@toViewId|" inlinks="pf1378939198959128" path="/reports/tradeSecretJust.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/tradeSecretMJust" x="554" y="5170" id="pf1378939198959148" referenceLink="//@navigationRule.1/@navigationCase.12/@toViewId|" inlinks="pf1378939198959129" path="/reports/tradeSecretMJust.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/tradeSecretSJust" x="554" y="5554" id="pf1378939198959149" referenceLink="//@navigationRule.1/@navigationCase.13/@toViewId|" inlinks="pf1378939198959130" path="/reports/tradeSecretSJust.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/textBoxViewEdit" x="554" y="5938" id="pf1378939198959150" referenceLink="//@navigationRule.1/@navigationCase.14/@toViewId|" inlinks="pf1378939198959131" path="/reports/textBoxViewEdit.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/deleteReportReq" x="554" y="6322" id="pf1378939198959151" referenceLink="//@navigationRule.1/@navigationCase.15/@toViewId|" inlinks="pf1378939198959132" path="/reports/deleteReportReq.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/associateProfile" x="554" y="6706" id="pf1378939198959152" referenceLink="//@navigationRule.1/@navigationCase.16/@toViewId|" inlinks="pf1378939198959133" path="/reports/associateProfile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/createReport" x="338" y="6867" id="pf1378939198959153" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf1378939198959154 pf1378939198959155" inlinks="pf1378939198959102" path="/reports/createReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home" x="554" y="7090" id="pf1378939198959156" referenceLink="//@navigationRule.3/@navigationCase.3/@toViewId|" inlinks="pf1378939198959154 pf1378939198959155 pf1378939198959104 pf1378939198959105" path="/home.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/printEmiRpt" x="338" y="3634" id="pf1378939198959157" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf1378939198959106" path="/reports/printEmiRpt.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="reports/printNtvEmiRpt" x="338" y="4018" id="pf1378939198959158" referenceLink="//@navigationRule.6/@navigationCase.1/@toViewId|" inlinks="pf1378939198959107" path="/reports/printNtvEmiRpt.jsp"/>
+  <links id="pf137893919895992" target="pf1378939198959108" source="pf137893919895991" outcome="dialog:createEUListPop"/>
+  <links id="pf137893919895993" target="pf1378939198959109" source="pf137893919895991" outcome="dialog:createGroupPop"/>
+  <links id="pf137893919895994" target="pf1378939198959110" source="pf137893919895991" outcome="dialog:emissionsDoc"/>
+  <links id="pf137893919895995" target="pf1378939198959111" source="pf137893919895991" outcome="dialog:emissionsDocNTV"/>
+  <links id="pf137893919895996" target="pf1378939198959112" source="pf137893919895991" outcome="dialog:rptConfirmTSDownload"/>
+  <links id="pf137893919895997" target="pf1378939198959113" source="pf137893919895991" outcome="dialog:rptConfirmTSDownloadNTV"/>
+  <links id="pf137893919895998" target="pf1378939198959114" source="pf137893919895991" outcome="dialog:selectReportData"/>
+  <links id="pf137893919895999" target="pf1378939198959115" source="pf137893919895991" outcome="dialog:reviseNtvReport"/>
+  <links id="pf1378939198959100" target="pf1378939198959116" source="pf137893919895991" outcome="emissionReport" redirect="true"/>
+  <links id="pf1378939198959101" target="pf1378939198959136" source="pf137893919895991" outcome="dialog:viewCalc"/>
+  <links id="pf1378939198959117" target="pf1378939198959137" source="pf1378939198959116" outcome="dialog:confirmSaveReport"/>
+  <links id="pf1378939198959118" target="pf1378939198959138" source="pf1378939198959116" outcome="dialog:editContact"/>
+  <links id="pf1378939198959119" target="pf1378939198959139" source="pf1378939198959116" outcome="dialog:deleteNtvReportReq"/>
+  <links id="pf1378939198959120" target="pf1378939198959140" source="pf1378939198959116" outcome="dialog:reviseReport"/>
+  <links id="pf1378939198959121" target="pf1378939198959141" source="pf1378939198959116" outcome="&quot;editFire&quot;" fromaction="#{reportDetail.editFIRE}"/>
+  <links id="pf1378939198959122" target="pf1378939198959141" source="pf1378939198959116" outcome="dialog:editViewFire"/>
+  <links id="pf1378939198959123" target="pf1378939198959142" source="pf1378939198959116" outcome="dialog:deletePeriod"/>
+  <links id="pf1378939198959124" target="pf1378939198959143" source="pf1378939198959116" outcome="dialog:deleteEmissions"/>
+  <links id="pf1378939198959125" target="pf1378939198959144" source="pf1378939198959116" outcome="dialog:deleteEmissionUnit"/>
+  <links id="pf1378939198959126" target="pf1378939198959145" source="pf1378939198959116" outcome="dialog:requestEditFP"/>
+  <links id="pf1378939198959127" target="pf1378939198959146" source="pf1378939198959116" outcome="goToFacilityPage"/>
+  <links id="pf1378939198959128" target="pf1378939198959147" source="pf1378939198959116" outcome="dialog:tradeSecret"/>
+  <links id="pf1378939198959129" target="pf1378939198959148" source="pf1378939198959116" outcome="dialog:tradeSecretM"/>
+  <links id="pf1378939198959130" target="pf1378939198959149" source="pf1378939198959116" outcome="dialog:tradeSecretSched"/>
+  <links id="pf1378939198959131" target="pf1378939198959150" source="pf1378939198959116" outcome="dialog:tradeSecretES"/>
+  <links id="pf1378939198959132" target="pf1378939198959151" source="pf1378939198959116" outcome="dialog:deleteReportReq"/>
+  <links id="pf1378939198959133" target="pf1378939198959152" source="pf1378939198959116" outcome="dialog:associateProfile"/>
+  <links id="pf1378939198959154" target="pf1378939198959156" source="pf1378939198959153" outcome="failure"/>
+  <links id="pf1378939198959155" target="pf1378939198959156" source="pf1378939198959153" fromaction="#{reportDetail.startCreateReportDone}"/>
+  <links id="pf1378939198959102" target="pf1378939198959153" source="pf137893919895991" outcome="dialog:createNewReport"/>
+  <links id="pf1378939198959103" target="pf1378939198959114" source="pf137893919895991" outcome="create_facilityId"/>
+  <links id="pf1378939198959104" target="pf1378939198959156" source="pf137893919895991" outcome="failure"/>
+  <links id="pf1378939198959105" target="pf1378939198959156" source="pf137893919895991" outcome="home"/>
+  <links id="pf1378939198959134" target="pf1378939198959116" source="pf1378939198959145" outcome="failure"/>
+  <links id="pf1378939198959135" target="pf1378939198959116" source="pf1378939198959141" fromaction="#{reportDetail.saveFireSelection}"/>
+  <links id="pf1378939198959106" target="pf1378939198959157" source="pf137893919895991" outcome="dialog:emissionReport"/>
+  <links id="pf1378939198959107" target="pf1378939198959158" source="pf137893919895991" outcome="dialog:ntvEmissionReport"/>
+</pageflow:Pageflow>
